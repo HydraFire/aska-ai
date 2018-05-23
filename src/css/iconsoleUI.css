@@ -1,0 +1,15 @@
+.serverLog {
+ margin: 65px 0px 0px 50px;
+ position: absolute;
+ font-size: 10px;
+ font-family: 'Exo 2', sans-serif;
+ color: #333;
+}
+.clientLog {
+ margin: 65px 10px 0px 0px;
+ float: right;
+ text-align: right;
+ font-size: 10px;
+ font-family: 'Exo 2', sans-serif;
+ color: #333;
+}

@@ -1,0 +1,45 @@
+{
+  "name": "aska",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "watch": "nodemon ./server.js --ignore public/ --ignore src/ --ignore data/",
+    "start": "concurrently \"npm run watch\" \"npm run build\" --names \"💻,📦\" --prefix name",
+    "assets": "webpack -w --display-max-modules 0",
+    "dev": "webpack-dev-server  --inline --hot --progress --colors --historyApiFallback",
+    "build": "webpack --watch --color"
+  },
+  "author": "Yaroslav Koval",
+  "license": "ISC",
+  "devDependencies": {
+    "babel-core": "^6.26.0",
+    "babel-loader": "^7.1.2",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-react": "^6.24.1",
+    "concurrently": "^3.5.1",
+    "css-loader": "^0.28.10",
+    "eslint": "^4.18.2",
+    "eslint-config-airbnb": "^16.1.0",
+    "eslint-plugin-import": "^2.9.0",
+    "eslint-plugin-jsx-a11y": "^6.0.3",
+    "eslint-plugin-react": "^7.7.0",
+    "nodemon": "^1.17.1",
+    "style-loader": "^0.20.2",
+    "webpack": "^3.1.1",
+    "webpack-dev-server": "^2.1.1"
+  },
+  "dependencies": {
+    "brain.js": "^1.1.2",
+    "dotenv": "^5.0.1",
+    "express": "^4.16.2",
+    "jsonwebtoken": "8.1.0",
+    "prop-types": "^15.6.1",
+    "react": "^16.2.0",
+    "react-dom": "^16.2.0",
+    "request": "^2.85.0",
+    "web-audio-analyser": "^2.0.1",
+    "web-push": "^3.3.0",
+    "ws": "^5.0.0"
+  }
+}

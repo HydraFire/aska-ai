@@ -1,0 +1,37 @@
+/* Контейнер поверх Канваса с шейдером */
+#main_container{
+  text-align: center;
+  margin: 0px 0px 0px 0px;
+  z-index: 5;
+  width: 100%;
+  position: absolute;
+}
+#projectName{
+  -moz-user-select: none;
+  -khtml-user-select: none;
+  -webkit-user-select: none;
+  user-select: none;
+  height:120px;
+  padding-top:50px;
+  color:rgba(50, 50, 50, 1);
+  font-size: 90pt;
+}
+/* Отображение разпознаных слов */
+.words {
+  font-family: 'Exo 2', sans-serif;
+  width:100%;
+  color: rgba(0, 0, 0, 0.5);
+  line-height:2rem;
+}
+p {
+  font-family: 'Jura', sans-serif;
+  margin: 0;
+}
+.words:before {
+  content: '';
+  position: absolute;
+  width: 4px;
+  top: 0;
+  left: 30px;
+  bottom: 0;
+}

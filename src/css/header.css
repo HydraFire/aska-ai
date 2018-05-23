@@ -1,0 +1,69 @@
+.header {
+  width: 100%;
+  height: 45px;
+  padding-left: 70px;
+  margin: 0 0 0 0;
+  z-index: 1000;
+  color: #abc;
+  background: rgb(22, 22, 22);
+  font-size: 30px;
+  position: fixed;
+}
+.logo {
+  font-size: 14pt;
+}
+/* Кнопки переключения шейдеров */
+.shaderButton {
+  height: 25px;
+  padding: 2px 5px 0px 5px;
+  font-family: "Lucida Console";
+  border-style: dashed;
+  border-width: 1px;
+  color: #777;
+  margin-left: 20px;
+  border-color: rgb(110, 110, 110);
+  background: rgba(0, 0, 0, 0);
+}
+.shaderButton:hover {
+  background: rgba(50, 50, 50, 1);
+}
+.shaderButton:active {
+  background: rgba(100, 100, 100, 1);
+}
+.shaderButton:focus {
+  outline:0;
+}
+
+
+.canvasButton {
+  height: 25px;
+  padding: 2px 5px 0px 5px;
+  font-family: "Lucida Console";
+  border-style: solid;
+  border-width: 1px;
+  color: #777;
+  margin-left: 20px;
+  border-color: rgb(110, 110, 110);
+  background: rgba(0, 0, 0, 0);
+}
+.canvasButton:hover {
+  background: rgba(50, 50, 50, 1);
+}
+.canvasButton:active {
+  background: rgba(100, 100, 100, 1);
+}
+.canvasButton:focus {
+  outline:0;
+}
+
+.subscribeButton {
+  height: 25px;
+  padding: 2px 5px 0px 5px;
+  font-family: "Lucida Console";
+  border-style: solid;
+  border-width: 1px;
+  color: #777;
+  margin-left: 20px;
+  border-color: rgb(110, 110, 110);
+  background: rgba(0, 0, 0, 0);
+}

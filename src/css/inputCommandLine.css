@@ -1,0 +1,43 @@
+@import url('https://fonts.googleapis.com/css?family=Press+Start+2P');
+@import url('https://fonts.googleapis.com/css?family=Jura');
+
+.inputConteiner {
+  padding: 0px;
+  margin-top: -4px;
+}
+.inputCommandLine {
+  width: 70%;
+  height: 22px;
+  font-size: 14px;
+  line-height: 22px;
+  vertical-align: middle;
+  float: left;
+  padding: 0px;
+  margin: 0px;
+  border-top: 0px;
+  border-left: 0px;
+  border-right: 0px;
+  color: #ddd;
+  border-color: rgb(22, 22, 22);
+  background: rgba(50, 50, 50, 1);
+  font-family: 'Jura', sans-serif;
+}
+.inputCommandLine:focus {
+  outline:0;
+}
+.inputTab {
+  -moz-user-select: none;
+  -khtml-user-select: none;
+  -webkit-user-select: none;
+  user-select: none;
+  width: 15%;
+  height: 22px;
+  font-size: 8px;
+  float: left;
+  line-height: 22px;
+  vertical-align: middle;
+  text-align: center;
+  color: #777;
+  background: rgba(22, 22, 22, 1);
+  font-family: 'Press Start 2P', cursive;
+}
