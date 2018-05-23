@@ -14,9 +14,9 @@ const { mainTimeCircle } = require('./aska_script/mainTimeCircle');
 const exp = express();
 exp.use(express.static(`${__dirname}/public`));
 //
-const key = fs.readFileSync('./private.key');
-const cert = fs.readFileSync('./primary.crt');
-const ca = fs.readFileSync('./intermediate.crt');
+const key = fs.readFileSync('./privkey.pem');
+const cert = fs.readFileSync('./cert.pem');
+const ca = fs.readFileSync('./fullchain.pem');
 const options = {
   key,
   cert,
