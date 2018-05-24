@@ -1,7 +1,6 @@
 const fs = require('fs');
 const brain = require('brain.js');
 const socket = require('../webSocketOnMessage');
-const { trainMain } = require('./trainMainNN');
 const { getOptions } = require('./optionalNN');
 const { getParameters } = require('./parameterNN');
 // Нужно сделать автоматический require
@@ -22,11 +21,7 @@ const commands = {
 const net = new brain.NeuralNetwork();
 
 function load() {
-  try {
-    net.fromJSON(JSON.parse(fs.readFileSync('./data/NN_train_buffer.json')));
-  } catch(err) {
-    trainMain();
-  };
+  net.fromJSON(JSON.parse(fs.readFileSync('./data/NN_train_buffer.json')));
 }
 module.exports.load = load;
 // ////////////////////////////////////////////////////////////////////////////
