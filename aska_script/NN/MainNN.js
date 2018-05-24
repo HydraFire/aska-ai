@@ -21,7 +21,11 @@ const commands = {
 const net = new brain.NeuralNetwork();
 
 function load() {
-  net.fromJSON(JSON.parse(fs.readFileSync('./data/NN_train_buffer.json')));
+  try {
+    net.fromJSON(JSON.parse(fs.readFileSync('./data/NN_train_buffer.json')));
+  } catch(err) {
+    trainMain();
+  };
 }
 module.exports.load = load;
 // ////////////////////////////////////////////////////////////////////////////
