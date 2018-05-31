@@ -4,7 +4,7 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    "watch": "nodemon ./server.js --ignore public/ --ignore src/ --ignore data/",
+    "watch": "nodemon ./server.js --ignore public/ --ignore src/ --ignore mobile/ --ignore data/",
     "start": "concurrently \"npm run watch\" \"npm run build\" --names \"💻,📦\" --prefix name",
     "assets": "webpack -w --display-max-modules 0",
     "dev": "webpack-dev-server  --inline --hot --progress --colors --historyApiFallback",
