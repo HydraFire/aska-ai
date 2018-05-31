@@ -1,13 +1,22 @@
 const webpack = require('webpack');
 
 require('dotenv').load();
-console.log(process.env.HOSTNAME)
+
+console.log(process.env.DEVICE);
+console.log(process.env.HOSTNAME);
+
+let entry = './src/index.js';
+let filename = 'bundle.js';
+if (process.env.DEVICE === 'Mobile') {
+  entry = './mobile/index.js';
+  filename = 'mobile-bundle.js';
+}
 
 module.exports = {
   devtool: 'source-map',
-  entry: './src/index.js',
+  entry,
   output: {
-    filename: 'bundle.js',
+    filename,
     path: `${__dirname}/public/`
   },
   module: {
@@ -26,7 +35,7 @@ module.exports = {
       }
     ]
   },
-  
+
   plugins: [
     // uglify js
     new webpack.optimize.UglifyJsPlugin({
@@ -39,7 +48,7 @@ module.exports = {
       'process.env.HOSTNAME': JSON.stringify(process.env.HOSTNAME)
     })
   ],
-  
+
   devServer: {
     contentBase: `${__dirname}/public`,
     compress: true,
