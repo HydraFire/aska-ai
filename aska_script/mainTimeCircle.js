@@ -85,7 +85,7 @@ const checkQuests = function checkQuests(ws) {
     .map(v => Object.assign(v, { startWith: 'LifeCircle' }));
   // сливаем всё в один масив
   finalArray = finalArray.concat(arrEndQuests, arrQuests, arrLifeCircle);
-  console.log(finalArray);
+  // console.log(finalArray);
   // интервал который всё это дело будет по очереди запускать
   shortInterval(ws, finalArray);
 };

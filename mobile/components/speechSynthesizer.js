@@ -25,7 +25,7 @@ function aska(text) {
         // iconsole.logC('audioTag.play()');
         audioTag.play();
         socket.send('speech_start','AUDIO');
-        startStopRec();
+        // startStopRec();
         //socket.send('SPEECH');
         // console.log('SPEECH');
         /*
@@ -51,7 +51,7 @@ function aska(text) {
         audioTag.addEventListener('pause',()=>{
           console.log('SHUT_UP')
           socket.send('speech_end','AUDIO');
-          startStopRec();
+          // startStopRec();
         },{once:true})
       }
       return text

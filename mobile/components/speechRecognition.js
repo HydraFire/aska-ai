@@ -1,4 +1,4 @@
-import iconsole from './interface/iconsole';
+// import iconsole from './interface/iconsole';
 import socket from './webSocketClient';
 import DisplayWordsClass from './interface/displayWordsClass';
 // Cтатус розпознавания речи, включено true, выключено false
@@ -11,20 +11,21 @@ recognition.lang = 'ru-RU';
 /* eslint-enable */
 
 function recStart() {
-  iconsole.logC('recognition.start()');
+  // iconsole.logC('recognition.start()');
+  console.log('recognition.start()');
   recognition.start();
   statusRec = true;
   recognition.addEventListener('end', recognition.start);
 }
 function startStopRec() {
-  if (statusRec) {
-    iconsole.logC('recognition.stop()');
-    recognition.removeEventListener('end', recognition.start);
-    recognition.stop();
-    statusRec = false;
-  } else {
-    recStart();
-  }
+  // if (statusRec) {
+  // iconsole.logC('recognition.stop()');
+  //  recognition.removeEventListener('end', recognition.start);
+  recognition.start();
+//    statusRec = false;
+//  } else {
+//    recStart();
+//  }
 }
 module.exports.startStopRec = startStopRec;
 
@@ -61,6 +62,7 @@ function speechRec() {
     waitInterval = true;
     waitForSend = false;
     const text = display.getWordsByNum(0);
+    console.log(text);
     // text = repeatСheck(text);
     display.displayWordsFinal('🎤');
     // Отправляем сокеты.
@@ -74,7 +76,7 @@ function speechRec() {
       const m = setInterval(() => {
         i += 1;
         if (i > 2) {
-          iconsole.logC('sendWordsFinal()');
+          // iconsole.logC('sendWordsFinal()');
           sendWordsFinal();
         }
         if (waitInterval) {
@@ -85,7 +87,7 @@ function speechRec() {
   }
 
   // Запуск Разпознавания.
-  recStart();
+  // recStart();
   display.displayMicrophone();
   // Результаты разпознавания.
   recognition.addEventListener('result', (e) => {
