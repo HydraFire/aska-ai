@@ -3,15 +3,15 @@ const { trainMain } = require('./trainMainNN');
 const MainNN = require('./MainNN');
 const { train } = require('./optionalNN');
 
-const filepath = './aska_script/NN/difference.json';
+const filepath = './data/difference.json';
 
 function createDiff() {
   const obj = {};
-  const list = fs.readdirSync('./aska_script/commands');
+  const list = fs.readdirSync('./data/commands');
   list.forEach((v) => {
     obj[v] = {
-      description: fs.readFileSync(`./aska_script/commands/${v}/description.json`).length,
-      option: fs.readFileSync(`./aska_script/commands/${v}/option.json`).length
+      description: fs.readFileSync(`./data/commands/${v}/description.json`).length,
+      option: fs.readFileSync(`./data/commands/${v}/option.json`).length
     };
   });
   return obj;

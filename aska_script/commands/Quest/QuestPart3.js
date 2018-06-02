@@ -4,7 +4,7 @@ const asyncAsk = require('../../asyncAsk');
 const { saveExcuse, saveTimeStart, saveVictory } = require('./QuestInstrument');
 // ///////////////////////////////////////////
 // //////////////////////////////////////////
-const fileOption = './aska_script/commands/Quest/option.json';
+const fileOption = './data/commands/Quest/option.json';
 const AskaSC = JSON.parse(fs.readFileSync(fileOption));
 // /////////////////////////////////////////////////////////////////////////////
 const askPart5 = function askPart5(ws, obj) {

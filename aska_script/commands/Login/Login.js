@@ -5,8 +5,8 @@ const asyncAsk = require('../../asyncAsk');
 const { checkAssignments } = require('../../mainTimeCircle');
 // ///////////////////////////////
 // ///////////////////////////////
-const fileDescription = './aska_script/commands/Login/description.json';
-const fileOption = './aska_script/commands/Login/option.json';
+const fileDescription = './data/commands/Login/description.json';
+const fileOption = './data/commands/Login/option.json';
 const AskaSC = JSON.parse(fs.readFileSync(fileOption));
 // ////////////////////////////////////////////////////////////////////////////
 function createToken() {

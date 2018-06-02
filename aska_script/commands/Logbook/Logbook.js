@@ -4,7 +4,7 @@ const asyncAsk = require('../../asyncAsk');
 // ///////////////////////////////
 // ///////////////////////////////
 const filepath = './data/LogBook.json';
-const fileOption = './aska_script/commands/Logbook/option.json';
+const fileOption = './data/commands/Logbook/option.json';
 const AskaSC = JSON.parse(fs.readFileSync(fileOption));
 // //////////////////////////////////////////////////////////////////////////////
 function readFile(p) {

@@ -5,7 +5,7 @@ const { searchDate, searchTime } = require('../../textToTime');
 const { saveResult } = require('./QuestInstrument');
 // ///////////////////////////////
 // ///////////////////////////////
-const fileOption = './aska_script/commands/Quest/option.json';
+const fileOption = './data/commands/Quest/option.json';
 const AskaSC = JSON.parse(fs.readFileSync(fileOption));
 // /////////////////////////////////////////////////////////////////////////////
 function note(ws, day, time) {

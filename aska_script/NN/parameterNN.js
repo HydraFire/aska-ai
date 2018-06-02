@@ -1,7 +1,7 @@
 const fs = require('fs');
 
 function getParameters(data, select) {
-  const obj = JSON.parse(fs.readFileSync(`./aska_script/commands/${select}/option.json`));
+  const obj = JSON.parse(fs.readFileSync(`./data/commands/${select}/option.json`));
   const parameters = data.split(' ').filter((v) => {
     return !obj.ignor.some((t, i) => {
       if (t === 'number') {

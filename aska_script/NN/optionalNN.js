@@ -4,7 +4,7 @@ const socket = require('../webSocketOnMessage');
 const { calcLayers } = require('./trainMainNN');
 
 function buildData(select) {
-  const list = JSON.parse(fs.readFileSync(`./aska_script/commands/${select}/option.json`)).nn;
+  const list = JSON.parse(fs.readFileSync(`./data/commands/${select}/option.json`)).nn;
   const arr = list.reduce((prev, next, index) => {
     return prev.concat(next.map((w) => {
       return {
@@ -31,14 +31,14 @@ function train(select) {
     learningRate: 0.3
   });
   const jsonTrain = net.toJSON();
-  fs.writeFileSync(`./aska_script/commands/${select}/nn`, JSON.stringify(jsonTrain), 'utf8');
+  fs.writeFileSync(`./data/commands/${select}/nn`, JSON.stringify(jsonTrain), 'utf8');
 }
 module.exports.train = train;
 
 function getOptions(ws, text, select) {
   const net = new brain.NeuralNetwork();
   // превращаем наш текст в формат для нейронки
-  net.fromJSON(JSON.parse(fs.readFileSync(`./aska_script/commands/${select}/nn`)));
+  net.fromJSON(JSON.parse(fs.readFileSync(`./data/commands/${select}/nn`)));
   const textObjLike = text.split(' ')
     .reduce((a, b, i) => Object.assign(a, { [b]: (99 - i) / 100 }), {});
   const output = net.run(textObjLike);

@@ -10,9 +10,9 @@ module.exports.calcLayers = calcLayers;
 // ////////////////////////////////////////////////////////////////////////////
 function buildData() {
   const obj = {};
-  const list = fs.readdirSync('./aska_script/commands');
+  const list = fs.readdirSync('./data/commands');
   list.forEach((v) => {
-    obj[v] = JSON.parse(fs.readFileSync(`./aska_script/commands/${v}/description.json`));
+    obj[v] = JSON.parse(fs.readFileSync(`./data/commands/${v}/description.json`));
   });
   const arr = Object.keys(obj).reduce((prev, next) => {
     return prev.concat(obj[next].map((w) => {
