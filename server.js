@@ -25,9 +25,9 @@ const options = {
 //
 //
 // http Server
-http.createServer(exp).listen(process.env.PORT);
+const server = http.createServer(exp).listen(process.env.PORT);
 // https server
-const server = https.createServer(options, exp).listen(process.env.PORTS);
+const server2 = https.createServer(options, exp).listen(process.env.PORTS);
 // WebSocketServer
 const wss = new WebSocketServer({ server });
 webSocketOnConnect(wss);
