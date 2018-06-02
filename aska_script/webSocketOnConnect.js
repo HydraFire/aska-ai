@@ -6,6 +6,7 @@ function webSocketOnConnect(wss) {
     let userIp = ws._socket.remoteAddress;
     userIp = userIp.substring(7, userIp.length);
     send(ws, 'console', userIp);
+    console.log('TEST');
     // NNListen переключает режим когда сказаное поступает в нейроную сеть
     // для выбора команды и режимом когда интервалы запушеные предыдушей
     // фразой ожидают новых разговорных даных от клиента для продолжения

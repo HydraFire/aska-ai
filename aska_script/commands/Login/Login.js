@@ -30,6 +30,7 @@ function verifToken(ws, token) {
       }
     });
   } else {
+    console.log(asyncAsk.whatToSay(AskaSC, 'a0'));
     socket.send(ws, 'aska', asyncAsk.whatToSay(AskaSC, 'a0'));
   }
 }
