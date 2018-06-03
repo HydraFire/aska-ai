@@ -30,7 +30,9 @@ const server = http.createServer(exp).listen(process.env.PORT);
 const server2 = https.createServer(options, exp).listen(process.env.PORTS);
 // WebSocketServer
 const wss = new WebSocketServer({ server });
+const wsx = new WebSocketServer({ server: server2 });
 webSocketOnConnect(wss);
+webSocketOnConnect(wsx);
 // Тренеруэм нейроную сеть если обновились команды
 SmartTrain();
 // Главный цикл обслуживает все задания и напоминания
