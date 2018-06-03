@@ -3,8 +3,6 @@ import pushNotification from './pushNotification';
 import aska from './speechSynthesizer';
 
 let socket = null;
-// const serverAddress = "wss://nerv.pro/z-index.html";
-const serverAddress = process.env.HOSTNAME;
 
 // Функция которая используеться для отправки на сервер
 function send(data, type) {
@@ -24,8 +22,12 @@ function send(data, type) {
 }
 // Чтобы веб сокеты запускалить после прогрузки страници и графики на ней
 function start() {
-  socket = new WebSocket(serverAddress);
-
+  try {
+    socket = new WebSocket(process.env.HOSTNAME);
+  } catch (err) {
+    console.log(`connect to ${process.env.ALTHOSTNAME}`);
+    socket = new WebSocket(process.env.ALTHOSTNAME);
+  }
   socket.onopen = function onopen() {
     iconsole.logC('SOCKET CONNECT');
     localStorage.test_token ? send(localStorage.test_token, 'TOKEN') : send('*', 'TOKEN');
