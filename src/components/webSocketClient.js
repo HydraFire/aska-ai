@@ -22,12 +22,8 @@ function send(data, type) {
 }
 // Чтобы веб сокеты запускалить после прогрузки страници и графики на ней
 function start() {
-  try {
-    socket = new WebSocket(process.env.HOSTNAME);
-  } catch (err) {
-    console.log(`connect to ${process.env.ALTHOSTNAME}`);
-    socket = new WebSocket(process.env.ALTHOSTNAME);
-  }
+  socket = new WebSocket(process.env.ALTHOSTNAME);
+
   socket.onopen = function onopen() {
     iconsole.logC('SOCKET CONNECT');
     localStorage.test_token ? send(localStorage.test_token, 'TOKEN') : send('*', 'TOKEN');
