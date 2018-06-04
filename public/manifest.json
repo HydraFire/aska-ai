@@ -1,0 +1,14 @@
+{
+  "short_name": "ASKA",
+  "name": "Aska v2.1",
+  "icons": [
+    {
+      "src": "aska.webp",
+      "sizes": "180x180",
+      "type": "image/webp"
+    }
+  ],
+  "start_url": "localhost:8080/mobile.html",
+  "display": "fullscreen",
+  "orientation": "landscape"
+}
