@@ -15,14 +15,6 @@ html, body {
   margin: 0px 0px 0px 0px;
   min-height: 100%;
 }
-/* --- ***************************************** --- */
-/* --- full screen in mobile (minimize address bar) --- */
-/* --- ***************************************** --- */
-.page {
-    height: auto !important;
-    width: auto !important;
-}
-
 
 #main_container{
   text-align: center;
