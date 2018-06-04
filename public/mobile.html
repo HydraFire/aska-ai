@@ -5,8 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Catch of the Day</title>
 </head>
-<body class="body">
-  <div id="suport"></div>
+<body>
+  <div class="page">
   <div id="main_container">
     <div id="projectName">ASKA</div>
     <div class="words"></div>
@@ -16,9 +16,16 @@
       <div class="inputTab">Press Enter ⏎</div>
     </div>
   </div>
-
+  </div>
   <audio src="" id="audio" />
   <audio src="" id="audio2" />
+  <button id="goFS">Go fullscreen</button>
+<script>
+    var goFS = document.getElementById("goFS");
+    goFS.addEventListener("click", function() {
+      document.body.requestFullscreen();
+    }, false);
+</script>
 </body>
 <script type="text/javascript" src="mobile-bundle.js"></script>
 </html>
