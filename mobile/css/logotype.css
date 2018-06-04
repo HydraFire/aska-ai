@@ -1,8 +1,4 @@
 /* Контейнер поверх Канваса с шейдером */
-body {
-  padding: 0px 0px 0px 0px;
-  margin: 0px 0px 0px 0px;
-}
 #suport{
   width: 100%;
   height: 100px;
@@ -10,12 +6,18 @@ body {
   position: relative;
   padding: 0px 0px 0px 0px;
 }
+html, body {
+  overflow-y: auto;
+  padding: 0px 0px 0px 0px;
+  margin: 0px 0px 0px 0px;
+  min-height: 100%;
+}
 #main_container{
   text-align: center;
   margin: 0px 0px 0px 0px;
   z-index: 5;
   width: 100%;
-  height: 1540px;
+  min-height: 100%;
   position: absolute;
   background: #4af;
 }
