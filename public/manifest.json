@@ -10,5 +10,5 @@
   ],
   "start_url": "localhost:8080/mobile.html",
   "display": "fullscreen",
-  "orientation": "landscape"
+  "orientation": "portrait"
 }
