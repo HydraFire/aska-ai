@@ -4,7 +4,7 @@ import './css/inputCommandLine.css';
 import socket from './components/webSocketClient';
 import DisplayWordsClass from './components/interface/displayWordsClass';
 import { speechRec, startStopRec } from './components/speechRecognition';
-
+import Kaleidoscope from './Kaleidoscope';
 
 socket.start();
 speechRec();
@@ -26,3 +26,5 @@ commandLine.onkeydown = function onkeydown(e) {
     }
   }
 };
+
+Kaleidoscope();
