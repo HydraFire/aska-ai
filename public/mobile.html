@@ -9,6 +9,7 @@
   <div class="page">
   <div id="main_container">
     <div id="projectName">ASKA</div>
+    <button id="goFS">Go fullscreen</button>
     <div class="words"></div>
     <div class="inputConteiner">
       <div class="inputTab">CommandLine :</div>
@@ -19,11 +20,11 @@
   </div>
   <audio src="" id="audio" />
   <audio src="" id="audio2" />
-  <button id="goFS">Go fullscreen</button>
+
 <script>
     var goFS = document.getElementById("goFS");
     goFS.addEventListener("click", function() {
-      document.body.requestFullscreen();
+      document.body.webkitRequestFullScreen() ;
     }, false);
 </script>
 </body>
