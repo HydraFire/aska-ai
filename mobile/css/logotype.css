@@ -18,13 +18,18 @@ html, body {
 /* --- ***************************************** --- */
 /* --- full screen in mobile (minimize address bar) --- */
 /* --- ***************************************** --- */
+.page {
+    height: auto !important;
+    width: auto !important;
+}
+
 
 #main_container{
   text-align: center;
   margin: 0px 0px 0px 0px;
   z-index: 5;
-  height: auto !important;
-  width: auto !important;
+  width: 100%;
+  min-height: 100%;
   position: absolute;
   background: #4af;
 }
