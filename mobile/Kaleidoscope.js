@@ -25,7 +25,7 @@ function Kaleidoscope() {
 
 
   const offsetScale = 1;
-  const zoom = 1;
+  const zoom = 0.75;
 
   let radius = canvas.width / 2;
   const slice = 32;
@@ -109,10 +109,10 @@ function Kaleidoscope() {
     }
     ctx.globalCompositeOperation = 'soft-light';
     // ctx.globalCompositeOperation = 'exclusion';
-    ctx.font = '120px serif';
+    ctx.font = '60px serif';
     ctx.fillStyle = 'white';
     ctx.textAlign = 'center';
-    ctx.fillText('ASKA', canvas.width / 2, 160);
+    ctx.fillText('ASKA', canvas.width / 2, 100);
   };
 
   let imagesArray = new Array(50);
@@ -164,11 +164,11 @@ function Kaleidoscope() {
     if (e) {
       canvas.width = 360;
       canvas.height = 720;
-      radius = 390;
+      radius = 400;
     } else {
       canvas.width = 360;
       canvas.height = 720;
-      radius = 390;
+      radius = 400;
     }
   }
   resize();
