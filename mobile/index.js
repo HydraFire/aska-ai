@@ -11,7 +11,7 @@ import Kaleidoscope from './Kaleidoscope';
 socket.start();
 speechRec();
 
-const askaButton = document.querySelector('#draw');
+const askaButton = document.querySelector('#main_div');
 askaButton.addEventListener('click', startStopRec);
 
 
@@ -30,7 +30,7 @@ commandLine.onkeydown = function onkeydown(e) {
 
 const snapConfig = {
   scrollSnapDestination: '100% 0%',
-  scrollTimeout: 10,
+  scrollTimeout: 300,
   scrollTime: 500
 };
 
