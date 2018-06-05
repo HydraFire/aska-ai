@@ -2,13 +2,15 @@
 html, body {
   padding: 0px 0px 0px 0px;
   margin: 0px 0px 0px 0px;
+  height:100%;
+  width: 100%;
+  -webkit-box-sizing: border-box;
 }
-
 #main_container{
+  height: 100%;
+  overflow: hidden;
   margin: 0px 0px 0px 0px;
   z-index: 5;
-  width: 100%;
-  min-height: 720px;
   position: absolute;
   white-space: nowrap;
   font-size: 0px;

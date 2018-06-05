@@ -162,13 +162,13 @@ function Kaleidoscope() {
 
   function resize(e) {
     if (e) {
-      canvas.width = e.currentTarget.innerWidth;
-      canvas.height = e.currentTarget.innerHeight;
-      radius = (canvas.height / 2) + 50;
+      canvas.width = 360;
+      canvas.height = 720;
+      radius = 390;
     } else {
       canvas.width = 360;
       canvas.height = 720;
-      radius = (canvas.height / 2) + 50;
+      radius = 390;
     }
   }
   resize();
