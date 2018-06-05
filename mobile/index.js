@@ -8,11 +8,11 @@ import Kaleidoscope from './Kaleidoscope';
 
 socket.start();
 speechRec();
-
+/*
 const askaButton = document.querySelector('#projectName');
 console.log(askaButton);
 askaButton.addEventListener('click', startStopRec);
-
+*/
 
 const display = new DisplayWordsClass();
 const commandLine = document.querySelector('.inputCommandLine');

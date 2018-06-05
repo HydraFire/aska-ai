@@ -11,6 +11,13 @@ html, body {
   width: 100%;
   min-height: 696px;
   position: absolute;
+  white-space: nowrap;
+}
+.screens {
+  width: 720px;
+  height: 1200px;
+  display: inline-block;
+  vertical-align: middle;
 }
 #projectName{
   -moz-user-select: none;
@@ -45,4 +52,20 @@ p {
 #draw {
   z-index: -5;
   position: absolute;
+}
+#cube0 {
+  width: 900px;
+  height: 900px;
+  background: #5a7;
+}
+#cube1 {
+  width: 300px;
+  height: 300px;
+  background: #3f2;
+}
+#cube2 {
+  width: 100px;
+  height: 100px;
+  background: #a4f;
+
 }
