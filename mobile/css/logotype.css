@@ -5,17 +5,17 @@ html, body {
 }
 
 #main_container{
-  text-align: center;
   margin: 0px 0px 0px 0px;
   z-index: 5;
   width: 100%;
-  min-height: 696px;
+  min-height: 720px;
   position: absolute;
   white-space: nowrap;
+  font-size: 0px;
 }
 .screens {
-  width: 720px;
-  height: 1200px;
+  width: 360px;
+  height: 720px;
   display: inline-block;
   vertical-align: middle;
 }
@@ -31,6 +31,7 @@ html, body {
 }
 /* Отображение разпознаных слов */
 .words {
+  text-align: center;
   min-height:500px;
   font-family: 'Exo 2', sans-serif;
   width:100%;
@@ -54,18 +55,17 @@ p {
   position: absolute;
 }
 #cube0 {
-  width: 900px;
-  height: 900px;
+  width: 360px;
+  height: 720px;
   background: #5a7;
 }
 #cube1 {
-  width: 300px;
-  height: 300px;
+  width: 360px;
+  height: 720px;
   background: #3f2;
 }
 #cube2 {
-  width: 100px;
-  height: 100px;
+  width: 360px;
+  height: 720px;
   background: #a4f;
-
 }

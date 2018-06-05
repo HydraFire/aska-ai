@@ -166,8 +166,8 @@ function Kaleidoscope() {
       canvas.height = e.currentTarget.innerHeight;
       radius = (canvas.height / 2) + 50;
     } else {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
+      canvas.width = 360;
+      canvas.height = 720;
       radius = (canvas.height / 2) + 50;
     }
   }
