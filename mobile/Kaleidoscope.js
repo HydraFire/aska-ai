@@ -1,4 +1,5 @@
 import analyserGetReady from './components/audioAnalyser';
+import { getMessageArr } from './components/interface/displayCanvasMessage';
 
 function Kaleidoscope() {
   const analyser = analyserGetReady();
@@ -40,8 +41,7 @@ function Kaleidoscope() {
   setInterval(() => {
     times += 1;
     f = analyser.frequencies();
-    // fBass = ((f[10] + f[23] + f[36] + f[49] + f[51] + f[64] + f[77] + f[80]) / (80 * 16) / volumeCoo);
-    // fLow = ((f[200] + f[210] + f[220] + f[230] + f[240] + f[250] + f[260] + f[270]) / (80 * 4) / volumeCoo);
+
     let ll = 0;
     for (let i = 25; i < 225; i += 1) {
       let zo = 0;
@@ -77,15 +77,16 @@ function Kaleidoscope() {
     offsetX -= fLow;
     offsetY -= fBass;
 
-
+    /*
     if (((fBass / 2) + fLow + fHigh) > ((volumeCoo * 2) + 4) && times > 650) {
       times = 0;
       reImage()
     }
+    */
   }, 20);
 
   const draw = function draw(img) {
-    ctx.clearRect(0,0,canvas.width,canvas.height);
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
     ctx.globalCompositeOperation = 'normal';
     ctx.fillStyle = ctx.createPattern(img, 'repeat');
     for (let i = 0; i <= slice; i += 1) {
@@ -107,14 +108,33 @@ function Kaleidoscope() {
       ctx.fill();
       ctx.restore();
     }
-    ctx.globalCompositeOperation = 'soft-light';
-    // ctx.globalCompositeOperation = 'exclusion';
+    // ctx.globalCompositeOperation = 'soft-light';
+    ctx.globalCompositeOperation = 'exclusion';
     ctx.font = '60px serif';
     ctx.fillStyle = 'white';
     ctx.textAlign = 'center';
-    ctx.fillText('ASKA', canvas.width / 2, 100);
-  };
+    ctx.fillText('ASKA', canvas.width / 2, 80);
 
+    ctx.font = '15px sans-serif';
+    getMessageArr().forEach((v, i) => {
+      if (i < 38) {
+        let x = 0;
+        if (v.left) {
+          ctx.textAlign = 'right';
+          x = 350;
+        } else {
+          ctx.textAlign = 'left';
+          x = 10;
+        }
+        ctx.fillText(v.text, x, 690 - (i * 15));
+      }
+    });
+  };
+  // //////////////////////////////////////////////////////////////////////////
+
+  // //////////////////////////////////////////////////////////////////////////
+
+  // //////////////////////////////////////////////////////////////////////////
   let imagesArray = new Array(50);
   imagesArray.fill('lol');
   imagesArray = imagesArray.map((v, i) => `image/${i}.jpg`);

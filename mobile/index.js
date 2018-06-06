@@ -6,6 +6,7 @@ import './css/inputCommandLine.css';
 import socket from './components/webSocketClient';
 import DisplayWordsClass from './components/interface/displayWordsClass';
 import { speechRec, startStopRec } from './components/speechRecognition';
+import { newMessage } from './components/interface/displayCanvasMessage';
 import Kaleidoscope from './Kaleidoscope';
 
 socket.start();
@@ -20,8 +21,7 @@ const commandLine = document.querySelector('.inputCommandLine');
 commandLine.onkeydown = function onkeydown(e) {
   if (e.keyCode === 13) {
     if (this.value !== '') {
-      display.displayWords(this.value);
-      display.displayWordsFinal('🎤');
+      newMessage(this.value, true);
       socket.send(this.value);
       this.value = '';
     }

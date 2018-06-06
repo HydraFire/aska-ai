@@ -1,11 +1,12 @@
 import socket from './webSocketClient';
+import { newMessage } from './interface/displayCanvasMessage';
 // import { startStopRec } from './speechRecognition';
 /* eslint-disable */
 function aska(text) {
   const audio = document.getElementById('audio');
   const audio2 = document.getElementById('audio2');
-  // iconsole.logC(text);
-  console.log(text);
+  newMessage(text, false);
+
 
   function choseAudioTag(text, audioTag, num) {
     function playAudio(text) {
