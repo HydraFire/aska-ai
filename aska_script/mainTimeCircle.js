@@ -33,7 +33,7 @@ function switchFunc(ws, v) {
   if (v) {
     switch (v.startWith) {
       case 'QuestPart3':
-        QuestPart3(ws, v);
+        // QuestPart3(ws, v);
         break;
       case 'QuestPart2':
         QuestPart2(ws, v);
