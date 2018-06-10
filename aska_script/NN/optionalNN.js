@@ -31,6 +31,7 @@ function train(select) {
     learningRate: 0.3
   });
   const jsonTrain = net.toJSON();
+  console.log('train ...Done');
   fs.writeFileSync(`./data/commands/${select}/nn`, JSON.stringify(jsonTrain), 'utf8');
 }
 module.exports.train = train;

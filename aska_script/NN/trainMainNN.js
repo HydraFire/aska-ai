@@ -44,6 +44,7 @@ function trainMain() {
   });
   // Протренированую сеть сохраняем в файл
   const jsonTrain = net.toJSON();
+  console.log('train ...Done');
   fs.writeFileSync('./data/NN_train_buffer.json', JSON.stringify(jsonTrain), 'utf8');
 }
 module.exports.trainMain = trainMain;
