@@ -39,7 +39,7 @@ function trainMain() {
     errorThresh: 0.005,
     iterations: 5000,
     log: true,
-    logPeriod: 500,
+    logPeriod: 50,
     learningRate: 0.3
   });
   // Протренированую сеть сохраняем в файл

@@ -27,7 +27,7 @@ function train(select) {
     errorThresh: 0.005,
     iterations: 6000,
     log: true,
-    logPeriod: 1000,
+    logPeriod: 50,
     learningRate: 0.3
   });
   const jsonTrain = net.toJSON();
