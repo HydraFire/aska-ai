@@ -1,11 +1,11 @@
 import iconsole from './interface/iconsole';
 import socket from './webSocketClient';
-import { startStopRec } from './speechRecognition';
+import { startStopRec, recStop } from './speechRecognition';
 /* eslint-disable */
 function aska(text) {
   const audio = document.getElementById('audio');
   const audio2 = document.getElementById('audio2');
-  iconsole.logC(text);
+  // iconsole.logC(text);
 
   function choseAudioTag(text, audioTag, num) {
     function playAudio(text) {
@@ -25,15 +25,7 @@ function aska(text) {
         iconsole.logC('audioTag.play()');
         audioTag.play();
         socket.send('speech_start','AUDIO');
-        startStopRec();
-        //socket.send('SPEECH');
-        // console.log('SPEECH');
-        /*
-        if(num==2){
-          let v = parseFloat(localStorage.audioVolume)+0.2
-          audioTag.volume = v.toFixed(2)
-        }
-        */
+        recStop();
       }
     };
     function splitOnParts(text){
@@ -46,6 +38,7 @@ function aska(text) {
     function splitAndPlay(text){
       let playText = '';
       [playText,text] = splitOnParts(text);
+      console.log([playText,text]);
       playAudio(playText);
       if(text.length == 0){
         audioTag.addEventListener('pause',()=>{

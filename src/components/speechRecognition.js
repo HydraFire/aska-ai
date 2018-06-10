@@ -16,6 +16,13 @@ function recStart() {
   statusRec = true;
   recognition.addEventListener('end', recognition.start);
 }
+function recStop() {
+  iconsole.logC('recognition.stop()');
+  recognition.removeEventListener('end', recognition.start);
+  statusRec = false;
+  recognition.stop();
+}
+module.exports.recStop = recStop;
 function startStopRec() {
   if (statusRec) {
     iconsole.logC('recognition.stop()');

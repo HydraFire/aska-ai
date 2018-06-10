@@ -24,18 +24,16 @@ function music() {
   const m = document.getElementById('imgMusik');
   const m2 = document.getElementById('imgMusik2');
   const m3 = document.getElementById('imgMusik3');
-  const m4 = document.getElementById('imgMusik4');
   m.addEventListener('click', () => play(''));
   m2.addEventListener('click', () => play('2'));
   m3.addEventListener('click', () => play('3'));
-  m4.addEventListener('click', () => read('4'));
 }
 // Main Page HTML
 class App extends React.Component {
   componentDidMount() {
     iconsole.start();
     graphicsStart();
-    socket.start(process.env.ALTHOSTNAME);
+    socket.start();
     speechRec();
     music();
   }

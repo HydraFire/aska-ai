@@ -45,8 +45,7 @@ module.exports = {
     }),
     // env plugin
     new webpack.DefinePlugin({
-      'process.env.HOSTNAME': JSON.stringify(process.env.HOSTNAME),
-      'process.env.ALTHOSTNAME': JSON.stringify(process.env.ALTHOSTNAME),
+      'process.env.HOSTNAME': JSON.stringify(process.env.HOSTNAME)
     })
   ],
 
