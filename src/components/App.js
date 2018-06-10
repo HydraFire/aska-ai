@@ -33,7 +33,7 @@ class App extends React.Component {
   componentDidMount() {
     iconsole.start();
     graphicsStart();
-    socket.start();
+    socket.start('wss://localhost');
     speechRec();
     music();
   }
