@@ -27,6 +27,7 @@ function differenceBetweenArray(a, b) {
 }
 
 function SmartTrain() {
+  console.log('SmartTrain');
   // Берем наш сохраненый файл с даными о размере файлов настройки нейронок
   // как основной так и меленьких нейронок
   const differenceFile = JSON.parse(fs.readFileSync(filepath));
@@ -34,13 +35,16 @@ function SmartTrain() {
   const difference = createDiff();
   // Сравниваем изменились ли настройки для оснойной нейронки
   if (differenceBetweenMain(differenceFile, difference)) {
+    console.log('new difference');
     trainMain();
     saveDiffFile(difference);
   }
   // Прогружаем нейронку с файла
   MainNN.load();
+  console.log('done ...');
   // Сравниваем изменились ли настройки у каждой маленькой нейроночьки
   differenceBetweenArray(differenceFile, difference).forEach((v) => {
+    console.log('new difference Between Array');
     train(v);
     saveDiffFile(difference);
   });
