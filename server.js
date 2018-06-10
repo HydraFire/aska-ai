@@ -36,8 +36,8 @@ webSocketOnConnect(wsx);
 // Тренеруэм нейроную сеть если обновились команды
 SmartTrain();
 // Главный цикл обслуживает все задания и напоминания
-/*
+
 setInterval(() => {
+  console.log('TESt')
   mainTimeCircle();
-}, 60000 * 5);
-*/
+}, 60000 * 1);

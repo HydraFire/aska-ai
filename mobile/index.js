@@ -4,10 +4,10 @@ import './css/logotype.css';
 import './css/inputCommandLine.css';
 
 import socket from './components/webSocketClient';
-import DisplayWordsClass from './components/interface/displayWordsClass';
 import { speechRec, startStopRec } from './components/speechRecognition';
 import { newMessage } from './components/interface/displayCanvasMessage';
 import Kaleidoscope from './Kaleidoscope';
+import pushNotification from './components/pushNotification';
 
 socket.start();
 speechRec();
@@ -15,8 +15,6 @@ speechRec();
 const askaButton = document.querySelector('#main_div');
 askaButton.addEventListener('click', startStopRec);
 
-
-const display = new DisplayWordsClass();
 const commandLine = document.querySelector('.inputCommandLine');
 commandLine.onkeydown = function onkeydown(e) {
   if (e.keyCode === 13) {
@@ -41,5 +39,8 @@ function callback() {
 const element = document.getElementById('container');
 const snapObject = new ScrollSnap(element, snapConfig);
 snapObject.bind(callback);
+
+pushNotification.subscribeBS();
+
 
 Kaleidoscope();

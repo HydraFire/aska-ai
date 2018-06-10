@@ -1,5 +1,5 @@
 // import iconsole from './interface/iconsole';
-// import pushNotification from './pushNotification';
+import pushNotification from './pushNotification';
 import aska from './speechSynthesizer';
 
 let socket = null;
@@ -33,12 +33,13 @@ function start() {
 
   socket.onmessage = function onmessage(event) {
     const message = JSON.parse(event.data);
+    console.log(message);
     switch (message.type) {
       case 'aska':
         aska(message.data);
         break;
       case 'notificationPublicKey':
-        // pushNotification.setVapidPublicKey(message.data);
+        pushNotification.setVapidPublicKey(message.data);
         // iconsole.logS(message.data);
         break;
       case 'token':
