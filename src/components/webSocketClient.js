@@ -1,6 +1,7 @@
 import iconsole from './interface/iconsole';
 import pushNotification from './pushNotification';
 import aska from './speechSynthesizer';
+import clientFunction from './functions/functionStart';
 
 let socket = null;
 
@@ -21,8 +22,9 @@ function send(data, type) {
   }
 }
 // Чтобы веб сокеты запускалить после прогрузки страници и графики на ней
-function start() {
-  socket = new WebSocket(process.env.ALTHOSTNAME);
+
+function start(ip) {
+  socket = new WebSocket(ip);
 
   socket.onopen = function onopen() {
     iconsole.logC('SOCKET CONNECT');
@@ -34,6 +36,9 @@ function start() {
     switch (message.type) {
       case 'aska':
         aska(message.data);
+        break;
+      case 'clientFunction':
+        clientFunction(message.data);
         break;
       case 'notificationPublicKey':
         pushNotification.setVapidPublicKey(message.data);

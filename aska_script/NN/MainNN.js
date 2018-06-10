@@ -9,13 +9,15 @@ const { Quest } = require('../commands/Quest/Quest');
 const { Logbook } = require('../commands/Logbook/Logbook');
 const { Reaction } = require('../commands/Reaction/Reaction');
 const { Login } = require('../commands/Login/Login');
+const { ReadClipboard } = require('../commands/ReadClipboard/ReadClipboard');
 
 const commands = {
   LifeCircles,
   Quest,
   Logbook,
   Reaction,
-  Login
+  Login,
+  ReadClipboard
 };
 // /////////////////////////////////////////////////////////////////////////////
 const net = new brain.NeuralNetwork();

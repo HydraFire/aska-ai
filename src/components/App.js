@@ -28,14 +28,14 @@ function music() {
   m.addEventListener('click', () => play(''));
   m2.addEventListener('click', () => play('2'));
   m3.addEventListener('click', () => play('3'));
-  m4.addEventListener('click', () => play('4'));
+  m4.addEventListener('click', () => read('4'));
 }
 // Main Page HTML
 class App extends React.Component {
   componentDidMount() {
     iconsole.start();
     graphicsStart();
-    socket.start();
+    socket.start(process.env.ALTHOSTNAME);
     speechRec();
     music();
   }

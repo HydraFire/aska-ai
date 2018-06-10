@@ -13,13 +13,22 @@ function hendler() {
     i > 4 ? i = 4 : '';
     i < 0 ? i = 0 : '';
   }
+  function secondConnect(text) {
+    const isconnect = text.substring(0, 7);
+    if (isconnect === 'connect') {
+      const ip = text.substring(7, text.length);
+      socket.start(`wss://${ip}`);
+    } else {
+      socket.send(text);
+    }
+  }
   // EventListener нажатия клавишь
   commandLine.onkeydown = function onkeydown(e) {
     if (e.keyCode === 13) {
       if (this.value !== '') {
         display.displayWords(this.value);
         display.displayWordsFinal('🎤');
-        socket.send(this.value);
+        secondConnect(this.value);
         this.value = '';
         i = 0;
       }
