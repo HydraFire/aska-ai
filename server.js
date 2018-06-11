@@ -6,6 +6,7 @@ const https = require('https');
 const http = require('http');
 const express = require('express');
 const fs = require('fs');
+const mpv = require('mpv-controller');
 // Модули программы
 const { webSocketOnConnect } = require('./aska_script/webSocketOnConnect');
 const { SmartTrain } = require('./aska_script/NN/differenceNN');
@@ -36,8 +37,13 @@ webSocketOnConnect(wsx);
 // Тренеруэм нейроную сеть если обновились команды
 SmartTrain();
 // Главный цикл обслуживает все задания и напоминания
+const player = new mpv(status => {
+    console.log(status);
+});
+player.limitStatusMessages(5);
+player.play("/napominanie.mp3");
 
 setInterval(() => {
   console.log('TESt')
-  mainTimeCircle();
+  // mainTimeCircle();
 }, 60000 * 1);
