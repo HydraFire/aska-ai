@@ -12,7 +12,6 @@ let mpvPlayer = new mpv({
     "binary": null,
     "debug": true,
     "ipcCommand": null,
-    "socket": "/tmp/node-mpv.sock", // UNIX
     "time_update": 100,
     "verbose": false,
 });
