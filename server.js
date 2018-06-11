@@ -40,9 +40,18 @@ SmartTrain();
 // Главный цикл обслуживает все задания и напоминания
 
 mpvPlayer.load("/napominanie.mp3");
-mpvPlayer.play();
+
+
+mpvPlayer.on('statuschange', function(status){
+  console.log(status);
+});
+
+mpvPlayer.on('stopped', function() {
+  console.log("Gimme more music");
+});
 
 setInterval(() => {
   console.log('TESt')
+  //mpvPlayer.play();
   // mainTimeCircle();
-}, 60000 * 1);
+}, 60000 * 0.3);
