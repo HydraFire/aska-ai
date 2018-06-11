@@ -7,7 +7,15 @@ const http = require('http');
 const express = require('express');
 const fs = require('fs');
 let mpv = require('node-mpv');
-let mpvPlayer = new mpv();
+let mpvPlayer = new mpv({
+    "audio_only": false,
+    "binary": null,
+    "debug": false,
+    "ipcCommand": null,
+    "socket": "/tmp/node-mpv.sock", // UNIX
+    "time_update": 1,
+    "verbose": false,
+});
 // Модули программы
 const { webSocketOnConnect } = require('./aska_script/webSocketOnConnect');
 const { SmartTrain } = require('./aska_script/NN/differenceNN');
