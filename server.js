@@ -39,7 +39,7 @@ webSocketOnConnect(wsx);
 SmartTrain();
 // Главный цикл обслуживает все задания и напоминания
 
-mpvPlayer.load("/napominanie.mp3");
+mpvPlayer.load("napominanie.mp3");
 mpvPlayer.volume(70);
 
 mpvPlayer.on('statuschange', function(status){
