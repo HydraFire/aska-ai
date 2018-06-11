@@ -40,7 +40,7 @@ SmartTrain();
 const player = new mpv(status => {
     console.log(status);
 });
-player.limitStatusMessages(5);
+
 player.play("/napominanie.mp3");
 
 setInterval(() => {
