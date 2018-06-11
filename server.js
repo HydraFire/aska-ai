@@ -10,7 +10,7 @@ let mpv = require('node-mpv');
 let mpvPlayer = new mpv({
     "audio_only": false,
     "binary": null,
-    "debug": false,
+    "debug": true,
     "ipcCommand": null,
     "socket": "/tmp/node-mpv.sock", // UNIX
     "time_update": 1,
