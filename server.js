@@ -9,12 +9,8 @@ const fs = require('fs');
 let mpv = require('node-mpv');
 let mpvPlayer = new mpv({
     "audio_only": true,
-    "binary": null,
-    "debug": true,
-    "ipcCommand": null,
+    "debug": false,
     "socket": "socket.sock", // UNIX
-    "time_update": 100,
-    "verbose": false,
 });
 // Модули программы
 const { webSocketOnConnect } = require('./aska_script/webSocketOnConnect');
@@ -47,7 +43,7 @@ webSocketOnConnect(wsx);
 SmartTrain();
 // Главный цикл обслуживает все задания и напоминания
 
-mpvPlayer.load("napominanie.mp3");
+
 mpvPlayer.volume(70);
 
 mpvPlayer.on('statuschange', function(status){
@@ -60,6 +56,6 @@ mpvPlayer.on('stopped', function() {
 
 setInterval(() => {
   console.log('TESt')
-  mpvPlayer.play();
+  mpvPlayer.load("napominanie.mp3");
   // mainTimeCircle();
 }, 60000 * 0.3);
