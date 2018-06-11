@@ -56,6 +56,6 @@ mpvPlayer.on('stopped', function() {
 */
 setInterval(() => {
   console.log('TESt')
-  mpvPlayer.load("napominanie.mp3");
+  //mpvPlayer.load("napominanie.mp3");
   // mainTimeCircle();
 }, 60000 * 0.3);
