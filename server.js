@@ -8,12 +8,12 @@ const express = require('express');
 const fs = require('fs');
 let mpv = require('node-mpv');
 let mpvPlayer = new mpv({
-    "audio_only": false,
+    "audio_only": true,
     "binary": null,
     "debug": true,
     "ipcCommand": null,
     "socket": "/tmp/node-mpv.sock", // UNIX
-    "time_update": 1,
+    "time_update": 100,
     "verbose": false,
 });
 // Модули программы
