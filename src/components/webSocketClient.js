@@ -24,15 +24,10 @@ function send(data, type) {
 // Чтобы веб сокеты запускалить после прогрузки страници и графики на ней
 
 function start(ip) {
-  if (localStorage.aska_ip) {
-    ip = localStorage.aska_ip;
-  }
-
   socket = new WebSocket(ip);
 
   socket.onopen = function onopen() {
     iconsole.logC('SOCKET CONNECT');
-    localStorage.aska_ip = ip;
     localStorage.test_token ? send(localStorage.test_token, 'TOKEN') : send('*', 'TOKEN');
   };
 
