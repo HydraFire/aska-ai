@@ -3,15 +3,9 @@ require('dotenv').load();
 // /////////////////////////////////////////////////////////////////////////////
 const WebSocketServer = require('ws').Server;
 const https = require('https');
-const http = require('http');
+// const http = require('http');
 const express = require('express');
 const fs = require('fs');
-let mpv = require('node-mpv');
-let mpvPlayer = new mpv({
-    "audio_only": true,
-    "debug": false,
-    "socket": "socket.sock", // UNIX
-});
 // Модули программы
 const { webSocketOnConnect } = require('./aska_script/webSocketOnConnect');
 const { SmartTrain } = require('./aska_script/NN/differenceNN');
@@ -20,9 +14,9 @@ const { mainTimeCircle } = require('./aska_script/mainTimeCircle');
 const exp = express();
 exp.use(express.static(`${__dirname}/public`));
 //
-const key = fs.readFileSync('./private.key');
-const cert = fs.readFileSync('./primary.crt');
-const ca = fs.readFileSync('./intermediate.crt');
+const key = fs.readFileSync('./privkey.pem');
+const cert = fs.readFileSync('./cert.pem');
+const ca = fs.readFileSync('./fullchain.pem');
 const options = {
   key,
   cert,
@@ -31,31 +25,15 @@ const options = {
 //
 //
 // http Server
-const server = http.createServer(exp).listen(process.env.PORT);
+// const server = http.createServer(exp).listen(process.env.PORT);
 // https server
-const server2 = https.createServer(options, exp).listen(process.env.PORTS);
+const server = https.createServer(options, exp).listen(process.env.PORT);
 // WebSocketServer
 const wss = new WebSocketServer({ server });
-const wsx = new WebSocketServer({ server: server2 });
 webSocketOnConnect(wss);
-webSocketOnConnect(wsx);
 // Тренеруэм нейроную сеть если обновились команды
 SmartTrain();
 // Главный цикл обслуживает все задания и напоминания
-
-
-mpvPlayer.volume(100);
-/*
-mpvPlayer.on('statuschange', function(status){
-  console.log(status);
-});
-
-mpvPlayer.on('stopped', function() {
-  console.log("Gimme more music");
-});
-*/
 setInterval(() => {
-  console.log('TESt')
-  //mpvPlayer.load("napominanie.mp3");
-  // mainTimeCircle();
-}, 60000 * 0.3);
+  mainTimeCircle();
+}, 60000 * 1);
