@@ -2,7 +2,8 @@
 function calcLast(arr, i) {
   const first = arr[i].incident[arr[i].incident.length - 1];
   const second = arr[i].incident[arr[i].incident.length - 2];
-  const sym = first - second;
+  let sym = ((first - second) / 100) * 80 | 0;
+  console.log(sym);
   return sym;
 }
 module.exports.calcLast = calcLast;
