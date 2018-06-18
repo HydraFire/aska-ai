@@ -13,7 +13,7 @@ const AskaSC = JSON.parse(fs.readFileSync(fileOption));
 // /////////////////////////////////////////////////////////////////////////////
 function LifeCirclesNapominanie(ws, obj) {
   const x = function x() {
-    socket.send(ws, 'aska', `${asyncAsk.whatToSay(AskaSC, 'z0')} ${obj.words[0]}`);
+    socket.send(ws, 'aska', `${asyncAsk.whatToSay(AskaSC, 'z0')}, ${obj.words}`);
   };
   asyncAsk.onlyWait(ws, x, ws);
 }

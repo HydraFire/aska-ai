@@ -82,10 +82,17 @@ const checkQuests = function checkQuests(ws) {
     .map(v => Object.assign(v, { startWith: 'QuestPart2' }));
   // проверка наличия лайф циклов
   arrLifeCircle = arrLifeCircle.filter(v => timeNow >= v.remind)
-    .map(v => Object.assign(v, { startWith: 'LifeCircle' }));
+    .reduce((a, b) => {
+      a.words += `${b.words[0]}, `;
+      return a;
+    }, {
+      startWith: 'LifeCircle',
+      words: ''
+    });
+  //  .map(v => Object.assign(v, { startWith: 'LifeCircle' }));
   // сливаем всё в один масив
   finalArray = finalArray.concat(arrEndQuests, arrQuests, arrLifeCircle);
-  // console.log(finalArray);
+  console.log(finalArray);
   // интервал который всё это дело будет по очереди запускать
   shortInterval(ws, finalArray);
 };
@@ -93,9 +100,11 @@ const checkQuests = function checkQuests(ws) {
 // Функция которая работает при подключении клиента
 // //////////////////////////////////////////////////////////////////////////////
 const checkAssignments = function checkAssignments(ws) {
+  console.log('rfr это')
   // Запускаем проверку актуальных заданий
   checkQuests(ws);
   // и интервал ипроверки
+  /*
   const checkInterval = 5; // min
   const int = setInterval(() => {
     if (ws.NNListen) {
@@ -103,8 +112,8 @@ const checkAssignments = function checkAssignments(ws) {
     }
     ws.closeTimeInterval ? clearInterval(int) : '';
   }, 60000 * checkInterval);
+  */
 };
-// Здесь же будет и проверка лайф циклов
 module.exports.checkAssignments = checkAssignments;
 
 // /////////////////////////////////////////////////////////////////////////////

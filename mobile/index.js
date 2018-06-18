@@ -6,15 +6,16 @@ import './css/inputCommandLine.css';
 import socket from './components/webSocketClient';
 import { speechRec, startStopRec } from './components/speechRecognition';
 import { newMessage } from './components/interface/displayCanvasMessage';
-import Kaleidoscope from './Kaleidoscope';
+import Kaleidoscope from './graphics/Kaleidoscope';
 import pushNotification from './components/pushNotification';
-
+import aska from './components/speechSynthesizer';
+// ////////////////////////////////////////////////////////////////////////////
 socket.start();
 speechRec();
-
+// /////////////////////////////////////////////////////////////////////////////
 const askaButton = document.querySelector('#main_div');
 askaButton.addEventListener('click', startStopRec);
-
+// /////////////////////////////////////////////////////////////////////////////
 const commandLine = document.querySelector('.inputCommandLine');
 commandLine.onkeydown = function onkeydown(e) {
   if (e.keyCode === 13) {
@@ -25,7 +26,7 @@ commandLine.onkeydown = function onkeydown(e) {
     }
   }
 };
-
+// /////////////////////////////////////////////////////////////////////////////
 const snapConfig = {
   scrollSnapDestination: '100% 0%',
   scrollTimeout: 300,
@@ -39,8 +40,14 @@ function callback() {
 const element = document.getElementById('container');
 const snapObject = new ScrollSnap(element, snapConfig);
 snapObject.bind(callback);
-
+// /////////////////////////////////////////////////////////////////////////////
 pushNotification.subscribeBS();
-
-
+// ////////////////////////////////////////////////////////////////////////////
+// Coub();
 Kaleidoscope();
+
+let r = 0;
+setInterval(() => {
+  r += 1;
+  aska('проверка '+r);
+}, 60000 * 3);
