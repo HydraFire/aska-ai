@@ -45,7 +45,7 @@ pushNotification.subscribeBS();
 // ////////////////////////////////////////////////////////////////////////////
 // Coub();
 Kaleidoscope();
-
+/*
 let r = 0;
 const audio = document.getElementById('audio');
 audio.volume = 0.01;
@@ -57,3 +57,4 @@ setInterval(() => {
     aska('проверка '+r+' минут');
   }
 }, 30000);
+*/
