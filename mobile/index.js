@@ -48,7 +48,7 @@ Kaleidoscope();
 
 let r = 0;
 const audio = document.getElementById('audio');
-audio.volume = 0.0;
+audio.volume = 0.1;
 setInterval(() => {
   r += 1;
   aska('проверка '+r+' минут');
