@@ -30,6 +30,7 @@ function readFile() {
 }
 
 function switchFunc(ws, v) {
+  console.log('switchFunc');
   if (v) {
     switch (v.startWith) {
       case 'QuestPart3':
@@ -47,6 +48,7 @@ function switchFunc(ws, v) {
 // //////////////////////////////////////////////////////////////////////////////
 const shortInterval = function shortInterval(ws, arrQuests) {
   // короткий интервал обслуживает запуст нескольких заданий поряд
+  console.log('shortInterval');
   let [first] = arrQuests.splice(0, 1);
   switchFunc(ws, first);
   //
