@@ -48,12 +48,12 @@ Kaleidoscope();
 
 let r = 0;
 const audio = document.getElementById('audio');
-audio.volume = 0.1;
+audio.volume = 0.01;
 setInterval(() => {
   r += 1;
   aska('проверка '+r+' минут');
   if (r > 9) {
-    audio.volume = 0.5;
+    audio.volume = 1;
     aska('проверка '+r+' минут');
   }
 }, 30000);
