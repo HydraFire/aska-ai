@@ -47,10 +47,13 @@ pushNotification.subscribeBS();
 Kaleidoscope();
 
 let r = 0;
+const audio = document.getElementById('audio');
+audio.volume = 0.0;
 setInterval(() => {
   r += 1;
-  newMessage(r+' так', false);
-  if (r > 10) {
+  aska('проверка '+r+' минут');
+  if (r > 9) {
+    audio.volume = 0.5;
     aska('проверка '+r+' минут');
   }
 }, 30000);

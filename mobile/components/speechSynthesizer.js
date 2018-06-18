@@ -24,6 +24,7 @@ function aska(text) {
       audioTag.src = url;
       audioTag.onloadeddata = function onloadeddata() {
         // iconsole.logC('audioTag.play()');
+        console.log(audioTag.volume)
         audioTag.play();
         socket.send('speech_start','AUDIO');
         // startStopRec();
