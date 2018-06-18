@@ -44,10 +44,10 @@ module.exports.countToText = countToText;
 
 function dateToText(value) {
   const mmm = new Date(value);
-  console.log(mmm);
+  console.log('value '+value+'  mmm '+mmm);
   let minutes = mmm.getMinutes();
   let hours = mmm.getUTCHours();
-  let date = mmm.getDate() - 1;
+  let date = mmm.getUTCDate() - 1;
 
   date += '';
   if (date != 0) {
