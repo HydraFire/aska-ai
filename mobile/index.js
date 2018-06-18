@@ -48,6 +48,9 @@ Kaleidoscope();
 
 let r = 0;
 setInterval(() => {
-  r += 5;
-  aska('проверка '+r+' минут');
+  r += 1;
+  newMessage(r+' так', false);
+  if (r > 10) {
+    aska('проверка '+r+' минут');
+  }
 }, 30000);
