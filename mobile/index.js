@@ -8,7 +8,7 @@ import { speechRec, startStopRec } from './components/speechRecognition';
 import { newMessage } from './components/interface/displayCanvasMessage';
 import Kaleidoscope from './graphics/Kaleidoscope';
 import pushNotification from './components/pushNotification';
-import aska from './components/speechSynthesizer';
+
 // ////////////////////////////////////////////////////////////////////////////
 socket.start();
 speechRec();
@@ -45,16 +45,3 @@ pushNotification.subscribeBS();
 // ////////////////////////////////////////////////////////////////////////////
 // Coub();
 Kaleidoscope();
-/*
-let r = 0;
-const audio = document.getElementById('audio');
-audio.volume = 0.01;
-setInterval(() => {
-  r += 1;
-  aska('проверка '+r+' минут');
-  if (r > 9) {
-    audio.volume = 1;
-    aska('проверка '+r+' минут');
-  }
-}, 30000);
-*/

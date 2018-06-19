@@ -51,6 +51,7 @@ function itsHappened(ws, arr, i, value) {
   askForCircle.ok(ws, arr, i, value);
   arr[i].incident.push(Date.parse(new Date()));
   arr = remindCalc(arr, i);
+  askForCircle.clientTimeout(ws, arr, i);
   saveFile(filepath, arr);
 }
 
@@ -61,8 +62,15 @@ function whenDidItHappen(ws, arr, i, value) {
 function doNotRemind(ws) {
 
 }
-function setTime() {
-
+function setTime(ws, arr, i, sayWords) {
+  sayWords = askForCircle.special(ws, arr, i);
+  if (isNaN(parseFloat(sayWords))) {
+    askForCircle.noTimeInt(ws);
+  } else {
+    arr[i].timeOut = parseFloat(sayWords);
+    saveFile(filepath, arr);
+    askForCircle.setTimer(ws, parseFloat(sayWords));
+  }
 }
 
 function cancelTheLastData() {
@@ -102,6 +110,9 @@ function switchOption(ws, arr, i, sayWords, option) {
       break;
     case '3':
       doNotRemind(ws, arr, i, sayWords);
+      break;
+    case '4':
+      setTime(ws, arr, i, sayWords);
       break;
     default:
       console.log('error option');

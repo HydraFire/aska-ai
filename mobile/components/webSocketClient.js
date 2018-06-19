@@ -1,6 +1,7 @@
 // import iconsole from './interface/iconsole';
 import pushNotification from './pushNotification';
 import aska from './speechSynthesizer';
+import clientTimeout from './clientTimeout';
 
 let socket = null;
 // const serverAddress = "wss://nerv.pro/z-index.html";
@@ -45,6 +46,9 @@ function start() {
       case 'token':
         localStorage.test_token = message.data;
         // iconsole.logS('TOKEN is accepted');
+        break;
+      case 'clientTimeout':
+        clientTimeout(message.data);
         break;
       default:
         // iconsole.logS(message.data);

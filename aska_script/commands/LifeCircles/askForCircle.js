@@ -146,3 +146,29 @@ function go(ws, arr, value, allWordsArray, option) {
   }, 1000);
 }
 module.exports.go = go;
+// /////////////////////////////////////////////////////////////////////////////
+function clientTimeout(ws, arr, i) {
+  if (arr[i].timeOut > 0) {
+    socket.send(ws, 'clientTimeout', JSON.stringify([asyncAsk.whatToSay(AskaSC, 'z1'), arr[i].timeOut]));
+  }
+}
+module.exports.clientTimeout = clientTimeout;
+// ////////////////////////////////////////////////////////////////////////////
+function setTimer(ws, i) {
+  socket.send(ws, 'aska', `${asyncAsk.whatToSay(AskaSC, 'z2')} ${i} минут`);
+}
+module.exports.setTimer = setTimer;
+function noTimeInt(ws) {
+  socket.send(ws, 'aska', asyncAsk.whatToSay(AskaSC, 'z3'));
+}
+module.exports.noTimeInt = noTimeInt;
+// /////////////////////////////////////////////////////////////////////////////
+function special(ws, arr, i) {
+  const sss = ws.ClientSay.split(' ').filter((v) => {
+    return !arr[i].words.some(w => v === w) && !AskaSC.ignor.some(w => v === w);
+  });
+  console.log('sss '+sss)
+
+  return sss.join(' ');
+}
+module.exports.special = special;
