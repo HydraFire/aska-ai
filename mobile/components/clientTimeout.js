@@ -9,12 +9,13 @@ function clientTimeout(arr) {
       audio.volume = 0.01;
       aska('ой');
     }
-    r += 1;
-    audio.play();
     if (r >= (parseFloat(arr[1]) * 2)) {
       audio.volume = 1;
       aska(arr[0]);
       clearInterval(int);
+    } else {
+      r += 1;
+      audio.play();
     }
   }, 30000);
 }
