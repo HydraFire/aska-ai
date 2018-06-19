@@ -7,6 +7,7 @@ import socket from './components/webSocketClient';
 import { speechRec, startStopRec } from './components/speechRecognition';
 import { newMessage } from './components/interface/displayCanvasMessage';
 import Kaleidoscope from './graphics/Kaleidoscope';
+import Coub from './graphics/Coub';
 import pushNotification from './components/pushNotification';
 
 // ////////////////////////////////////////////////////////////////////////////
@@ -43,5 +44,5 @@ snapObject.bind(callback);
 // /////////////////////////////////////////////////////////////////////////////
 pushNotification.subscribeBS();
 // ////////////////////////////////////////////////////////////////////////////
-// Coub();
-Kaleidoscope();
+Coub();
+// Kaleidoscope();

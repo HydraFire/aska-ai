@@ -3,6 +3,10 @@ html, body {
   padding: 0px 0px 0px 0px;
   margin: 0px 0px 0px 0px;
 }
+#video {
+  width: 0px;
+  height: 0px;
+}
 #main_container{
   height: 100%;
   overflow: auto;
