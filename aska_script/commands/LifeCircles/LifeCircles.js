@@ -59,8 +59,10 @@ function whenDidItHappen(ws, arr, i, value) {
   askForCircle.when(ws, arr, i, value);
   saveFile(filepath, arr);
 }
-function doNotRemind(ws) {
-
+function doNotRemind(ws, arr, i) {
+  arr[i].remind = 9999999999000;
+  saveFile(filepath, arr);
+  askForCircle.setNotRemind(ws, arr[i].words[0]);
 }
 function setTime(ws, arr, i, sayWords) {
   sayWords = askForCircle.special(ws, arr, i);

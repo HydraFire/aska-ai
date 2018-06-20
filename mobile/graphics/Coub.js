@@ -6,7 +6,7 @@ function Coub() {
   const video = document.querySelector('#video');
   const audio2 = document.querySelector('#audio2');
   audio2.src = 'coub/audio.mp3';
-  audio2.volume = 0.2;
+  audio2.volume = 0.1;
   const ctx = canvas.getContext('2d');
   canvas.width = 360;
   canvas.height = 720;

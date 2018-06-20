@@ -10,7 +10,7 @@ const fileOption = './data/commands/Login/option.json';
 const AskaSC = JSON.parse(fs.readFileSync(fileOption));
 // ////////////////////////////////////////////////////////////////////////////
 function createToken() {
-  return jwt.sign({ id: process.env.PASSWORD }, process.env.JWT_SECRET, { expiresIn: '2d' });
+  return jwt.sign({ id: process.env.PASSWORD }, process.env.JWT_SECRET, { expiresIn: '14d' });
 }
 // ////////////////////////////////////////////////////////////////////////////
 function verifAccess() {

@@ -167,8 +167,11 @@ function special(ws, arr, i) {
   const sss = ws.ClientSay.split(' ').filter((v) => {
     return !arr[i].words.some(w => v === w) && !AskaSC.ignor.some(w => v === w);
   });
-  console.log('sss '+sss)
-
   return sss.join(' ');
 }
 module.exports.special = special;
+// /////////////////////////////////////////////////////////////////////////////
+function setNotRemind(ws, word) {
+  socket.send(ws, 'aska', `${word}, ${asyncAsk.whatToSay(AskaSC, 'z4')}`);
+}
+module.exports.setNotRemind = setNotRemind;
