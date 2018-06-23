@@ -1,15 +1,14 @@
 const fs = require('fs');
 const socket = require('../../webSocketOnMessage');
 const asyncAsk = require('../../asyncAsk');
-const { questSimple } = require('./QuestSimple');
-const { searchDate, searchTime } = require('../../textToTime');
+const { searchDate } = require('../../textToTime');
 const { saveResult } = require('./QuestInstrument');
 // ///////////////////////////////
 // ///////////////////////////////
 const fileOption = './data/commands/Quest/option.json';
 const AskaSC = JSON.parse(fs.readFileSync(fileOption));
 // /////////////////////////////////////////////////////////////////////////////
-function note(ws, day, time, options) {
+function note(ws, day, time) {
   //
   let newText = '';
   //
@@ -20,7 +19,7 @@ function note(ws, day, time, options) {
 
   const first = function attentionCheck() {
     if (newText !== '') {
-      saveResult(day, time, newText, options);
+      saveResult(day, time, newText, '3');
       socket.send(ws, 'aska', asyncAsk.whatToSay(AskaSC, 'x3'));
     } else {
       socket.send(ws, 'aska', asyncAsk.whatToSay(AskaSC, 'x4'));
@@ -40,14 +39,13 @@ function note(ws, day, time, options) {
 }
 
 // ////////////////////////////////////////////////////////////////////////////
-function questHard(ws, options, parameters) {
+
+function questSimple(ws, parameters) {
   //  const a = parameters.join(' ');
   ws.NNListen = false;
   let skazanoe = '';
   let x = false;
   let xString = false;
-  let y = false;
-  let yString = false;
   let z = false;
 
   const int = setInterval(() => {
@@ -64,28 +62,19 @@ function questHard(ws, options, parameters) {
           question = false;
         }
       }
-      if (!y) {
-        yString = searchTime(ws.ClientSay);
-        if (yString) {
-          y = true;
-        } else if (question) {
-          socket.send(ws, 'aska', asyncAsk.whatToSay(AskaSC, 'x1'));
-          question = false;
-        }
-      }
       if (!z) {
         console.log(`parameters ${parameters}***`);
         if (parameters != '') {
           z = true;
         } else if (question) {
-          note(ws, xString, yString, options);
+          note(ws, xString, '04:00:00.000Z');
           clearInterval(int);
         }
       }
-      if (x && y && z) {
+      if (x && z) {
         socket.send(ws, 'aska', asyncAsk.whatToSay(AskaSC, 'x3'));
         parameters = parameters.join(' ');
-        saveResult(xString, yString, parameters, options);
+        saveResult(xString, '04:00:00.000Z', parameters, '3');
         clearInterval(int);
         ws.NNListen = true;
       }
@@ -93,12 +82,4 @@ function questHard(ws, options, parameters) {
   //  }
   }, 1000);
 }
-// /////////////////////////////////////////////////////////////////////////////
-function Quest(ws, options, parameters) {
-  if (options === '3') {
-    questSimple(ws, parameters);
-  } else {
-    questHard(ws, options, parameters);
-  }
-}
-module.exports.Quest = Quest;
+module.exports.questSimple = questSimple;

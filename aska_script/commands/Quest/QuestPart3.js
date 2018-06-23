@@ -1,7 +1,8 @@
 const fs = require('fs');
 const socket = require('../../webSocketOnMessage');
 const asyncAsk = require('../../asyncAsk');
-const { saveExcuse, saveTimeStart, saveVictory } = require('./QuestInstrument');
+const { saveExcuse, saveTimeStart, copyToVictoryFile } = require('./QuestInstrument');
+const { searchDate, searchTime } = require('../../textToTime');
 // ///////////////////////////////////////////
 // //////////////////////////////////////////
 const fileOption = './data/commands/Quest/option.json';
@@ -10,6 +11,9 @@ const AskaSC = JSON.parse(fs.readFileSync(fileOption));
 const askPart5 = function askPart5(ws, obj) {
   // Закрываем все ожидания чтобы создать новое
   // ws.closeAllInterval = true;
+
+
+  /*
   const defaultFunction = function defaultFunction() {
     socket.send(ws, 'aska', asyncAsk.whatToSay(AskaSC, 'h1'));
   };
@@ -28,11 +32,53 @@ const askPart5 = function askPart5(ws, obj) {
       }
     ], defaultFunction);
   };
+  */
+  const packaging = function packaging() {
+    ws.NNListen = false;
+    let skazanoe = ws.ClientSay;
+    let x = false;
+    let xString = false;
+    let y = false;
+    let yString = false;
+
+    const int = setInterval(() => {
+      if (skazanoe !== ws.ClientSay) {
+        skazanoe = ws.ClientSay;
+        let question = true;
+        //  if (skazanoe !== ws.ClientSay) {
+        if (!x) {
+          xString = searchDate(ws.ClientSay);
+          if (xString) {
+            x = true;
+          } else {
+            socket.send(ws, 'aska', asyncAsk.whatToSay(AskaSC, 'x0'));
+            question = false;
+          }
+        }
+        if (!y) {
+          yString = searchTime(ws.ClientSay);
+          if (yString) {
+            y = true;
+          } else if (question) {
+            socket.send(ws, 'aska', asyncAsk.whatToSay(AskaSC, 'x1'));
+            question = false;
+          }
+        }
+        if (x && y) {
+          socket.send(ws, 'aska', asyncAsk.whatToSay(AskaSC, 'x3'));
+          clearInterval(int);
+          saveTimeStart(obj, xString, yString);
+          ws.NNListen = true;
+        }
+      }
+    //  }
+    }, 1000);
+  };
   asyncAsk.readEndWait(ws, asyncAsk.whatToSay(AskaSC, 'h0'), packaging);
 };
 
 // /////////////////////////////////////////////////////////////////////////////
-
+/*
 const askPart4 = function askPart4(ws, obj) {
   //
   let newText = '';
@@ -62,7 +108,7 @@ const askPart4 = function askPart4(ws, obj) {
   };
   asyncAsk.readEndWait(ws, asyncAsk.whatToSay(AskaSC, 'e0'), packaging);
 };
-
+*/
 // /////////////////////////////////////////////////////////////////////////////
 // /////////////////////////////////////////////////////////////////////////////
 
@@ -109,7 +155,8 @@ const QuestPart3 = function QuestPart3(ws, obj) {
 
   const attentionCheck = function attentionCheck() {
     socket.send(ws, 'aska', asyncAsk.whatToSay(AskaSC, 'z2'));
-    asyncAsk.onlyWait(ws, askPart4, obj);
+    copyToVictoryFile(obj);
+    // asyncAsk.onlyWait(ws, askPart4, obj);
   };
   const negative = function negative() {
     socket.send(ws, 'aska', asyncAsk.whatToSay(AskaSC, 'z3'));

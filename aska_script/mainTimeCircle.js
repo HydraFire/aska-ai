@@ -1,6 +1,7 @@
 const fs = require('fs');
 const { QuestPart2 } = require('./commands/Quest/QuestPart2');
 const { QuestPart3 } = require('./commands/Quest/QuestPart3');
+const { QuestPartSimple } = require('./commands/Quest/QuestPartSimple');
 const { LifeCirclesNapominanie } = require('./commands/LifeCircles/askForCircle');
 const { sendNotification, getNotificationID } = require('./notification/pushNotification');
 // //////////////////////////////////////
@@ -36,7 +37,11 @@ function switchFunc(ws, v) {
         QuestPart3(ws, v);
         break;
       case 'QuestPart2':
-        QuestPart2(ws, v);
+        if (v.type === 'HARD') {
+          QuestPart2(ws, v);
+        } else {
+          QuestPartSimple(ws, v);
+        }
         break;
       case 'LifeCircle':
         LifeCirclesNapominanie(ws, v);
@@ -124,7 +129,7 @@ const mainTimeCircle = function mainTimeCircle() {
   console.log('Start');
   const timeNow = Date.parse(new Date());
   let arrQuests = readFile();
-  arrQuests = arrQuests.filter(v => timeNow >= v.startDate);
+  arrQuests = arrQuests.filter(v => timeNow >= v.startDate && v.type !== 'SIMPLE');
   console.log(arrQuests);
   // Запускаем пуш уведомление
   if (arrQuests != '') {

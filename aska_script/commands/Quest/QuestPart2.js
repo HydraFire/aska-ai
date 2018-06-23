@@ -2,6 +2,7 @@ const fs = require('fs');
 const socket = require('../../webSocketOnMessage');
 const asyncAsk = require('../../asyncAsk');
 const { saveTimeEnd, saveExcuse, saveTimeStart } = require('./QuestInstrument');
+const { searchDate, searchTime } = require('../../textToTime');
 // ///////////////////////////////////////
 // //////////////////////////////////////
 const fileOption = './data/commands/Quest/option.json';
@@ -10,6 +11,9 @@ const AskaSC = JSON.parse(fs.readFileSync(fileOption));
 const askPart5 = function askPart5(ws, obj) {
   // Закрываем все ожидания чтобы создать новое
   // ws.closeAllInterval = true;
+
+
+  /*
   const defaultFunction = function defaultFunction() {
     socket.send(ws, 'aska', asyncAsk.whatToSay(AskaSC, 'h1'));
   };
@@ -27,6 +31,48 @@ const askPart5 = function askPart5(ws, obj) {
         end: true
       }
     ], defaultFunction);
+  };
+  */
+  const packaging = function packaging() {
+    ws.NNListen = false;
+    let skazanoe = ws.ClientSay;
+    let x = false;
+    let xString = false;
+    let y = false;
+    let yString = false;
+
+    const int = setInterval(() => {
+      if (skazanoe !== ws.ClientSay) {
+        skazanoe = ws.ClientSay;
+        let question = true;
+        //  if (skazanoe !== ws.ClientSay) {
+        if (!x) {
+          xString = searchDate(ws.ClientSay);
+          if (xString) {
+            x = true;
+          } else {
+            socket.send(ws, 'aska', asyncAsk.whatToSay(AskaSC, 'x0'));
+            question = false;
+          }
+        }
+        if (!y) {
+          yString = searchTime(ws.ClientSay);
+          if (yString) {
+            y = true;
+          } else if (question) {
+            socket.send(ws, 'aska', asyncAsk.whatToSay(AskaSC, 'x1'));
+            question = false;
+          }
+        }
+        if (x && y) {
+          socket.send(ws, 'aska', asyncAsk.whatToSay(AskaSC, 'x3'));
+          clearInterval(int);
+          saveTimeStart(obj, xString, yString);
+          ws.NNListen = true;
+        }
+      }
+    //  }
+    }, 1000);
   };
   asyncAsk.readEndWait(ws, asyncAsk.whatToSay(AskaSC, 'h0'), packaging);
 };
@@ -65,7 +111,7 @@ const askPart4 = function askPart4(ws, obj) {
 };
 
 // /////////////////////////////////////////////////////////////////////////////
-
+/*
 const askPart3 = function askPart3(ws, obj) {
   // Закрываем все ожидания чтобы создать новое
   // ws.closeAllInterval = true;
@@ -90,7 +136,7 @@ const askPart3 = function askPart3(ws, obj) {
   };
   asyncAsk.readEndWait(ws, asyncAsk.whatToSay(AskaSC, 'j0'), packaging);
 };
-
+*/
 // /////////////////////////////////////////////////////////////////////////////
 
 const askPart2 = function askPart2(ws, obj) {
@@ -102,7 +148,8 @@ const askPart2 = function askPart2(ws, obj) {
 
   const attentionCheck = function attentionCheck() {
     socket.send(ws, 'aska', asyncAsk.whatToSay(AskaSC, 'p2'));
-    asyncAsk.onlyWait(ws, askPart3, obj);
+    saveTimeEnd(obj, ws.ClientSay);
+    // asyncAsk.onlyWait(ws, askPart3, obj);
   };
   const negative = function negative() {
     socket.send(ws, 'aska', asyncAsk.whatToSay(AskaSC, 'p3'));
@@ -129,6 +176,7 @@ const askPart2 = function askPart2(ws, obj) {
 
 const QuestPart2 = function QuestPart2(ws, obj) {
   // Закрываем все ожидания чтобы создать новое
+  /*
   if (!ws.onlyOpened) {
     const defaultFunction = function defaultFunction() {
       socket.send(ws, 'aska', asyncAsk.whatToSay(AskaSC, 'y2'));
@@ -157,7 +205,14 @@ const QuestPart2 = function QuestPart2(ws, obj) {
     };
     asyncAsk.readEndWait(ws, asyncAsk.whatToSay(AskaSC, 'y0'), packaging);
   } else {
-    asyncAsk.readEndWait(ws, `${asyncAsk.whatToSay(AskaSC, 'y1')}, ${obj.quest}`, askPart2, obj);
+  */
+  let n = '';
+  if (obj.excuse) {
+    n = `${asyncAsk.whatToSay(AskaSC, 'y0')}, ${obj.quest}, ${asyncAsk.whatToSay(AskaSC, 'y1')}, ${obj.excuse}`;
+  } else {
+    n = `${asyncAsk.whatToSay(AskaSC, 'y0')}, ${obj.quest}`;
   }
+  asyncAsk.readEndWait(ws, n, askPart2, obj);
+  // }
 };
 module.exports.QuestPart2 = QuestPart2;
