@@ -29,7 +29,7 @@ function Coub() {
   video.addEventListener('play', () => {
     imgC = 720 / video.videoHeight;
     imgW = 180 - ((video.videoWidth * imgC) / 2);
-    audio2.play();
+    // audio2.play();
     setInterval(() => {
       draw();
     }, 1000 / 30);
