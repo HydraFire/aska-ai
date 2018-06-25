@@ -1,15 +1,20 @@
 // let's go!
+import React from 'react';
+import { render } from 'react-dom';
 import ScrollSnap from 'scroll-snap';
+
+import App from './components/App';
 import './css/logotype.css';
 import './css/inputCommandLine.css';
 
 import socket from './components/webSocketClient';
 import { speechRec, startStopRec } from './components/speechRecognition';
 import { newMessage } from './components/interface/displayCanvasMessage';
-import Kaleidoscope from './graphics/Kaleidoscope';
+// import Kaleidoscope from './graphics/Kaleidoscope';
 import Coub from './graphics/Coub';
 import pushNotification from './components/pushNotification';
 
+render(<App />, document.querySelector('#main'));
 // ////////////////////////////////////////////////////////////////////////////
 socket.start();
 speechRec();

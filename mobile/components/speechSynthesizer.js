@@ -2,18 +2,21 @@ import socket from './webSocketClient';
 import { newMessage } from './interface/displayCanvasMessage';
 // import { startStopRec } from './speechRecognition';
 /* eslint-disable */
-const audio = document.getElementById('audio');
-const audio2 = document.getElementById('audio2');
+let audio
+let audio2
 let aska_mute = false;
 
 function handleMediaError() {
   aska_mute = true;
 }
 
-audio.addEventListener('error', handleMediaError)
+function initAudio() {
+  audio = document.getElementById('audio');
+  audio2 = document.getElementById('audio2');
+  audio.addEventListener('error', handleMediaError);
+}
 // /////////////////////////////////////////////////////////////////////////////
 function aska(text) {
-  console.log('///////////'+text)
   newMessage(text, false);
 
   if (aska_mute){
@@ -81,4 +84,4 @@ function aska(text) {
   }
 }
 
-export default aska;
+export { aska, initAudio };

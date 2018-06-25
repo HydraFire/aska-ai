@@ -1,0 +1,46 @@
+::-webkit-scrollbar {
+    width: 0px;  /* remove scrollbar space */
+    background: transparent;  /* optional: just make scrollbar invisible */
+}
+.droplist {
+  margin: 10px 10px 10px 10px;
+  width: 80%;
+  height: 30px;
+  font-size: 14px;
+}
+.buttonSave {
+  height: 30px;
+  margin: 10px 10px 10px 0px;
+}
+.buttonSection {
+  width: auto;
+  height: 30px;
+  margin: 0px 10px 0px 10px;
+}
+.editor_container {
+  height: 620px;
+  overflow-y: scroll;
+  font-size: 16px;
+  margin: 10px 10px 10px 10px;
+}
+.editor_view {
+  margin: 10px 0px 10px 0px;
+  color: #999;
+  background: #eee;
+}
+.editor_count {
+  background: #eee;
+}
+.editor_count:after {
+    content: " ";
+    display: block;
+    clear: both;
+}
+.editor_text {
+  color: #333;
+  margin: 2px 2px 2px 2px;
+  padding: 5px 10px 5px 10px;
+  border: 1px solid black;
+  float: left;
+  background: #bbb;
+}

@@ -1,4 +1,4 @@
-import aska from './speechSynthesizer';
+import { aska } from './speechSynthesizer';
 
 function clientTimeout(arr) {
   arr = JSON.parse(arr);

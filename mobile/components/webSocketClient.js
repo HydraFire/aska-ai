@@ -1,6 +1,6 @@
 // import iconsole from './interface/iconsole';
 import pushNotification from './pushNotification';
-import aska from './speechSynthesizer';
+import { aska } from './speechSynthesizer';
 import clientTimeout from './clientTimeout';
 
 let socket = null;
