@@ -81,6 +81,7 @@ module.exports.saveExcuse = saveExcuse;
 const saveTimeStart = function saveTimeStart(obj, day, time) {
   const str = day + time;
   obj.startDate = Date.parse(new Date(str));
+  obj.endDate = 9999999999999;
   saveObjtoFile(obj);
 };
 module.exports.saveTimeStart = saveTimeStart;
