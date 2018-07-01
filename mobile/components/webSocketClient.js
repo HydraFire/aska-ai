@@ -2,6 +2,7 @@
 import pushNotification from './pushNotification';
 import { aska } from './speechSynthesizer';
 import clientTimeout from './clientTimeout';
+import NNEditor from './interface/NNEditor';
 
 let socket = null;
 // const serverAddress = "wss://nerv.pro/z-index.html";
@@ -49,6 +50,13 @@ function start() {
         break;
       case 'clientTimeout':
         clientTimeout(message.data);
+        break;
+      case 'editor':
+        if (message.data === 'done') {
+          window.editorComponent.doneSocket();
+        } else {
+          window.editorComponent.loadSocket(message.data);
+        }
         break;
       default:
         // iconsole.logS(message.data);

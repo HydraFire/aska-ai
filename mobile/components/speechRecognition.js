@@ -9,13 +9,11 @@ recognition.interimResults = true;
 recognition.lang = 'ru-RU';
 /* eslint-enable */
 
-function startStopRec() {
+export const startStopRec = () => {
   recognition.start();
-}
-module.exports.startStopRec = startStopRec;
+};
 
-
-function speechRec() {
+export const speechRec = () => {
   // Дополнительные функции
   function transcriptText(text) {
     /* eslint-disable */
@@ -35,5 +33,4 @@ function speechRec() {
       socket.send(text);
     }
   });
-}
-export { speechRec, startStopRec };
+};

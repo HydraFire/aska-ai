@@ -1,6 +1,7 @@
 const { getKey, setKey } = require('./notification/typeNotification');
 const { start } = require('./NN/MainNN');
 const { verifToken, verifAccess } = require('./commands/Login/Login');
+const { editorLoad, editorSave } = require('./NN/editor');
 // Функция нужна для автоматизации создания обэкта и стрингификации
 function send(ws, type, data) {
   if (!ws.closeAllInterval) {
@@ -43,6 +44,15 @@ function webSocketOnMessage(ws) {
 
         case 'AUDIO':
           ws.audio = obj.data;
+          break;
+          // Подгружает даные для editora на клиенте
+        case 'editor':
+          if (obj.data === 'load') {
+            send(ws, 'editor', JSON.stringify(editorLoad()));
+          } else {
+            send(ws, 'editor', editorSave(obj.data));
+          }
+
           break;
           // Если тип сокета не совпадает
         default:

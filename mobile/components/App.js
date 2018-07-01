@@ -1,5 +1,5 @@
 import React from 'react';
-import NNEditor from './interface/NNEditor.js';
+import NNEditor from './interface/NNEditor';
 import { initAudio } from './speechSynthesizer';
 
 import '../css/inputCommandLine.css';
@@ -34,12 +34,12 @@ class App extends React.Component {
           </div>
           <div className="page">
             <div id="cube2">
-              <NNEditor />
+              <NNEditor ref={(editorComponent) => { window.editorComponent = editorComponent }}/>
             </div>
           </div>
         </div>
-        <video id="video" src="http://localhost:8080/video.mp4" autoPlay loop />
-        <audio src="http://localhost:8080/audio.mp3" id="audio" />
+        <video id="video" src="https://localhost:8080/coub/video.mp4" autoPlay loop />
+        <audio src="https://localhost:8080/coub/audio.mp3" id="audio" />
         <audio src="" id="audio2" />
       </div>
     );
