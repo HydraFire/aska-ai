@@ -13,6 +13,8 @@ class App extends React.Component {
     // speechRec();
   }
   render() {
+    let video = `${process.env.FILESERVER}video.mp4`;
+    let audio = `${process.env.FILESERVER}audio.mp3`;
     return (
       <div>
         <div id="container">
@@ -38,8 +40,8 @@ class App extends React.Component {
             </div>
           </div>
         </div>
-        <video id="video" src="https://localhost:8080/coub/video.mp4" autoPlay loop />
-        <audio src="https://localhost:8080/coub/audio.mp3" id="audio" />
+        <video id="video" src={video} autoPlay loop />
+        <audio src={audio} id="audio" />
         <audio src="" id="audio2" />
       </div>
     );

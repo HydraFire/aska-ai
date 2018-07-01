@@ -26,7 +26,7 @@ module.exports = {
         exclude: /node_modules/,
         loader: 'babel-loader',
         query: {
-          presets: ['react', 'es2015']
+          presets: ['react', 'es2016']
         }
       },
       {
@@ -38,20 +38,18 @@ module.exports = {
 
   plugins: [
     // uglify js
+    /*
     new webpack.optimize.UglifyJsPlugin({
       compress: { warnings: false },
       output: { comments: false },
       sourceMap: true
     }),
+    */
     // env plugin
+
     new webpack.DefinePlugin({
+      'process.env.FILESERVER': JSON.stringify(process.env.FILESERVER),
       'process.env.HOSTNAME': JSON.stringify(process.env.HOSTNAME)
     })
-  ],
-
-  devServer: {
-    contentBase: `${__dirname}/public`,
-    compress: true,
-    port: 8060
-  }
+  ]
 };
