@@ -12,7 +12,6 @@ class ChallengeLog extends React.Component {
   }
   loadState = (data) => {
     data = JSON.parse(data);
-    data.reverse();
     this.setState({
       loadbutton: false,
       data
