@@ -15,9 +15,9 @@ background-size: 20px 20px;
 }
 .block {
   width: 358px;
-  border-bottom: 1px dashed black;
-  border-left: 1px dashed black;
-  border-right: 1px dashed black;
+  border-bottom: 1px dashed white;
+  border-left: 1px dashed white;
+  border-right: 1px dashed white;
 }
 
 .date {
