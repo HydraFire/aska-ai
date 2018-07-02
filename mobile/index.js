@@ -39,7 +39,7 @@ const snapConfig = {
   scrollTime: 500
 };
 
-function callback() {
+function callback(e) {
   console.log('called when snap animation ends');
 }
 

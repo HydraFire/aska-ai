@@ -1,5 +1,6 @@
 import React from 'react';
 import NNEditor from './interface/NNEditor';
+import ChallengeLog from './interface/challengeLog';
 import { initAudio } from './speechSynthesizer';
 
 import '../css/inputCommandLine.css';
@@ -13,8 +14,8 @@ class App extends React.Component {
     // speechRec();
   }
   render() {
-    let video = `${process.env.FILESERVER}video.mp4`;
-    let audio = `${process.env.FILESERVER}audio.mp3`;
+    const video = `${process.env.FILESERVER}video.mp4`;
+    const audio = `${process.env.FILESERVER}audio.mp3`;
     return (
       <div>
         <div id="container">
@@ -32,7 +33,9 @@ class App extends React.Component {
             </div>
           </div>
           <div className="page">
-            <div id="cube1">360x720</div>
+            <div id="cube1">
+              <ChallengeLog ref={(cLogComponent) => { window.cLogComponent = cLogComponent }} />
+            </div>
           </div>
           <div className="page">
             <div id="cube2">

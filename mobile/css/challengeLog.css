@@ -1,0 +1,49 @@
+.main_block {
+  width: 100%;
+
+  height: 670px;
+  overflow-y: scroll;
+  background:
+linear-gradient(27deg, #151515 5px, transparent 5px) 0 5px,
+linear-gradient(207deg, #151515 5px, transparent 5px) 10px 0px,
+linear-gradient(27deg, #222 5px, transparent 5px) 0px 10px,
+linear-gradient(207deg, #222 5px, transparent 5px) 10px 5px,
+linear-gradient(90deg, #1b1b1b 10px, transparent 10px),
+linear-gradient(#1d1d1d 25%, #1a1a1a 25%, #1a1a1a 50%, transparent 50%, transparent 75%, #242424 75%, #242424);
+background-color: #131313;
+background-size: 20px 20px;
+}
+.block {
+  width: 358px;
+  border-bottom: 1px dashed black;
+  border-left: 1px dashed black;
+  border-right: 1px dashed black;
+}
+
+.date {
+ color: #adadad;
+ font-size: 14px;
+ width: 120px;
+ text-align: center;
+ vertical-align: middle;
+ display: inline-block;
+}
+.challenge_info {
+  color: #ddd;
+  text-align: center;
+  width: 228px;
+  font-size: 16px;
+  white-space:normal;
+  vertical-align: middle;
+  display: inline-block;
+  margin: 10px 5px 10px 5px;
+}
+.challenge_all {
+  width: 100%;
+  line-height: 50px;
+  display: inline-block;
+  vertical-align: middle;
+  text-align: center;
+  font-size: 16px;
+  background: #eee;
+}

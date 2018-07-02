@@ -58,6 +58,9 @@ function start() {
           window.editorComponent.loadSocket(message.data);
         }
         break;
+      case 'challengeLog':
+        window.cLogComponent.loadState(message.data);
+        break;
       default:
         // iconsole.logS(message.data);
         break;
