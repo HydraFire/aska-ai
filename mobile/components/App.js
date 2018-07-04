@@ -1,6 +1,7 @@
 import React from 'react';
 import NNEditor from './interface/NNEditor';
 import ChallengeLog from './interface/challengeLog';
+import ChartCom from './interface/chartComponent';
 import { initAudio } from './speechSynthesizer';
 
 import '../css/inputCommandLine.css';
@@ -41,6 +42,9 @@ class App extends React.Component {
             <div id="cube2">
               <NNEditor ref={(editorComponent) => { window.editorComponent = editorComponent }}/>
             </div>
+          </div>
+          <div className="page2x">
+            <ChartCom ref={(chartComponent) => { window.chartComponent = chartComponent }}/>
           </div>
         </div>
         <video id="video" src={video} autoPlay loop />

@@ -61,6 +61,9 @@ function start() {
       case 'challengeLog':
         window.cLogComponent.loadState(message.data);
         break;
+      case 'chart':
+        window.chartComponent.loadChart(message.data);
+        break;
       default:
         // iconsole.logS(message.data);
         break;

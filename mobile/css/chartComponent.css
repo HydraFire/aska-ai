@@ -1,0 +1,16 @@
+.scrollfix {
+  width: 100%;
+  height: 360px;
+  overflow-y: scroll;
+}
+.buttons {
+  width: 100%;
+  height: 360px;
+  background: #222;
+}
+.loadButton {
+  width: 100%;
+  height: 360px;
+  font-size: 20px;
+  text-align: center;
+}

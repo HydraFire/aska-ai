@@ -3,6 +3,7 @@ const { start } = require('./NN/MainNN');
 const { verifToken, verifAccess } = require('./commands/Login/Login');
 const { editorLoad, editorSave } = require('./NN/editor');
 const { challengeLogLoad } = require('./challengeLog');
+const { chartLoad } = require('./chartLoad');
 // Функция нужна для автоматизации создания обэкта и стрингификации
 function send(ws, type, data) {
   if (!ws.closeAllInterval) {
@@ -57,6 +58,11 @@ function webSocketOnMessage(ws) {
         case 'challengeLog':
           if (obj.data === 'load') {
             send(ws, 'challengeLog', JSON.stringify(challengeLogLoad()));
+          }
+          break;
+        case 'chart':
+          if (obj.data === 'load') {
+            send(ws, 'chart', JSON.stringify(chartLoad()));
           }
           break;
           // Если тип сокета не совпадает

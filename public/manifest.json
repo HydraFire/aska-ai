@@ -1,6 +1,6 @@
 {
   "short_name": "ASKA",
-  "name": "Aska v2.1",
+  "name": "Aska v3.1",
   "icons": [
     {
       "src": "aska.webp",
@@ -10,5 +10,5 @@
   ],
   "start_url": "localhost:8080/mobile.html",
   "display": "fullscreen",
-  "orientation": "portrait"
+  "orientation": "any"
 }
