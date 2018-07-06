@@ -5,12 +5,46 @@
 }
 .buttons {
   width: 100%;
-  height: 360px;
-  background: #222;
+  height: 50px;
 }
 .loadButton {
   width: 100%;
   height: 360px;
   font-size: 20px;
   text-align: center;
+}
+.buttonRewind {
+  width: 90px;
+  height: 50px;
+}
+.buttonSpeed {
+  width: 45px;
+  height: 50px;
+}
+.buttonFull {
+  width: 225px;
+  height: 50px;
+}
+.razdel {
+  font-size: 20px;
+  width: 100%;
+  height: 20px;
+}
+.panel {
+  font-size: 20px;
+  width: 100%;
+}
+.text {
+  color: #ddd;
+  width: 360px;
+  display: inline-block;
+  text-align: center;
+}
+.buttonEnabled {
+  margin: 10px 25px 10px 25px;
+  height: 35px;
+}
+.buttonColor {
+  margin: 10px 25px 10px 25px;
+  height: 35px;
 }

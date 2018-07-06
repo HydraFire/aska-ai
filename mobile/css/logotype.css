@@ -32,8 +32,10 @@ html, body {
   vertical-align: middle;
 }
 .page2x {
+  color: #ddd;
   width: 720px;
   height: 720px;
+  background: #222;
   display: inline-block;
   vertical-align: middle;
 }
