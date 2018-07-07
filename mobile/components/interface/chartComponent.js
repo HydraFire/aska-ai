@@ -4,6 +4,7 @@ import socket from '../webSocketClient';
 import '../../css/chartComponent.css';
 
 let mainData = [];
+let LogBookData = [];
 
 function loadChartTryButtons() {
   let arr = [];
@@ -14,7 +15,16 @@ function loadChartTryButtons() {
   }
   return arr;
 }
-
+function formatDateMax() {
+  const x = new Date();
+  return `${x.getUTCMonth() + 1}/${x.getUTCDate()}/${x.getFullYear()} 00:00`;
+}
+function formatDateMin() {
+  const x = new Date();
+  let m = x.getUTCMonth() - 1;
+  m < 1 ? m = 1 : '';
+  return `${m}/${x.getUTCDate()}/${x.getFullYear()} 00:00`;
+}
 
 class ChartCom extends React.Component {
   constructor() {
@@ -37,8 +47,8 @@ class ChartCom extends React.Component {
             type: "time",
             time: {
               parser: 'MM/DD/YYYY HH:mm',
-              max: '7/6/2018 00:00',
-              min: '5/1/2018 00:00',
+              max: formatDateMax(),
+              min: formatDateMin(),
               tooltipFormat: 'll HH:mm'
             }
           }]
@@ -48,6 +58,23 @@ class ChartCom extends React.Component {
     };
   // ///////////////////////////////////////////////////////////////////////////
   enabledButtonsColorChart = (chartButtons) => {
+    mainData = mainData.map((v) => {
+      let i = false;
+      chartButtons.forEach((value) => {
+        if (v.label === value.name) {
+          i = value.borderColor;
+        }
+      })
+      if (i) {
+        v.borderColor ? v.borderColor = i : '';
+        v.backgroundColor ? v.backgroundColor = i : '';
+        // v.backgroundColor = i;
+         return v;
+       } else {
+         return v;
+       }
+    })
+
     const arr = this.state.chartData;
     arr['datasets'] = arr.datasets.map((v) => {
       let i = false;
@@ -120,7 +147,10 @@ class ChartCom extends React.Component {
     this.state.chartButtons.forEach((v) => {
       chartButtons = chartButtons.map((w) => {
         if (v.name === w.name) {
-          return w.borderColor = v.borderColor;
+          w.borderColor = v.borderColor;
+          return w;
+        } else {
+          return w;
         }
       })
     })
@@ -146,11 +176,10 @@ class ChartCom extends React.Component {
   loadChart = (data) => {
     data = JSON.parse(data);
     mainData = data.datasets;
+    LogBookData = data.logbookdata;
     const chartButtons = this.createChartButtons(data.datasets);
     this.enabledButtonsEnableChart(chartButtons);
     this.enabledButtonsColorChart(chartButtons);
-    // data.datasets[0].borderColor = 'rgb(100, 7, 7)';
-
     this.setState({
       loadbutton: false
     });
@@ -164,10 +193,10 @@ class ChartCom extends React.Component {
   recalc(d, naSkolko, znak) {
     const arr = d.split('/');
     let a = new Date();
-    let y = Date.UTC(parseFloat(arr[2]), parseFloat(arr[0]), parseFloat(arr[1]), 0, 0, 0) + a.getTimezoneOffset() * 60000;
+    let y = Date.UTC(parseFloat(arr[2]), parseFloat(arr[0]) - 1, parseFloat(arr[1]), 0, 0, 0) + a.getTimezoneOffset() * 60000;
     znak === 'plus' ? y = y + (24 * 60 * 60000 * naSkolko) : y = y - (24 * 60 * 60000 *naSkolko);
     const x = new Date(y);
-    return `${x.getUTCMonth()}/${x.getUTCDate()}/${x.getFullYear()} 00:00`;
+    return `${x.getUTCMonth() + 1}/${x.getUTCDate()}/${x.getFullYear()} 00:00`;
   }
   buttonRewindHandler = (e) => {
     const code = e.target.getAttribute('code');
@@ -184,14 +213,20 @@ class ChartCom extends React.Component {
   oneMoreRender = () => {
     return this.state.chartButtons.map((v) => {
       let color = { background:v.borderColor };
+      let enColor;
+      if (v.enabled) {
+        enColor = { background:'#888' };
+      } else {
+        enColor = { background:'#333' };
+      }
       return (
         <div key={v.name} className="panel">
           <div className="text">{v.name}</div>
           <div className="text">
-            <button alt={v.name} onClick={this.enabledButtons} className="buttonEnabled">{ v.enabled ? 'Enabled' : 'disabled'}</button>
+            <button alt={v.name} onClick={this.enabledButtons} style={enColor}  className="buttonEnabled">{ v.enabled ? 'Enabled' : 'disabled'}</button>
             <button alt={v.name} onClick={this.changeColor} style={color} className="buttonColor">{'Color'}</button>
-            <button className="buttonEnabled">{'GO'}</button>
-            <button className="buttonEnabled">{'X'}</button>
+            <button className="buttonGO">{'GO'}</button>
+            <button className="buttonX">{'X'}</button>
           </div>
         </div>
       )
@@ -214,7 +249,7 @@ class ChartCom extends React.Component {
           <button part="minus" code="max" onClick={this.buttonRewindHandler} className="buttonRewind">{'<<<'}</button>
           <button part="plus" code="max" onClick={this.buttonRewindHandler} className="buttonRewind">{'>>>'}</button>
         </div>
-        <span className="razdel">---------------------------------------------</span>
+        <span className="razdel">------------------------------------------------------------------------------------------------------------</span>
         <div>
           {this.oneMoreRender()}
         </div>

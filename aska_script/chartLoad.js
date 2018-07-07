@@ -6,7 +6,7 @@ function dateFormated(d) {
 }
 
 function difference(a, b) {
-  return Math.abs((a - b) / 100000000);
+  return Math.abs((a - b) / 100000000 | 0);
 }
 function QuestVictory() {
   const arr = JSON.parse(fs.readFileSync('./data/QuestVictoryData.json'));
@@ -54,7 +54,9 @@ function logBookData() {
 
 function LifeCirclePart(element) {
   const data = element.incident.map((v, i) => {
-    return { x: dateFormated(v), y: difference(v, element.incident[i + 1]) };
+    let diffpar = element.incident[i - 1];
+    !diffpar ? diffpar = v : '';
+    return { x: dateFormated(v), y: difference(diffpar, v) };
   });
   return {
     label: element.words[0],
@@ -66,12 +68,13 @@ function LifeCirclePart(element) {
 // /////////////////////////////////////////////////////////////////////////////
 function chartLoad() {
   const arr = JSON.parse(fs.readFileSync('./data/LifeCirclesData.json'));
+  const logbookdata = JSON.parse(fs.readFileSync('./data/LogBook.json'));
   const datasets = [];
   datasets.push(logBookData());
   datasets.push(QuestVictory());
   datasets.push(QuestPlan());
   arr.forEach(v => datasets.push(LifeCirclePart(v)));
-  return { datasets };
+  return { datasets, logbookdata };
 }
 
 module.exports.chartLoad = chartLoad;

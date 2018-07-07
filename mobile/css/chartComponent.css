@@ -14,18 +14,25 @@
   text-align: center;
 }
 .buttonRewind {
+  background: #333;
+  border: 0px;
   width: 90px;
   height: 50px;
 }
 .buttonSpeed {
+  background: #333;
+  border: 0px;
   width: 45px;
   height: 50px;
 }
 .buttonFull {
+  background: #222;
+  border: 0px;
   width: 225px;
   height: 50px;
 }
 .razdel {
+  color: #444;
   font-size: 20px;
   width: 100%;
   height: 20px;
@@ -35,16 +42,30 @@
   width: 100%;
 }
 .text {
-  color: #ddd;
+  color: #999;
   width: 360px;
   display: inline-block;
   text-align: center;
 }
 .buttonEnabled {
+  border: 0px;
   margin: 10px 25px 10px 25px;
   height: 35px;
 }
 .buttonColor {
+  border: 0px;
   margin: 10px 25px 10px 25px;
+  height: 35px;
+}
+.buttonGO {
+  background: #222;
+  border: 0px;
+  margin: 10px 25px 10px 25px;
+  height: 35px;
+}
+.buttonX {
+  background: #222;
+  border: 0px;
+  margin: 10px 0px 10px 25px;
   height: 35px;
 }

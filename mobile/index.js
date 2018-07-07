@@ -46,6 +46,7 @@ function callback(e) {
 const element = document.getElementById('container');
 const snapObject = new ScrollSnap(element, snapConfig);
 snapObject.bind(callback);
+element.style.overflowY = 'hidden';
 // /////////////////////////////////////////////////////////////////////////////
 pushNotification.subscribeBS();
 // ////////////////////////////////////////////////////////////////////////////
