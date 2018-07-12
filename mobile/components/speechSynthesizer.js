@@ -15,6 +15,11 @@ function initAudio() {
   audio2 = document.getElementById('audio2');
   audio.addEventListener('error', handleMediaError);
 }
+function stopAska() {
+  audio.pause();
+  audio2.pause();
+  socket.send('speech_end','AUDIO');
+}
 // /////////////////////////////////////////////////////////////////////////////
 function aska(text) {
   newMessage(text, false);
@@ -84,4 +89,4 @@ function aska(text) {
   }
 }
 
-export { aska, initAudio };
+export { aska, initAudio, stopAska };

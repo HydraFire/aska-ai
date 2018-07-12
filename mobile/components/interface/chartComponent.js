@@ -1,5 +1,6 @@
 import React, { Fragment } from 'react';
 import RC2 from 'react-chartjs2';
+import ChartWindow from './chartwindow';
 import socket from '../webSocketClient';
 import '../../css/chartComponent.css';
 
@@ -31,10 +32,13 @@ class ChartCom extends React.Component {
     super();
     this.state = {
       loadbutton: true,
+      chartwindow: false,
       rewindSpeed: parseFloat(localStorage.rewindSpeed) || 3,
       chartButtons:  loadChartTryButtons(),
       chartData: null,
       chartOptions: {
+        events: ['click'],
+        onClick: this.chartwindowHandler,
         animation: false,
         legend: {
             display: false,
@@ -177,6 +181,7 @@ class ChartCom extends React.Component {
     data = JSON.parse(data);
     mainData = data.datasets;
     LogBookData = data.logbookdata;
+    console.log(LogBookData);
     const chartButtons = this.createChartButtons(data.datasets);
     this.enabledButtonsEnableChart(chartButtons);
     this.enabledButtonsColorChart(chartButtons);
@@ -210,6 +215,32 @@ class ChartCom extends React.Component {
 
   }
   // ///////////////////////////////////////////////////////////////////////////
+  chartwindowClose = () => {
+    this.setState({
+      chartwindow: false
+    });
+  }
+  chartwindowHandler = (e, item) => {
+    if (item != '') {
+      if (item[0]._model.datasetLabel === 'LogBook') {
+        setTimeout(()=>{
+          this.setState({
+            chartwindow: item[0]._index
+          });
+        },300)
+      }
+    }
+  }
+  chartwindowShow = () => {
+    if (this.state.chartwindow !== false) {
+      let arr = LogBookData[this.state.chartwindow];
+      return <ChartWindow
+        data={arr}
+        chartwindowClose={this.chartwindowClose}
+        />
+    }
+  }
+  // ///////////////////////////////////////////////////////////////////////////
   oneMoreRender = () => {
     return this.state.chartButtons.map((v) => {
       let color = { background:v.borderColor };
@@ -238,6 +269,7 @@ class ChartCom extends React.Component {
     } else {
       return (
         <Fragment>
+        {this.chartwindowShow()}
         <RC2 data={this.state.chartData} options={this.state.chartOptions} type="bar" />
         <div className="buttons">
           <button part="minus" code="min" onClick={this.buttonRewindHandler} className="buttonRewind">{'<<<'}</button>

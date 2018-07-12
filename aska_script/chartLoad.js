@@ -42,7 +42,9 @@ function logBookData() {
   const data = arr.map((v, i) => {
     let diffpar = arr[i + 1];
     !diffpar ? diffpar = arr[i] : '';
-    return { x: dateFormated(v.date), y: (difference(v.date, diffpar.date)*2) };
+    let diffnano = (difference(v.date, diffpar.date) * 2);
+    diffnano === 0 ? diffnano = 3 : '';
+    return { x: dateFormated(v.date), y: diffnano };
   });
   return {
     label: 'LogBook',
