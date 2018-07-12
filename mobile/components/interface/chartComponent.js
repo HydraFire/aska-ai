@@ -18,7 +18,7 @@ function loadChartTryButtons() {
 }
 function formatDateMax() {
   const x = new Date();
-  return `${x.getUTCMonth() + 1}/${x.getUTCDate()}/${x.getFullYear()} 00:00`;
+  return `${x.getUTCMonth() + 1}/${x.getUTCDate()+1}/${x.getFullYear()} 00:00`;
 }
 function formatDateMin() {
   const x = new Date();
@@ -54,6 +54,11 @@ class ChartCom extends React.Component {
               max: formatDateMax(),
               min: formatDateMin(),
               tooltipFormat: 'll HH:mm'
+            }
+          }],
+          yAxes: [{
+            ticks: {
+              max: 20
             }
           }]
           }
@@ -211,8 +216,16 @@ class ChartCom extends React.Component {
      stateCopy.scales.xAxes[0].time[code] = this.recalc(min[0], this.state.rewindSpeed, part);
      this.setState({ chartOptions: stateCopy})
   }
-  buttonFullHandler = () => {
-
+  buttonFullHandler = (e) => {
+    const part = e.target.getAttribute('part');
+    const stateCopy = this.state.chartOptions;
+     const min = stateCopy.scales.yAxes[0].ticks.max;
+     if (part === 'minus') {
+       stateCopy.scales.yAxes[0].ticks.max = min - 3;
+     } else {
+       stateCopy.scales.yAxes[0].ticks.max = min + 3;
+     }
+     this.setState({ chartOptions: stateCopy})
   }
   // ///////////////////////////////////////////////////////////////////////////
   chartwindowClose = () => {
@@ -277,7 +290,8 @@ class ChartCom extends React.Component {
           <button onClick={this.buttonSpeedHandler} className="buttonSpeed">{'4x'}</button>
           <button onClick={this.buttonSpeedHandler} className="buttonSpeed">{'7x'}</button>
           <button onClick={this.buttonSpeedHandler} className="buttonSpeed">{'30x'}</button>
-          <button onClick={this.buttonFullHandler} className="buttonFull">{'full'}</button>
+          <button part="minus" onClick={this.buttonFullHandler} className="buttonFull">{'minus'}</button>
+          <button part="plus" onClick={this.buttonFullHandler} className="buttonFull">{'plus'}</button>
           <button part="minus" code="max" onClick={this.buttonRewindHandler} className="buttonRewind">{'<<<'}</button>
           <button part="plus" code="max" onClick={this.buttonRewindHandler} className="buttonRewind">{'>>>'}</button>
         </div>
