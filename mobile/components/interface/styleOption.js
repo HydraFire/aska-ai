@@ -123,7 +123,7 @@ class StyleOption extends React.Component {
      fetch(`${process.env.FILESERVER}audio${0}.mp3`).then((response) => {
        alert('ok');
      });
-   } catch(err){
+   } catch(err) {
      alert(err);
    }
    /*
