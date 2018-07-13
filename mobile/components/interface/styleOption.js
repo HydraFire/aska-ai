@@ -113,7 +113,7 @@ class StyleOption extends React.Component {
          this.hotCodeVideoRender();
        }
      })
-   }, 500);
+   }, 2500);
   }
   getAllMusic = () => {
    let arr = [];
@@ -121,15 +121,16 @@ class StyleOption extends React.Component {
    let opt = { mode: 'no-cors', method: 'GET', headers: {
      'Access-Control-Allow-Origin':'http://localhost:8080'}
    };
-   alert('sdf');
    const int = setInterval(() => {
      fetch(`${process.env.FILESERVER}audio${i}.mp3`, opt).then((response) => {
        alert(response);
        if(response.ok) {
+         alert('ok');
          arr.push(`${process.env.FILESERVER}audio${i}.mp3`);
          i += 1;
        } else {
          clearInterval(int);
+         alert(arr);
          this.setState({
            music: arr
          });
