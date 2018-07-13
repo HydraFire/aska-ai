@@ -2,7 +2,8 @@ import { getMessageArr } from '../components/interface/displayCanvasMessage';
 
 function printText(ctx) {
   // ctx.globalCompositeOperation = 'soft-light';
-  ctx.globalCompositeOperation = 'exclusion';
+  //ctx.globalCompositeOperation = 'exclusion';
+
   ctx.font = '60px serif';
   ctx.fillStyle = 'white';
   ctx.textAlign = 'center';
@@ -22,5 +23,6 @@ function printText(ctx) {
       ctx.fillText(v.text, x, 690 - (i * 15));
     }
   });
+  
 }
 export default printText;

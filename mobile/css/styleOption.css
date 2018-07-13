@@ -1,0 +1,47 @@
+.scrollfix {
+  font-size: 14px;
+  width: 360px;
+  height: 720px;
+  overflow-y: scroll;
+}
+.div_buttons {
+  margin: 5px 20px 5px 19px;
+  display: inline-block;
+  text-align: center;
+}
+.time_buttons {
+  border-style: solid;
+  border-color: black;
+  border-width: 0px 0px 1px 0px;
+  width: 107px;
+  height: 50px;
+  outline: none;
+}
+.time_buttons_active {
+  border-style: solid;
+  border-color: black;
+  border-width: 1px 1px 0px 1px;
+  width: 107px;
+  height: 50px;
+  outline: none;
+}
+.div_video {
+  margin-left: 10px;
+}
+.div_video:after {
+    content: " ";
+    display: block;
+    clear: both;
+}
+.videoImg {
+  margin: 5px 5px 0px 0px;
+  display: block;
+  float: left;
+}
+.div_music {
+  margin-left: 10px;
+}
+.musicImg {
+  padding: 5px 0px 5px 0px;
+  display: block;
+}
