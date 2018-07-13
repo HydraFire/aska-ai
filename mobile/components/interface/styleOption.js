@@ -123,8 +123,10 @@ class StyleOption extends React.Component {
    try {
     alert(`${process.env.FILESERVER}audio${i}.mp3`);
     fetch(`${process.env.FILESERVER}audio${i}.mp3`, {
-      mode: 'cors',
-      headers:{'Access-Control-Allow-Origin':'*'}
+    mode: 'no-cors',
+    method: 'GET',
+    headers: {
+      'Access-Control-Allow-Origin':'http://localhost:8080',
     }).then((response) => {
       alert('way');
     }).catch((error) => {
