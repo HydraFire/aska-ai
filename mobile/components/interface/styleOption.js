@@ -118,7 +118,15 @@ class StyleOption extends React.Component {
   getAllMusic = () => {
    let arr = [];
    let i = 0;
-   alert(`${process.env.FILESERVER}audio${i}.mp3`);
+
+   try{
+     fetch(`${process.env.FILESERVER}audio${0}.mp3`).then((response) => {
+       alert('ok');
+     }
+   }catch(err){
+     alert(err);
+   }
+   /*
    const int = setInterval(() => {
      fetch(`${process.env.FILESERVER}audio${i}.mp3`).then((response) => {
        alert(arr);
@@ -134,6 +142,7 @@ class StyleOption extends React.Component {
        }
      })
    }, 2000);
+   */
   }
   // ///////////////////////////////////////////////////////////////////////////
   clickVideoHendler = (e) => {
