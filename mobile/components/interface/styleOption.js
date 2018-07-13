@@ -100,11 +100,8 @@ class StyleOption extends React.Component {
   getAllVideo = () => {
    let arr = [];
    let i = 0;
-   let opt = { mode: 'no-cors', method: 'GET', headers: {
-     'Access-Control-Allow-Origin':'http://localhost:8080'}
-   };
    const int = setInterval(() => {
-     fetch(`${process.env.FILESERVER}video${i}.mp4`, opt).then((response) => {
+     fetch(`${process.env.FILESERVER}video${i}.mp4`).then((response) => {
        if(response.ok) {
          arr.push(`${process.env.FILESERVER}video${i}.mp4`);
          i += 1;
@@ -124,8 +121,10 @@ class StyleOption extends React.Component {
    let opt = { mode: 'no-cors', method: 'GET', headers: {
      'Access-Control-Allow-Origin':'http://localhost:8080'}
    };
+   alert('sdf');
    const int = setInterval(() => {
      fetch(`${process.env.FILESERVER}audio${i}.mp3`, opt).then((response) => {
+       alert(response);
        if(response.ok) {
          arr.push(`${process.env.FILESERVER}audio${i}.mp3`);
          i += 1;
@@ -135,8 +134,10 @@ class StyleOption extends React.Component {
            music: arr
          });
        }
+     }).catch((error) => {
+       alert(error)
      })
-   }, 250);
+   }, 2000);
   }
   // ///////////////////////////////////////////////////////////////////////////
   clickVideoHendler = (e) => {
