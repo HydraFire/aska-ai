@@ -122,7 +122,9 @@ class StyleOption extends React.Component {
    alert('lol2');
    try {
     alert(`${process.env.FILESERVER}audio${i}.mp3`);
-    fetch(`${process.env.FILESERVER}audio${i}.mp3`);
+    fetch(`${process.env.FILESERVER}audio${i}.mp3`).then((response) => {
+      alert('way');
+    });
     alert('ok');
 
    } catch(err) {
