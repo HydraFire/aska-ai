@@ -118,12 +118,14 @@ class StyleOption extends React.Component {
   getAllMusic = () => {
    let arr = [];
    let i = 0;
+   alert(`${process.env.FILESERVER}audio${i}.mp3`);
    const int = setInterval(() => {
      fetch(`${process.env.FILESERVER}audio${i}.mp3`).then((response) => {
        if(response.ok) {
          arr.push(`${process.env.FILESERVER}audio${i}.mp3`);
          i += 1;
        } else {
+         alert(arr);
          clearInterval(int);
          this.setState({
            music: arr
