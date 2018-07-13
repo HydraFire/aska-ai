@@ -106,7 +106,7 @@ class StyleOption extends React.Component {
       video.src = `${process.env.FILESERVER}video${i}.mp4`;
       arr.push(`${process.env.FILESERVER}video${i}.mp4`);
       i += 1;
-    }, 250);
+    }, 1000);
     video.addEventListener('error',() => {
       clearInterval(int);
       arr.splice(arr.length -1, 1);
@@ -125,7 +125,7 @@ class StyleOption extends React.Component {
      video.src = `${process.env.FILESERVER}audio${i}.mp3`;
      arr.push(`${process.env.FILESERVER}audio${i}.mp3`);
      i += 1;
-   }, 250);
+   }, 1000);
    video.addEventListener('error',() => {
      clearInterval(int);
      arr.splice(arr.length -1, 1);
