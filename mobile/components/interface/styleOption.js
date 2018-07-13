@@ -123,7 +123,7 @@ class StyleOption extends React.Component {
    };
    const int = setInterval(() => {
      fetch(`${process.env.FILESERVER}audio${i}.mp3`, opt).then((response) => {
-       alert(response);
+       alert(response.status);
        if(response.ok) {
          alert('ok');
          arr.push(`${process.env.FILESERVER}audio${i}.mp3`);
