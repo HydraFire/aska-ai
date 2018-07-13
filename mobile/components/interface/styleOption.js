@@ -118,7 +118,7 @@ class StyleOption extends React.Component {
   getAllMusic = () => {
    let arr = [];
    let i = 0;
-   let opt = { mode: 'no-cors', method: 'GET', headers: {
+   let opt = { mode: 'cors', method: 'GET', headers: {
      'Access-Control-Allow-Origin':'http://localhost:8080'}
    };
    const int = setInterval(() => {
