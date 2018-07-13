@@ -53,9 +53,7 @@ pushNotification.subscribeBS();
 Coub();
 function playMusic() {
   const audio = document.querySelector('#audio2');
-  console.log(audio.src);
   audio.oncanplaythrough = () => {
-    console.log('sdfsdfsdf');
     audio.play();
     let i = 10000;
     let startVol = audio.volume;
@@ -68,7 +66,7 @@ function playMusic() {
       audio.volume = startVol;
       if (i <= 0) {
         clearInterval(int);
-        audio.pause();
+        audio.src = '';
         audio.volume = endVol;
       }
     }, speed);

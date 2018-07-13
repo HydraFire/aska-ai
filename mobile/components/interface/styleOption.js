@@ -98,47 +98,41 @@ class StyleOption extends React.Component {
     });
   }
   getAllVideo = () => {
-   let arr = [];
-   let i = 0;
-   const int = setInterval(() => {
-     fetch(`${process.env.FILESERVER}video${i}.mp4`).then((response) => {
-       if(response.ok) {
-         arr.push(`${process.env.FILESERVER}video${i}.mp4`);
-         i += 1;
-       } else {
-         clearInterval(int);
-         this.setState({
-           videoArr: arr
-         });
-         this.hotCodeVideoRender();
-       }
-     })
-   }, 2500);
+    let arr = [];
+    let i = 0;
+    let video = document.createElement('video');
+
+    const int = setInterval(() => {
+      video.src = `${process.env.FILESERVER}video${i}.mp4`;
+      arr.push(`${process.env.FILESERVER}video${i}.mp4`);
+      i += 1;
+    }, 250);
+    video.addEventListener('error',() => {
+      clearInterval(int);
+      arr.splice(arr.length -1, 1);
+      this.setState({
+         videoArr: arr
+      });
+      this.hotCodeVideoRender();
+    });
   }
   getAllMusic = () => {
    let arr = [];
    let i = 0;
-   let opt = { mode: 'cors', method: 'GET', headers: {
-     'Access-Control-Allow-Origin':'http://localhost:8080'}
-   };
+   let video = document.createElement('video');
+
    const int = setInterval(() => {
-     fetch(`${process.env.FILESERVER}audio${i}.mp3`, opt).then((response) => {
-       alert(response.status);
-       if(response.ok) {
-         alert('ok');
-         arr.push(`${process.env.FILESERVER}audio${i}.mp3`);
-         i += 1;
-       } else {
-         clearInterval(int);
-         alert(arr);
-         this.setState({
-           music: arr
-         });
-       }
-     }).catch((error) => {
-       alert(error)
-     })
-   }, 2000);
+     video.src = `${process.env.FILESERVER}audio${i}.mp3`;
+     arr.push(`${process.env.FILESERVER}audio${i}.mp3`);
+     i += 1;
+   }, 250);
+   video.addEventListener('error',() => {
+     clearInterval(int);
+     arr.splice(arr.length -1, 1);
+     this.setState({
+       music: arr
+     });
+    })
   }
   // ///////////////////////////////////////////////////////////////////////////
   clickVideoHendler = (e) => {

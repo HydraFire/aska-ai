@@ -1,7 +1,7 @@
 import { getMessageArr } from '../components/interface/displayCanvasMessage';
 
 function printText(ctx) {
-  // ctx.globalCompositeOperation = 'soft-light';
+   ctx.globalCompositeOperation = 'soft-light';
   //ctx.globalCompositeOperation = 'exclusion';
 
   ctx.font = '60px serif';
@@ -23,6 +23,6 @@ function printText(ctx) {
       ctx.fillText(v.text, x, 690 - (i * 15));
     }
   });
-  
+
 }
 export default printText;
