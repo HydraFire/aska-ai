@@ -100,8 +100,11 @@ class StyleOption extends React.Component {
   getAllVideo = () => {
    let arr = [];
    let i = 0;
+   let opt = { mode: 'no-cors', method: 'GET', headers: {
+     'Access-Control-Allow-Origin':'http://localhost:8080'}
+   };
    const int = setInterval(() => {
-     fetch(`${process.env.FILESERVER}video${i}.mp4`).then((response) => {
+     fetch(`${process.env.FILESERVER}video${i}.mp4`, opt).then((response) => {
        if(response.ok) {
          arr.push(`${process.env.FILESERVER}video${i}.mp4`);
          i += 1;
@@ -118,42 +121,22 @@ class StyleOption extends React.Component {
   getAllMusic = () => {
    let arr = [];
    let i = 0;
-   alert('lol');
-   alert('lol2');
-   try {
-    alert(`${process.env.FILESERVER}audio${i}.mp3`);
-    fetch(`${process.env.FILESERVER}audio${i}.mp3`, {
-    mode: 'no-cors',
-    method: 'GET',
-    headers: {
-      'Access-Control-Allow-Origin':'http://localhost:8080'
-    }}).then((response) => {
-      alert('way');
-    }).catch((error) => {
-      alert(error);
-    });
-
-
-   } catch(err) {
-     alert(err);
-   }
-   /*
+   let opt = { mode: 'no-cors', method: 'GET', headers: {
+     'Access-Control-Allow-Origin':'http://localhost:8080'}
+   };
    const int = setInterval(() => {
-     fetch(`${process.env.FILESERVER}audio${i}.mp3`).then((response) => {
-       alert(arr);
+     fetch(`${process.env.FILESERVER}audio${i}.mp3`, opt).then((response) => {
        if(response.ok) {
          arr.push(`${process.env.FILESERVER}audio${i}.mp3`);
          i += 1;
        } else {
-         alert(arr);
          clearInterval(int);
          this.setState({
            music: arr
          });
        }
      })
-   }, 2000);
-   */
+   }, 250);
   }
   // ///////////////////////////////////////////////////////////////////////////
   clickVideoHendler = (e) => {
