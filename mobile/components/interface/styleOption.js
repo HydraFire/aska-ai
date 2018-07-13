@@ -126,8 +126,8 @@ class StyleOption extends React.Component {
     mode: 'no-cors',
     method: 'GET',
     headers: {
-      'Access-Control-Allow-Origin':'http://localhost:8080',
-    }).then((response) => {
+      'Access-Control-Allow-Origin':'http://localhost:8080'
+    }}).then((response) => {
       alert('way');
     }).catch((error) => {
       alert(error);
