@@ -118,11 +118,12 @@ class StyleOption extends React.Component {
   getAllMusic = () => {
    let arr = [];
    let i = 0;
-
+   alert('lol');
+   alert('lol2');
    try {
-     fetch(`${process.env.FILESERVER}audio${0}.mp3`).then((response) => {
-       alert('ok');
-     });
+
+    alert('ok');
+
    } catch(err) {
      alert(err);
    }
