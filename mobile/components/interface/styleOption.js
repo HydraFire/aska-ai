@@ -78,6 +78,7 @@ class StyleOption extends React.Component {
   // ///////////////////////////////////////////////////////////////////////////
   snapImage = (url, i) => {
     let video = document.createElement('video');
+    video.crossOrigin="anonymous";
     video.src = url;
     alert('test');
     video.onloadeddata = () => {
@@ -87,7 +88,7 @@ class StyleOption extends React.Component {
       canvas.height = 60;//video.videoHeight / 12 |0;
       canvas.getContext('2d').drawImage(video, 0, 0, canvas.width, canvas.height);
       alert(canvas.height);
-      let image = canvas.toDataURL();
+      let image = canvas.toDataURL('image/jpeg', 0.5);
       alert(image);
       const videoImg = this.state.videoImg;
       videoImg[`img${i}`] = image;
