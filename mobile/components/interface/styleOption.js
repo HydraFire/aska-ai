@@ -23,7 +23,6 @@ class StyleOption extends React.Component {
     this.state = {
       loadbutton: true,
       videoArr: [],
-      videoImg: {},
       music: [],
       int0: obj.int0,
       int1: obj.int1,
@@ -76,83 +75,33 @@ class StyleOption extends React.Component {
     }
   }
   // ///////////////////////////////////////////////////////////////////////////
-  snapImage = (url, i) => {
-    let video = document.createElement('video');
-
-    video.src = url;
-    alert('test');
-    video.onloadeddata = () => {
-      alert('test');
-      let canvas = document.createElement('canvas');
-      canvas.width = 106;//video.videoWidth / 12 | 0;
-      canvas.height = 60;//video.videoHeight / 12 |0;
-      let encoder = new JPEGEncoder();
-      alert(encoder);
-      var image = jpeg.decode(canvas.getContext('2d').drawImage(video, 0, 0, canvas.width, canvas.height), 50);
-      // let image = canvas.toDataURL('image/jpeg', 0.5);
-      alert(image);
-      const videoImg = this.state.videoImg;
-      videoImg[`img${i}`] = image;
-      alert(videoImg);
-      this.setState({
-        videoImg
-      });
-    }
-  };
-  hotCodeVideoRender = () => {
-    this.state.videoArr.map((v, i) => {
-      // this.snapImage(v, i);
-    });
-  }
   getAllVideo = () => {
-    let arr = [
-      `${process.env.FILESERVER}video0.mp4`
-    ];
-    this.setState({
-       videoArr: arr
-    });
-    setTimeout(() => {
-      this.hotCodeVideoRender();
-    },1000)
-
-    /*
     let arr = [];
     let i = 0;
     let video = document.createElement('video');
-
     const int = setInterval(() => {
       video.src = `${process.env.FILESERVER}video${i}.mp4`;
       arr.push(`${process.env.FILESERVER}video${i}.mp4`);
       i += 1;
-    }, 1000);
+    }, 250);
     video.addEventListener('error',() => {
       clearInterval(int);
       arr.splice(arr.length -1, 1);
       this.setState({
          videoArr: arr
       });
-      this.hotCodeVideoRender();
     });
-    */
+
   }
   getAllMusic = () => {
-   let arr = [
-     `${process.env.FILESERVER}audio0.mp3`,
-     `${process.env.FILESERVER}audio1.mp3`,
-     `${process.env.FILESERVER}audio2.mp3`,
-     `${process.env.FILESERVER}audio3.mp3`,
-     `${process.env.FILESERVER}audio4.mp3`,
-     `${process.env.FILESERVER}audio5.mp3`
-   ];
-   /*
+   let arr = [];
    let i = 0;
-   let video = document.createElement('video');
-
+   let video = document.createElement('audio');
    const int = setInterval(() => {
      video.src = `${process.env.FILESERVER}audio${i}.mp3`;
      arr.push(`${process.env.FILESERVER}audio${i}.mp3`);
      i += 1;
-   }, 1000);
+   }, 250);
    video.addEventListener('error',() => {
      clearInterval(int);
      arr.splice(arr.length -1, 1);
@@ -160,7 +109,6 @@ class StyleOption extends React.Component {
        music: arr
      });
     })
-    */
     this.setState({
       music: arr
     });
@@ -168,9 +116,8 @@ class StyleOption extends React.Component {
   // ///////////////////////////////////////////////////////////////////////////
   clickVideoHendler = (e) => {
     let videoIndex = e.target.getAttribute('alt');
-    videoIndex = parseFloat(videoIndex.substring(3,videoIndex.length));
     const obj = this.state[this.state.chooseInterval];
-    obj['video'] = this.state.videoArr[videoIndex];
+    obj['video'] = videoIndex;
     this.setState({
       [this.state.chooseInterval]: obj
     });
@@ -191,13 +138,8 @@ class StyleOption extends React.Component {
   videoRender = () => {
     return this.state.videoArr.map((v, i) => {
     //  return <img alt={v} onClick={this.clickVideoHendler} className="videoImg" key={v} src={this.state.videoImg[v]} />
-    return <VideoThumbnail
-      videoUrl={v}
-      className="videoImg"
-      width={120}
-      height={80}
-      />
-    });
+      return <video className="videoImg" src={v} key={v} alt={v} onClick={this.clickVideoHendler} />
+      });
   }
 
   musicRender = () => {
