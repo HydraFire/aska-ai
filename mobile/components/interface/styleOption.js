@@ -78,7 +78,7 @@ class StyleOption extends React.Component {
   // ///////////////////////////////////////////////////////////////////////////
   snapImage = (url, i) => {
     let video = document.createElement('video');
-    video.crossOrigin="anonymous";
+    
     video.src = url;
     alert('test');
     video.onloadeddata = () => {
