@@ -1,5 +1,5 @@
 import React, { Fragment } from 'react';
-
+import VideoThumbnail from 'react-video-thumbnail';
 import '../../css/styleOption.css';
 
 
@@ -78,7 +78,7 @@ class StyleOption extends React.Component {
   // ///////////////////////////////////////////////////////////////////////////
   snapImage = (url, i) => {
     let video = document.createElement('video');
-    
+
     video.src = url;
     alert('test');
     video.onloadeddata = () => {
@@ -86,9 +86,10 @@ class StyleOption extends React.Component {
       let canvas = document.createElement('canvas');
       canvas.width = 106;//video.videoWidth / 12 | 0;
       canvas.height = 60;//video.videoHeight / 12 |0;
-      canvas.getContext('2d').drawImage(video, 0, 0, canvas.width, canvas.height);
-      alert(canvas.height);
-      let image = canvas.toDataURL('image/jpeg', 0.5);
+      let encoder = new JPEGEncoder();
+      alert(encoder);
+      var image = jpeg.decode(canvas.getContext('2d').drawImage(video, 0, 0, canvas.width, canvas.height), 50);
+      // let image = canvas.toDataURL('image/jpeg', 0.5);
       alert(image);
       const videoImg = this.state.videoImg;
       videoImg[`img${i}`] = image;
@@ -100,7 +101,7 @@ class StyleOption extends React.Component {
   };
   hotCodeVideoRender = () => {
     this.state.videoArr.map((v, i) => {
-      this.snapImage(v, i);
+      // this.snapImage(v, i);
     });
   }
   getAllVideo = () => {
@@ -188,8 +189,14 @@ class StyleOption extends React.Component {
   // ///////////////////////////////////////////////////////////////////////////
 
   videoRender = () => {
-    return Object.keys(this.state.videoImg).map((v, i) => {
-      return <img alt={v} onClick={this.clickVideoHendler} className="videoImg" key={v} src={this.state.videoImg[v]} />
+    return this.state.videoArr.map((v, i) => {
+    //  return <img alt={v} onClick={this.clickVideoHendler} className="videoImg" key={v} src={this.state.videoImg[v]} />
+    return <VideoThumbnail
+      videoUrl={v}
+      className="videoImg"
+      width={120}
+      height={80}
+      />
     });
   }
 
