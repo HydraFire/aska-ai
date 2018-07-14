@@ -79,17 +79,22 @@ class StyleOption extends React.Component {
   snapImage = (url, i) => {
     let video = document.createElement('video');
     video.src = url;
+    alert('test');
     video.onloadeddata = () => {
-    let canvas = document.createElement('canvas');
-    canvas.width = 106;//video.videoWidth / 12 | 0;
-    canvas.height = 60;//video.videoHeight / 12 |0;
-    canvas.getContext('2d').drawImage(video, 0, 0, canvas.width, canvas.height);
-    let image = canvas.toDataURL();
-    const videoImg = this.state.videoImg;
-    videoImg[`img${i}`] = image;
-    this.setState({
-      videoImg
-    });
+      alert('test');
+      let canvas = document.createElement('canvas');
+      canvas.width = 106;//video.videoWidth / 12 | 0;
+      canvas.height = 60;//video.videoHeight / 12 |0;
+      canvas.getContext('2d').drawImage(video, 0, 0, canvas.width, canvas.height);
+      alert(canvas.height);
+      let image = canvas.toDataURL();
+      alert(image);
+      const videoImg = this.state.videoImg;
+      videoImg[`img${i}`] = image;
+      alert(videoImg);
+      this.setState({
+        videoImg
+      });
     }
   };
   hotCodeVideoRender = () => {
