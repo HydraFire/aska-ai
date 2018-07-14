@@ -1,5 +1,4 @@
 import React, { Fragment } from 'react';
-import VideoThumbnail from 'react-video-thumbnail';
 import '../../css/styleOption.css';
 
 
