@@ -75,34 +75,15 @@ class StyleOption extends React.Component {
   }
   // ///////////////////////////////////////////////////////////////////////////
   getAllVideo = () => {
-    let arr = [
-      `${process.env.FILESERVER}video0.mp4`,
-      `${process.env.FILESERVER}video1.mp4`,
-      `${process.env.FILESERVER}video2.mp4`,
-      `${process.env.FILESERVER}video3.mp4`,
-      `${process.env.FILESERVER}video4.mp4`,
-      `${process.env.FILESERVER}video5.mp4`,
-      `${process.env.FILESERVER}video6.mp4`,
-      `${process.env.FILESERVER}video7.mp4`,
-      `${process.env.FILESERVER}video8.mp4`,
-      `${process.env.FILESERVER}video9.mp4`,
-      `${process.env.FILESERVER}video10.mp4`,
-      `${process.env.FILESERVER}video11.mp4`,
-      `${process.env.FILESERVER}video12.mp4`,
-      `${process.env.FILESERVER}video13.mp4`,
-      `${process.env.FILESERVER}video14.mp4`,
-      `${process.env.FILESERVER}video15.mp4`,
-      `${process.env.FILESERVER}video16.mp4`
-    ];
-    /*
+    let arr = [];
     let i = 0;
-    let video = document.createElement('video');
-    video.preload="metadata";
+    let video = document.createElement('img');
+
     const int = setInterval(() => {
-      video.src = `${process.env.FILESERVER}video${i}.mp4`;
-      arr.push(`${process.env.FILESERVER}video${i}.mp4`);
+      video.src = `${process.env.FILESERVER}img${i}.png`;
+      arr.push(`${process.env.FILESERVER}img${i}.png`);
       i += 1;
-    }, 250);
+    }, 100);
     video.addEventListener('error',() => {
       clearInterval(int);
       arr.splice(arr.length -1, 1);
@@ -110,10 +91,7 @@ class StyleOption extends React.Component {
          videoArr: arr
       });
     });
-    */
-    this.setState({
-       videoArr: arr
-    });
+
   }
   getAllMusic = () => {
    let arr = [];
@@ -137,9 +115,10 @@ class StyleOption extends React.Component {
   }
   // ///////////////////////////////////////////////////////////////////////////
   clickVideoHendler = (e) => {
-    let videoIndex = e.target.getAttribute('alt');
+    let videoIndex = e.target.getAttribute('alt').substring(process.env.FILESERVER.length + 3, e.target.getAttribute('alt').length);
+    videoIndex = videoIndex.split('.')[0];
     const obj = this.state[this.state.chooseInterval];
-    obj['video'] = videoIndex;
+    obj['video'] = `${process.env.FILESERVER}video${videoIndex}.mp4`;
     this.setState({
       [this.state.chooseInterval]: obj
     });
@@ -159,9 +138,8 @@ class StyleOption extends React.Component {
 
   videoRender = () => {
     return this.state.videoArr.map((v, i) => {
-    //  return <img alt={v} onClick={this.clickVideoHendler} className="videoImg" key={v} src={this.state.videoImg[v]} />
-      return <video preload="metadata" className="videoImg" src={v} key={v} alt={v} onClick={this.clickVideoHendler} />
-      });
+      return <img alt={v} onClick={this.clickVideoHendler} className="videoImg" key={v} src={v} />
+    });
   }
 
   musicRender = () => {
