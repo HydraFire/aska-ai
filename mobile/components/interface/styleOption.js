@@ -75,9 +75,29 @@ class StyleOption extends React.Component {
   }
   // ///////////////////////////////////////////////////////////////////////////
   getAllVideo = () => {
-    let arr = [];
+    let arr = [
+      `${process.env.FILESERVER}video0.mp4`,
+      `${process.env.FILESERVER}video1.mp4`,
+      `${process.env.FILESERVER}video2.mp4`,
+      `${process.env.FILESERVER}video3.mp4`,
+      `${process.env.FILESERVER}video4.mp4`,
+      `${process.env.FILESERVER}video5.mp4`,
+      `${process.env.FILESERVER}video6.mp4`,
+      `${process.env.FILESERVER}video7.mp4`,
+      `${process.env.FILESERVER}video8.mp4`,
+      `${process.env.FILESERVER}video9.mp4`,
+      `${process.env.FILESERVER}video10.mp4`,
+      `${process.env.FILESERVER}video11.mp4`,
+      `${process.env.FILESERVER}video12.mp4`,
+      `${process.env.FILESERVER}video13.mp4`,
+      `${process.env.FILESERVER}video14.mp4`,
+      `${process.env.FILESERVER}video15.mp4`,
+      `${process.env.FILESERVER}video16.mp4`
+    ];
+    /*
     let i = 0;
     let video = document.createElement('video');
+    video.preload="metadata";
     const int = setInterval(() => {
       video.src = `${process.env.FILESERVER}video${i}.mp4`;
       arr.push(`${process.env.FILESERVER}video${i}.mp4`);
@@ -90,7 +110,10 @@ class StyleOption extends React.Component {
          videoArr: arr
       });
     });
-
+    */
+    this.setState({
+       videoArr: arr
+    });
   }
   getAllMusic = () => {
    let arr = [];
@@ -137,7 +160,7 @@ class StyleOption extends React.Component {
   videoRender = () => {
     return this.state.videoArr.map((v, i) => {
     //  return <img alt={v} onClick={this.clickVideoHendler} className="videoImg" key={v} src={this.state.videoImg[v]} />
-      return <video className="videoImg" src={v} key={v} alt={v} onClick={this.clickVideoHendler} />
+      return <video preload="metadata" className="videoImg" src={v} key={v} alt={v} onClick={this.clickVideoHendler} />
       });
   }
 
