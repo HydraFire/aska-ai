@@ -120,6 +120,10 @@ class StyleOption extends React.Component {
     this.setState({
        videoArr: arr
     });
+    setTimeout(() => {
+      this.hotCodeVideoRender();
+    },1000)
+
     /*
     let arr = [];
     let i = 0;
