@@ -16,8 +16,8 @@ function clientTimeout(arr) {
       clearInterval(int);
     } else {
       r += 1;
-       audio.play();
+       aska('ой');
     }
-  }, 10000);
+  }, 20000);
 }
 export default clientTimeout;
