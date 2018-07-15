@@ -13,6 +13,8 @@ import '../css/logotype.css';
 class App extends React.Component {
   componentDidMount() {
     initAudio();
+  }
+  handler = () => {
     clientTimeout(JSON.stringify(['молодец', 15]));
   }
   render() {
@@ -21,7 +23,7 @@ class App extends React.Component {
       <div>
         <div id="container">
           <div className="page" id="main_div">
-            <Logo />
+            <Logo onClick={this.handler} />
             <div className="words" />
           </div>
           <div className="page">

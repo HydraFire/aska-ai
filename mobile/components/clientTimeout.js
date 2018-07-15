@@ -6,6 +6,7 @@ function clientTimeout(arr) {
   const audio = document.getElementById('audio');
 
   audio.src = `${process.env.FILESERVER}20Hz.mp3`;
+  audio.load()
   function lol() {
     audio.play();
   }
