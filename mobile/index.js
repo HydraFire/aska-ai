@@ -74,5 +74,6 @@ function playMusic() {
 }
 playMusic();
 
-chrome.idle.onStateChanged.addListener(playMusic);
+chrome.idle.onStateChanged.addListener(()=>{alert('tyr')});
+
 // Kaleidoscope();
