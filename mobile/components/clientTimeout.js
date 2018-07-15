@@ -1,6 +1,6 @@
 
 import { aska } from './speechSynthesizer';
-import NoSleep from 'NoSleep.js';
+import NoSleep from 'nosleep.js';
 
 function clientTimeout(arr) {
   const noSleep = new NoSleep();
