@@ -12,15 +12,16 @@ function clientTimeout(arr) {
   audio.addEventListener('ended', lol, false);
   audio.play();
 
-  let r = 0;
+  let r = 1;
   const int = setInterval(() => {
-    if (r >= (parseFloat(arr[1]) * 2)) {
+    if (r >= (parseFloat(arr[1]))) {
       audio.removeEventListener('ended', lol, false);
       aska(arr[0]);
       clearInterval(int);
     } else {
       r += 1;
+      aska(r);
     }
-  }, 30000);
+  }, 60000);
 }
 export default clientTimeout;
