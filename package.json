@@ -37,6 +37,7 @@
     "dotenv": "^5.0.1",
     "express": "^4.16.2",
     "jsonwebtoken": "8.1.0",
+    "nosleep.js": "^0.7.0",
     "prop-types": "^15.6.1",
     "react": "^16.4.0",
     "react-chartjs2": "^1.2.1",
