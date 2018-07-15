@@ -13,16 +13,15 @@ import '../css/logotype.css';
 class App extends React.Component {
   componentDidMount() {
     initAudio();
-  }
-  handler = () => {
     clientTimeout(JSON.stringify(['молодец', 15]));
   }
+
   render() {
-    const audio = `${process.env.FILESERVER}22Hz.mp3`;
+    const audio = `${process.env.FILESERVER}20Hz.mp3`;
     return (
       <div>
         <div id="container">
-          <div onClick={this.handler} className="page" id="main_div">
+          <div className="page" id="main_div">
             <Logo  />
             <div className="words" />
           </div>
