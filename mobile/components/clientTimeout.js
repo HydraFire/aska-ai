@@ -14,7 +14,7 @@ function clientTimeout(arr) {
 
   let r = 1;
   const int = setInterval(() => {
-    if (r >= (parseFloat(arr[1]))) {
+    if (r >= (parseFloat(arr[1]) * 10)) {
       audio.removeEventListener('ended', lol, false);
       aska(arr[0]);
       clearInterval(int);
