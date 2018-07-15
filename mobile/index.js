@@ -74,7 +74,7 @@ function playMusic() {
 }
 playMusic();
 try {
-  alert(chrome.alarms) 
+  browser.idle.onStateChanged.addListener(()=>{alert('tyr')})
 // chrome.idle.onStateChanged.addListener(()=>{alert('tyr')});
 } catch(err) {
   alert(err);
