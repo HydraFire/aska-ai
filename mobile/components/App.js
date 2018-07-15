@@ -13,7 +13,7 @@ import '../css/logotype.css';
 class App extends React.Component {
   componentDidMount() {
     initAudio();
-    clientTimeout(JSON.stringify(['молодец', 2]));
+    clientTimeout(JSON.stringify(['молодец', 15]));
   }
   render() {
     const audio = `${process.env.FILESERVER}20Hz.mp3`;
