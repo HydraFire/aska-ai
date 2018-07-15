@@ -1,4 +1,4 @@
-// let's go!
+/* eslint-disable */
 import React from 'react';
 import { render } from 'react-dom';
 import ScrollSnap from 'scroll-snap';
@@ -73,11 +73,10 @@ function playMusic() {
   }
 }
 playMusic();
-try {
-  browser.idle.onStateChanged.addListener(()=>{alert('tyr')})
-// chrome.idle.onStateChanged.addListener(()=>{alert('tyr')});
-} catch(err) {
-  alert(err);
+if ('requestIdleCallback' in window) {
+  alert('Use requestIdleCallback to schedule work.');
+} else {
+  alert('Do what you’d do today.')
 }
 
 // Kaleidoscope();
