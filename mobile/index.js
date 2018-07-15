@@ -73,10 +73,8 @@ function playMusic() {
   }
 }
 playMusic();
-if ('requestIdleCallback' in window) {
-  alert('Use requestIdleCallback to schedule work.');
-} else {
-  alert('Do what you’d do today.')
+window.requestIdleCallback = () => {
+  alert('lol')
 }
 
 // Kaleidoscope();
