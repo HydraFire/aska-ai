@@ -18,12 +18,12 @@ class App extends React.Component {
     clientTimeout(JSON.stringify(['молодец', 15]));
   }
   render() {
-    const audio = `${process.env.FILESERVER}20Hz.mp3`;
+    const audio = `${process.env.FILESERVER}22Hz.mp3`;
     return (
       <div>
         <div id="container">
-          <div className="page" id="main_div">
-            <Logo onClick={this.handler} />
+          <div onClick={this.handler} className="page" id="main_div">
+            <Logo  />
             <div className="words" />
           </div>
           <div className="page">
@@ -46,7 +46,7 @@ class App extends React.Component {
           </div>
         </div>
         <audio src={audio} id="audio" />
-        <audio src="" id="audio2" />
+        <audio src={audio} id="audio2" />
       </div>
     );
   }
