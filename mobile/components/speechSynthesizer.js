@@ -22,7 +22,7 @@ function stopAska() {
 }
 // /////////////////////////////////////////////////////////////////////////////
 function aska(text) {
-  newMessage(text, false);
+  //newMessage(text, false);
 
   if (aska_mute){
     socket.send('speech_start','AUDIO');

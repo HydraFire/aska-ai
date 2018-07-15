@@ -187,7 +187,7 @@ class StyleOption extends React.Component {
   }
   render() {
     return (
-      <div className="scrollfix">
+      <div className="scrollfix2">
         {this.myRender()}
       </div>
     );

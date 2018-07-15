@@ -1,6 +1,7 @@
 .inputConteiner {
   padding: 0px;
   margin-top: -4px;
+  padding: 230px 0px 0px 0px;
 }
 .inputCommandLine {
   width: 100%;
@@ -9,7 +10,6 @@
   line-height: 22px;
   vertical-align: middle;
   text-align: center;
-  padding: 0px;
   margin: 0px;
   color: #ddd;
   border: 0px;

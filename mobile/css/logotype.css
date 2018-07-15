@@ -36,7 +36,7 @@ html, body {
   color: #ddd;
   width: 720px;
   height: 720px;
-  background: #222;
+  background: #353436;
   display: inline-block;
   vertical-align: middle;
 }
@@ -78,7 +78,7 @@ p {
 #cube0 {
   width: 360px;
   height: 720px;
-  background: #eee;
+  background: #353436;
 }
 #cube1 {
   width: 360px;
@@ -87,5 +87,5 @@ p {
 #cube2 {
   width: 360px;
   height: 720px;
-  background: #eee;
+  background: #353436;
 }

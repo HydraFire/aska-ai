@@ -50,7 +50,8 @@ element.style.overflowY = 'hidden';
 // /////////////////////////////////////////////////////////////////////////////
 pushNotification.subscribeBS();
 // ////////////////////////////////////////////////////////////////////////////
-Coub();
+// Coub();
+/*
 function playMusic() {
   const audio = document.querySelector('#audio2');
   audio.oncanplaythrough = () => {
@@ -73,8 +74,10 @@ function playMusic() {
   }
 }
 playMusic();
+*/
+/*
 window.requestIdleCallback = () => {
   alert('lol')
 }
-
+*/
 // Kaleidoscope();

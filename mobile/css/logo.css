@@ -1,0 +1,53 @@
+.main {
+  height: 720px;
+  font-size: 20px;
+  background: #353436;
+}
+.hero-logo {
+  margin: 220px 0px 0px -60px;
+  transform: rotate(90deg);
+}
+.hero-logo-circle {
+  position: absolute;
+  left: -3px;
+  top: 150px;
+  animation: hero-logo-circle 1s linear infinite;
+  will-change: transform;
+}
+
+
+#c1 {
+  animation-duration: 30s;
+}
+#c2 {
+    animation-duration: 40s;
+}
+#c3 {
+    animation-duration: 50s;
+}
+#c4 {
+    animation-duration: 60s;
+}
+#c5 {
+    animation-duration: 70s;
+}
+#c6 {
+    animation-duration: 80s;
+}
+#c7 {
+    animation-duration: 90s;
+}
+#c8 {
+    animation-duration: 100s;
+}
+#c9 {
+  animation-duration: 110s;
+}
+#c10 {
+  animation-duration: 120s;
+}
+@keyframes hero-logo-circle{
+  100%{
+    transform:rotate(1turn);
+    }
+  }
