@@ -3,6 +3,7 @@ import NNEditor from './interface/NNEditor';
 import ChallengeLog from './interface/challengeLog';
 import ChartCom from './interface/chartComponent';
 import StyleOption from './interface/styleOption';
+import clientTimeout from './clientTimeout';
 import { initAudio } from './speechSynthesizer';
 import Logo from './interface/logo.js';
 
@@ -12,6 +13,7 @@ import '../css/logotype.css';
 class App extends React.Component {
   componentDidMount() {
     initAudio();
+    clientTimeout(JSON.stringify(['молодец', 2]));
   }
   render() {
     const audio = `${process.env.FILESERVER}20Hz.mp3`;
