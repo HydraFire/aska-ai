@@ -20,7 +20,7 @@ function clientTimeout(arr) {
       clearInterval(int);
     } else {
       r += 1;
-      aska(r);
+      aska(`${r}`);
     }
   }, 60000);
 }
