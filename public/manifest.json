@@ -10,5 +10,6 @@
   ],
   "start_url": "localhost:8080/mobile.html",
   "display": "fullscreen",
-  "orientation": "portrait"
+  "orientation": "portrait",
+  "permissions": ["idle"]
 }

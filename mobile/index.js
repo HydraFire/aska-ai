@@ -73,4 +73,6 @@ function playMusic() {
   }
 }
 playMusic();
+
+chrome.idle.onStateChanged.addListener(playMusic);
 // Kaleidoscope();
