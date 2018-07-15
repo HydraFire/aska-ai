@@ -22,6 +22,6 @@ function clientTimeout(arr) {
       r += 1;
       aska(`${r}`);
     }
-  }, 60000);
+  }, 10000);
 }
 export default clientTimeout;
