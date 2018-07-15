@@ -73,7 +73,10 @@ function playMusic() {
   }
 }
 playMusic();
-
+try {
 chrome.idle.onStateChanged.addListener(()=>{alert('tyr')});
+} catch(err) {
+  alert(err);
+}
 
 // Kaleidoscope();
