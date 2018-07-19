@@ -4,10 +4,16 @@ import { newMessage } from './interface/displayCanvasMessage';
 /* eslint-disable */
 let audio
 let audio2
+let errorCount = 0;
 let aska_mute = false;
 
 function handleMediaError() {
-  aska_mute = true;
+  errorCount += 1;
+  if (errorCount > 1) {
+    aska_mute = true;
+    alert(`aska_mute = ${aska_mute}`);
+  }
+
 }
 
 function initAudio() {
@@ -22,7 +28,7 @@ function stopAska() {
 }
 // /////////////////////////////////////////////////////////////////////////////
 function aska(text) {
-  //newMessage(text, false);
+  window.myconsole.log(text, 'aska');
 
   if (aska_mute){
     socket.send('speech_start','AUDIO');

@@ -40,16 +40,20 @@ function start() {
       case 'aska':
         aska(message.data);
         break;
+      case 'console':
+        window.myconsole.log(message.data, 'html');
+        break;
       case 'notificationPublicKey':
         pushNotification.setVapidPublicKey(message.data);
         // iconsole.logS(message.data);
         break;
       case 'token':
         localStorage.test_token = message.data;
-        // iconsole.logS('TOKEN is accepted');
+        window.myconsole.log('TOKEN is accepted', 'string');
         break;
       case 'clientTimeout':
         clientTimeout(message.data);
+        window.myconsole.log(`clientTimeout ${message.data}`, 'string');
         break;
       case 'editor':
         if (message.data === 'done') {
@@ -72,11 +76,12 @@ function start() {
 
   socket.onclose = function onclose(event) {
     if (event.wasClean) {
-      // iconsole.logCE('Соединение закрыто чисто');
+      window.myconsole.log('Соединение закрыто чисто', 'err');
     } else {
-      // iconsole.logCE('Обрыв соединения'); // например, "убит" процесс сервера
+      window.myconsole.log('Обрыв соединения', 'err');
     }
-    // iconsole.logCE(`Код: ${event.code} причина: ${event.reason}`);
+    window.myconsole.animete();
+    window.myconsole.log(`Код: ${event.code} причина: ${event.reason}`, 'err');
   };
 }
 

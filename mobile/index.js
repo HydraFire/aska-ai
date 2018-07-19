@@ -19,19 +19,9 @@ render(<App />, document.querySelector('#main'));
 socket.start();
 speechRec();
 // /////////////////////////////////////////////////////////////////////////////
-const askaButton = document.querySelector('#main_div');
+const askaButton = document.querySelector('.main');
 askaButton.addEventListener('click', startStopRec);
 // /////////////////////////////////////////////////////////////////////////////
-const commandLine = document.querySelector('.inputCommandLine');
-commandLine.onkeydown = function onkeydown(e) {
-  if (e.keyCode === 13) {
-    if (this.value !== '') {
-      newMessage(this.value, true);
-      socket.send(this.value);
-      this.value = '';
-    }
-  }
-};
 // /////////////////////////////////////////////////////////////////////////////
 const snapConfig = {
   scrollSnapDestination: '100% 0%',
@@ -40,7 +30,7 @@ const snapConfig = {
 };
 
 function callback(e) {
-  console.log('called when snap animation ends');
+  // console.log('called when snap animation ends');
 }
 
 const element = document.getElementById('container');
@@ -51,30 +41,6 @@ element.style.overflowY = 'hidden';
 pushNotification.subscribeBS();
 // ////////////////////////////////////////////////////////////////////////////
 // Coub();
-/*
-function playMusic() {
-  const audio = document.querySelector('#audio2');
-  audio.oncanplaythrough = () => {
-    audio.play();
-    let i = 10000;
-    let startVol = audio.volume;
-    let endVol = audio.volume;
-    let speed = 1000;
-    let volSpeed = ((i / speed) / 1000).toFixed(2);
-    const int = setInterval(() => {
-      i -= speed;
-      startVol -= 0.01;
-      audio.volume = startVol;
-      if (i <= 0) {
-        clearInterval(int);
-        audio.src = '';
-        audio.volume = endVol;
-      }
-    }, speed);
-  }
-}
-playMusic();
-*/
 /*
 window.requestIdleCallback = () => {
   alert('lol')

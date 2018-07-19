@@ -2,10 +2,9 @@ import React from 'react';
 import NNEditor from './interface/NNEditor';
 import ChallengeLog from './interface/challengeLog';
 import ChartCom from './interface/chartComponent';
-import StyleOption from './interface/styleOption';
 import clientTimeout from './clientTimeout';
 import { initAudio } from './speechSynthesizer';
-import Logo from './interface/logo.js';
+import Logo from './interface/logo';
 
 
 import '../css/logotype.css';
@@ -16,18 +15,11 @@ class App extends React.Component {
   }
 
   render() {
-    const audio = `${process.env.FILESERVER}20Hz.mp3`;
     return (
       <div>
         <div id="container">
-          <div className="page" id="main_div">
-            <Logo />
-            <div className="words" />
-          </div>
-          <div className="page">
-            <div id="cube0">
-              <StyleOption />
-            </div>
+          <div className="page2" id="main_div">
+            <Logo ref={(myconsole) => { window.myconsole = myconsole }}/>
           </div>
           <div className="page">
             <div id="cube1">
@@ -43,8 +35,8 @@ class App extends React.Component {
             <ChartCom ref={(chartComponent) => { window.chartComponent = chartComponent }}/>
           </div>
         </div>
-        <audio src={audio} id="audio" />
-        <audio src={audio} id="audio2" />
+        <audio src="" id="audio" />
+        <audio src="" id="audio2" />
       </div>
     );
   }

@@ -31,6 +31,12 @@ html, body {
   display: inline-block;
   vertical-align: middle;
 }
+.page2 {
+  width: 720px;
+  height: 720px;
+  display: inline-block;
+  vertical-align: middle;
+}
 .page2x {
   overflow: hidden;
   color: #ddd;
@@ -78,7 +84,7 @@ p {
 #cube0 {
   width: 360px;
   height: 720px;
-  background: #353436;
+  background: #000;
 }
 #cube1 {
   width: 360px;

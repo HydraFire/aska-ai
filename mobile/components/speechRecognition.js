@@ -29,7 +29,7 @@ export const speechRec = () => {
     const text = transcriptText(e.results);
     // Финальное значение разпознавания
     if (e.results[0].isFinal) {
-      newMessage(text, true);
+      window.myconsole.log(text, 'chat');
       socket.send(text);
     }
   });

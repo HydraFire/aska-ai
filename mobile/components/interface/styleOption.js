@@ -175,11 +175,6 @@ class StyleOption extends React.Component {
           {this.musicRender()}
         </div>
         <div>
-         настройка когда меняеться по времени
-        </div>
-        <div>
-          <button id="unsubscribe">unsubscribe</button>
-          <button id="subscribe">subscribe</button>
         </div>
         </Fragment>
       )

@@ -3,19 +3,100 @@
   font-size: 20px;
   background: #000;
 }
-.hero-logo {
-  margin: 220px 0px 0px -60px;
-  transform: rotate(90deg);
+.circle-static-portable {
+  margin: 70px 0px 0px 111px;
 }
-.hero-logo-circle {
+.circle-portable {
+  left: 175px;
+  top: 0px;
   position: absolute;
-  left: -3px;
-  top: 150px;
   animation: hero-logo-circle 1s linear infinite;
   will-change: transform;
 }
-
-
+.circle-static {
+  margin: 220px 0px 0px -60px;
+  transform: rotate(90deg);
+}
+.circle {
+  left: -3px;
+  top: 150px;
+  position: absolute;
+  animation: hero-logo-circle 1s linear infinite;
+  will-change: transform;
+}
+.nosleep-video {
+  margin-top: 10px;
+  margin-left: 50px;
+  position: absolute;
+  width: 50px;
+  height: 50px;
+  background: #000;
+  color: #000;
+}
+.consoleButton {
+  margin-top: 10px;
+  margin-left: 0px;
+  position: absolute;
+  width: 50px;
+  height: 50px;
+  background: rgba(0,0,0,0);
+  color: #fff;
+  z-index: 11;
+  border-width: 0px;
+  outline: 0px;
+}
+.console {
+  position: absolute;
+  font-size: 13px;
+  width: 360px;
+  height: 720px;
+  background: rgba(0,0,0,0.8);
+  color: #ddd;
+  z-index: 10;
+  top:0;
+}
+.console_top {
+  width: 100%;
+  height: 30px;
+  margin: 5px 10px 5px 10px;
+}
+.console_center {
+  white-space: normal;
+  width: 340px;
+  height: 650px;
+  overflow-y: scroll;
+  margin: 5px 10px 5px 10px;
+}
+.inputCommandLine {
+  width: 100%;
+  font-size: 14px;
+  vertical-align: middle;
+  text-align: center;
+  margin: 0px 5px 10px 5px;
+  color: #ddd;
+  border: 0px;
+  background: rgba(0, 0, 0, 0);
+}
+.console_string {
+  color: #777;
+  margin-bottom: 5px;
+}
+.console_html {
+  color: #76a;
+  margin-bottom: 5px;
+}
+.console_chat {
+  color: #fff;
+  margin-bottom: 5px;
+}
+.console_err {
+  color: red;
+  margin: 10px 0px 10px 0px;
+}
+.console_aska {
+  color: #fa2;
+  margin-bottom: 5px;
+}
 #c1 {
   animation-duration: 30s;
 }
@@ -45,6 +126,9 @@
 }
 #c10 {
   animation-duration: 120s;
+}
+#cSpeed {
+  animation-duration: 1s;
 }
 @keyframes hero-logo-circle{
   100%{
