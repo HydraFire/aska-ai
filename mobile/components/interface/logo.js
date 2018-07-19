@@ -46,7 +46,7 @@ function test() {
        window.myconsole.log(r, 'string');
        //audio.play;
      }
-   }, 10000);
+   }, 60000);
 }
 // var previousOrientation = window.orientation;
 function checkOrientation() {
