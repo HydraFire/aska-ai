@@ -1,4 +1,5 @@
 import React, { Fragment } from 'react';
+import { aska } from '../speechSynthesizer';
 import socket from '../webSocketClient';
 import '../../css/logo.css';
 /*
@@ -33,8 +34,8 @@ function test() {
   }
   audio2.addEventListener('ended', lol, false);
   audio2.play();
-
-   let r = 1;
+  window.myconsole.log('start','err');
+   let r = 0;
    const int = setInterval(() => {
     if (r >= (220)) {
        audio.removeEventListener('ended', lol, false);
@@ -42,6 +43,7 @@ function test() {
      } else {
        r += 1;
        aska(`${r}`);
+       window.myconsole.log(r, 'string');
        //audio.play;
      }
    }, 10000);
