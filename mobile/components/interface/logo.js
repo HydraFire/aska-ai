@@ -149,7 +149,7 @@ class Logo extends React.Component {
   }
   componentDidMount() {
     init();
-    test();
+    //test();
   }
 
   noSleep = () => {
