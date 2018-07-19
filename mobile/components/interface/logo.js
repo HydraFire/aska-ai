@@ -1,7 +1,7 @@
 import React, { Fragment } from 'react';
 import socket from '../webSocketClient';
 import '../../css/logo.css';
-
+/*
 function test() {
   let r = 0;
   const audio = document.querySelector('#audio2');
@@ -21,6 +21,30 @@ function test() {
       window.myconsole.log(r*0.34 | 0,'string');
     }
   }, 20000);
+}*/
+function test() {
+//  const audio = document.querySelector('#audio');
+//  audio.src = `${process.env.FILESERVER}napominanie.mp3`;
+
+  const audio2 = document.getElementById('audio2');
+  audio2.src = `${process.env.FILESERVER}20Hz.mp3`;
+  function lol() {
+    audio2.play();
+  }
+  audio2.addEventListener('ended', lol, false);
+  audio2.play();
+
+   let r = 1;
+   const int = setInterval(() => {
+    if (r >= (220)) {
+       audio.removeEventListener('ended', lol, false);
+       clearInterval(int);
+     } else {
+       r += 1;
+       aska(`${r}`);
+       //audio.play;
+     }
+   }, 10000);
 }
 // var previousOrientation = window.orientation;
 function checkOrientation() {
