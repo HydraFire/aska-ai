@@ -34,7 +34,8 @@ function test() {
   }
   audio2.addEventListener('ended', lol, false);
   audio2.play();
-  window.myconsole.log('start','err');
+  audio2.volume = 0.1;
+  //window.myconsole.log('start','err');
    let r = 0;
    const int = setInterval(() => {
     if (r >= (220)) {
@@ -46,7 +47,7 @@ function test() {
        window.myconsole.log(r, 'string');
        //audio.play;
      }
-   }, 60000);
+   }, 10000);
 }
 // var previousOrientation = window.orientation;
 function checkOrientation() {
@@ -139,7 +140,7 @@ class Logo extends React.Component {
       activeInput(false);
       this.setState({console: false});
     } else {
-      test();
+
       this.setState({console: true});
       setTimeout(() => {
         activeInput(true);
@@ -148,6 +149,7 @@ class Logo extends React.Component {
   }
   componentDidMount() {
     init();
+    test();
   }
 
   noSleep = () => {
