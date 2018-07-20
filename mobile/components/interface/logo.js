@@ -24,7 +24,7 @@ function test() {
   }, 20000);
 }*/
 function test() {
-//  const audio = document.querySelector('#audio');
+  const audio = document.querySelector('#audio');
 //  audio.src = `${process.env.FILESERVER}napominanie.mp3`;
 
   const audio2 = document.getElementById('audio2');
@@ -38,16 +38,18 @@ function test() {
   //window.myconsole.log('start','err');
    let r = 0;
    const int = setInterval(() => {
-    if (r >= (220)) {
+     let x = new Date();
+
+    if (x.getHours() == 9 && x.getMinutes() == 25) {
        audio.removeEventListener('ended', lol, false);
+       aska(`текущее время, ${x.getHours()} часов, ${x.getMinutes()} минут, первый тест пройден успешно`);
        clearInterval(int);
      } else {
        r += 1;
-       aska(`${r}`);
-       window.myconsole.log(r, 'string');
-       //audio.play;
+       window.myconsole.log(`цикл интервала ${r}`, 'string');
+       window.myconsole.log(`${x.getHours()}:${x.getMinutes()}`, 'string');
      }
-   }, 10000);
+   }, 60000);
 }
 // var previousOrientation = window.orientation;
 function checkOrientation() {
@@ -149,7 +151,7 @@ class Logo extends React.Component {
   }
   componentDidMount() {
     init();
-    //test();
+    test();
   }
 
   noSleep = () => {
