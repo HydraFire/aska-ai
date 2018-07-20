@@ -40,9 +40,9 @@ function test() {
    const int = setInterval(() => {
      let x = new Date();
 
-    if (x.getHours() == 10 && x.getMinutes() == 35) {
+    if (x.getHours() == 14 && x.getMinutes() == 10) {
        audio.removeEventListener('ended', lol, false);
-       aska(`текущее время, ${x.getHours()} часов, ${x.getMinutes()} минут, первый тест пройден успешно`);
+       aska(`текущее время, ${x.getHours()} часов, ${x.getMinutes()} минут, третий тест пройден успешно`);
        clearInterval(int);
      } else {
        r += 1;
