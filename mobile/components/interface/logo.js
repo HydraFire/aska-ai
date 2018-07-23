@@ -2,27 +2,26 @@ import React, { Fragment } from 'react';
 import { aska } from '../speechSynthesizer';
 import socket from '../webSocketClient';
 import '../../css/logo.css';
-/*
-function test() {
-  let r = 0;
-  const audio = document.querySelector('#audio2');
-  audio.src = `${process.env.FILESERVER}napominanie.mp3`;
-  const int = setInterval(() => {
-    if (r >= 45*3) {
 
-      clearInterval(int);
+function deviceMotionHandler(e) {
+  console.log(e.acceleration);
+  window.myconsole.log(JSON.stringify(e.acceleration),'string');
+  let sym = e.acceleration.x + e.acceleration.y + e.acceleration.z;
+  if (sym > 0) {
+    window.removeEventListener("devicemotion", deviceMotionHandler);
+    aska(`это победа`);
+  }
+}
 
-    } else {
-      try {
-        audio.play();
-      } catch(err) {
-        window.myconsole.log(err.message,'err');
-      }
-      r += 1;
-      window.myconsole.log(r*0.34 | 0,'string');
-    }
-  }, 20000);
-}*/
+function test2() {
+  setTimeout(()=>{
+    window.myconsole.log(`window.DeviceMotionEvent = ${window.DeviceMotionEvent}`,'string');
+    window.addEventListener("devicemotion", deviceMotionHandler);
+  },5000);
+  //setInterval(() => {
+  //}, 1000);
+}
+
 function test() {
   const audio = document.querySelector('#audio');
 //  audio.src = `${process.env.FILESERVER}napominanie.mp3`;
@@ -152,6 +151,7 @@ class Logo extends React.Component {
   componentDidMount() {
     init();
     test();
+    test2();
   }
 
   noSleep = () => {
