@@ -6,7 +6,7 @@ import '../../css/logo.css';
 function deviceMotionHandler(e) {
   console.log(e.acceleration);
   window.myconsole.log(`${e.acceleration.x} ${e.acceleration.y} ${e.acceleration.z}`,'string');
-  let sym = e.acceleration.x + e.acceleration.y + e.acceleration.z;
+  let sym = e.acceleration.x + e.acceleration.y + e.acceleration.z | 0;
   window.myconsole.log(`sym = ${sym} `,'string');
   if (sym > 0) {
     window.removeEventListener("devicemotion", deviceMotionHandler);
