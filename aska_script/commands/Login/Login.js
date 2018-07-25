@@ -59,7 +59,7 @@ function Login(ws, option) {
     ws.accessed = true;
     // Запуск проверки заданий и лайф циклов
     setTimeout(() => {
-      checkAssignments(ws);
+      idleInterval(ws);
     }, 3000);
   };
   const negative = function negative() {
