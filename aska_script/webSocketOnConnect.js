@@ -6,7 +6,6 @@ function webSocketOnConnect(wss) {
     let userIp = ws._socket.remoteAddress;
     userIp = userIp.substring(7, userIp.length);
     send(ws, 'console', userIp);
-    console.log('TEST');
     // NNListen переключает режим когда сказаное поступает в нейроную сеть
     // для выбора команды и режимом когда интервалы запушеные предыдушей
     // фразой ожидают новых разговорных даных от клиента для продолжения
@@ -17,6 +16,7 @@ function webSocketOnConnect(wss) {
     ws.NNListen = true;
     // статус проигрования аудио на клиенте, speech_end тоесть сейчас не проигрываеться
     ws.audio = 'speech_end';
+    ws.endedTracks = [];
     // Все интервалы проверяют этот параметер, если поставить true они все завершаться
     ws.closeAllInterval = false;
     // Стирает интервал проверки заданий
@@ -29,6 +29,7 @@ function webSocketOnConnect(wss) {
     ws.addEventListener('close', () => {
       ws.closeAllInterval = true;
       ws.closeTimeInterval = true;
+      clearInterval(ws.idleInterval);
     });
   });
 }

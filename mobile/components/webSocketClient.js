@@ -3,7 +3,7 @@ import pushNotification from './pushNotification';
 import { aska } from './speechSynthesizer';
 import clientTimeout from './clientTimeout';
 import NNEditor from './interface/NNEditor';
-import Quest from './quest';
+import { twoArr } from './quest';
 
 let socket = null;
 // const serverAddress = "wss://nerv.pro/z-index.html";
@@ -70,7 +70,7 @@ function start() {
         window.chartComponent.loadChart(message.data);
         break;
       case 'quest':
-        Quest(message.data);
+        twoArr(message.data);
         break;
       default:
         // iconsole.logS(message.data);

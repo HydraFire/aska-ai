@@ -10,7 +10,6 @@ const read = function read() {
     }
   );
 }
-module.exports.read = read;
 // /////////////////////////////////////////////////////////////////////////////
 const translate = function translate() {
   let extensionId = 'jaolhkfjhkkakocggfihkelgobjbclol';
@@ -28,4 +27,4 @@ const translate = function translate() {
     }
   );
 }
-module.exports.translate = translate;
+export { translate, read }

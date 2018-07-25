@@ -37,10 +37,10 @@ function trainMain() {
   });
   net.train(data, {
     errorThresh: 0.005,
-    iterations: 5000,
+    iterations: 10000,
     log: true,
     logPeriod: 50,
-    learningRate: 0.3
+    learningRate: 0.05
   });
   // Протренированую сеть сохраняем в файл
   const jsonTrain = net.toJSON();

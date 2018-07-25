@@ -48,7 +48,6 @@ module.exports = {
     // env plugin
 
     new webpack.DefinePlugin({
-      'process.env.FILESERVER': JSON.stringify(process.env.FILESERVER),
       'process.env.HOSTNAME': JSON.stringify(process.env.HOSTNAME)
     })
   ]

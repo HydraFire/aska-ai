@@ -1,5 +1,6 @@
 const fs = require('fs');
 const textAnalitic = require('./textAnalitic');
+const socket = require('../../webSocketOnMessage');
 const askForCircle = require('./askForCircle');
 const { calcLast } = require('./calcTime');
 // //////////////////////////////////////
@@ -38,19 +39,30 @@ function saveIncidentFirstTime(arr, value, startCount) {
 }
 module.exports.saveIncidentFirstTime = saveIncidentFirstTime;
 // /////////////////////////////////////////////////////////////////////////////
-function remindCalc(arr, i) {
+function remindCalc(ws, arr, i) {
+  if (arr[i].timeInterval) {
+    let zzz = arr[i].incident[arr[i].incident.length - 1];
+    zzz += arr[i].timeInterval[0] * 3600000;
+    const m = arr[i].timeInterval.shift();
+    arr[i].timeInterval.splice(arr[i].timeInterval.length, 1, m);
+    socket.send(ws, 'console', `arr[i].timeInterval = ${arr[i].timeInterval}`);
+    arr[i].remind = zzz;
+    return arr;
+  }
   let zzz = calcLast(arr, i);
   zzz += arr[i].incident[arr[i].incident.length - 1];
   arr[i].remind = zzz;
+  socket.send(ws, 'console', `arr[i].remind = ${arr[i].remind}`);
   return arr;
 }
+
 // /////////////////////////////////////////////////////////////////////////////
 
 // /////////////////////////////////////////////////////////////////////////////
 function itsHappened(ws, arr, i, value) {
   askForCircle.ok(ws, arr, i, value);
   arr[i].incident.push(Date.parse(new Date()));
-  arr = remindCalc(arr, i);
+  arr = remindCalc(ws, arr, i);
   askForCircle.clientTimeout(ws, arr, i);
   saveFile(filepath, arr);
 }
@@ -65,7 +77,7 @@ function doNotRemind(ws, arr, i) {
   askForCircle.setNotRemind(ws, arr[i].words[0]);
 }
 function setTime(ws, arr, i, sayWords) {
-  sayWords = askForCircle.special(ws, arr, i);
+  sayWords = askForCircle.special(ws, arr, i, 'ignor');
   if (isNaN(parseFloat(sayWords))) {
     askForCircle.noTimeInt(ws);
   } else {
@@ -75,8 +87,23 @@ function setTime(ws, arr, i, sayWords) {
   }
 }
 
-function cancelTheLastData() {
-
+function setTimeInterval(ws, arr, i, sayWords) {
+  sayWords = askForCircle.special(ws, arr, i, 'ignor');
+  sayWords = sayWords.split(' ');
+  sayWords = sayWords.map(v => v.replace(/[, ]+/g, " ").trim());
+  sayWords = sayWords.map((v) => {
+    if (v.includes(':')) { v = v.split(':')[0]; }
+    return parseFloat(v);
+  });
+  if (sayWords.every(v => !isNaN(v))) {
+    socket.send(ws, 'console', `sayWords = ${sayWords}`);
+    arr[i].timeInterval = sayWords;
+    saveFile(filepath, arr);
+    askForCircle.setTimeIntervalSay(ws, sayWords.join(' '));
+  } else {
+    socket.send(ws, 'console', `sayWords = ${sayWords}`);
+    askForCircle.noTimeIntervalSay(ws, sayWords.join(' '));
+  }
 }
 // /////////////////////////////////////////////////////////////////////////////
 // ПРОВЕРКА НАЛИЧИЯ СУЩЕСТВОВАНИЯ ПАРАМЕТРОВ В БАЗЕ
@@ -87,6 +114,7 @@ function newIncident(ws, arr, value) {
 module.exports.newIncident = newIncident;
 // /////////////////////////////////////////////////////////////////////////////
 function allWordsTest(ws, arr, value, option) {
+  console.log(`value = ${value};`);
   const allWordsArray = [];
   arr.forEach((v, i) => {
     v.words.forEach((word) => {
@@ -115,6 +143,9 @@ function switchOption(ws, arr, i, sayWords, option) {
       break;
     case '4':
       setTime(ws, arr, i, sayWords);
+      break;
+    case '5':
+      setTimeInterval(ws, arr, i, sayWords);
       break;
     default:
       console.log('error option');

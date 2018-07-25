@@ -1,5 +1,6 @@
 const fs = require('fs');
 const socket = require('../../webSocketOnMessage');
+const { mainTimeCircle } = require('../../mainTimeCircle');
 const asyncAsk = require('../../asyncAsk');
 const { questSimple } = require('./QuestSimple');
 const { searchDate, searchTime } = require('../../textToTime');
@@ -22,6 +23,7 @@ function note(ws, day, time, options) {
     if (newText !== '') {
       saveResult(day, time, newText, options);
       socket.send(ws, 'aska', asyncAsk.whatToSay(AskaSC, 'x3'));
+      mainTimeCircle(ws);
     } else {
       socket.send(ws, 'aska', asyncAsk.whatToSay(AskaSC, 'x4'));
     }
@@ -88,6 +90,7 @@ function questHard(ws, options, parameters) {
         saveResult(xString, yString, parameters, options);
         clearInterval(int);
         ws.NNListen = true;
+        mainTimeCircle(ws);
       }
     }
   //  }

@@ -102,7 +102,7 @@ function go(ws, arr, value, allWordsArray, option) {
   let positivAnswer = false;
 
   const defaultFunction = function defaultFunction() {
-    socket.send(ws, 'aska', asyncAsk.whatToSay(AskaSC, 'q1'));
+    socket.send(ws, 'aska', asyncAsk.whatToSay(AskaSC, 's4'));
   };
   const positive = function positive() {
     positivAnswer = true;
@@ -158,14 +158,27 @@ function setTimer(ws, i) {
   socket.send(ws, 'aska', `${asyncAsk.whatToSay(AskaSC, 'z2')} ${i} минут`);
 }
 module.exports.setTimer = setTimer;
+function setTimeIntervalSay(ws, i) {
+  socket.send(ws, 'aska', `${asyncAsk.whatToSay(AskaSC, 'z5')} ${i}`);
+}
+module.exports.setTimeIntervalSay = setTimeIntervalSay;
+function noTimeIntervalSay(ws, i) {
+  socket.send(ws, 'aska', `${asyncAsk.whatToSay(AskaSC, 'z6')} ${i}`);
+}
+module.exports.noTimeIntervalSay = noTimeIntervalSay;
 function noTimeInt(ws) {
   socket.send(ws, 'aska', asyncAsk.whatToSay(AskaSC, 'z3'));
 }
 module.exports.noTimeInt = noTimeInt;
 // /////////////////////////////////////////////////////////////////////////////
-function special(ws, arr, i) {
+function special(ws, arr, i, key) {
   const sss = ws.ClientSay.split(' ').filter((v) => {
-    return !arr[i].words.some(w => v === w) && !AskaSC.ignor.some(w => v === w);
+    return !arr[i].words.some((w) => {
+      if (w.split(' ').length === 1) {
+        return v === w;
+      }
+      return w.split(' ').some(y => v === y);
+    }) && !AskaSC[key].some(w => v === w);
   });
   return sss.join(' ');
 }

@@ -22,7 +22,7 @@ function recStop() {
   statusRec = false;
   recognition.stop();
 }
-module.exports.recStop = recStop;
+
 function startStopRec() {
   if (statusRec) {
     iconsole.logC('recognition.stop()');
@@ -33,7 +33,6 @@ function startStopRec() {
     recStart();
   }
 }
-module.exports.startStopRec = startStopRec;
 
 
 function speechRec() {
@@ -105,4 +104,4 @@ function speechRec() {
     }
   });
 }
-export { speechRec, startStopRec };
+export { speechRec, startStopRec, recStop };

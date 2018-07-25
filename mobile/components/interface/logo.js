@@ -3,54 +3,6 @@ import { aska } from '../speechSynthesizer';
 import socket from '../webSocketClient';
 import '../../css/logo.css';
 
-function deviceMotionHandler(e) {
-  console.log(e.acceleration);
-  window.myconsole.log(`${e.acceleration.x} ${e.acceleration.y} ${e.acceleration.z}`,'string');
-  let sym = e.acceleration.x + e.acceleration.y + e.acceleration.z | 0;
-  window.myconsole.log(`sym = ${sym} `,'string');
-  if (sym > 0) {
-    window.removeEventListener("devicemotion", deviceMotionHandler);
-    aska(`это победа`);
-  }
-}
-
-function test2() {
-  setTimeout(()=>{
-    window.myconsole.log(`window.DeviceMotionEvent = ${window.DeviceMotionEvent}`,'string');
-    window.addEventListener("devicemotion", deviceMotionHandler);
-  },15000);
-  //setInterval(() => {
-  //}, 1000);
-}
-
-function test() {
-  const audio = document.querySelector('#audio');
-//  audio.src = `${process.env.FILESERVER}napominanie.mp3`;
-
-  const audio2 = document.getElementById('audio2');
-  audio2.src = `${process.env.FILESERVER}20Hz.mp3`;
-  function lol() {
-    audio2.play();
-  }
-  audio2.addEventListener('ended', lol, false);
-  audio2.play();
-  audio2.volume = 0.1;
-  //window.myconsole.log('start','err');
-   let r = 0;
-   const int = setInterval(() => {
-     let x = new Date();
-
-    if (x.getHours() == 21 && x.getMinutes() == 15) {
-       audio.removeEventListener('ended', lol, false);
-       aska(`текущее время, ${x.getHours()} часов, ${x.getMinutes()} минут, четвертый тест пройден успешно`);
-       clearInterval(int);
-     } else {
-       r += 1;
-       window.myconsole.log(`цикл интервала ${r}`, 'string');
-       window.myconsole.log(`${x.getHours()}:${x.getMinutes()}`, 'string');
-     }
-   }, 60000);
-}
 // var previousOrientation = window.orientation;
 function checkOrientation() {
   //  if(window.orientation !== previousOrientation){
@@ -133,8 +85,6 @@ class Logo extends React.Component {
           </div>
         </div>
       );
-    } else {
-      return <video className="nosleep-video" src={`${process.env.FILESERVER}noSleep.mp4`}/>
     }
   }
   consoleButton = () => {
@@ -151,26 +101,19 @@ class Logo extends React.Component {
   }
   componentDidMount() {
     init();
-    test();
-    test2();
-  }
-
-  noSleep = () => {
-    let video = document.querySelector('.nosleep-video');
-    video.paused ? video.play() : video.pause();
   }
   render() {
-    const svg1 = `${process.env.FILESERVER}index-portal-red-semi-085b4e44d49b2ffe935cc1b2b3094ce8.svg`;
-    const svg2 = `${process.env.FILESERVER}index-portal-red-be5d1b8a52c13bf286560aba3e4c8c30.svg`;
-    const svg3 = `${process.env.FILESERVER}index-portal-orange-semi-d2010f0f8e41e03dbf2b5c52166abe4b.svg`;
-    const svg4 = `${process.env.FILESERVER}index-portal-orange-b3bddfb758b91d22f43d0e14ed8e29da.svg`;
-    const svg5 = `${process.env.FILESERVER}index-portal-yellow-semi-545681fe77ff01659d472bd379a9f38b.svg`;
-    const svg6 = `${process.env.FILESERVER}index-portal-yellow-ff207a58ad4f450ea9ac0e17224b39f1.svg`;
-    const svg7 = `${process.env.FILESERVER}index-portal-green-semi-2d5bc571ee90e710d93f7ae7ddd06e85.svg`;
-    const svg8 = `${process.env.FILESERVER}index-portal-green-6ab85a1e7343a232273868031b242806.svg`;
-    const svg9 = `${process.env.FILESERVER}index-portal-blue-semi-7333f1323549be50644411b691b173dd.svg`;
-    const svg10 = `${process.env.FILESERVER}index-portal-blue-92fc2c151190795bd0147c03d4fb8352.svg`;
-    const svg11 = `${process.env.FILESERVER}index-portal-sides-7d999cb5d5762880eef4ede55549d5c6.svg`;
+    const svg1 = 'http://localhost:8080/coub/index-portal-red-semi-085b4e44d49b2ffe935cc1b2b3094ce8.svg';
+    const svg2 = 'http://localhost:8080/coub/index-portal-red-be5d1b8a52c13bf286560aba3e4c8c30.svg';
+    const svg3 = 'http://localhost:8080/coub/index-portal-orange-semi-d2010f0f8e41e03dbf2b5c52166abe4b.svg';
+    const svg4 = 'http://localhost:8080/coub/index-portal-orange-b3bddfb758b91d22f43d0e14ed8e29da.svg';
+    const svg5 = 'http://localhost:8080/coub/index-portal-yellow-semi-545681fe77ff01659d472bd379a9f38b.svg';
+    const svg6 = 'http://localhost:8080/coub/index-portal-yellow-ff207a58ad4f450ea9ac0e17224b39f1.svg';
+    const svg7 = 'http://localhost:8080/coub/index-portal-green-semi-2d5bc571ee90e710d93f7ae7ddd06e85.svg';
+    const svg8 = 'http://localhost:8080/coub/index-portal-green-6ab85a1e7343a232273868031b242806.svg';
+    const svg9 = 'http://localhost:8080/coub/index-portal-blue-semi-7333f1323549be50644411b691b173dd.svg';
+    const svg10 = 'http://localhost:8080/coub/index-portal-blue-92fc2c151190795bd0147c03d4fb8352.svg';
+    const svg11 = 'http://localhost:8080/coub/index-portal-sides-7d999cb5d5762880eef4ede55549d5c6.svg';
     return (
       <Fragment>
       <button onClick={this.consoleButton} className="consoleButton"></button>

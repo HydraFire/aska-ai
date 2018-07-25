@@ -2,7 +2,7 @@ const fs = require('fs');
 const jwt = require('jsonwebtoken');
 const socket = require('../../webSocketOnMessage');
 const asyncAsk = require('../../asyncAsk');
-const { checkAssignments } = require('../../mainTimeCircle');
+const { idleInterval } = require('../../mainTimeCircle');
 // ///////////////////////////////
 // ///////////////////////////////
 const fileDescription = './data/commands/Login/description.json';
@@ -25,7 +25,7 @@ function verifToken(ws, token) {
         socket.send(ws, 'aska', asyncAsk.whatToSay(AskaSC, 'b1'));
       } else {
         ws.accessed = true;
-        checkAssignments(ws);
+        idleInterval(ws);
         console.log('connection accessed');
       }
     });

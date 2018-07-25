@@ -25,10 +25,10 @@ function train(select) {
   });
   net.train(data, {
     errorThresh: 0.005,
-    iterations: 6000,
+    iterations: 10000,
     log: true,
     logPeriod: 50,
-    learningRate: 0.3
+    learningRate: 0.05
   });
   const jsonTrain = net.toJSON();
   console.log('train ...Done');

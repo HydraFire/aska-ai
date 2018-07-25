@@ -10,6 +10,7 @@ const { Logbook } = require('../commands/Logbook/Logbook');
 const { Reaction } = require('../commands/Reaction/Reaction');
 const { Login } = require('../commands/Login/Login');
 const { ReadClipboard } = require('../commands/ReadClipboard/ReadClipboard');
+const { Music } = require('../commands/Music/Music');
 
 const commands = {
   LifeCircles,
@@ -17,7 +18,8 @@ const commands = {
   Logbook,
   Reaction,
   Login,
-  ReadClipboard
+  ReadClipboard,
+  Music
 };
 // /////////////////////////////////////////////////////////////////////////////
 const net = new brain.NeuralNetwork();

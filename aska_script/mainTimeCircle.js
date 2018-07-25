@@ -1,11 +1,14 @@
 const fs = require('fs');
+const socket = require('./webSocketOnMessage');
 const { QuestPart2 } = require('./commands/Quest/QuestPart2');
 const { QuestPart3 } = require('./commands/Quest/QuestPart3');
 const { QuestPartSimple } = require('./commands/Quest/QuestPartSimple');
 const { LifeCirclesNapominanie } = require('./commands/LifeCircles/askForCircle');
-const { sendNotification, getNotificationID } = require('./notification/pushNotification');
+// const { sendNotification, getNotificationID } = require('./notification/pushNotification');
 // //////////////////////////////////////
 // //////////////////////////////////////
+const fileOption = './data/commands/Quest/option.json';
+const AskaSC = JSON.parse(fs.readFileSync(fileOption));
 const filepath = './data/QuestData.json';
 const filepathLifeCircle = './data/LifeCirclesData.json';
 // ///////////////////////////////////////////////////////////////////////////
@@ -124,11 +127,53 @@ module.exports.checkAssignments = checkAssignments;
 // Функция запуска уведомлений
 // /////////////////////////////////////////////////////////////////////////////
 
-const mainTimeCircle = function mainTimeCircle() {
+const mainTimeCircle = function mainTimeCircle(ws) {
   // первая часть это нашы задания
-  console.log('Start');
-  const timeNow = Date.parse(new Date());
+  const morning = 6;
+  const midday = 12;
+  const evening = 21;
+  const zazor = 1;
+  const houersNow = new Date().getHours();
+  let howLong = 0;
+  if (morning > houersNow || houersNow >= evening) {
+    console.log('morning');
+    howLong = morning + zazor;
+  } else if (midday > houersNow) {
+    console.log('midday');
+    howLong = midday + zazor;
+  } else if (evening > houersNow) {
+    console.log('evening');
+    howLong = evening + zazor;
+  }
+  const x = new Date();
+  x.setHours(howLong);
+  x.setMinutes(0);
+  howLong < houersNow ? x.setDate(x.getDate() + 1) : '';
+  const timeTest = Date.parse(x);
+  console.log(`howLong = ${howLong}`);
+  console.log(`houersNow = ${houersNow}`);
+  console.log(`timeTest = ${timeTest}`);
+  console.log(`timeTest = ${new Date(timeTest)}`);
+
   let arrQuests = readFile();
+  arrQuests = arrQuests.filter(v => Date.now() < v.startDate && v.type !== 'SIMPLE');
+  arrQuests = arrQuests.filter(v => timeTest >= v.startDate && v.type !== 'SIMPLE');
+  console.log(arrQuests);
+  if (arrQuests.length > 0) {
+    arrQuests = arrQuests.map((v) => {
+      if (v.type === 'HARD') {
+        v.say = AskaSC.hard;
+      } else {
+        v.say = AskaSC.simple;
+      }
+      return v;
+    });
+    socket.send(ws, 'quest', arrQuests);
+  }
+  /*
+
+  const timeNow = Date.now();
+
   arrQuests = arrQuests.filter(v => timeNow >= v.startDate && v.type !== 'SIMPLE');
   console.log(arrQuests);
   // Запускаем пуш уведомление
@@ -137,5 +182,28 @@ const mainTimeCircle = function mainTimeCircle() {
     sendNotification(id, arrQuests[0].quest);
   }
   // Здесь мы разделим чтоб и LifeCircles работали
+  */
+
 };
+
 module.exports.mainTimeCircle = mainTimeCircle;
+// /////////////////////////////////////////////////////////////////////////////
+// /////////////////////////// Евент регестрирующий Sleep mode ////////////////
+// /////////////////////////////////////////////////////////////////////////////
+const idleInterval = function idleInterval(ws) {
+  let pastTime = 0;
+  ws.idleInterval = setInterval(() => {
+    let now = Date.now();
+    pastTime += 1100;
+    // console.log(`pastTime = ${pastTime} now = ${now}`);
+    if (pastTime < now) {
+      console.log('наш пациэнт');
+      mainTimeCircle(ws);
+      checkAssignments(ws);
+      pastTime = now;
+    } else {
+      pastTime = now;
+    }
+  }, 1000);
+};
+module.exports.idleInterval = idleInterval;
