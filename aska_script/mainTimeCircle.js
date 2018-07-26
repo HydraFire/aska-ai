@@ -89,6 +89,7 @@ const checkQuests = function checkQuests(ws) {
   arrQuests = arrQuests.filter(v => timeNow >= v.startDate)
     .map(v => Object.assign(v, { startWith: 'QuestPart2' }));
   // проверка наличия лайф циклов
+
   arrLifeCircle = arrLifeCircle.filter(v => timeNow >= v.remind)
     .reduce((a, b) => {
       a.words += `${b.words[0]}, `;
@@ -99,7 +100,7 @@ const checkQuests = function checkQuests(ws) {
     });
   //  .map(v => Object.assign(v, { startWith: 'LifeCircle' }));
   // сливаем всё в один масив
-  finalArray = finalArray.concat(arrEndQuests, arrQuests, arrLifeCircle);
+  finalArray = finalArray.concat(arrEndQuests, arrQuests);
   console.log(finalArray);
   // интервал который всё это дело будет по очереди запускать
   shortInterval(ws, finalArray);
@@ -180,11 +181,11 @@ const idleInterval = function idleInterval(ws) {
   let pastTime = 0;
   ws.idleInterval = setInterval(() => {
     let now = Date.now();
-    pastTime += 1100;
+    pastTime += 1500;
     // console.log(`pastTime = ${pastTime} now = ${now}`);
     if (pastTime < now) {
       console.log('наш пациэнт '+(now - pastTime));
-      mainTimeCircle(ws);
+      // mainTimeCircle(ws);
       checkAssignments(ws);
       pastTime = now;
     } else {
