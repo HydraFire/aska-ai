@@ -100,7 +100,7 @@ const checkQuests = function checkQuests(ws) {
     });
   //  .map(v => Object.assign(v, { startWith: 'LifeCircle' }));
   // сливаем всё в один масив
-  finalArray = finalArray.concat(arrEndQuests, arrQuests);
+  finalArray = finalArray.concat(arrEndQuests, arrQuests, arrLifeCircle);
   console.log(finalArray);
   // интервал который всё это дело будет по очереди запускать
   shortInterval(ws, finalArray);
@@ -178,6 +178,7 @@ module.exports.mainTimeCircle = mainTimeCircle;
 // /////////////////////////// Евент регестрирующий Sleep mode ////////////////
 // /////////////////////////////////////////////////////////////////////////////
 const idleInterval = function idleInterval(ws) {
+  console.log('/// START FUNCTION idleInterval()')
   let pastTime = 0;
   ws.idleInterval = setInterval(() => {
     let now = Date.now();
