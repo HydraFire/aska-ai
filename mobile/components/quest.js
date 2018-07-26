@@ -72,7 +72,7 @@ function intervalGO(arr) {
 function twoArr(arr) {
   if (mainInterval == 0) {
     window.myconsole.log('intervalGO(arr);', 'string');
-    play20Hz();
+    // play20Hz();
     intervalGO(arr);
   } else {
     clearInterval(mainInterval);
