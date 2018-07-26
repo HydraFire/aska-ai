@@ -170,20 +170,6 @@ const mainTimeCircle = function mainTimeCircle(ws) {
     });
     socket.send(ws, 'quest', arrQuests);
   }
-  /*
-
-  const timeNow = Date.now();
-
-  arrQuests = arrQuests.filter(v => timeNow >= v.startDate && v.type !== 'SIMPLE');
-  console.log(arrQuests);
-  // Запускаем пуш уведомление
-  if (arrQuests != '') {
-    const id = getNotificationID();
-    sendNotification(id, arrQuests[0].quest);
-  }
-  // Здесь мы разделим чтоб и LifeCircles работали
-  */
-
 };
 
 module.exports.mainTimeCircle = mainTimeCircle;
@@ -199,7 +185,7 @@ const idleInterval = function idleInterval(ws) {
     if (pastTime < now) {
       console.log('наш пациэнт');
       mainTimeCircle(ws);
-      checkAssignments(ws);
+      // checkAssignments(ws);
       pastTime = now;
     } else {
       pastTime = now;

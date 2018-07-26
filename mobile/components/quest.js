@@ -37,8 +37,8 @@ function getmainInterval() {
 // /////////////////////////////////////////////////////////////////////////////
 function intervalGO(arr) {
   function deviceMotionHandler(e) {
-    // if ((e.acceleration.x + e.acceleration.y + e.acceleration.z | 0) > 0) {
-    setTimeout(() => {
+    if ((e.acceleration.x + e.acceleration.y + e.acceleration.z | 0) > 0) {
+    // setTimeout(() => {
       window.removeEventListener('devicemotion', deviceMotionHandler);
       clearInterval(impulseInterval);
       impulseInterval = 0;
@@ -52,8 +52,8 @@ function intervalGO(arr) {
         console.log('final');
       }
       nowObj = {};
-    }, 15000);
-    // }
+    // }, 15000);
+    }
   }
   function impulse(obj) {
     window.myconsole.log('impulse(obj)', 'string');
