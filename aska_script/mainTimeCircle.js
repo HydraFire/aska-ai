@@ -150,10 +150,10 @@ const mainTimeCircle = function mainTimeCircle(ws) {
   x.setMinutes(0);
   howLong < houersNow ? x.setDate(x.getDate() + 1) : '';
   const timeTest = Date.parse(x);
-  console.log(`howLong = ${howLong}`);
-  console.log(`houersNow = ${houersNow}`);
-  console.log(`timeTest = ${timeTest}`);
-  console.log(`timeTest = ${new Date(timeTest)}`);
+  // console.log(`howLong = ${howLong}`);
+  // console.log(`houersNow = ${houersNow}`);
+  // console.log(`timeTest = ${timeTest}`);
+  // console.log(`timeTest = ${new Date(timeTest)}`);
 
   let arrQuests = readFile();
   arrQuests = arrQuests.filter(v => Date.now() < v.startDate && v.type !== 'SIMPLE');
@@ -183,9 +183,9 @@ const idleInterval = function idleInterval(ws) {
     pastTime += 1100;
     // console.log(`pastTime = ${pastTime} now = ${now}`);
     if (pastTime < now) {
-      console.log('наш пациэнт');
+      console.log('наш пациэнт '+(now - pastTime));
       mainTimeCircle(ws);
-      // checkAssignments(ws);
+      checkAssignments(ws);
       pastTime = now;
     } else {
       pastTime = now;
