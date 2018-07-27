@@ -179,7 +179,7 @@ module.exports.mainTimeCircle = mainTimeCircle;
 // /////////////////////////////////////////////////////////////////////////////
 const idleInterval = function idleInterval(ws) {
   console.log('/// START FUNCTION idleInterval()')
-  let pastTime = 0;
+  let pastTime = Date.now();
   let symtime = 0;
   let onetime = true;
   ws.idleInterval = setInterval(() => {
