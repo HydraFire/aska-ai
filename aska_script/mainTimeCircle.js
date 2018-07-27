@@ -180,14 +180,22 @@ module.exports.mainTimeCircle = mainTimeCircle;
 const idleInterval = function idleInterval(ws) {
   console.log('/// START FUNCTION idleInterval()')
   let pastTime = 0;
+  let symtime = 0;
+  let onetime = true;
   ws.idleInterval = setInterval(() => {
     let now = Date.now();
     pastTime += 1500;
     // console.log(`pastTime = ${pastTime} now = ${now}`);
     if (pastTime < now) {
+      symtime += now - pastTime;
       console.log('наш пациэнт '+(now - pastTime));
+      if (symtime > 1111000 && onetime) {
+        console.log('Отправил запрос на ультра звук');
+        onetime = false;
+        socket.send(ws, 'clientTimeout', JSON.stringify(['опа опа', 15]));
+      }
       // mainTimeCircle(ws);
-      checkAssignments(ws);
+      // checkAssignments(ws);
       pastTime = now;
     } else {
       pastTime = now;
