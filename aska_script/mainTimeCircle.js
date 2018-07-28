@@ -192,6 +192,7 @@ const idleInterval = function idleInterval(ws) {
       if (symtime > 1111000) {
         console.log('Отправил запрос на ультра звук');
         // onetime = false;
+        checkAssignments(ws)
         socket.send(ws, 'clientTimeout', JSON.stringify(['опа опа', 15]));
       }
       // mainTimeCircle(ws);
