@@ -1,6 +1,7 @@
 import socket from './webSocketClient';
 import { newMessage } from './interface/displayCanvasMessage';
 // import { startStopRec } from './speechRecognition';
+import { play20Hz } from './quest';
 /* eslint-disable */
 let audio
 let audio2
@@ -56,6 +57,9 @@ function aska(text) {
           // iconsole.logC('audioTag.play()');
           // console.log(audioTag.volume)
           audioTag.play();
+          if (text == 'ой') {
+            play20Hz();
+          }
           socket.send('speech_start','AUDIO');
         }
       };
