@@ -48,7 +48,9 @@ function aska(text) {
             '&speed=1'+
             '&robot=1'+
             '&emotion=evil';//evil
-
+        if (text == 'ой') {
+          url = 'http://localhost:8080/coub/20Hz.mp3';
+        }
         audioTag.src = url;
         audioTag.onloadeddata = function onloadeddata() {
           // iconsole.logC('audioTag.play()');
