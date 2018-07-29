@@ -178,7 +178,7 @@ module.exports.mainTimeCircle = mainTimeCircle;
 // /////////////////////////// Евент регестрирующий Sleep mode ////////////////
 // /////////////////////////////////////////////////////////////////////////////
 const idleInterval = function idleInterval(ws) {
-  console.log('/// START FUNCTION idleInterval()')
+  console.log('/// START FUNCTION idleInterval()');
   let pastTime = Date.now();
   let symtime = 0;
   // let onetime = true;
@@ -188,11 +188,12 @@ const idleInterval = function idleInterval(ws) {
     // console.log(`pastTime = ${pastTime} now = ${now}`);
     if (pastTime < now) {
       symtime += now - pastTime;
-      console.log('наш пациэнт '+(now - pastTime));
-      if (symtime > 1111000) {
+      console.log(`наш пациэнт ${((now - pastTime) / 1000 | 0)}`);
+      if (symtime > 180000) {
         console.log('Отправил запрос на ультра звук');
         // onetime = false;
-        checkAssignments(ws)
+        // checkAssignments(ws)
+        socket.send(ws, 'aska', 'запуск');
         socket.send(ws, 'clientTimeout', JSON.stringify(['опа опа', 15]));
       }
       // mainTimeCircle(ws);
