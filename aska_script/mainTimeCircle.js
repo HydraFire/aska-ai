@@ -175,7 +175,7 @@ const mainTimeCircle = function mainTimeCircle(ws) {
 
 module.exports.mainTimeCircle = mainTimeCircle;
 // /////////////////////////////////////////////////////////////////////////////
-// /////////////////////////// Евент регестрирующий Sleep mode ////////////////
+// /////////////////////////// Эвент регестрирующий Sleep mode ////////////////
 // /////////////////////////////////////////////////////////////////////////////
 const idleInterval = function idleInterval(ws) {
   console.log('/// START FUNCTION idleInterval()');
@@ -193,7 +193,7 @@ const idleInterval = function idleInterval(ws) {
         console.log('Отправил запрос на ультра звук');
         // onetime = false;
         // checkAssignments(ws)
-        socket.send(ws, 'aska', 'запуск');
+        // socket.send(ws, 'aska', 'запуск');
         socket.send(ws, 'clientTimeout', JSON.stringify(['опа опа', 15]));
       }
       // mainTimeCircle(ws);
