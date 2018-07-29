@@ -130,6 +130,7 @@ module.exports.checkAssignments = checkAssignments;
 
 const mainTimeCircle = function mainTimeCircle(ws) {
   // первая часть это нашы задания
+  /*
   const morning = 6;
   const midday = 12;
   const evening = 21;
@@ -146,11 +147,12 @@ const mainTimeCircle = function mainTimeCircle(ws) {
     console.log('evening');
     howLong = evening + zazor;
   }
-  const x = new Date();
-  x.setHours(howLong);
-  x.setMinutes(0);
-  howLong < houersNow ? x.setDate(x.getDate() + 1) : '';
-  const timeTest = Date.parse(x);
+  */
+  const timeTest = Date.now() + 3600000;
+  // x.setHours(howLong);
+  // x.setMinutes(0);
+  // howLong < houersNow ? x.setDate(x.getDate() + 1) : '';
+  // const timeTest = Date.parse(x);
   // console.log(`howLong = ${howLong}`);
   // console.log(`houersNow = ${houersNow}`);
   // console.log(`timeTest = ${timeTest}`);
@@ -169,6 +171,7 @@ const mainTimeCircle = function mainTimeCircle(ws) {
       }
       return v;
     });
+    socket.send(ws, 'aska', '20Hz');
     socket.send(ws, 'quest', arrQuests);
   }
 };
@@ -180,23 +183,24 @@ module.exports.mainTimeCircle = mainTimeCircle;
 const idleInterval = function idleInterval(ws) {
   console.log('/// START FUNCTION idleInterval()');
   let pastTime = Date.now();
-  let symtime = 0;
+  // let symtime = 0;
   // let onetime = true;
   ws.idleInterval = setInterval(() => {
     let now = Date.now();
     pastTime += 1500;
     // console.log(`pastTime = ${pastTime} now = ${now}`);
     if (pastTime < now) {
-      symtime += now - pastTime;
+      // symtime += now - pastTime;
       console.log(`наш пациэнт ${((now - pastTime) / 1000 | 0)}`);
+      /*
       if (symtime > 180000) {
         console.log('Отправил запрос на ультра звук');
         // onetime = false;
         // checkAssignments(ws)
-         socket.send(ws, 'aska', 'ой');
         // socket.send(ws, 'clientTimeout', JSON.stringify(['опа опа', 15]));
       }
-      // mainTimeCircle(ws);
+      */
+      mainTimeCircle(ws);
       // checkAssignments(ws);
       pastTime = now;
     } else {

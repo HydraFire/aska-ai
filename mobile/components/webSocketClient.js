@@ -53,9 +53,8 @@ function start() {
         window.myconsole.log('TOKEN is accepted', 'string');
         break;
       case 'clientTimeout':
-        play20Hz();
-        // clientTimeout(message.data);
-        // window.myconsole.log(`clientTimeout ${message.data}`, 'string');
+        clientTimeout(message.data);
+        window.myconsole.log(`clientTimeout ${message.data}`, 'string');
         break;
       case 'editor':
         if (message.data === 'done') {

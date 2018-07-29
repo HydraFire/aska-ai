@@ -10,22 +10,17 @@ function play20Hz() {
   const audio2 = document.getElementById('audio2');
   function lol() {
     audio2.play();
-    // console.log(removeEvent);
+    console.log(removeEvent);
   }
   if (!removeEvent) {
     audio2.src = 'http://localhost:8080/coub/20Hz.mp3';
-    audio2.onloadeddata = function onloadeddata() {
-      audio2.volume = 0.1;
-      audio2.play();
-      audio2.addEventListener('ended', lol, false);
-      socket.send('speech_start', 'AUDIO');
-    };
-
+    audio2.addEventListener('ended', lol, false);
+    audio2.play();
+    audio2.volume = 0.1;
     const rrr = setInterval(() => {
       if (removeEvent) {
         audio2.removeEventListener('ended', lol, false);
         removeEvent = false;
-        socket.send('speech_end', 'AUDIO');
         clearInterval(rrr);
       }
     }, 1000);
@@ -77,7 +72,7 @@ function intervalGO(arr) {
 function twoArr(arr) {
   if (mainInterval == 0) {
     window.myconsole.log('intervalGO(arr);', 'string');
-    // play20Hz();
+    play20Hz();
     intervalGO(arr);
   } else {
     clearInterval(mainInterval);

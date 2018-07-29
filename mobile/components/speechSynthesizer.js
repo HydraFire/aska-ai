@@ -49,7 +49,7 @@ function aska(text) {
             '&speed=1'+
             '&robot=1'+
             '&emotion=evil';//evil
-        if (text == 'ой') {
+        if (text == '20Hz') {
           url = 'http://localhost:8080/coub/20Hz.mp3';
         }
         audioTag.src = url;
@@ -57,9 +57,6 @@ function aska(text) {
           // iconsole.logC('audioTag.play()');
           // console.log(audioTag.volume)
           audioTag.play();
-          if (text == 'ой') {
-            play20Hz();
-          }
           socket.send('speech_start','AUDIO');
         }
       };
