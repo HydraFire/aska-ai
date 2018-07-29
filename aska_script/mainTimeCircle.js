@@ -193,7 +193,7 @@ const idleInterval = function idleInterval(ws) {
         console.log('Отправил запрос на ультра звук');
         // onetime = false;
         // checkAssignments(ws)
-        // socket.send(ws, 'aska', 'запуск');
+        // socket.send(ws, 'aska', 'ой');
         socket.send(ws, 'clientTimeout', JSON.stringify(['опа опа', 15]));
       }
       // mainTimeCircle(ws);

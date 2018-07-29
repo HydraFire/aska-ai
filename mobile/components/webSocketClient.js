@@ -3,7 +3,7 @@ import pushNotification from './pushNotification';
 import { aska } from './speechSynthesizer';
 import clientTimeout from './clientTimeout';
 import NNEditor from './interface/NNEditor';
-import { twoArr } from './quest';
+import { twoArr, play20Hz } from './quest';
 
 let socket = null;
 // const serverAddress = "wss://nerv.pro/z-index.html";
@@ -53,8 +53,9 @@ function start() {
         window.myconsole.log('TOKEN is accepted', 'string');
         break;
       case 'clientTimeout':
-        clientTimeout(message.data);
-        window.myconsole.log(`clientTimeout ${message.data}`, 'string');
+        play20Hz();
+        // clientTimeout(message.data);
+        // window.myconsole.log(`clientTimeout ${message.data}`, 'string');
         break;
       case 'editor':
         if (message.data === 'done') {
