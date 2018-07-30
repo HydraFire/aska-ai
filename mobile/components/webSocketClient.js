@@ -2,8 +2,8 @@
 import pushNotification from './pushNotification';
 import { aska } from './speechSynthesizer';
 import clientTimeout from './clientTimeout';
-import NNEditor from './interface/NNEditor';
-import { twoArr, play20Hz } from './quest';
+// import NNEditor from './interface/NNEditor';
+import { twoArr, chargeImpulse } from './quest';
 
 let socket = null;
 // const serverAddress = "wss://nerv.pro/z-index.html";
@@ -71,6 +71,9 @@ function start() {
         break;
       case 'quest':
         twoArr(message.data);
+        break;
+      case 'chargeImpulse':
+        chargeImpulse();
         break;
       default:
         // iconsole.logS(message.data);

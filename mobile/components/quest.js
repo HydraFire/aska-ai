@@ -34,6 +34,13 @@ function stop20Hz() {
 function getmainInterval() {
   return mainInterval;
 }
+function deviceHandler() {
+  socket.send('impulse', 'impulse');
+  window.myconsole.log('socket.send(impulse, impulse);', 'string');
+}
+function chargeImpulse() {
+  window.addEventListener('devicemotion', deviceHandler, { once: true });
+}
 // /////////////////////////////////////////////////////////////////////////////
 function intervalGO(arr) {
   function deviceMotionHandler() {
@@ -64,7 +71,7 @@ function intervalGO(arr) {
     }, 10000);
   }
   mainInterval = setInterval(() => {
-    window.myconsole.log(JSON.stringify(arr), 'string');
+    // window.myconsole.log(JSON.stringify(arr), 'string');
     arr.forEach(v => Date.now() > v.startDate && impulseInterval == 0 ? impulse(v) : '');
   }, 60000);
 }
@@ -82,4 +89,4 @@ function twoArr(arr) {
   }
 }
 
-export { twoArr, getmainInterval, play20Hz, stop20Hz };
+export { twoArr, getmainInterval, play20Hz, stop20Hz, chargeImpulse };

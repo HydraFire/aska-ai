@@ -6,6 +6,7 @@ const { QuestPartSimple } = require('./commands/Quest/QuestPartSimple');
 const { LifeCirclesNapominanie } = require('./commands/LifeCircles/askForCircle');
 // const { sendNotification, getNotificationID } = require('./notification/pushNotification');
 // //////////////////////////////////////
+let displayOn = false;
 // //////////////////////////////////////
 const fileOption = './data/commands/Quest/option.json';
 const AskaSC = JSON.parse(fs.readFileSync(fileOption));
@@ -110,6 +111,7 @@ const checkQuests = function checkQuests(ws) {
 // //////////////////////////////////////////////////////////////////////////////
 const checkAssignments = function checkAssignments(ws) {
   // Запускаем проверку актуальных заданий
+  displayOn = true;
   checkQuests(ws);
   // и интервал ипроверки
   /*
@@ -148,7 +150,7 @@ const mainTimeCircle = function mainTimeCircle(ws) {
     howLong = evening + zazor;
   }
   */
-  const timeTest = Date.now() + 3600000;
+  const timeTest = Date.now() + (15 * 60 * 1000);
   // x.setHours(howLong);
   // x.setMinutes(0);
   // howLong < houersNow ? x.setDate(x.getDate() + 1) : '';
@@ -186,12 +188,25 @@ const idleInterval = function idleInterval(ws) {
   // let symtime = 0;
   // let onetime = true;
   ws.idleInterval = setInterval(() => {
-    let now = Date.now();
+    const now = Date.now();
     pastTime += 1500;
     // console.log(`pastTime = ${pastTime} now = ${now}`);
     if (pastTime < now) {
       // symtime += now - pastTime;
-      console.log(`наш пациэнт ${((now - pastTime) / 1000 | 0)}`);
+      const sym = (now - pastTime) / 1000 | 0;
+      const min = sym / 60 | 0;
+      const sec = sym % 60;
+      if (min == 0) {
+        console.log(`${sec}s`);
+      } else {
+        console.log(`${min}m ${sec}s`);
+      }
+
+      if (displayOn) {
+        displayOn = false;
+        socket.send(ws, 'chargeImpulse', 'chargeImpulse');
+      }
+
       /*
       if (symtime > 180000) {
         console.log('Отправил запрос на ультра звук');

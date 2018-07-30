@@ -1,4 +1,5 @@
 const { webSocketOnMessage, send } = require('./webSocketOnMessage');
+const { checkAssignments } = require('./mainTimeCircle');
 
 function webSocketOnConnect(wss) {
   wss.on('connection', (ws) => {
@@ -25,6 +26,7 @@ function webSocketOnConnect(wss) {
     ws.onlyOpened = true;
     // Запуск евент листенера на меседжи
     webSocketOnMessage(ws);
+    checkAssignments(ws);
     // Впринципе хотелось бы зделать чтоб был лог всег IP заходивших на nerv
     ws.addEventListener('close', () => {
       ws.closeAllInterval = true;
