@@ -36,29 +36,29 @@ function getmainInterval() {
 }
 // /////////////////////////////////////////////////////////////////////////////
 function intervalGO(arr) {
-  function deviceMotionHandler(e) {
-    if ((e.acceleration.x + e.acceleration.y + e.acceleration.z | 0) > 0) {
+  function deviceMotionHandler() {
+  //  if ((e.acceleration.x + e.acceleration.y + e.acceleration.z | 0) > 0) {
     // setTimeout(() => {
-      window.removeEventListener('devicemotion', deviceMotionHandler);
-      clearInterval(impulseInterval);
-      impulseInterval = 0;
-      socket.send('impulse', 'impulse');
-      window.myconsole.log('socket.send(impulse, impulse);', 'string');
-      arr = arr.filter(v => v.quest != nowObj.quest);
-      if (arr.length == 0) {
-        clearInterval(mainInterval);
-        mainInterval = 0;
-        stop20Hz();
-        console.log('final');
-      }
-      nowObj = {};
-    // }, 15000);
+  //    window.removeEventListener('devicemotion', deviceMotionHandler);
+    clearInterval(impulseInterval);
+    impulseInterval = 0;
+    socket.send('impulse', 'impulse');
+    window.myconsole.log('socket.send(impulse, impulse);', 'string');
+    arr = arr.filter(v => v.quest != nowObj.quest);
+    if (arr.length == 0) {
+      clearInterval(mainInterval);
+      mainInterval = 0;
+      stop20Hz();
+      // console.log('final');
     }
+    nowObj = {};
+    // }, 15000);
+  //  }
   }
   function impulse(obj) {
     window.myconsole.log('impulse(obj)', 'string');
     nowObj = obj;
-    window.addEventListener('devicemotion', deviceMotionHandler);
+    window.addEventListener('devicemotion', deviceMotionHandler, { once: true });
     impulseInterval = setInterval(() => {
       aska(nowObj.say[Math.random() * nowObj.say.length | 0]);
     }, 10000);
