@@ -7,6 +7,7 @@ let nowObj = {};
 let removeEvent = false;
 
 function play20Hz() {
+  window.myconsole.animeteUltraSound(true);
   const audio2 = document.getElementById('audio2');
   function lol() {
     audio2.play();
@@ -29,6 +30,7 @@ function play20Hz() {
 
 function stop20Hz() {
   removeEvent = true;
+  window.myconsole.animeteUltraSound(false);
 }
 
 function getmainInterval() {

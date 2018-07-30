@@ -11,6 +11,7 @@ recognition.lang = 'ru-RU';
 
 export const startStopRec = () => {
   recognition.start();
+  window.myconsole.animeteMic(true);
 };
 
 export const speechRec = () => {
@@ -30,6 +31,7 @@ export const speechRec = () => {
     // Финальное значение разпознавания
     if (e.results[0].isFinal) {
       window.myconsole.log(text, 'chat');
+      window.myconsole.animeteMic(false);
       socket.send(text);
     }
   });

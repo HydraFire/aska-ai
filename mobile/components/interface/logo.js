@@ -52,6 +52,7 @@ class Logo extends React.Component {
     arr.push({ text, type });
     this.setState({ arr });
   }
+  // //////////////////////////////////////////////////////////////////////////
   animete = () => {
     document.querySelector('#c2').id = 'cSpeed';
   }
@@ -62,6 +63,28 @@ class Logo extends React.Component {
       document.querySelector('#cSpeed').id = 'c4';
     }
   }
+  animeteMic = (boolean) => {
+    if (boolean) {
+      document.querySelector('#c6').id = 'cSpeed';
+    } else {
+      document.querySelector('#cSpeed').id = 'c6';
+    }
+  }
+  animeteUltraSound = (boolean) => {
+    if (boolean) {
+      document.querySelector('#c8').id = 'cSpeed';
+    } else {
+      document.querySelector('#cSpeed').id = 'c8';
+    }
+  }
+  animetePlayAudio = (boolean) => {
+    if (boolean) {
+      document.querySelector('#c10').id = 'cSpeed';
+    } else {
+      document.querySelector('#cSpeed').id = 'c10';
+    }
+  }
+  // ///////////////////////////////////////////////////////////////////////////
   myRender = () => {
     return this.state.arr.map((v, i) => {
       if (v.type === 'string') {

@@ -1,7 +1,5 @@
 import socket from './webSocketClient';
-import { newMessage } from './interface/displayCanvasMessage';
 // import { startStopRec } from './speechRecognition';
-import { play20Hz } from './quest';
 /* eslint-disable */
 let audio
 let audio2
@@ -59,6 +57,7 @@ function aska(text) {
           window.myconsole.animeteLoadAudio(false);
           audioTag.play();
           socket.send('speech_start','AUDIO');
+          window.myconsole.animetePlayAudio(true);
         }
       };
       function splitOnParts(text){
@@ -76,6 +75,7 @@ function aska(text) {
           audioTag.addEventListener('pause',()=>{
             // console.log('SHUT_UP')
             socket.send('speech_end','AUDIO');
+            window.myconsole.animetePlayAudio(false);
             // startStopRec();
           },{once:true})
         }
