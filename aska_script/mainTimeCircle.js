@@ -163,8 +163,8 @@ const mainTimeCircle = function mainTimeCircle(ws) {
   let arrQuests = readFile();
   arrQuests = arrQuests.filter(v => Date.now() < v.startDate && v.type !== 'SIMPLE');
   arrQuests = arrQuests.filter(v => timeTest >= v.startDate && v.type !== 'SIMPLE');
-  console.log(arrQuests);
   if (arrQuests.length > 0) {
+    console.log(arrQuests);
     arrQuests = arrQuests.map((v) => {
       if (v.type === 'HARD') {
         v.say = AskaSC.hard;
@@ -204,6 +204,7 @@ const idleInterval = function idleInterval(ws) {
 
       if (displayOn) {
         displayOn = false;
+        console.log('chargeImpulse');
         socket.send(ws, 'chargeImpulse', 'chargeImpulse');
       }
 

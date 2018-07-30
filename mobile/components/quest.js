@@ -49,8 +49,8 @@ function intervalGO(arr) {
   //    window.removeEventListener('devicemotion', deviceMotionHandler);
     clearInterval(impulseInterval);
     impulseInterval = 0;
-    socket.send('impulse', 'impulse');
-    window.myconsole.log('socket.send(impulse, impulse);', 'string');
+    // socket.send('impulse', 'impulse');
+    window.myconsole.log('clearInterval(impulseInterval);', 'string');
     arr = arr.filter(v => v.quest != nowObj.quest);
     if (arr.length == 0) {
       clearInterval(mainInterval);
@@ -67,11 +67,12 @@ function intervalGO(arr) {
     nowObj = obj;
     window.addEventListener('devicemotion', deviceMotionHandler, { once: true });
     impulseInterval = setInterval(() => {
+      window.myconsole.log('impulseInterval', 'string');
       aska(nowObj.say[Math.random() * nowObj.say.length | 0]);
     }, 10000);
   }
   mainInterval = setInterval(() => {
-    // window.myconsole.log(JSON.stringify(arr), 'string');
+    window.myconsole.log(JSON.stringify(arr), 'string');
     arr.forEach(v => Date.now() > v.startDate && impulseInterval == 0 ? impulse(v) : '');
   }, 60000);
 }
