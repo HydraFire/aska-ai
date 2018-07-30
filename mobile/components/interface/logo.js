@@ -55,6 +55,13 @@ class Logo extends React.Component {
   animete = () => {
     document.querySelector('#c2').id = 'cSpeed';
   }
+  animeteLoadAudio = (boolean) => {
+    if (boolean) {
+      document.querySelector('#c4').id = 'cSpeed';
+    } else {
+      document.querySelector('#cSpeed').id = 'c4';
+    }
+  }
   myRender = () => {
     return this.state.arr.map((v, i) => {
       if (v.type === 'string') {

@@ -30,7 +30,7 @@ function stopAska() {
 // /////////////////////////////////////////////////////////////////////////////
 function aska(text) {
   window.myconsole.log(text, 'aska');
-
+  window.myconsole.animeteLoadAudio(true);
   if (aska_mute){
     socket.send('speech_start','AUDIO');
     setTimeout(()=>{
@@ -56,6 +56,7 @@ function aska(text) {
         audioTag.onloadeddata = function onloadeddata() {
           // iconsole.logC('audioTag.play()');
           // console.log(audioTag.volume)
+          window.myconsole.animeteLoadAudio(false);
           audioTag.play();
           socket.send('speech_start','AUDIO');
         }
