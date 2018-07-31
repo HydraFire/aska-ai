@@ -34,7 +34,7 @@ class ChallengeLog extends React.Component {
           <div key={v.info} className="block">
             <div className="date">{str}</div>
             <div className="challenge_info">
-                {v.quest}<br/>{v.excuse}
+                {v.quest}
             </div>
           </div>
         )

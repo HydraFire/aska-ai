@@ -34,8 +34,8 @@ class chartWindow extends React.Component {
   }
   render() {
     return (
-      <div className="input_bg">
-        <div className="main_window">
+      <div className="input_bgg">
+        <div className="main_windoww">
         {this.myRender()}
           <button onClick={this.stopAska} className="button_input">Stop</button>
           <button onClick={this.props.chartwindowClose} className="button_input">Close</button>

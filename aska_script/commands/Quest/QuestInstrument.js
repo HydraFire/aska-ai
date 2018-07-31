@@ -52,6 +52,17 @@ function copyToVictoryFile(obj) {
     console.log('NewFile');
   }
   arr2.push(obj);
+
+  arr2.sort((a, b) => {
+    if (a.info > b.info) {
+      return 1;
+    }
+    if (a.info < b.info) {
+      return -1;
+    }
+    return 0;
+  });
+
   fs.writeFileSync(fileVictorypath, JSON.stringify(arr2), 'utf8');
 }
 module.exports.copyToVictoryFile = copyToVictoryFile;
