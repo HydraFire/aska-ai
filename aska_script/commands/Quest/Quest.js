@@ -21,7 +21,7 @@ function note(ws, day, time, options) {
   const first = function attentionCheck() {
     if (newText !== '') {
       saveResult(day, time, newText, options);
-      socket.send(ws, 'aska', asyncAsk.whatToSay(AskaSC, 'x3'));
+      socket.send(ws, 'aska', asyncAsk.whatToSay(AskaSC, 'f3'));
     } else {
       socket.send(ws, 'aska', asyncAsk.whatToSay(AskaSC, 'x4'));
     }
@@ -36,7 +36,7 @@ function note(ws, day, time, options) {
       }
     ], defaultFunction);
   };
-  asyncAsk.readEndWait(ws, asyncAsk.whatToSay(AskaSC, 'x2'), packaging);
+  asyncAsk.readEndWait(ws, asyncAsk.whatToSay(AskaSC, `x${options}`), packaging);
 }
 
 // ////////////////////////////////////////////////////////////////////////////
@@ -69,7 +69,7 @@ function questHard(ws, options, parameters) {
         if (yString) {
           y = true;
         } else if (question) {
-          socket.send(ws, 'aska', asyncAsk.whatToSay(AskaSC, 'x1'));
+          socket.send(ws, 'aska', asyncAsk.whatToSay(AskaSC, 'f1'));
           question = false;
         }
       }
@@ -83,7 +83,7 @@ function questHard(ws, options, parameters) {
         }
       }
       if (x && y && z) {
-        socket.send(ws, 'aska', asyncAsk.whatToSay(AskaSC, 'x3'));
+        socket.send(ws, 'aska', asyncAsk.whatToSay(AskaSC, 'f3'));
         parameters = parameters.join(' ');
         saveResult(xString, yString, parameters, options);
         clearInterval(int);
