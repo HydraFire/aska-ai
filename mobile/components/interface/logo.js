@@ -65,9 +65,9 @@ class Logo extends React.Component {
   }
   animeteMic = (boolean) => {
     if (boolean) {
-      document.querySelector('#c6').id = 'cSpeed';
+      document.querySelector('#c10').id = 'cSpeed';
     } else {
-      document.querySelector('#cSpeed').id = 'c6';
+      document.querySelector('#cSpeed').id = 'c10';
     }
   }
   animeteUltraSound = (boolean) => {
@@ -79,9 +79,9 @@ class Logo extends React.Component {
   }
   animetePlayAudio = (boolean) => {
     if (boolean) {
-      document.querySelector('#c10').id = 'cSpeed';
+      document.querySelector('#c6').id = 'cSpeed';
     } else {
-      document.querySelector('#cSpeed').id = 'c10';
+      document.querySelector('#cSpeed').id = 'c6';
     }
   }
   // ///////////////////////////////////////////////////////////////////////////

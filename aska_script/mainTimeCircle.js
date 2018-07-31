@@ -131,26 +131,7 @@ module.exports.checkAssignments = checkAssignments;
 // /////////////////////////////////////////////////////////////////////////////
 
 const mainTimeCircle = function mainTimeCircle(ws) {
-  // первая часть это нашы задания
-  /*
-  const morning = 6;
-  const midday = 12;
-  const evening = 21;
-  const zazor = 1;
-  const houersNow = new Date().getHours();
-  let howLong = 0;
-  if (morning > houersNow || houersNow >= evening) {
-    console.log('morning');
-    howLong = morning + zazor;
-  } else if (midday > houersNow) {
-    console.log('midday');
-    howLong = midday + zazor;
-  } else if (evening > houersNow) {
-    console.log('evening');
-    howLong = evening + zazor;
-  }
-  */
-  const timeTest = Date.now() + (15 * 60 * 1000);
+  const timeTest = Date.now() + (30 * 60 * 1000);
   // x.setHours(howLong);
   // x.setMinutes(0);
   // howLong < houersNow ? x.setDate(x.getDate() + 1) : '';
@@ -207,17 +188,7 @@ const idleInterval = function idleInterval(ws) {
         console.log('chargeImpulse');
         socket.send(ws, 'chargeImpulse', 'chargeImpulse');
       }
-
-      /*
-      if (symtime > 180000) {
-        console.log('Отправил запрос на ультра звук');
-        // onetime = false;
-        // checkAssignments(ws)
-        // socket.send(ws, 'clientTimeout', JSON.stringify(['опа опа', 15]));
-      }
-      */
       mainTimeCircle(ws);
-      // checkAssignments(ws);
       pastTime = now;
     } else {
       pastTime = now;

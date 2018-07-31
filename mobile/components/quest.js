@@ -7,11 +7,9 @@ let nowObj = {};
 let removeEvent = false;
 
 function play20Hz() {
-  window.myconsole.animeteUltraSound(true);
   const audio2 = document.getElementById('audio2');
   function lol() {
     audio2.play();
-    console.log(removeEvent);
   }
   if (!removeEvent) {
     audio2.src = 'http://localhost:8080/coub/20Hz.mp3';
@@ -30,7 +28,6 @@ function play20Hz() {
 
 function stop20Hz() {
   removeEvent = true;
-  window.myconsole.animeteUltraSound(false);
 }
 
 function getmainInterval() {
@@ -52,7 +49,7 @@ function intervalGO(arr) {
     clearInterval(impulseInterval);
     impulseInterval = 0;
     // socket.send('impulse', 'impulse');
-    window.myconsole.log('clearInterval(impulseInterval);', 'string');
+    // window.myconsole.log('clearInterval(impulseInterval);', 'string');
     arr = arr.filter(v => v.quest != nowObj.quest);
     if (arr.length == 0) {
       clearInterval(mainInterval);
