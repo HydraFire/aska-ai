@@ -92,7 +92,14 @@ module.exports.askForNew = askForNew;
 function when(ws, arr, i, value) {
   let time = calcNow(arr, i);
   time = dateToText(time);
-  socket.send(ws, 'aska', `${asyncAsk.whatToSay(AskaSC, 'q0')} ${value}, ${time} назад`);
+  let text = `${asyncAsk.whatToSay(AskaSC, 'q0')} ${value}, ${time} назад`;
+  if (arr[i].timeOut > 0) {
+    text += `, time out ${arr[i].timeOut} минут`;
+  }
+  if (arr[i].timeInterval) {
+    text += `, интервал ${arr[i].timeInterval.join(' ')}`;
+  }
+  socket.send(ws, 'aska', text);
 }
 module.exports.when = when;
 // /////////////////////////////////////////////////////////////////////////////
