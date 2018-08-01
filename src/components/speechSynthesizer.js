@@ -1,6 +1,6 @@
 import iconsole from './interface/iconsole';
 import socket from './webSocketClient';
-import { startStopRec, recStop } from './speechRecognition';
+import { startStopRec, recStop, recStart } from './speechRecognition';
 /* eslint-disable */
 function aska(text) {
   const audio = document.getElementById('audio');
@@ -41,10 +41,12 @@ function aska(text) {
       console.log([playText,text]);
       playAudio(playText);
       if(text.length == 0){
+        console.log(audioTag);
         audioTag.addEventListener('pause',()=>{
           console.log('SHUT_UP')
           socket.send('speech_end','AUDIO');
-          startStopRec();
+          // startStopRec();
+          recStart();
         },{once:true})
       }
       return text

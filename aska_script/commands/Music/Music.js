@@ -42,13 +42,16 @@ function playMusic(ws, parameters) {
   obj.allTag = arrAllTag;
   ws.endedTracks.push(obj);
   socket.send(ws, 'music', obj);
-  console.log(ws.endedTracks);
+  setTimeout(() => {
+    socket.send(ws, 'aska', asyncAsk.whatToSay(AskaSC, 'y0'));
+  }, 1000);
+  // console.log(ws.endedTracks);
 }
 module.exports.playMusic = playMusic;
 // ////////////////////// ВЫКЛЮЧИ МУЗЫКУ ///////////////////////////////////////
 function stopMusic(ws) {
   socket.send(ws, 'music', { name: 'stop' });
-  socket.send(ws, 'aska', 'как скажешь');
+  socket.send(ws, 'aska', asyncAsk.whatToSay(AskaSC, 'y1'));
 }
 // ////////////////////// следующий трек ///////////////////////////////////////
 function nextTrack(ws) {
@@ -56,51 +59,51 @@ function nextTrack(ws) {
 }
 function prevTrack(ws) {
   ws.endedTracks.splice(ws.endedTracks.length - 1, 1);
-  console.log(ws.endedTracks);
+  // console.log(ws.endedTracks);
   socket.send(ws, 'music', ws.endedTracks[ws.endedTracks.length - 1]);
 }
 function starTrack(ws) {
   addValue(ws, ws.endedTracks[ws.endedTracks.length - 1], -7, false);
-  socket.send(ws, 'aska', 'хорошо, я сделаю чтоб этот трек играл часче');
+  socket.send(ws, 'aska', asyncAsk.whatToSay(AskaSC, 'y2'));
 }
 function deleteTrack(ws) {
-  const text = `${'ты действительно хочешь удалить трек'}, ${ws.endedTracks[ws.endedTracks.length - 1].name}`; // asyncAsk.whatToSay(AskaSC, 'y0')
+  const text = `${asyncAsk.whatToSay(AskaSC, 's0')}, ${ws.endedTracks[ws.endedTracks.length - 1].name}`;
   const defaultFunction = function defaultFunction() {
-    socket.send(ws, 'aska', 'я задала вопрос');
+    socket.send(ws, 'aska', asyncAsk.whatToSay(AskaSC, 's1'));
   };
   function deleteTrack2() {
     const nowTag = ws.endedTracks[ws.endedTracks.length - 1].nowTag;
     deleteT(ws, ws.endedTracks[ws.endedTracks.length - 1]);
+    socket.send(ws, 'aska', asyncAsk.whatToSay(AskaSC, 's5'));
   }
   const negative = function negative() {
-    socket.send(ws, 'aska', 'а зря');
+    socket.send(ws, 'aska', asyncAsk.whatToSay(AskaSC, 's2'));
   };
   const packaging = function packaging() {
     asyncAsk.selectFunctionFromWords(ws, [
       {
         func: deleteTrack2,
-        words: ['да'],
+        words: AskaSC.s3,
         end: true
       }, {
         func: negative,
-        words: ['нет', 'отмена'],
+        words: AskaSC.s4,
         end: true
       }
     ], defaultFunction);
   };
   asyncAsk.readEndWait(ws, text, packaging);
-  // socket.send(ws, 'aska', 'хорошо, я сделаю чтоб этот трек играл часче');
 }
 function volumeTrack(ws, parameters) {
   parameters = parameters.join(' ');
   let n = 0;
-  if (parameters === 'тише') {
+  if (parameters === AskaSC.z0[0]) {
     n = -0.4;
-  } else if (parameters === 'немного тише') {
+  } else if (parameters === AskaSC.z0[1]) {
     n = -0.2;
-  } else if (parameters === 'немного громче') {
+  } else if (parameters === AskaSC.z0[2]) {
     n = 0.2;
-  } else if (parameters === 'громче') {
+  } else if (parameters === AskaSC.z0[3]) {
     n = 0.4;
   }
   socket.send(ws, 'music', { name: 'volume', data: n });

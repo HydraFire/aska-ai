@@ -104,4 +104,4 @@ function speechRec() {
     }
   });
 }
-export { speechRec, startStopRec, recStop };
+export { speechRec, startStopRec, recStop, recStart };
