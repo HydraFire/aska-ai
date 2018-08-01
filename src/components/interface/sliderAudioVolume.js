@@ -4,6 +4,7 @@ import '../../css/sliderAudioVolume.css';
 
 function start() {
 	const audio = document.querySelector('#audio');
+	const audio2 = document.querySelector('#audio2');
 	const speed = document.querySelector('.speed');
 	const bar = speed.querySelector('.speed-bar');
 	const navCoords = speed.getBoundingClientRect();
@@ -22,6 +23,7 @@ function start() {
 
 	function handleMove(e){
 	  if(isClicked){
+			let high = 0.1;
 			let y = e.pageY - navCoords.top + 1;
 			let shkala = navCoords.bottom - navCoords.top;
 			let procent = y / shkala * 100 | 0;
@@ -29,6 +31,8 @@ function start() {
 			procent = (100 - procent)/100;
       bar.textContent = procent;
 			audio.volume = procent;
+			procent > 0.8 ? high = 0 : high = 0.1;
+			audio2.volume = procent + high;
       localStorage.audioVolume = procent;
 	  }
 	}
