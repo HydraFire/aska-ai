@@ -60,12 +60,12 @@ const askPart5 = function askPart5(ws, obj) {
           if (yString) {
             y = true;
           } else if (question) {
-            socket.send(ws, 'aska', asyncAsk.whatToSay(AskaSC, 'x1'));
+            socket.send(ws, 'aska', asyncAsk.whatToSay(AskaSC, 'f1'));
             question = false;
           }
         }
         if (x && y) {
-          socket.send(ws, 'aska', asyncAsk.whatToSay(AskaSC, 'x3'));
+          socket.send(ws, 'aska', asyncAsk.whatToSay(AskaSC, 'f3'));
           clearInterval(int);
           saveTimeStart(obj, xString, yString);
           ws.NNListen = true;

@@ -20,7 +20,7 @@ function note(ws, day, time) {
   const first = function attentionCheck() {
     if (newText !== '') {
       saveResult(day, time, newText, '3');
-      socket.send(ws, 'aska', asyncAsk.whatToSay(AskaSC, 'x3'));
+      socket.send(ws, 'aska', asyncAsk.whatToSay(AskaSC, 'f3'));
     } else {
       socket.send(ws, 'aska', asyncAsk.whatToSay(AskaSC, 'x4'));
     }
@@ -35,7 +35,7 @@ function note(ws, day, time) {
       }
     ], defaultFunction);
   };
-  asyncAsk.readEndWait(ws, asyncAsk.whatToSay(AskaSC, 'x2'), packaging);
+  asyncAsk.readEndWait(ws, asyncAsk.whatToSay(AskaSC, 'x3'), packaging);
 }
 
 // ////////////////////////////////////////////////////////////////////////////
@@ -72,7 +72,7 @@ function questSimple(ws, parameters) {
         }
       }
       if (x && z) {
-        socket.send(ws, 'aska', asyncAsk.whatToSay(AskaSC, 'x3'));
+        socket.send(ws, 'aska', asyncAsk.whatToSay(AskaSC, 'f3'));
         parameters = parameters.join(' ');
         saveResult(xString, '04:00:00.000Z', parameters, '3');
         clearInterval(int);
