@@ -1,6 +1,7 @@
 const fs = require('fs');
 const socket = require('../../webSocketOnMessage');
 const asyncAsk = require('../../asyncAsk');
+const { checkURL } = require('../../saveAska');
 const { questSimple } = require('./QuestSimple');
 const { searchDate, searchTime } = require('../../textToTime');
 const { saveResult } = require('./QuestInstrument');
@@ -14,16 +15,16 @@ function note(ws, day, time, options) {
   let newText = '';
   //
   const defaultFunction = function defaultFunction(string) {
-    socket.send(ws, 'aska', asyncAsk.whatToSay(AskaSC, 'x5'));
+    socket.send(ws, 'aska', checkURL(asyncAsk.whatToSay(AskaSC, 'x5')));
     newText += `${string}, `;
   };
 
   const first = function attentionCheck() {
     if (newText !== '') {
       saveResult(day, time, newText, options);
-      socket.send(ws, 'aska', asyncAsk.whatToSay(AskaSC, 'f3'));
+      socket.send(ws, 'aska', checkURL(asyncAsk.whatToSay(AskaSC, 'f3')));
     } else {
-      socket.send(ws, 'aska', asyncAsk.whatToSay(AskaSC, 'x4'));
+      socket.send(ws, 'aska', checkURL(asyncAsk.whatToSay(AskaSC, 'x4')));
     }
   };
 
@@ -36,7 +37,7 @@ function note(ws, day, time, options) {
       }
     ], defaultFunction);
   };
-  asyncAsk.readEndWait(ws, asyncAsk.whatToSay(AskaSC, `x${options}`), packaging);
+  asyncAsk.readEndWait(ws, checkURL(asyncAsk.whatToSay(AskaSC, `x${options}`)), packaging);
 }
 
 // ////////////////////////////////////////////////////////////////////////////
@@ -60,7 +61,7 @@ function questHard(ws, options, parameters) {
         if (xString) {
           x = true;
         } else {
-          socket.send(ws, 'aska', asyncAsk.whatToSay(AskaSC, 'x0'));
+          socket.send(ws, 'aska', checkURL(asyncAsk.whatToSay(AskaSC, 'x0')));
           question = false;
         }
       }
@@ -69,7 +70,7 @@ function questHard(ws, options, parameters) {
         if (yString) {
           y = true;
         } else if (question) {
-          socket.send(ws, 'aska', asyncAsk.whatToSay(AskaSC, 'f1'));
+          socket.send(ws, 'aska', checkURL(asyncAsk.whatToSay(AskaSC, 'f1')));
           question = false;
         }
       }
@@ -83,7 +84,7 @@ function questHard(ws, options, parameters) {
         }
       }
       if (x && y && z) {
-        socket.send(ws, 'aska', asyncAsk.whatToSay(AskaSC, 'f3'));
+        socket.send(ws, 'aska', checkURL(asyncAsk.whatToSay(AskaSC, 'f3')));
         parameters = parameters.join(' ');
         saveResult(xString, yString, parameters, options);
         clearInterval(int);

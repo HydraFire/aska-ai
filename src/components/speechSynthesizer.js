@@ -1,24 +1,36 @@
 import iconsole from './interface/iconsole';
 import socket from './webSocketClient';
 import { recStop, recStart } from './speechRecognition';
+
+function delquestionMark(str) {
+  return str.replace(/[?]/gi, '@');
+}
 /* eslint-disable */
 function aska(text) {
+
+
   const audio = document.getElementById('audio');
   const audio2 = document.getElementById('audio2');
   // iconsole.logC(text);
 
   function choseAudioTag(text, audioTag, num) {
     function playAudio(text) {
-      let url = 'https://tts.voicetech.yandex.net/generate?'+
-          'key=222499e2-1e45-4b6d-aaaa-70b53b87c2ec'+
-          '&text='+encodeURI(text)+
-          '&format=mp3'+
-          '&lang=ru-RU'+
-          '&topic=queries'+
-          '&speaker=oksana'+
-          '&speed=1'+
-          '&robot=1'+
-          '&emotion=evil';//evil
+      let url
+      if (text.substring(0, 1) == '#') {
+        text.includes('?') ? text = delquestionMark(text) : '';
+        url = `http://localhost:8080/sample/${text.substring(1, text.length)}.mp3`;
+      } else {
+        url = 'https://tts.voicetech.yandex.net/generate?'+
+            'key=222499e2-1e45-4b6d-aaaa-70b53b87c2ec'+
+            '&text='+encodeURI(text)+
+            '&format=mp3'+
+            '&lang=ru-RU'+
+            '&topic=queries'+
+            '&speaker=oksana'+
+            '&speed=1'+
+            '&robot=1'+
+            '&emotion=evil';
+      }
 
       audioTag.src = url;
       audioTag.onloadeddata = function onloadeddata() {
