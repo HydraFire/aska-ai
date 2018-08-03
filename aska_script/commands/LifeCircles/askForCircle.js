@@ -1,6 +1,7 @@
 const fs = require('fs');
 const socket = require('../../webSocketOnMessage');
 const asyncAsk = require('../../asyncAsk');
+const { checkURL } = require('../../saveAska');
 const lifeCircles = require('./LifeCircles');
 const { calcNow, countToText, dateToText } = require('./calcTime');
 // /////////////////////////////////////
@@ -13,7 +14,7 @@ const AskaSC = JSON.parse(fs.readFileSync(fileOption));
 // /////////////////////////////////////////////////////////////////////////////
 function LifeCirclesNapominanie(ws, obj) {
   const x = function x() {
-    socket.send(ws, 'aska', `${asyncAsk.whatToSay(AskaSC, 'z0')}, ${obj.words}`);
+    socket.send(ws, 'aska', checkURL(`${asyncAsk.whatToSay(AskaSC, 'z0')}, ${obj.words}`));
   };
   if (obj.words != '') {
     asyncAsk.onlyWait(ws, x, ws);
