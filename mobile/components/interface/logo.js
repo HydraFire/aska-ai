@@ -32,7 +32,10 @@ function activeInput(n) {
     commandLine.onkeydown = '';
   }
 }
-
+function restoreCharts() {
+  localStorage.chartButtons = [];
+  window.myconsole.log('localStorage.chartButtons = [];', 'err');
+}
 function init() {
   window.addEventListener('orientationchange', checkOrientation, false);
 }
@@ -105,7 +108,7 @@ class Logo extends React.Component {
       return (
         <div className="console">
           <div className="console_top">
-            ASKA version: 3.1    I give you this pain with love
+            ASKA version: 3.1    <span onClick={restoreCharts}>I give you this pain with love</span>
           </div>
           <div className="console_center">
             {this.myRender()}
