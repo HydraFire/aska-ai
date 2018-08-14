@@ -5,6 +5,12 @@ import { recStop, recStart } from './speechRecognition';
 function delquestionMark(str) {
   return str.replace(/[?]/gi, '@');
 }
+function getServerUrl() {
+  if (localStorage.aska_ip) {
+    return `https://${localStorage.aska_ip.split('//')[1]}/sample/`;
+  }
+  return `https://${process.env.HOSTNAME.split('//')[1]}/sample/`;
+}
 /* eslint-disable */
 function aska(text) {
 
@@ -18,7 +24,7 @@ function aska(text) {
       let url
       if (text.substring(0, 1) == '#') {
         text.includes('?') ? text = delquestionMark(text) : '';
-        url = `http://localhost:8080/sample/${text.substring(1, text.length)}.mp3`;
+        url = `${getServerUrl()}${text.substring(1, text.length)}.mp3`;
       } else {
         url = 'https://tts.voicetech.yandex.net/generate?'+
             'key=222499e2-1e45-4b6d-aaaa-70b53b87c2ec'+
