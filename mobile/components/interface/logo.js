@@ -8,6 +8,7 @@ function checkOrientation() {
   //  if(window.orientation !== previousOrientation){
   //      previousOrientation = window.orientation;
   //  }
+  window.myconsole.log(`window.orientation = ${window.orientation}`, 'str');
   if (window.orientation === 90 || window.orientation === 270) {
     document.querySelectorAll('.circle').forEach(v => v.className = 'circle-portable');
     document.querySelector('.circle-static').className = 'circle-static-portable';
