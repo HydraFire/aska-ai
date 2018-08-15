@@ -3,8 +3,24 @@
   font-size: 20px;
   background: #000;
 }
+
+
+.circle-static {
+  margin: 220px 0px 0px -60px;
+  transform: rotate(90deg);
+}
 .circle-static-portable {
   margin: 70px 0px 0px 111px;
+}
+
+
+
+.circle {
+  left: -3px;
+  top: 150px;
+  position: absolute;
+  animation: hero-logo-circle 1s linear infinite;
+  will-change: transform;
 }
 .circle-portable {
   left: 175px;
@@ -13,17 +29,7 @@
   animation: hero-logo-circle 1s linear infinite;
   will-change: transform;
 }
-.circle-static {
-  margin: 220px 0px 0px -60px;
-  transform: rotate(90deg);
-}
-.circle {
-  left: -3px;
-  top: 150px;
-  position: absolute;
-  animation: hero-logo-circle 1s linear infinite;
-  will-change: transform;
-}
+
 .consoleButton {
   margin-top: 10px;
   margin-left: 0px;
