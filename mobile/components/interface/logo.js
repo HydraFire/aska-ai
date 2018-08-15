@@ -5,10 +5,6 @@ import '../../css/logo.css';
 
 // var previousOrientation = window.orientation;
 function checkOrientation() {
-  //  if(window.orientation !== previousOrientation){
-  //      previousOrientation = window.orientation;
-  //  }
-  window.myconsole.log(`window.orientation = ${window.orientation}`, 'str');
   if (window.orientation === 90 || window.orientation === -90) {
     document.querySelectorAll('.circle').forEach(v => v.className = 'circle-portable');
     document.querySelector('.circle-static').className = 'circle-static-portable';
@@ -153,18 +149,18 @@ class Logo extends React.Component {
       <button onClick={this.consoleButton} className="consoleButton"></button>
       <div className="main">
         <div className="hero-logo-div">
-          <img className="circle" id="c1" src={svg1} alt="lol" />
-          <img className="circle" id="c2" src={svg2} alt="lol" />
-          <img className="circle" id="c3" src={svg3} alt="lol" />
-          <img className="circle" id="c4" src={svg4} alt="lol" />
-          <img className="circle" id="c5" src={svg5} alt="lol" />
-          <img className="circle" id="c6" src={svg6} alt="lol" />
-          <img className="circle" id="c7" src={svg7} alt="lol" />
-          <img className="circle" id="c8" src={svg8} alt="lol" />
-          <img className="circle" id="c9" src={svg9} alt="lol" />
-          <img className="circle" id="c10" src={svg10} alt="lol" />
+          <img className="circle" id="c1" src={svg1} alt="ASKA" />
+          <img className="circle" id="c2" src={svg2} alt="ASKA" />
+          <img className="circle" id="c3" src={svg3} alt="ASKA" />
+          <img className="circle" id="c4" src={svg4} alt="ASKA" />
+          <img className="circle" id="c5" src={svg5} alt="ASKA" />
+          <img className="circle" id="c6" src={svg6} alt="ASKA" />
+          <img className="circle" id="c7" src={svg7} alt="ASKA" />
+          <img className="circle" id="c8" src={svg8} alt="ASKA" />
+          <img className="circle" id="c9" src={svg9} alt="ASKA" />
+          <img className="circle" id="c10" src={svg10} alt="ASKA" />
         </div>
-        <img className="circle-static" src={svg11} alt="lol" />
+        <img className="circle-static" src={svg11} alt="ASKA" />
           {/*
             <div>
               <button id="unsubscribe">unsubscribe</button>
