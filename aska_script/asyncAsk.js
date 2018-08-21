@@ -30,6 +30,7 @@ module.exports.whatToSay = whatToSay;
 function selectFunctionFromWords(ws, options, defaultFunction) {
   ws.NNListen = false;
   let skazanoe = 'none';
+  ws.ClientSay = '';
   let flag = 0;
   const int = setInterval(() => {
     if (skazanoe !== ws.ClientSay) {
