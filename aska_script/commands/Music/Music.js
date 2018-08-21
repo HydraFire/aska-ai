@@ -37,7 +37,9 @@ function playMusic(ws, parameters) {
     return 0;
   });
   const random = Math.random() * (arr.length / 10 | 0) | 0;
+  console.log(`random = ${random}`);
   const obj = arr[random];
+  console.log(`arr = ${arr}`);
   obj.nowTag = parameters;
   obj.allTag = arrAllTag;
   ws.endedTracks.push(obj);
