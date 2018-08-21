@@ -36,18 +36,20 @@ function playMusic(ws, parameters) {
     }
     return 0;
   });
-  const random = Math.random() * (arr.length / 10 | 0) | 0;
-  console.log(`random = ${random}`);
-  const obj = arr[random];
-  console.log(`arr = ${arr}`);
-  obj.nowTag = parameters;
-  obj.allTag = arrAllTag;
-  ws.endedTracks.push(obj);
-  socket.send(ws, 'music', obj);
-  setTimeout(() => {
-    socket.send(ws, 'aska', asyncAsk.whatToSay(AskaSC, 'y0'));
-  }, 1000);
-  // console.log(ws.endedTracks);
+  if (arr != '') {
+    const random = Math.random() * (arr.length / 10 | 0) | 0;
+    const obj = arr[random];
+    obj.nowTag = parameters;
+    obj.allTag = arrAllTag;
+    ws.endedTracks.push(obj);
+    socket.send(ws, 'music', obj);
+    setTimeout(() => {
+      socket.send(ws, 'aska', asyncAsk.whatToSay(AskaSC, 'y0'));
+    }, 1000);
+    // console.log(ws.endedTracks);
+  } else {
+    socket.send(ws, 'aska', `${asyncAsk.whatToSay(AskaSC, 'z1')} ${parameters}`);
+  }
 }
 module.exports.playMusic = playMusic;
 // ////////////////////// ВЫКЛЮЧИ МУЗЫКУ ///////////////////////////////////////
