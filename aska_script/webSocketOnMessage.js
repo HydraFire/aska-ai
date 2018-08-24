@@ -5,12 +5,7 @@ const { editorLoad, editorSave } = require('./NN/editor');
 const { challengeLogLoad } = require('./challengeLog');
 const { chartLoad } = require('./chartLoad');
 const { checkAssignments } = require('./mainTimeCircle');
-const {
-  saveFile,
-  newFile,
-  refreshDB,
-  commands
-} = require('./commands/Music/instrument');
+const { saveFile, commands } = require('./commands/Music/instrument');
 // Функция нужна для автоматизации создания обэкта и стрингификации
 function send(ws, type, data) {
   if (!ws.closeAllInterval) {
