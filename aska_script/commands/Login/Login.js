@@ -10,7 +10,7 @@ const fileOption = './data/commands/Login/option.json';
 const AskaSC = JSON.parse(fs.readFileSync(fileOption));
 // ////////////////////////////////////////////////////////////////////////////
 function createToken() {
-  return jwt.sign({ id: process.env.PASSWORD }, process.env.JWT_SECRET, { expiresIn: '14d' });
+  return jwt.sign({ id: process.env.PASSWORD }, process.env.JWT_SECRET, { expiresIn: '21d' });
 }
 // ////////////////////////////////////////////////////////////////////////////
 function verifAccess() {
@@ -61,6 +61,7 @@ function Login(ws, option) {
     // Запуск проверки заданий и лайф циклов
     setTimeout(() => {
       idleInterval(ws);
+      checkAssignments(ws);
     }, 3000);
   };
   const negative = function negative() {
