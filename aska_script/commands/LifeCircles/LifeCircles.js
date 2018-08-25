@@ -18,7 +18,8 @@ function readFile(p) {
   try {
     return JSON.parse(fs.readFileSync(p));
   } catch (err) {
-    fs.writeFileSync(p, JSON.stringify(example), 'utf8');
+    console.log(err);
+    // fs.writeFileSync(p, JSON.stringify(example), 'utf8');
     return example;
   }
 }

@@ -32,6 +32,8 @@ function ok(ws, arr, i, value) {
   time = dateToText(time);
   let n = arr[i].incident.length + arr[i].startIncident;
   n = countToText(n);
+  socket.send(ws, 'console', `${asyncAsk.whatToSay(AskaSC, 'm0')}, ${value} ${asyncAsk.whatToSay(AskaSC, 'm1')} ${n},
+  ${asyncAsk.whatToSay(AskaSC, 'm2')} ${time}`);
   socket.send(ws, 'aska', `${asyncAsk.whatToSay(AskaSC, 'm0')}, ${value} ${asyncAsk.whatToSay(AskaSC, 'm1')} ${n},
   ${asyncAsk.whatToSay(AskaSC, 'm2')} ${time}`);
 }
