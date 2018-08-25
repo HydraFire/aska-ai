@@ -1,5 +1,5 @@
 import socket from './webSocketClient';
-import { animeteLoadAudio, animetePlayAudio } from './interface/animation';
+import { animeteLoadAudio, animetePlayAudio, animeteUltraSound } from './interface/animation';
 // import { startStopRec } from './speechRecognition';
 /* eslint-disable */
 let audio
@@ -8,11 +8,11 @@ let errorCount = 0;
 let aska_mute = false;
 // //////////////////////////////////////////////////////////////////////////
 function psevdo() {
-  window.myconsole.animeteUltraSound(true);
+  animeteUltraSound(true);
   socket.send('speech_start','AUDIO');
   setTimeout(()=>{
     socket.send('speech_end','AUDIO');
-    window.myconsole.animeteUltraSound(false);
+    animeteUltraSound(false);
   }, 1500);
 }
 

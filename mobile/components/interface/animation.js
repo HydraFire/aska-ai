@@ -2,7 +2,11 @@ import analyserGetReady from '../audioAnalyser';
 
 let analyser;
 let int;
-
+let w;
+let arrZ = [];
+let animMic;
+let animUS;
+let animLoad;
 
 // /////////////////////////////////////////////////////////////////////////////////////
 function checkOrientation() {
@@ -20,54 +24,100 @@ function init() {
 }
 // ///////////////////////////////////////////////////////////////////////////////////
 
-function animete() {
-  document.querySelector('#c2').id = 'cSpeed';
+function animeteErr() {
+  document.querySelector('#c2').animate([
+    // keyframes
+    { transform: 'rotate(0deg) scale(0.1)' },
+    { transform: 'rotate(360deg) scale(3)' }
+  ], {
+    // timing options
+    duration: 1000,
+    iterations: Infinity
+  });
 }
 function animeteLoadAudio(boolean) {
   if (boolean) {
-
+    animLoad = document.querySelector('#c4').animate([
+      // keyframes
+      { transform: 'rotate(0deg) scale(1.3)' },
+      { transform: 'rotate(360deg) scale(0.2)' }
+    ], {
+      // timing options
+      duration: 1000,
+      iterations: Infinity
+    });
   } else {
-    //clearInterval(int);
-    //document.querySelectorAll('.circle').forEach(v => v.style.transform = 'scale(0.1)');
+    animLoad.cancel();
   }
 }
 function animeteMic(boolean) {
   if (boolean) {
-    document.querySelector('#c10').id = 'cSpeed';
+    animMic = document.querySelector('#c10').animate([
+      // keyframes
+      { transform: 'rotate(0deg) scale(0.2)' },
+      { transform: 'rotate(360deg) scale(1.3)' }
+    ], {
+      // timing options
+      duration: 1000,
+      iterations: Infinity
+    });
   } else {
-    document.querySelector('#cSpeed').id = 'c10';
+    animMic.cancel();
   }
 }
 function animeteUltraSound(boolean) {
   if (boolean) {
-    document.querySelector('#c8').id = 'cSpeed';
+    animUS = document.querySelector('#c8').animate([
+      // keyframes
+      { transform: 'rotate(0deg) scale(0.2)' },
+      { transform: 'rotate(360deg) scale(1.3)' }
+    ], {
+      // timing options
+      duration: 1000,
+      iterations: Infinity
+    });
   } else {
-    document.querySelector('#cSpeed').id = 'c8';
+    animUS.cancel();
   }
 }
-
+// ////////////////////////////////////////////////////////////////////////////////
 function getStarted() {
   const arr = new Array(10);
   for (let i = 0; i < 10; i += 1) {
     arr[i] = i + 1;
   }
-  arr.forEach((v) => {
-    document.querySelector(`#c${v}`).style.animationName = 'none';
-  });
+  if (arrZ.length > 0) {
+    arrZ.forEach((v) => {
+      v.cancel();
+    });
+    arrZ = [];
+  } else {
+    arr.forEach((v) => {
+      document.querySelector(`#c${v}`).style.animationName = 'none';
+    });
+  }
 }
-function getFinished() {
+function getFinished(arrM) {
   const arr = new Array(10);
   for (let i = 0; i < 10; i += 1) {
     arr[i] = i + 1;
   }
-  arr.forEach((v) => {
-    document.querySelector(`#c${v}`).style.animationName = 'anim';
+  arr.forEach((v, index) => {
+    arrZ.push(document.querySelector(`#c${v}`).animate([
+      // keyframes
+      { transform: `rotate(0deg) scale(${w[arrM[index]] / 80})` },
+      { transform: `rotate(360deg) scale(${w[arrM[index]] / 80})` }
+    ], {
+      // timing options
+      duration: 100000 / arr[index],
+      iterations: Infinity
+    }));
   });
 }
 
 function animetePlayAudio(boolean) {
   const arr = new Array(10);
-  const arrW = [0, 10, 20, 50, 100, 150, 200, 250, 500, 55];
+  const arrW = [0, 10, 20, 50, 100, 150, 200, 250, 350, 500];
   for (let i = 0; i < 10; i += 1) {
     arr[i] = i + 1;
   }
@@ -75,16 +125,16 @@ function animetePlayAudio(boolean) {
     getStarted();
     let i = 0;
     int = setInterval(() => {
-      i += 10;
-      let w = analyser.frequencies();
+      i += 5;
+      w = analyser.frequencies();
       arr.forEach((v, index) => {
-        document.querySelector(`#c${v}`).style.transform = `scale(${w[arrW[index]] / 128}) rotate(${i / v}deg)`;
+        document.querySelector(`#c${v}`).style.transform = `scale(${w[arrW[index]] / 80}) rotate(${i / v}deg)`;
       });
     }, 20);
   } else {
+    getFinished(arrW);
     clearInterval(int);
-    getFinished();
   }
 }
 
-export { init, animetePlayAudio, animeteLoadAudio };
+export { init, animetePlayAudio, animeteLoadAudio, animeteMic, animeteUltraSound, animeteErr };

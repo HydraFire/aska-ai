@@ -1,6 +1,7 @@
 // import iconsole from './interface/iconsole';
 import socket from './webSocketClient';
 import { newMessage } from './interface/displayCanvasMessage';
+import { animeteMic } from './interface/animation';
 // Cтатус розпознавания речи, включено true, выключено false
 /* eslint-disable */
 window.SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
@@ -11,7 +12,7 @@ recognition.lang = 'ru-RU';
 
 export const startStopRec = () => {
   recognition.start();
-  window.myconsole.animeteMic(true);
+  animeteMic(true);
 };
 
 export const speechRec = () => {
@@ -31,7 +32,7 @@ export const speechRec = () => {
     // Финальное значение разпознавания
     if (e.results[0].isFinal) {
       window.myconsole.log(text, 'chat');
-      window.myconsole.animeteMic(false);
+      animeteMic(false);
       socket.send(text);
     }
   });

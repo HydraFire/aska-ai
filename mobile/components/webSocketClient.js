@@ -1,6 +1,7 @@
 // import iconsole from './interface/iconsole';
 import pushNotification from './pushNotification';
 import { aska } from './speechSynthesizer';
+import { animeteErr } from './interface/animation';
 import clientTimeout from './clientTimeout';
 // import NNEditor from './interface/NNEditor';
 import { twoArr, chargeImpulse } from './quest';
@@ -87,7 +88,7 @@ function start() {
     } else {
       window.myconsole.log('Обрыв соединения', 'err');
     }
-    window.myconsole.animete();
+    animeteErr();
     window.myconsole.log(`Код: ${event.code} причина: ${event.reason}`, 'err');
   };
 }
