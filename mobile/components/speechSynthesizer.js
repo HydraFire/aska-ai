@@ -1,4 +1,5 @@
 import socket from './webSocketClient';
+import { animeteLoadAudio, animetePlayAudio } from './interface/animation';
 // import { startStopRec } from './speechRecognition';
 /* eslint-disable */
 let audio
@@ -47,7 +48,7 @@ function trueAska(text) {
         text.includes('?') ? text = delquestionMark(text) : '';
         url = `http://localhost:8080/sample/${text.substring(1, text.length)}.mp3`;
       } else {
-        window.myconsole.animeteLoadAudio(true);
+        animeteLoadAudio(true);
         url = 'https://tts.voicetech.yandex.net/generate?'+
             'key=222499e2-1e45-4b6d-aaaa-70b53b87c2ec'+
             '&text='+encodeURI(text)+
@@ -67,11 +68,11 @@ function trueAska(text) {
         // iconsole.logC('audioTag.play()');
         // console.log(audioTag.volume)
         if (text.substring(0, 1) != '#') {
-          window.myconsole.animeteLoadAudio(false);
+          animeteLoadAudio(false);
         }
         audioTag.play();
         socket.send('speech_start','AUDIO');
-        window.myconsole.animetePlayAudio(true);
+        animetePlayAudio(true);
       }
     };
     function splitOnParts(text){
@@ -89,7 +90,7 @@ function trueAska(text) {
         audioTag.addEventListener('pause',()=>{
           // console.log('SHUT_UP')
           socket.send('speech_end','AUDIO');
-          window.myconsole.animetePlayAudio(false);
+          animetePlayAudio(false);
           // startStopRec();
         },{once:true})
       }

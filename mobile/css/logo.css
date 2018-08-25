@@ -19,14 +19,12 @@
   left: -3px;
   top: 180px;
   position: absolute;
-  animation: hero-logo-circle 1s linear infinite;
   will-change: transform;
 }
 .circle-portable {
   left: 180px;
   top: -3px;
   position: absolute;
-  animation: hero-logo-circle 1s linear infinite;
   will-change: transform;
 }
 
@@ -95,40 +93,73 @@
   margin-bottom: 5px;
 }
 #c1 {
+  animation-name: anim;
   animation-duration: 30s;
+  animation-iteration-count: infinite;
+  animation-timing-function: linear;
 }
 #c2 {
-    animation-duration: 40s;
+  animation-name: anim;
+  animation-duration: 40s;
+  animation-iteration-count: infinite;
+  animation-timing-function: linear;
 }
 #c3 {
-    animation-duration: 50s;
+  animation-name: anim;
+  animation-duration: 50s;
+  animation-iteration-count: infinite;
+  animation-timing-function: linear;
 }
 #c4 {
-    animation-duration: 60s;
+  animation-name: anim;
+  animation-duration: 60s;
+  animation-iteration-count: infinite;
+  animation-timing-function: linear;
 }
 #c5 {
-    animation-duration: 70s;
+  animation-name: anim;
+  animation-duration: 70s;
+  animation-iteration-count: infinite;
+  animation-timing-function: linear;
 }
 #c6 {
-    animation-duration: 80s;
+  animation-name: anim;
+  animation-duration: 80s;
+  animation-iteration-count: infinite;
+  animation-timing-function: linear;
 }
 #c7 {
-    animation-duration: 90s;
+  animation-name: anim;
+  animation-duration: 90s;
+  animation-iteration-count: infinite;
+  animation-timing-function: linear;
 }
 #c8 {
-    animation-duration: 100s;
+  animation-name: anim;
+  animation-duration: 100s;
+  animation-iteration-count: infinite;
+  animation-timing-function: linear;
 }
 #c9 {
+  animation-name: anim;
   animation-duration: 110s;
+  animation-iteration-count: infinite;
+  animation-timing-function: linear;
+  will-change: transform;
 }
 #c10 {
+  animation-name: anim;
   animation-duration: 120s;
+  animation-iteration-count: infinite;
+  animation-timing-function: linear;
+
 }
-#cSpeed {
-  animation-duration: 1s;
-}
-@keyframes hero-logo-circle{
+
+@keyframes anim {
+  0%{
+    transform:rotate(0deg);
+    }
   100%{
-    transform:rotate(1turn);
+    transform:rotate(360deg);
     }
   }

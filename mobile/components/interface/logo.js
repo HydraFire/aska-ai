@@ -1,18 +1,11 @@
 import React, { Fragment } from 'react';
 import { aska } from '../speechSynthesizer';
 import socket from '../webSocketClient';
+import { init } from './animation';
 import '../../css/logo.css';
 
 // var previousOrientation = window.orientation;
-function checkOrientation() {
-  if (window.orientation === 90 || window.orientation === -90) {
-    document.querySelectorAll('.circle').forEach(v => v.className = 'circle-portable');
-    document.querySelector('.circle-static').className = 'circle-static-portable';
-  } else {
-    document.querySelectorAll('.circle-portable').forEach(v => v.className = 'circle');
-    document.querySelector('.circle-static-portable').className = 'circle-static';
-  }
-}
+
 function activeInput(n) {
   const commandLine = document.querySelector('.inputCommandLine');
   if (n) {
@@ -33,9 +26,7 @@ function restoreCharts() {
   localStorage.chartButtons = [];
   window.myconsole.log('localStorage.chartButtons = [];', 'err');
 }
-function init() {
-  window.addEventListener('orientationchange', checkOrientation, false);
-}
+
 // /////////////////////////////////////////////////////////////////////////////
 // /////////////////////////////////////////////////////////////////////////////
 
@@ -53,37 +44,6 @@ class Logo extends React.Component {
     this.setState({ arr });
   }
   // //////////////////////////////////////////////////////////////////////////
-  animete = () => {
-    document.querySelector('#c2').id = 'cSpeed';
-  }
-  animeteLoadAudio = (boolean) => {
-    if (boolean) {
-      document.querySelector('#c4').id = 'cSpeed';
-    } else {
-      document.querySelector('#cSpeed').id = 'c4';
-    }
-  }
-  animeteMic = (boolean) => {
-    if (boolean) {
-      document.querySelector('#c10').id = 'cSpeed';
-    } else {
-      document.querySelector('#cSpeed').id = 'c10';
-    }
-  }
-  animeteUltraSound = (boolean) => {
-    if (boolean) {
-      document.querySelector('#c8').id = 'cSpeed';
-    } else {
-      document.querySelector('#cSpeed').id = 'c8';
-    }
-  }
-  animetePlayAudio = (boolean) => {
-    if (boolean) {
-      document.querySelector('#c6').id = 'cSpeed';
-    } else {
-      document.querySelector('#cSpeed').id = 'c6';
-    }
-  }
   // ///////////////////////////////////////////////////////////////////////////
   myRender = () => {
     return this.state.arr.map((v, i) => {
@@ -122,7 +82,6 @@ class Logo extends React.Component {
       activeInput(false);
       this.setState({console: false});
     } else {
-
       this.setState({console: true});
       setTimeout(() => {
         activeInput(true);
@@ -161,12 +120,6 @@ class Logo extends React.Component {
           <img className="circle" id="c10" src={svg10} alt="ASKA" />
         </div>
         <img className="circle-static" src={svg11} alt="ASKA" />
-          {/*
-            <div>
-              <button id="unsubscribe">unsubscribe</button>
-              <button id="subscribe">subscribe</button>
-            </div>
-          */}
       </div>
       {this.console()}
       </Fragment>
