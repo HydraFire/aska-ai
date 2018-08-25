@@ -4,15 +4,35 @@ const fetch = require('node-fetch');
 const filepath = './data/saveAska.json';
 const savepath = './public/sample/';
 // //////////////////////////////////////
+function delquestionMark(str) {
+  return str.replace(/[?]/gi, '@');
+}
+function addquestionMark(str) {
+  return str.replace(/[@]/gi, '?');
+}
+function delmp3Mark(str) {
+  return str.replace(/[.mp3]/gi, '');
+}
+function getlistFile() {
+  const obj = { all: [] };
+  const list = fs.readdirSync(savepath);
+  list.forEach((v) => {
+    v = addquestionMark(v);
+    v = delmp3Mark(v);
+    obj.all.push(v);
+  });
+  fs.writeFileSync(filepath, JSON.stringify(obj), 'utf8');
+  return obj;
+}
+
 function readFile() {
   try {
     return JSON.parse(fs.readFileSync(filepath));
   } catch (err) {
-    return { all: [] };
+    console.log(err);
+    console.log('// BUILD new saveAska file list');
+    return getlistFile();
   }
-}
-function delquestionMark(str) {
-  return str.replace(/[?]/gi, '@');
 }
 // //////////////////////////////////////
 const arrAska = readFile();
@@ -40,7 +60,12 @@ function saveAudio(text) {
       return res.buffer();
     })
     .then((data) => {
-      fs.writeFile(`${savepath}${filename}.mp3`, data);
+      fs.writeFile(`${savepath}${filename}.mp3`, data, () => {
+        console.log(`SAVE... ${savepath}${filename}.mp3 .. DONE`);
+        arrAska.all.push(text);
+        fs.writeFileSync(filepath, JSON.stringify(arrAska), 'utf8');
+        console.log('arrAska ...UPDATE');
+      });
     })
     .catch((error) => {
       console.log('request failed', error);
@@ -54,8 +79,6 @@ function checkURL(text) {
     setTimeout(() => {
       saveAudio(text);
     }, 3000);
-    arrAska.all.push(text);
-    fs.writeFileSync(filepath, JSON.stringify(arrAska), 'utf8');
   }
   return text;
 }
