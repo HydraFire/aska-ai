@@ -36,4 +36,10 @@ export const speechRec = () => {
       socket.send(text);
     }
   });
+  recognition.addEventListener('end', () => {
+    animeteMic(false);
+  });
+  recognition.addEventListener('error', () => {
+    animeteMic(false);
+  });
 };
