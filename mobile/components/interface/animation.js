@@ -130,7 +130,7 @@ function animetePlayAudio(boolean) {
       arr.forEach((v, index) => {
         document.querySelector(`#c${v}`).style.transform = `scale(${w[arrW[index]] / 80}) rotate(${i / v}deg)`;
       });
-    }, 20);
+    }, 10);
   } else {
     getFinished(arrW);
     clearInterval(int);
