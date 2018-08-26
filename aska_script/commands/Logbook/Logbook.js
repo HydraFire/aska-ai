@@ -1,6 +1,7 @@
 const fs = require('fs');
 const socket = require('../../webSocketOnMessage');
 const asyncAsk = require('../../asyncAsk');
+const { checkURL } = require('../../saveAska');
 // ///////////////////////////////
 // ///////////////////////////////
 const filepath = './data/LogBook.json';
@@ -46,14 +47,14 @@ function oneIteration(ws, text) {
   let newText = '';
   const defaultFunction = function defaultFunction(string) {
     newText += `${string}, `;
-    socket.send(ws, 'aska', asyncAsk.whatToSay(AskaSC, 't3'));
+    socket.send(ws, 'aska', checkURL(asyncAsk.whatToSay(AskaSC, 't3')));
   };
   const saveOfPart = function saveOfPart() {
     if (newText !== '') {
       saveToFile(newText);
-      socket.send(ws, 'aska', asyncAsk.whatToSay(AskaSC, 't0'));
+      socket.send(ws, 'aska', checkURL(asyncAsk.whatToSay(AskaSC, 't0')));
     } else {
-      socket.send(ws, 'aska', asyncAsk.whatToSay(AskaSC, 't2'));
+      socket.send(ws, 'aska', checkURL(asyncAsk.whatToSay(AskaSC, 't2')));
     }
   };
   const newPart = function newPart() {
@@ -74,7 +75,7 @@ function oneIteration(ws, text) {
     ], defaultFunction);
   };
   const n = function n() {
-    asyncAsk.readEndWait(ws, asyncAsk.whatToSay(AskaSC, 't1'), x);
+    asyncAsk.readEndWait(ws, checkURL(asyncAsk.whatToSay(AskaSC, 't1')), x);
   };
   asyncAsk.readEndWait(ws, text, n);
 }
@@ -111,7 +112,7 @@ function Logbook(ws) {
       });
       if (arrayAllParts.length === 0) {
         clearInterval(int);
-        asyncAsk.waitForNNListen(ws, socket.send, [ws, 'aska', asyncAsk.whatToSay(AskaSC, 't4')]);
+        asyncAsk.waitForNNListen(ws, socket.send, [ws, 'aska', checkURL(asyncAsk.whatToSay(AskaSC, 't4'))]);
       }
     }
     ws.closeAllInterval ? clearInterval(int) : '';

@@ -83,3 +83,9 @@ function checkURL(text) {
   return text;
 }
 module.exports.checkURL = checkURL;
+// ////////////////////////////////////////////
+function checkArray(arr) {
+  arr = arr.map(v => checkURL(v));
+  return arr;
+}
+module.exports.checkArray = checkArray;

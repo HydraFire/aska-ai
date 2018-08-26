@@ -3,7 +3,6 @@ import { aska } from './speechSynthesizer';
 
 let mainInterval = 0;
 let impulseInterval = 0;
-let nowObj = {};
 let removeEvent = false;
 
 function play20Hz() {
@@ -33,45 +32,47 @@ function stop20Hz() {
 function getmainInterval() {
   return mainInterval;
 }
+
 function deviceHandler() {
   socket.send('impulse', 'impulse');
   window.myconsole.log('socket.send(impulse, impulse);', 'string');
 }
 function chargeImpulse() {
+  window.myconsole.log('chargeImpulse', 'err');
   window.addEventListener('devicemotion', deviceHandler, { once: true });
 }
 // /////////////////////////////////////////////////////////////////////////////
 function intervalGO(arr) {
-  function deviceMotionHandler() {
-  //  if ((e.acceleration.x + e.acceleration.y + e.acceleration.z | 0) > 0) {
-    // setTimeout(() => {
-  //    window.removeEventListener('devicemotion', deviceMotionHandler);
+  function finishIntervals(obj) {
+    window.myconsole.log(JSON.stringify(obj), 'string');
+
     clearInterval(impulseInterval);
     impulseInterval = 0;
-    // socket.send('impulse', 'impulse');
-    // window.myconsole.log('clearInterval(impulseInterval);', 'string');
-    arr = arr.filter(v => v.quest != nowObj.quest);
+
+    arr = arr.filter(v => v.quest != obj.quest);
+
     if (arr.length == 0) {
       clearInterval(mainInterval);
       mainInterval = 0;
       stop20Hz();
-      // console.log('final');
     }
-    nowObj = {};
-    // }, 15000);
-  //  }
   }
   function impulse(obj) {
-    window.myconsole.log('impulse(obj)', 'string');
-    nowObj = obj;
-    window.addEventListener('devicemotion', deviceMotionHandler, { once: true });
+    let i = 0;
+    let t = 0;
     impulseInterval = setInterval(() => {
-      window.myconsole.log('impulseInterval', 'string');
-      aska(nowObj.say[Math.random() * nowObj.say.length | 0]);
+      i += 10;
+      t += 10;
+      t < 70 ? aska(obj.say[Math.random() * obj.say.length | 0]) : '';
+      t > 300 ? t = 0 : '';
+      i > 1800 ? finishIntervals(obj) : '';
     }, 10000);
+    window.addEventListener('devicemotion', () => {
+      finishIntervals(obj);
+    }, { once: true });
   }
+
   mainInterval = setInterval(() => {
-    window.myconsole.log(JSON.stringify(arr), 'string');
     arr.forEach(v => Date.now() > v.startDate && impulseInterval == 0 ? impulse(v) : '');
   }, 60000);
 }

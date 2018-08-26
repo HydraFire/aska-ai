@@ -105,8 +105,8 @@ function getFinished(arrM) {
   arr.forEach((v, index) => {
     arrZ.push(document.querySelector(`#c${v}`).animate([
       // keyframes
-      { transform: `rotate(0deg) scale(${w[arrM[index]] / 80})` },
-      { transform: `rotate(360deg) scale(${w[arrM[index]] / 80})` }
+      { transform: `rotate(0deg) scale(${w[arrM[index]] / 100})` },
+      { transform: `rotate(360deg) scale(${w[arrM[index]] / 100})` }
     ], {
       // timing options
       duration: 100000 / arr[index],
@@ -117,7 +117,7 @@ function getFinished(arrM) {
 
 function animetePlayAudio(boolean) {
   const arr = new Array(10);
-  const arrW = [0, 10, 20, 50, 100, 150, 200, 250, 350, 500];
+  const arrW = [0, 10, 25, 50, 100, 150, 200, 250, 350, 500];
   for (let i = 0; i < 10; i += 1) {
     arr[i] = i + 1;
   }
@@ -125,12 +125,12 @@ function animetePlayAudio(boolean) {
     getStarted();
     let i = 0;
     int = setInterval(() => {
-      i += 5;
+      i += 10;
       w = analyser.frequencies();
       arr.forEach((v, index) => {
-        document.querySelector(`#c${v}`).style.transform = `scale(${w[arrW[index]] / 80}) rotate(${i / v}deg)`;
+        document.querySelector(`#c${v}`).style.transform = `scale(${w[arrW[index]] / 100}) rotate(${i / v}deg)`;
       });
-    }, 10);
+    }, 20);
   } else {
     getFinished(arrW);
     clearInterval(int);

@@ -1,6 +1,7 @@
 const fs = require('fs');
 const socket = require('../../webSocketOnMessage');
 const asyncAsk = require('../../asyncAsk');
+const { checkURL } = require('../../saveAska');
 const { addValue, deleteT } = require('./instrument');
 // ///////////////////////////////
 // ///////////////////////////////
@@ -44,18 +45,18 @@ function playMusic(ws, parameters) {
     ws.endedTracks.push(obj);
     socket.send(ws, 'music', obj);
     setTimeout(() => {
-      socket.send(ws, 'aska', asyncAsk.whatToSay(AskaSC, 'y0'));
+      socket.send(ws, 'aska', checkURL(asyncAsk.whatToSay(AskaSC, 'y0')));
     }, 1000);
     // console.log(ws.endedTracks);
   } else {
-    socket.send(ws, 'aska', `${asyncAsk.whatToSay(AskaSC, 'z1')} ${parameters}`);
+    socket.send(ws, 'aska', checkURL(`${asyncAsk.whatToSay(AskaSC, 'z1')}`));
   }
 }
 module.exports.playMusic = playMusic;
 // ////////////////////// ВЫКЛЮЧИ МУЗЫКУ ///////////////////////////////////////
 function stopMusic(ws) {
   socket.send(ws, 'music', { name: 'stop' });
-  socket.send(ws, 'aska', asyncAsk.whatToSay(AskaSC, 'y1'));
+  socket.send(ws, 'aska', checkURL(asyncAsk.whatToSay(AskaSC, 'y1')));
 }
 // ////////////////////// следующий трек ///////////////////////////////////////
 function nextTrack(ws) {
@@ -68,20 +69,20 @@ function prevTrack(ws) {
 }
 function starTrack(ws) {
   addValue(ws, ws.endedTracks[ws.endedTracks.length - 1], -7, false);
-  socket.send(ws, 'aska', asyncAsk.whatToSay(AskaSC, 'y2'));
+  socket.send(ws, 'aska', checkURL(asyncAsk.whatToSay(AskaSC, 'y2')));
 }
 function deleteTrack(ws) {
   const text = `${asyncAsk.whatToSay(AskaSC, 's0')}, ${ws.endedTracks[ws.endedTracks.length - 1].name}`;
   const defaultFunction = function defaultFunction() {
-    socket.send(ws, 'aska', asyncAsk.whatToSay(AskaSC, 's1'));
+    socket.send(ws, 'aska', checkURL(asyncAsk.whatToSay(AskaSC, 's1')));
   };
   function deleteTrack2() {
     const nowTag = ws.endedTracks[ws.endedTracks.length - 1].nowTag;
     deleteT(ws, ws.endedTracks[ws.endedTracks.length - 1]);
-    socket.send(ws, 'aska', asyncAsk.whatToSay(AskaSC, 's5'));
+    socket.send(ws, 'aska', checkURL(asyncAsk.whatToSay(AskaSC, 's5')));
   }
   const negative = function negative() {
-    socket.send(ws, 'aska', asyncAsk.whatToSay(AskaSC, 's2'));
+    socket.send(ws, 'aska', checkURL(asyncAsk.whatToSay(AskaSC, 's2')));
   };
   const packaging = function packaging() {
     asyncAsk.selectFunctionFromWords(ws, [
@@ -148,7 +149,7 @@ function Music(ws, options, parameters) {
       addTag(ws, parameters);
       break;
     default:
-      console.log('err');
+      // console.log('err');
   }
 }
 module.exports.Music = Music;

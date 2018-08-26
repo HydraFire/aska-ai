@@ -2,6 +2,7 @@ const fs = require('fs');
 const jwt = require('jsonwebtoken');
 const socket = require('../../webSocketOnMessage');
 const asyncAsk = require('../../asyncAsk');
+const { checkURL } = require('../../saveAska');
 const { checkAssignments, idleInterval } = require('../../mainTimeCircle');
 // ///////////////////////////////
 // ///////////////////////////////
@@ -22,7 +23,7 @@ function verifToken(ws, token) {
   if (token != '*') {
     jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
       if (err || decoded.id !== process.env.PASSWORD) {
-        socket.send(ws, 'aska', asyncAsk.whatToSay(AskaSC, 'b1'));
+        socket.send(ws, 'aska', checkURL(asyncAsk.whatToSay(AskaSC, 'b1')));
       } else {
         ws.accessed = true;
         idleInterval(ws);
@@ -32,7 +33,7 @@ function verifToken(ws, token) {
     });
   } else {
     console.log(asyncAsk.whatToSay(AskaSC, 'a0'));
-    socket.send(ws, 'aska', asyncAsk.whatToSay(AskaSC, 'a0'));
+    socket.send(ws, 'aska', checkURL(asyncAsk.whatToSay(AskaSC, 'a0')));
   }
 }
 module.exports.verifToken = verifToken;
@@ -43,7 +44,7 @@ function Login(ws, option) {
   let count = 3;
   const defaultFunction = function defaultFunction() {
     count -= 1;
-    socket.send(ws, 'aska', asyncAsk.whatToSay(AskaSC, 'b0'));
+    socket.send(ws, 'aska', checkURL(asyncAsk.whatToSay(AskaSC, 'b0')));
     if (count === 0) {
       // Закрыть соединение
       ws.close();
@@ -51,10 +52,10 @@ function Login(ws, option) {
   };
   const positive = function positive() {
     if (option === '1') {
-      socket.send(ws, 'aska', asyncAsk.whatToSay(AskaSC, 'a2'));
+      socket.send(ws, 'aska', checkURL(asyncAsk.whatToSay(AskaSC, 'a2')));
       socket.send(ws, 'token', createToken());
     } else {
-      socket.send(ws, 'aska', asyncAsk.whatToSay(AskaSC, 'a3'));
+      socket.send(ws, 'aska', checkURL(asyncAsk.whatToSay(AskaSC, 'a3')));
     }
     // Получает доступ
     ws.accessed = true;
@@ -65,7 +66,7 @@ function Login(ws, option) {
     }, 3000);
   };
   const negative = function negative() {
-    socket.send(ws, 'aska', asyncAsk.whatToSay(AskaSC, 'b2'));
+    socket.send(ws, 'aska', checkURL(asyncAsk.whatToSay(AskaSC, 'b2')));
   };
 
   const packaging = function packaging() {
@@ -82,6 +83,6 @@ function Login(ws, option) {
     ], defaultFunction);
   };
   console.log(`LOGIN // option =${option}`);
-  asyncAsk.readEndWait(ws, asyncAsk.whatToSay(AskaSC, 'a1'), packaging);
+  asyncAsk.readEndWait(ws, checkURL(asyncAsk.whatToSay(AskaSC, 'a1')), packaging);
 }
 module.exports.Login = Login;

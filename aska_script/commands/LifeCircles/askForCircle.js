@@ -41,12 +41,12 @@ module.exports.ok = ok;
 // ////////////////////////////////////////////////////////////////////////////
 function askForStartCount(ws, arr, value) {
   const defaultFunction = function defaultFunction() {
-    socket.send(ws, 'aska', asyncAsk.whatToSay(AskaSC, 'k2'));
+    socket.send(ws, 'aska', checkURL(asyncAsk.whatToSay(AskaSC, 'k2')));
   };
 
   const positive = function positive() {
     const startIncident = parseFloat(ws.ClientSay);
-    socket.send(ws, 'aska', asyncAsk.whatToSay(AskaSC, 'k3'));
+    socket.send(ws, 'aska', checkURL(asyncAsk.whatToSay(AskaSC, 'k3')));
     lifeCircles.saveIncidentFirstTime(arr, value, startIncident);
   };
 
@@ -60,7 +60,7 @@ function askForStartCount(ws, arr, value) {
       }
     ], defaultFunction);
   };
-  asyncAsk.readEndWait(ws, asyncAsk.whatToSay(AskaSC, 'k0'), packaging);
+  asyncAsk.readEndWait(ws, checkURL(asyncAsk.whatToSay(AskaSC, 'k0')), packaging);
 }
 // ////////////////////////////////////////////////////////////////////////////
 function askForNew(ws, arr, value) {
@@ -72,7 +72,7 @@ function askForNew(ws, arr, value) {
     askForStartCount(ws, arr, value);
   };
   const negative = function negative() {
-    socket.send(ws, 'aska', asyncAsk.whatToSay(AskaSC, 's3'));
+    socket.send(ws, 'aska', checkURL(asyncAsk.whatToSay(AskaSC, 's3')));
   };
 
   const packaging = function packaging() {
@@ -112,7 +112,7 @@ function go(ws, arr, value, allWordsArray, option) {
   let positivAnswer = false;
 
   const defaultFunction = function defaultFunction() {
-    socket.send(ws, 'aska', asyncAsk.whatToSay(AskaSC, 's4'));
+    socket.send(ws, 'aska', checkURL(asyncAsk.whatToSay(AskaSC, 's4')));
   };
   const positive = function positive() {
     positivAnswer = true;
@@ -159,13 +159,13 @@ module.exports.go = go;
 // /////////////////////////////////////////////////////////////////////////////
 function clientTimeout(ws, arr, i) {
   if (arr[i].timeOut > 0) {
-    socket.send(ws, 'clientTimeout', JSON.stringify([asyncAsk.whatToSay(AskaSC, 'z1'), arr[i].timeOut]));
+    socket.send(ws, 'clientTimeout', JSON.stringify([checkURL(asyncAsk.whatToSay(AskaSC, 'z1')), arr[i].timeOut]));
   }
 }
 module.exports.clientTimeout = clientTimeout;
 // ////////////////////////////////////////////////////////////////////////////
 function setTimer(ws, i) {
-  socket.send(ws, 'aska', `${asyncAsk.whatToSay(AskaSC, 'z2')} ${i} минут`);
+  socket.send(ws, 'aska', checkURL(`${asyncAsk.whatToSay(AskaSC, 'z2')} ${i} минут`));
 }
 module.exports.setTimer = setTimer;
 function setTimeIntervalSay(ws, i) {
@@ -177,7 +177,7 @@ function noTimeIntervalSay(ws, i) {
 }
 module.exports.noTimeIntervalSay = noTimeIntervalSay;
 function noTimeInt(ws) {
-  socket.send(ws, 'aska', asyncAsk.whatToSay(AskaSC, 'z3'));
+  socket.send(ws, 'aska', checkURL(asyncAsk.whatToSay(AskaSC, 'z3')));
 }
 module.exports.noTimeInt = noTimeInt;
 // /////////////////////////////////////////////////////////////////////////////
@@ -195,6 +195,6 @@ function special(ws, arr, i, key) {
 module.exports.special = special;
 // /////////////////////////////////////////////////////////////////////////////
 function setNotRemind(ws, word) {
-  socket.send(ws, 'aska', `${word}, ${asyncAsk.whatToSay(AskaSC, 'z4')}`);
+  socket.send(ws, 'aska', checkURL(`${word}, ${asyncAsk.whatToSay(AskaSC, 'z4')}`));
 }
 module.exports.setNotRemind = setNotRemind;

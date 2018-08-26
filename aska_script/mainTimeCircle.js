@@ -4,6 +4,7 @@ const { QuestPart2 } = require('./commands/Quest/QuestPart2');
 const { QuestPart3 } = require('./commands/Quest/QuestPart3');
 const { QuestPartSimple } = require('./commands/Quest/QuestPartSimple');
 const { LifeCirclesNapominanie } = require('./commands/LifeCircles/askForCircle');
+const { checkArray } = require('./saveAska');
 // const { sendNotification, getNotificationID } = require('./notification/pushNotification');
 // //////////////////////////////////////
 let displayOn = false;
@@ -148,9 +149,9 @@ const mainTimeCircle = function mainTimeCircle(ws) {
     console.log(arrQuests);
     arrQuests = arrQuests.map((v) => {
       if (v.type === 'HARD') {
-        v.say = AskaSC.hard;
+        v.say = checkArray(AskaSC.hard);
       } else {
-        v.say = AskaSC.simple;
+        v.say = checkArray(AskaSC.simple);
       }
       return v;
     });

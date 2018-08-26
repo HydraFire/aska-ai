@@ -3,6 +3,7 @@ const socket = require('../../webSocketOnMessage');
 const asyncAsk = require('../../asyncAsk');
 const { searchDate } = require('../../textToTime');
 const { saveResult } = require('./QuestInstrument');
+const { checkURL } = require('../../saveAska');
 // ///////////////////////////////
 // ///////////////////////////////
 const fileOption = './data/commands/Quest/option.json';
@@ -13,16 +14,16 @@ function note(ws, day, time) {
   let newText = '';
   //
   const defaultFunction = function defaultFunction(string) {
-    socket.send(ws, 'aska', asyncAsk.whatToSay(AskaSC, 'x5'));
+    socket.send(ws, 'aska', checkURL(asyncAsk.whatToSay(AskaSC, 'x5')));
     newText += `${string}, `;
   };
 
   const first = function attentionCheck() {
     if (newText !== '') {
       saveResult(day, time, newText, '3');
-      socket.send(ws, 'aska', asyncAsk.whatToSay(AskaSC, 'f3'));
+      socket.send(ws, 'aska', checkURL(asyncAsk.whatToSay(AskaSC, 'f3')));
     } else {
-      socket.send(ws, 'aska', asyncAsk.whatToSay(AskaSC, 'x4'));
+      socket.send(ws, 'aska', checkURL(asyncAsk.whatToSay(AskaSC, 'x4')));
     }
   };
 
@@ -35,7 +36,7 @@ function note(ws, day, time) {
       }
     ], defaultFunction);
   };
-  asyncAsk.readEndWait(ws, asyncAsk.whatToSay(AskaSC, 'x3'), packaging);
+  asyncAsk.readEndWait(ws, checkURL(asyncAsk.whatToSay(AskaSC, 'x3')), packaging);
 }
 
 // ////////////////////////////////////////////////////////////////////////////
@@ -58,7 +59,7 @@ function questSimple(ws, parameters) {
         if (xString) {
           x = true;
         } else {
-          socket.send(ws, 'aska', asyncAsk.whatToSay(AskaSC, 'x0'));
+          socket.send(ws, 'aska', checkURL(asyncAsk.whatToSay(AskaSC, 'x0')));
           question = false;
         }
       }
@@ -72,7 +73,7 @@ function questSimple(ws, parameters) {
         }
       }
       if (x && z) {
-        socket.send(ws, 'aska', asyncAsk.whatToSay(AskaSC, 'f3'));
+        socket.send(ws, 'aska', checkURL(asyncAsk.whatToSay(AskaSC, 'f3')));
         parameters = parameters.join(' ');
         saveResult(xString, '04:00:00.000Z', parameters, '3');
         clearInterval(int);
