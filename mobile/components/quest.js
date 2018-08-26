@@ -45,7 +45,8 @@ function chargeImpulse() {
 function intervalGO(arr) {
   function finishIntervals(obj) {
     window.myconsole.log(JSON.stringify(obj), 'string');
-
+    socket.send('impulse', 'impulse');
+    window.myconsole.log('socket.send(impulse, impulse);', 'string');
     clearInterval(impulseInterval);
     impulseInterval = 0;
 

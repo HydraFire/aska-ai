@@ -8,6 +8,7 @@ const { checkArray } = require('./saveAska');
 // const { sendNotification, getNotificationID } = require('./notification/pushNotification');
 // //////////////////////////////////////
 let displayOn = false;
+let lastTime = 0;
 // //////////////////////////////////////
 const fileOption = './data/commands/Quest/option.json';
 const AskaSC = JSON.parse(fs.readFileSync(fileOption));
@@ -112,18 +113,11 @@ const checkQuests = function checkQuests(ws) {
 // //////////////////////////////////////////////////////////////////////////////
 const checkAssignments = function checkAssignments(ws) {
   // Запускаем проверку актуальных заданий
-  displayOn = true;
-  checkQuests(ws);
-  // и интервал ипроверки
-  /*
-  const checkInterval = 5; // min
-  const int = setInterval(() => {
-    if (ws.NNListen) {
-      checkQuests(ws);
-    }
-    ws.closeTimeInterval ? clearInterval(int) : '';
-  }, 60000 * checkInterval);
-  */
+  if (Date.now() > lastTime) {
+    lastTime = Date.now() + 60000;
+    displayOn = true;
+    checkQuests(ws);
+  }
 };
 module.exports.checkAssignments = checkAssignments;
 
