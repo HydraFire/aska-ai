@@ -36,7 +36,7 @@ function countToText(v) {
   zz>1&&z==0?v +=arr_20_90[zz-2]:'';
   zz>1&&z!=0?v +=arr_20_90b[zz-2]:'';
   zz!=1&&z!=0?v +=arr_1_9[z-1]:'';
-  !zzz&&!zz&&z==0?v +='не разу':'';
+  !zzz&&!zz&&z==0?v +='ни разу':'';
   zzz||zz||z!=0?v +='раз ':''
 
   return v
@@ -45,7 +45,7 @@ module.exports.countToText = countToText;
 
 function dateToText(value) {
   const mmm = new Date(value);
-  console.log('value '+value+'  mmm '+mmm);
+  // console.log('value '+value+'  mmm '+mmm);
   let minutes = mmm.getMinutes();
   let hours = mmm.getUTCHours();
   let date = mmm.getUTCDate() - 1;
@@ -54,11 +54,11 @@ function dateToText(value) {
   if (date != 0) {
     let d = date[date.length-1]
     let dd = date[date.length-2]
-    if(dd == 1){date +=' дней '}else
-      if(d == 0){date +=' дней '}else
-        if(d == 1){date +=' день '}else
-          if(d > 1&&d < 5){date +=' дня '}else
-            if(d >= 5){date +=' дней '}
+    if(dd == 1){date +=' дней'}else
+      if(d == 0){date +=' дней'}else
+        if(d == 1){date +=' день'}else
+          if(d > 1&&d < 5){date +=' дня'}else
+            if(d >= 5){date +=' дней'}
   }else{date = ''}
 
   hours+=''
@@ -74,17 +74,17 @@ function dateToText(value) {
   }else{hours = ''}
 
   minutes+=''
-  if(minutes != 0){
+  if (minutes != 0) {
     let m = minutes[minutes.length-1]
     let mm = minutes[minutes.length-2]
 
     if(mm == 1){minutes +=' минут '}else
       if(m == 0){minutes +=' минут '}else
-        if(m == 1){minutes +=' минута '}else
+        if(m == 1){minutes +=' минуту '}else
           if(m > 1&&m < 5){minutes +=' минуты '}else
             if(m >= 5){minutes +=' минут '}
-  }else{minutes = ''}
+  } else { minutes = '' }
 
-  return date+hours+minutes
+  return date+'@*@#'+hours+minutes;
 }
 module.exports.dateToText = dateToText;

@@ -1,10 +1,8 @@
+import md5 from 'blueimp-md5';
 import iconsole from './interface/iconsole';
 import socket from './webSocketClient';
 import { recStop, recStart } from './speechRecognition';
 
-function delquestionMark(str) {
-  return str.replace(/[?]/gi, '@');
-}
 function getServerUrl() {
   if (localStorage.aska_ip) {
     return `https://${localStorage.aska_ip.split('//')[1]}/sample/`;
@@ -20,13 +18,15 @@ function aska(text) {
   // iconsole.logC(text);
 
   function choseAudioTag(text, audioTag, num) {
-    function playAudio(text) {
-      let url
-      if (text.substring(0, 1) == '#') {
-        text.includes('?') ? text = delquestionMark(text) : '';
-        url = `${getServerUrl()}${text.substring(1, text.length)}.mp3`;
+    let par = false;
+    function createURL(text) {
+      if (text == '20Hz') {
+        return false;
+      } else if (text.substring(0, 1) == '#' || par) {
+        console.log(text);
+        return `${getServerUrl()}${md5(text.substring(1, text.length))}.mp3`;
       } else {
-        url = 'https://tts.voicetech.yandex.net/generate?'+
+        return 'https://tts.voicetech.yandex.net/generate?'+
             'key=222499e2-1e45-4b6d-aaaa-70b53b87c2ec'+
             '&text='+encodeURI(text)+
             '&format=mp3'+
@@ -37,8 +37,9 @@ function aska(text) {
             '&robot=1'+
             '&emotion=evil';
       }
-
-      audioTag.src = url;
+    }
+    function playAudio(text) {
+      audioTag.src = createURL(text);
       audioTag.onloadeddata = function onloadeddata() {
         iconsole.logC('audioTag.play()');
         audioTag.play();
@@ -47,27 +48,46 @@ function aska(text) {
       }
     };
     function splitOnParts(text){
-      let part = text.slice(0,1000);
-      let m = [...part].reverse().join('').indexOf('.');
-      let chankStart = part.slice(0,1000-m);
-      let chankEnd = text.slice(1000-m);
-      return [chankStart,chankEnd]
+      if (text.length > 1000) {
+        if (text.substring(0, 1) == '#') {
+          if (!par) {
+            par = true;
+          }
+          text = text.substring(1, text.length);
+        }
+        let part = text.slice(0, 1000);
+        let m = [...part].reverse().join('');
+        let dot = m.indexOf('.');
+        let coma = m.indexOf(',');
+        if (dot != -1) {
+          dot > coma ? m = coma : m = dot;
+        } else {
+          m = coma;
+        }
+        let chankStart = part.slice(0, 1000 - m);
+        let chankEnd = text.slice(1000 - m);
+        par ? chankStart = `#${chankStart}` : '';
+        par ? chankEnd = `#${chankEnd}` : '';
+        return [chankStart, chankEnd];
+      }
+      if (text.includes('@*@')) {
+        let chankStart = text.slice(0, text.indexOf('@*@'));
+        let chankEnd = text.slice(text.indexOf('@*@')+3);
+        return [chankStart, chankEnd];
+      }
+      return [text, ''];
     };
     function splitAndPlay(text){
       let playText = '';
       [playText,text] = splitOnParts(text);
-      // console.log([playText,text]);
       playAudio(playText);
       if(text.length == 0){
-        // console.log(audioTag);
         audioTag.addEventListener('pause',()=>{
-          // console.log('SHUT_UP')
           socket.send('speech_end','AUDIO');
-          // startStopRec();
           recStart();
-        },{once:true})
+        },{ once: true });
       }
-      return text
+      return text;
     }
 
     text = splitAndPlay(text)

@@ -4,7 +4,7 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    "watch": "nodemon ./server.js --ignore public/ --ignore src/ --ignore mobile/ --ignore data/",
+    "watch": "nodemon ./server.js --ignore config.json --ignore public/ --ignore src/ --ignore mobile/ --ignore data/",
     "start": "concurrently \"npm run watch\" \"npm run build\" --names \"💻,📦\" --prefix name",
     "assets": "webpack -w --display-max-modules 0",
     "dev": "webpack-dev-server  --inline --hot --progress --colors --historyApiFallback",
@@ -32,6 +32,7 @@
     "webpack-dev-server": "^2.1.1"
   },
   "dependencies": {
+    "blueimp-md5": "^2.10.0",
     "brain.js": "^1.1.2",
     "chart.js": "^2.7.2",
     "dotenv": "^5.0.1",

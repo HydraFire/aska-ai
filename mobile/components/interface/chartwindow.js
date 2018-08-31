@@ -8,7 +8,7 @@ class chartWindow extends React.Component {
   playAska = (e) => {
     let i = e.target.getAttribute('index');
     if (i >= 0) {
-      aska(this.props.data[`part${i}`]);
+      aska('#' + this.props.data[`part${i}`]);
     }
   }
   stopAska = () => {

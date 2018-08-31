@@ -1,7 +1,7 @@
 const fs = require('fs');
 const socket = require('../../webSocketOnMessage');
 const asyncAsk = require('../../asyncAsk');
-const { checkURL } = require('../../saveAska');
+const { checkURL, checkLargeURL } = require('../../saveAska');
 // ///////////////////////////////
 // ///////////////////////////////
 const filepath = './data/LogBook.json';
@@ -40,7 +40,7 @@ function saveToFile(newText) {
     });
   }
   fs.writeFileSync(filepath, JSON.stringify(array), 'utf8');
-  console.log(array[array.length - 1]);
+  checkLargeURL(newText);
 }
 // /////////////////////////////////////////////////////////////////////////////
 function oneIteration(ws, text) {
@@ -77,7 +77,7 @@ function oneIteration(ws, text) {
   const n = function n() {
     asyncAsk.readEndWait(ws, checkURL(asyncAsk.whatToSay(AskaSC, 't1')), x);
   };
-  asyncAsk.readEndWait(ws, text, n);
+  asyncAsk.readEndWait(ws, `#${text}`, n);
 }
 // /////////////////////////////////////////////////////////////////////////////
 

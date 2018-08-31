@@ -7,7 +7,11 @@ let arrZ = [];
 let animMic;
 let animUS;
 let animLoad;
-
+const arr = new Array(10);
+const arrW = [5, 10, 25, 50, 100, 150, 200, 250, 350, 500];
+for (let i = 0; i < 10; i += 1) {
+  arr[i] = i + 1;
+}
 // /////////////////////////////////////////////////////////////////////////////////////
 function checkOrientation() {
   if (window.orientation === 90 || window.orientation === -90) {
@@ -114,13 +118,11 @@ function getFinished(arrM) {
     }));
   });
 }
+function ran() {
+  return Math.random() * 800 | 0;
+}
 
 function animetePlayAudio(boolean) {
-  const arr = new Array(10);
-  const arrW = [0, 10, 25, 50, 100, 150, 200, 250, 350, 500];
-  for (let i = 0; i < 10; i += 1) {
-    arr[i] = i + 1;
-  }
   if (boolean) {
     getStarted();
     let i = 0;

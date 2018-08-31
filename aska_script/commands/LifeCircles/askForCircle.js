@@ -1,7 +1,7 @@
 const fs = require('fs');
 const socket = require('../../webSocketOnMessage');
 const asyncAsk = require('../../asyncAsk');
-const { checkURL } = require('../../saveAska');
+const { checkURL, checkSmartURL } = require('../../saveAska');
 const lifeCircles = require('./LifeCircles');
 const { calcNow, countToText, dateToText } = require('./calcTime');
 // /////////////////////////////////////
@@ -32,10 +32,7 @@ function ok(ws, arr, i, value) {
   time = dateToText(time);
   let n = arr[i].incident.length + arr[i].startIncident;
   n = countToText(n);
-  socket.send(ws, 'console', `${asyncAsk.whatToSay(AskaSC, 'm0')}, ${value} ${asyncAsk.whatToSay(AskaSC, 'm1')} ${n},
-  ${asyncAsk.whatToSay(AskaSC, 'm2')} ${time}`);
-  socket.send(ws, 'aska', `${asyncAsk.whatToSay(AskaSC, 'm0')}, ${value} ${asyncAsk.whatToSay(AskaSC, 'm1')} ${n},
-  ${asyncAsk.whatToSay(AskaSC, 'm2')} ${time}`);
+  socket.send(ws, 'aska', checkSmartURL(`${asyncAsk.whatToSay(AskaSC, 'm0')}@*@${value} ${asyncAsk.whatToSay(AskaSC, 'm1')}@*@#${n}@*@#${asyncAsk.whatToSay(AskaSC, 'm2')} ${time}`));
 }
 module.exports.ok = ok;
 // ////////////////////////////////////////////////////////////////////////////
@@ -95,14 +92,18 @@ module.exports.askForNew = askForNew;
 function when(ws, arr, i, value) {
   let time = calcNow(arr, i);
   time = dateToText(time);
-  let text = `${asyncAsk.whatToSay(AskaSC, 'q0')} ${value}, ${time} назад`;
+  let r = '';
+  if (time.substring(0, 1) != '@') {
+    r = '@*@#';
+  }
+  let text = `${asyncAsk.whatToSay(AskaSC, 'q0')} ${value},${r}${time}назад`;
   if (arr[i].timeOut > 0) {
-    text += `, time out ${arr[i].timeOut} минут`;
+    text += `@*@time out ${arr[i].timeOut} минут`;
   }
   if (arr[i].timeInterval) {
-    text += `, интервал ${arr[i].timeInterval.join(' ')}`;
+    text += `@*@интервал ${arr[i].timeInterval.join(' ')}`;
   }
-  socket.send(ws, 'aska', text);
+  socket.send(ws, 'aska', checkSmartURL(text));
 }
 module.exports.when = when;
 // /////////////////////////////////////////////////////////////////////////////
@@ -120,7 +121,7 @@ function go(ws, arr, value, allWordsArray, option) {
     lifeCircles.switchOption(ws, arr, allWordsArray[0].index, value, option);
   };
   const negative = function negative() {
-    allWordsArray.splice(0, 1);
+    allWordsArray = allWordsArray.filter(v => v.index != allWordsArray[0].index);
   };
 
   const packaging = function packaging() {

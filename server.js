@@ -9,6 +9,12 @@ const fs = require('fs');
 // Модули программы
 const { webSocketOnConnect } = require('./aska_script/webSocketOnConnect');
 const { SmartTrain } = require('./aska_script/NN/differenceNN');
+const {
+  renderLargeURL,
+  renderCount,
+  renderDay,
+  renderTime
+} = require('./aska_script/saveAska');
 //
 const exp = express();
 exp.use(express.static(`${__dirname}/public`));
@@ -34,3 +40,7 @@ webSocketOnConnect(wss);
 webSocketOnConnect(wsp);
 // Тренеруэм нейроную сеть если обновились команды
 SmartTrain();
+renderLargeURL();
+renderCount();
+renderDay();
+renderTime();
