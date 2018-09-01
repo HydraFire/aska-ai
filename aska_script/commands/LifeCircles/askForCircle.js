@@ -143,7 +143,7 @@ function go(ws, arr, value, allWordsArray, option) {
       if (ws.NNListen) {
         if (allWordsArray.length !== 0) {
           ws.ClientSay = 'none';
-          asyncAsk.readEndWait(ws, `${asyncAsk.whatToSay(AskaSC, 'n0')} ${allWordsArray[0].name}`, packaging);
+          asyncAsk.readEndWait(ws, checkURL(`${asyncAsk.whatToSay(AskaSC, 'n0')} ${allWordsArray[0].name}`), packaging);
         } else {
           lifeCircles.newIncident(ws, arr, value);
           clearInterval(int);
