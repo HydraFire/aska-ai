@@ -29,6 +29,20 @@ class NNEditor extends React.Component {
       newText: e.target.innerText
     });
   }
+  // ///////////// во вкладке options добавляет новый массив и новое значение
+  addEditHandler = (e) => {
+    const pickF = this.state.nowpickFunc;
+    const objFunc = this.state.data[pickF];
+    objFunc.nn.push(['new']);
+    if (pickF === 'Reaction') {
+      objFunc[`a${Object.keys(objFunc).length - 1}`] = ['new'];
+    }
+    const copystate = this.state.data;
+    copystate[pickF] = objFunc;
+    this.setState({
+       data: copystate
+     });
+  }
   // ////////////////// После нажатия на SAVE вносит изменения в state  ///////
   editStateHandler = () => {
     const newText = this.state.newText;
@@ -155,7 +169,7 @@ class NNEditor extends React.Component {
           <button onClick={this.sectionHendler} className="buttonSection">says</button>
         </div>
         <div className="editor_container">
-          {myRender(this.state, this.editHandler)}
+          {myRender(this.state, this.editHandler, this.addEditHandler)}
         </div>
       </div>
     );

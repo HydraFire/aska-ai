@@ -1,6 +1,6 @@
 import React from 'react';
 
-function myRender(state, editHandler) {
+function myRender(state, editHandler, addEditHandler) {
   let arr;
   let mainArr;
   if (state.data != null) {
@@ -31,6 +31,8 @@ function myRender(state, editHandler) {
             </div>
           </div>);
       });
+      mainArr.push(<div key={'+'} onClick={addEditHandler} className="editor_text">+</div>);
+      console.log(mainArr);
     } else if (state.nowpickSector === 'says') {
       const arrKey = Object.keys(state.data[state.nowpickFunc])
       arrKey.splice(0, 1);
