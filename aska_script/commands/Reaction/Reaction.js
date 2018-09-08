@@ -8,7 +8,7 @@ const AskaSC = JSON.parse(fs.readFileSync(fileOption));
 
 
 function next(ws, options) {
-  socket.send(ws, 'aska', checkURL(asyncAsk.whatToSay(AskaSC, `a${options}`)));
+  socket.send(ws, 'aska', checkURL(asyncAsk.whatToSay(AskaSC, `a${options - 1}`)));
 }
 
 function Reaction(ws, options) {
