@@ -26,7 +26,7 @@ function webSocketOnMessage(ws) {
   const arr = verifAccess();
   ws.on('message', (message) => {
     if (ws.accessed) {
-      if (message.length < 10000) {
+      if (message.length < 30000) {
         const obj = JSON.parse(message);
         // Пошол розбор полетов
         switch (obj.type) {
