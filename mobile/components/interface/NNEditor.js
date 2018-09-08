@@ -4,8 +4,15 @@ import socket from '../webSocketClient';
 import myRender from './NNEditorRender';
 import '../../css/nneditor.css';
 
-
-
+function autoAddOptionToDescription(objFunc) {
+  objFunc.nn.reduce((a, b) => a.concat(b), []).forEach(v => {
+    if (!objFunc.description.some(value => v === value)) {
+      objFunc.description.push(v);
+    };
+  })
+  return objFunc;
+}
+// /////////////////////////////////////////////////////////////////////////////
 class NNEditor extends React.Component {
   constructor() {
     super();
@@ -35,7 +42,7 @@ class NNEditor extends React.Component {
     const objFunc = this.state.data[pickF];
     objFunc.nn.push(['new']);
     if (pickF === 'Reaction') {
-      objFunc[`a${Object.keys(objFunc).length - 1}`] = ['new'];
+      objFunc[`a${Object.keys(objFunc).length - 2}`] = ['new'];
     }
     const copystate = this.state.data;
     copystate[pickF] = objFunc;
@@ -51,7 +58,7 @@ class NNEditor extends React.Component {
     const pickA = this.state.nowpickArr;
     const pickT = this.state.nowpicktext;
 
-    const objFunc = this.state.data[pickF];
+    let objFunc = this.state.data[pickF];
 
     if (pickS === 'ignor' || pickS === 'description') {
       if (pickT === '+' && newText != '' && newText != '+') {
@@ -68,9 +75,13 @@ class NNEditor extends React.Component {
         objFunc.nn[pickA].push(newText);
       } else if (pickT !== '+' && newText === '') {
         objFunc.nn[pickA].splice(objFunc.nn[pickA].indexOf(pickT), 1);
+        if (objFunc.nn[pickA].length === 0) {
+          objFunc.nn.splice(pickA, 1);
+        }
       } else if (pickT !== '+' && newText != '') {
         objFunc.nn[pickA].splice(objFunc.nn[pickA].indexOf(pickT), 1, newText);
       }
+      objFunc = autoAddOptionToDescription(objFunc);
     }
 
     if (pickS === 'says') {

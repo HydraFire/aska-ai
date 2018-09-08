@@ -27,10 +27,9 @@
 .editor_view {
   margin: 10px 0px 10px 0px;
   color: #999;
-  background: #eee;
 }
 .editor_count {
-  background: #eee;
+  
 }
 .editor_count:after {
     content: " ";

@@ -32,7 +32,6 @@ function myRender(state, editHandler, addEditHandler) {
           </div>);
       });
       mainArr.push(<div key={'+'} onClick={addEditHandler} className="editor_text">+</div>);
-      console.log(mainArr);
     } else if (state.nowpickSector === 'says') {
       const arrKey = Object.keys(state.data[state.nowpickFunc])
       arrKey.splice(0, 1);
