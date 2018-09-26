@@ -152,6 +152,7 @@ function saveArrayURL(arr) {
   arr.forEach((v, i) => { if (v != '') { saveURL(v, i); } });
 }
 function renderLargeURL() {
+  console.log('test');
   const config = readConfig();
   const listMd5 = readListMD5();
   if (config.logbook) {
@@ -172,6 +173,7 @@ function renderLargeURL() {
       saveArrayURL(arr);
     } else {
       configOn(false, 'logbook');
+      console.log('configOn(false, logbook);');
     }
   }
 }
