@@ -80,6 +80,22 @@ const searchDate = function searchDate(str) {
       date < 10 ? date = `0${date}` : '';
       return `${r.getFullYear()}-${month}-${date}T`;
     }
+  },
+  {
+    value: ['января', 'февраля', 'марта', 'апреля', 'мая', 'июня', 'июля','августа','сентября','октября','ноября','октября','декабря'],
+    func: (i, monthSay) => {
+      const r = new Date();
+      let year = r.getFullYear();
+      let month = monthSay + 1;
+      const date = sayDay;
+      const sayDay = parseFloat(arr[i - 1]);
+
+      month = r.getMonth() + 1;
+      month < 10 ? month = `0${month}` : '';
+      date = sayDay;
+      date < 10 ? date = `0${date}` : '';
+      return `${r.getFullYear()}-${month}-${date}T`;
+    }
   }];
   // ///////////////////////////////////////////////////////////////////////////
   arr.forEach((v, i) => {
