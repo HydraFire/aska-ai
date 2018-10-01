@@ -60,7 +60,9 @@ function saveAudio(text, p) {
     })
     .catch((error) => {
       console.log('request failed', error);
-      configOn(true, 'logbook');
+      if (p == 'big') {
+        configOn(true, 'logbook');
+      }
     });
 }
 // ////////////////////////////////////////////
@@ -152,7 +154,6 @@ function saveArrayURL(arr) {
   arr.forEach((v, i) => { if (v != '') { saveURL(v, i); } });
 }
 function renderLargeURL() {
-  console.log('test');
   const config = readConfig();
   const listMd5 = readListMD5();
   if (config.logbook) {
