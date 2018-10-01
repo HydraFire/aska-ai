@@ -82,19 +82,33 @@ const searchDate = function searchDate(str) {
     }
   },
   {
-    value: ['января', 'февраля', 'марта', 'апреля', 'мая', 'июня', 'июля','августа','сентября','октября','ноября','октября','декабря'],
+    value: ['января', 'февраля', 'марта', 'апреля', 'мая', 'июня', 'июля','августа','сентября','октября','ноября','декабря'],
     func: (i, monthSay) => {
       const r = new Date();
+
       let year = r.getFullYear();
       let month = monthSay + 1;
-      const date = sayDay;
-      const sayDay = parseFloat(arr[i - 1]);
+      let date = parseFloat(arr[i - 1]);
 
-      month = r.getMonth() + 1;
+      let monthNow = r.getMonth() + 1;
+      let dateNow = 2;
+
+      console.log(' '+month+' '+monthNow+' '+(month < monthNow));
+      console.log(' '+date+' '+dateNow+' '+(date < dateNow));
+
+      if (month < monthNow) {
+        year = year + 1;
+      }
+      if (month == monthNow && date < dateNow) {
+        year = year + 1;
+      }
+
+
+
       month < 10 ? month = `0${month}` : '';
-      date = sayDay;
       date < 10 ? date = `0${date}` : '';
-      return `${r.getFullYear()}-${month}-${date}T`;
+      console.log(`${year}-${month}-${date}T`);
+      return `${year}-${month}-${date}T`;
     }
   }];
   // ///////////////////////////////////////////////////////////////////////////
