@@ -9,10 +9,12 @@ function createDiff() {
   const obj = {};
   const list = fs.readdirSync('./data/commands');
   list.forEach((v) => {
-    obj[v] = {
-      description: fs.readFileSync(`./data/commands/${v}/description.json`).length,
-      option: fs.readFileSync(`./data/commands/${v}/option.json`).length
-    };
+    if (v != 'System') {
+      obj[v] = {
+        description: fs.readFileSync(`./data/commands/${v}/description.json`).length,
+        option: fs.readFileSync(`./data/commands/${v}/option.json`).length
+      };
+    }
   });
   return obj;
 }

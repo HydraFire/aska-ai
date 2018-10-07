@@ -5,6 +5,7 @@ const { QuestPart3 } = require('./commands/Quest/QuestPart3');
 const { QuestPartSimple } = require('./commands/Quest/QuestPartSimple');
 const { LifeCirclesNapominanie } = require('./commands/LifeCircles/askForCircle');
 const { checkArray } = require('./saveAska');
+const { checkDate, sayWhatYouNeed } = require('./systemNotification');
 // const { sendNotification, getNotificationID } = require('./notification/pushNotification');
 // //////////////////////////////////////
 let displayOn = false;
@@ -52,6 +53,9 @@ function switchFunc(ws, v) {
       case 'LifeCircle':
         LifeCirclesNapominanie(ws, v);
         break;
+      case 'System':
+        sayWhatYouNeed(ws, v);
+        break;
     }
   }
 }
@@ -80,10 +84,12 @@ const checkQuests = function checkQuests(ws) {
   timeNow = Date.parse(new Date());
   // Прогрузка файлов
   let finalArray = [];
+  let systemNotif;
   let arrQuests = readFile();
   let arrEndQuests = JSON.parse(JSON.stringify(arrQuests));
   let arrLifeCircle = readFileLifeCircle();
   //
+  systemNotif = checkDate();
   // проверка наличия окончания задания
   //
   arrEndQuests = arrEndQuests.filter(v => timeNow >= v.endDate)
@@ -103,7 +109,7 @@ const checkQuests = function checkQuests(ws) {
     });
   //  .map(v => Object.assign(v, { startWith: 'LifeCircle' }));
   // сливаем всё в один масив
-  finalArray = finalArray.concat(arrEndQuests, arrQuests, arrLifeCircle);
+  finalArray = finalArray.concat(systemNotif, arrEndQuests, arrQuests, arrLifeCircle);
   console.log(finalArray);
   // интервал который всё это дело будет по очереди запускать
   shortInterval(ws, finalArray);

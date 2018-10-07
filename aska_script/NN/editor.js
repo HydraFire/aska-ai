@@ -1,12 +1,19 @@
 const fs = require('fs');
 
+function noSystem(value) {
+  if (value != 'System') {
+    return JSON.parse(fs.readFileSync(`./data/commands/${value}/description.json`))
+  }
+  return [];
+}
+
 function editorLoad() {
   const obj = {};
   const list = fs.readdirSync('./data/commands');
   list.forEach((v) => {
     const x = JSON.parse(fs.readFileSync(`./data/commands/${v}/option.json`));
     obj[v] = {
-      description: JSON.parse(fs.readFileSync(`./data/commands/${v}/description.json`))
+      description: noSystem(v)
     };
     obj[v] = Object.assign(obj[v], x);
   });
@@ -38,7 +45,9 @@ function createDifffromClient(data) {
 function editorSave(data) {
   Object.keys(data).forEach((v) => {
     const obj = data[v];
-    fs.writeFileSync(`./data/commands/${v}/description.json`, JSON.stringify(obj.description), 'utf8');
+    if (v != 'System') {
+      fs.writeFileSync(`./data/commands/${v}/description.json`, JSON.stringify(obj.description), 'utf8');
+    }
     delete obj.description;
     fs.writeFileSync(`./data/commands/${v}/option.json`, JSON.stringify(obj), 'utf8');
   });

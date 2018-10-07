@@ -12,7 +12,9 @@ function buildData() {
   const obj = {};
   const list = fs.readdirSync('./data/commands');
   list.forEach((v) => {
-    obj[v] = JSON.parse(fs.readFileSync(`./data/commands/${v}/description.json`));
+    if (v != 'System') {
+      obj[v] = JSON.parse(fs.readFileSync(`./data/commands/${v}/description.json`));
+    }
   });
   const arr = Object.keys(obj).reduce((prev, next) => {
     return prev.concat(obj[next].map((w) => {
