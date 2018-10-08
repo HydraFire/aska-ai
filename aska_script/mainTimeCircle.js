@@ -5,7 +5,7 @@ const { QuestPart3 } = require('./commands/Quest/QuestPart3');
 const { QuestPartSimple } = require('./commands/Quest/QuestPartSimple');
 const { LifeCirclesNapominanie } = require('./commands/LifeCircles/askForCircle');
 const { checkArray } = require('./saveAska');
-const { checkDate, sayWhatYouNeed } = require('./systemNotification');
+const { checkDate, sayWhatYouNeed } = require('./commands/System/systemNotification');
 // const { sendNotification, getNotificationID } = require('./notification/pushNotification');
 // //////////////////////////////////////
 let displayOn = false;
@@ -75,7 +75,7 @@ const shortInterval = function shortInterval(ws, arrQuests) {
       }
     }
     ws.closeAllInterval ? clearInterval(int) : '';
-  }, 5000);
+  }, 1500);
 };
 // //////////////////////////////////////////////////////////////////////////////
 const checkQuests = function checkQuests(ws) {
@@ -110,7 +110,7 @@ const checkQuests = function checkQuests(ws) {
   //  .map(v => Object.assign(v, { startWith: 'LifeCircle' }));
   // сливаем всё в один масив
   finalArray = finalArray.concat(systemNotif, arrEndQuests, arrQuests, arrLifeCircle);
-  console.log(finalArray);
+  // console.log(finalArray);
   // интервал который всё это дело будет по очереди запускать
   shortInterval(ws, finalArray);
 };

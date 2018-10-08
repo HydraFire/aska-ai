@@ -43,6 +43,9 @@ function selectFunctionFromWords(ws, options, defaultFunction) {
           } else {
             includeStatus = ws.ClientSay === word;
           }
+          if (v.whatever) {
+            includeStatus = true;
+          }
           if (includeStatus) {
             if (v.end) {
               clearInterval(int);
