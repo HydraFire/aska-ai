@@ -63,6 +63,9 @@ function switchFunc(ws, v) {
 const shortInterval = function shortInterval(ws, arrQuests) {
   // короткий интервал обслуживает запуст нескольких заданий поряд
   let [first] = arrQuests.splice(0, 1);
+  if (Object.keys(first).length == 0) {
+    [first] = arrQuests.splice(0, 1);
+  }
   switchFunc(ws, first);
   //
   const int = setInterval(() => {
@@ -75,7 +78,7 @@ const shortInterval = function shortInterval(ws, arrQuests) {
       }
     }
     ws.closeAllInterval ? clearInterval(int) : '';
-  }, 1500);
+  }, 5000);
 };
 // //////////////////////////////////////////////////////////////////////////////
 const checkQuests = function checkQuests(ws) {
@@ -110,7 +113,7 @@ const checkQuests = function checkQuests(ws) {
   //  .map(v => Object.assign(v, { startWith: 'LifeCircle' }));
   // сливаем всё в один масив
   finalArray = finalArray.concat(systemNotif, arrEndQuests, arrQuests, arrLifeCircle);
-  // console.log(finalArray);
+  console.log(finalArray);
   // интервал который всё это дело будет по очереди запускать
   shortInterval(ws, finalArray);
 };
