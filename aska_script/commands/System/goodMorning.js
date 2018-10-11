@@ -1,6 +1,7 @@
 const fs = require('fs');
 const socket = require('../../webSocketOnMessage');
 const asyncAsk = require('../../asyncAsk');
+const { getWeather } =require('../Weather/Weather');
 const { checkURL, checkSmartURL } = require('../../saveAska');
 
 const filepath = './data/system.json';
@@ -33,12 +34,12 @@ function sayDateTime() {
   return `сегодня ${dateNow.getDate()}-е ${arrMonth[dateNow.getMonth()]}, ${dateNow.getHours()}:${dateNow.getMinutes()}`;
 }
 
-function goodMorning(ws, value) {
+async function goodMorning(ws, value) {
   let missYou = '';
   if (value.timeLeft) {
     missYou = iMissYou(value);
   }
-  socket.send(ws, 'aska', `${asyncAsk.whatToSay(AskaSC, 'a0')}, ${sayDateTime()}, ${missYou}`);
+  socket.send(ws, 'aska', `${asyncAsk.whatToSay(AskaSC, 'a0')}, ${sayDateTime()}, ${missYou}.${await getWeather()}`);
   let x = value.obj;
   x.timeLastRun = Date.now();
   x.timeLastGoodMorning = Date.now();

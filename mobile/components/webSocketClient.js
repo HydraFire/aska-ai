@@ -45,6 +45,9 @@ function start() {
       case 'console':
         window.myconsole.log(message.data, 'html');
         break;
+      case 'consoleButtons':
+        window.myconsole.log(message.data, 'buttons');
+        break;
       case 'notificationPublicKey':
         pushNotification.setVapidPublicKey(message.data);
         // iconsole.logS(message.data);

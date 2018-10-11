@@ -43,6 +43,9 @@ class Logo extends React.Component {
     arr.push({ text, type });
     this.setState({ arr });
   }
+  expClick = (e) => {
+    socket.send(e.target.getAttribute('alt'),'expClick');
+  }
   // //////////////////////////////////////////////////////////////////////////
   // ///////////////////////////////////////////////////////////////////////////
   myRender = () => {
@@ -55,6 +58,10 @@ class Logo extends React.Component {
         return <p key={`${v.text}${i}`} className="console_chat">{v.text}</p>
       } else if (v.type === 'err') {
         return <p key={`${v.text}${i}`} className="console_err">{v.text}</p>
+      } else if (v.type === 'buttons') {
+        return v.text.map((w,i) => {
+          return <p key={`${w}`}><button alt={`${i}`} onClick={this.expClick} className="console_buttons">{w}</button></p>
+        });
       } else {
         return <p key={`${v.text}${i}`} className="console_aska">{v.text}</p>
       }

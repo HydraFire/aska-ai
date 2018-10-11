@@ -85,6 +85,10 @@ function dateToText(value) {
             if(m >= 5){minutes +=' минут '}
   } else { minutes = '' }
 
+  if (hours == '' && minutes == '') {
+    return date;
+  }
+
   return date+'@*@#'+hours+minutes;
 }
 module.exports.dateToText = dateToText;

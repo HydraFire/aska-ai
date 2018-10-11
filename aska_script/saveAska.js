@@ -145,11 +145,17 @@ function readConfig() {
     return false;
   }
 }
+module.exports.readConfig = readConfig;
+
 function configOn(boolean, type) {
   const config = readConfig();
-  config[type] = boolean;
-  fs.writeFileSync(configpath, JSON.stringify(config), 'utf8');
+  if (config[type] != boolean) {
+    config[type] = boolean;
+    fs.writeFileSync(configpath, JSON.stringify(config), 'utf8');
+  }
 }
+module.exports.configOn = configOn;
+
 function saveArrayURL(arr) {
   arr.forEach((v, i) => { if (v != '') { saveURL(v, i); } });
 }

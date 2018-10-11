@@ -6,6 +6,7 @@ const { challengeLogLoad } = require('./challengeLog');
 const { chartLoad } = require('./chartLoad');
 const { checkAssignments } = require('./mainTimeCircle');
 const { saveFile, commands } = require('./commands/Music/instrument');
+const { writeResultEXP } = require('./commands/Logbook/Logbook');
 // Функция нужна для автоматизации создания обэкта и стрингификации
 function send(ws, type, data) {
   if (!ws.closeAllInterval) {
@@ -77,6 +78,9 @@ function webSocketOnMessage(ws) {
             break;
           case 'impulse':
             checkAssignments(ws);
+            break;
+          case 'expClick':
+            writeResultEXP(ws, obj.data);
             break;
           default:
             // console.log(`Unknown type ${obj.type}`);

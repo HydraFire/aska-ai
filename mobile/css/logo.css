@@ -88,6 +88,10 @@
   color: red;
   margin: 10px 0px 10px 0px;
 }
+.console_buttons {
+  padding: 5px 5px 5px 5px;
+  margin: 50px auto 0px auto;
+}
 .console_aska {
   color: #fa2;
   margin-bottom: 5px;

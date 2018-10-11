@@ -1,4 +1,5 @@
 const socket = require('./webSocketOnMessage');
+const { askaChoice } = require('./NN/LogbookPluginNN');
 /*
 function ask(ws, funTrue, funFalse) {
   ws.NNListen = false;
@@ -25,6 +26,13 @@ function whatToSay(arr, key) {
   return arr[key][Math.random() * arr[key].length | 0];
 }
 module.exports.whatToSay = whatToSay;
+
+function whatToSayEXP(text, obj, key) {
+  let choice = askaChoice(text);
+  let choicenArr = obj[`${key}${choice}`];
+  return choicenArr[Math.random() * choicenArr.length | 0];
+}
+module.exports.whatToSayEXP = whatToSayEXP;
 // ////////////////////////////////////////////////////////////////////////////
 
 function selectFunctionFromWords(ws, options, defaultFunction) {

@@ -1,13 +1,34 @@
 const fs = require('fs');
 const socket = require('../../webSocketOnMessage');
 const asyncAsk = require('../../asyncAsk');
-const { checkURL, checkLargeURL } = require('../../saveAska');
+const { checkURL, checkLargeURL, configOn } = require('../../saveAska');
 // ///////////////////////////////
 // ///////////////////////////////
 const filepath = './data/LogBook.json';
 const fileOption = './data/commands/Logbook/option.json';
 const AskaSC = JSON.parse(fs.readFileSync(fileOption));
+const fileOptionEXP = './data/commands/Logbook/exp.json';
+const AskaEXP = JSON.parse(fs.readFileSync(fileOptionEXP));
+
+let allmostSay = '';
 // //////////////////////////////////////////////////////////////////////////////
+function writeResultEXP(ws, index) {
+  if (allmostSay != ws.ClientSay) {
+    let objExp = JSON.parse(fs.readFileSync(fileOptionEXP));
+    objExp.nn[index].push(ws.ClientSay);
+    allmostSay = ws.ClientSay;
+    fs.writeFileSync(fileOptionEXP, JSON.stringify(objExp), 'utf8');
+    configOn(true,'logbooknntrain');
+  }
+}
+module.exports.writeResultEXP = writeResultEXP;
+function createButtonExp(ws) {
+  let arr = Object.keys(AskaEXP)
+    .filter(v => v != 'nn')
+    .map(v => AskaEXP[v][0])
+  socket.send(ws, 'consoleButtons', arr);
+}
+// /////////////////////////////////////////////////////////////////////////////
 function readFile(p) {
   try {
     return JSON.parse(fs.readFileSync(p));
@@ -47,7 +68,7 @@ function oneIteration(ws, text) {
   let newText = '';
   const defaultFunction = function defaultFunction(string) {
     newText += `${string}, `;
-    socket.send(ws, 'aska', checkURL(asyncAsk.whatToSay(AskaSC, 't3')));
+    socket.send(ws, 'aska', checkURL(asyncAsk.whatToSayEXP(string, AskaEXP, 'say')));
   };
   const saveOfPart = function saveOfPart() {
     if (newText !== '') {
@@ -95,6 +116,8 @@ function Logbook(ws) {
   let arrayAllParts = Object.keys(obj);
   let functionAlReadyStart = false;
 
+  createButtonExp(ws);
+
   const int = setInterval(() => {
     intervalTimer += 0.5;
     if (ws.NNListen) {
@@ -116,7 +139,7 @@ function Logbook(ws) {
       }
     }
     ws.closeAllInterval ? clearInterval(int) : '';
-    socket.send(ws, 'console', `Logbook Interval ${intervalTimer}s`);
+    // socket.send(ws, 'console', `Logbook Interval ${intervalTimer}s`);
   }, 500);
 }
 module.exports.Logbook = Logbook;
