@@ -45,8 +45,8 @@ function askaChoice(text) {
     .reduce((a, b, i) => Object.assign(a, { [b]: (99 - i) / 100 }), {});
   const output = net.run(textObjLike);
   // Сортируем полученые даный на предмет большого процентного соотношения
-  const commandSelect = Object.keys(output).sort((a, b) => output[b] - output[a])[0];
-  return commandSelect;
+  // const commandSelect = Object.keys(output).sort((a, b) => output[b] - output[a])[0];
+  return output;// commandSelect;
 }
 module.exports.askaChoice = askaChoice;
 

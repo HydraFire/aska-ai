@@ -7,6 +7,16 @@ let audio
 let audio2
 let errorCount = 0;
 let aska_mute = false;
+let aska_hide = false;
+// //////////////////////////////////////////////////////////////////////////
+function askaWriteOnScreen(text, arr) {
+  socket.send('speech_start','AUDIO');
+  if (arr) {
+    window.myconsole.handlerInteractWindow({ type:'buttons', text , arr});
+  } else {
+    window.myconsole.handlerInteractWindow({ type:'aska', text });
+  }
+}
 // //////////////////////////////////////////////////////////////////////////
 function psevdo() {
   animeteUltraSound(true);
@@ -133,11 +143,18 @@ function trueAska(text) {
   }
 }
 // /////////////////////////////////////////////////////////////////////////////
-function aska(text) {
-  if (!aska_mute || text.substring(0, 1) == '#') {
-    trueAska(text);
+function aska(text, buttons) {
+  if (aska_hide) {
+    askaWriteOnScreen(text, buttons);
   } else {
-    psevdo(text);
+    if (!aska_mute || text.substring(0, 1) == '#') {
+      trueAska(text);
+    } else {
+      psevdo(text);
+    }
+    if (buttons) {
+      askaWriteOnScreen(text, buttons);
+    }
   }
   window.myconsole.log(text, 'aska');
 }

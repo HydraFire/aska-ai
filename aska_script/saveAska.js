@@ -164,6 +164,7 @@ function renderLargeURL() {
   const listMd5 = readListMD5();
   if (config.logbook) {
     console.log('START DOWNLOAD LOGBOOK FILES');
+    console.time();
     let arr = [];
     let logBookArray = readLogBookFile();
     logBookArray = logBookArray.filter(v => v.date > config.logbooktime);
@@ -172,10 +173,13 @@ function renderLargeURL() {
       c.splice(0, 1);
       return a.concat(c);
     }, []);
+    console.timeEnd();
+    console.time();
     arr = arr.reduce((a, b) => {
       return a.concat(checkBigURL(b));
     }, []);
     arr = arr.filter(v => listMd5.every(w => w != `${md5(v)}.mp3`));
+    console.timeEnd();
     if (arr.length != 0) {
       saveArrayURL(arr);
     } else {

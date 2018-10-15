@@ -22,12 +22,6 @@ function writeResultEXP(ws, index) {
   }
 }
 module.exports.writeResultEXP = writeResultEXP;
-function createButtonExp(ws) {
-  let arr = Object.keys(AskaEXP)
-    .filter(v => v != 'nn')
-    .map(v => AskaEXP[v][0])
-  socket.send(ws, 'consoleButtons', arr);
-}
 // /////////////////////////////////////////////////////////////////////////////
 function readFile(p) {
   try {
@@ -68,7 +62,12 @@ function oneIteration(ws, text) {
   let newText = '';
   const defaultFunction = function defaultFunction(string) {
     newText += `${string}, `;
-    socket.send(ws, 'aska', checkURL(asyncAsk.whatToSayEXP(string, AskaEXP, 'say')));
+    let x = asyncAsk.whatToSayEXP(string);
+    const commandSelect = Object.keys(x).sort((a, b) => x[b] - x[a])[0];
+    let choicenArr = AskaEXP[`say${commandSelect}`];
+    choicenArr = choicenArr[Math.random() * choicenArr.length | 0];
+    let arrButtons = Object.keys(x).map(v => ({ name: AskaEXP[`say${v}`], value: (x[v].toFixed(2) * 100 | 0) }));
+    socket.send(ws, 'aska', checkURL(choicenArr), arrButtons);
   };
   const saveOfPart = function saveOfPart() {
     if (newText !== '') {
@@ -115,8 +114,6 @@ function Logbook(ws) {
   let intervalTimer = 0;
   let arrayAllParts = Object.keys(obj);
   let functionAlReadyStart = false;
-
-  createButtonExp(ws);
 
   const int = setInterval(() => {
     intervalTimer += 0.5;

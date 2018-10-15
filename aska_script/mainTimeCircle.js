@@ -92,7 +92,7 @@ const checkQuests = function checkQuests(ws) {
   let arrEndQuests = JSON.parse(JSON.stringify(arrQuests));
   let arrLifeCircle = readFileLifeCircle();
   //
-  systemNotif = checkDate();
+
   // проверка наличия окончания задания
   //
   arrEndQuests = arrEndQuests.filter(v => timeNow >= v.endDate)
@@ -101,6 +101,7 @@ const checkQuests = function checkQuests(ws) {
   arrQuests = arrQuests.filter(v => timeNow >= v.startDate)
     .map(v => Object.assign(v, { startWith: 'QuestPart2' }));
   // проверка наличия лайф циклов
+  systemNotif = checkDate();
 
   arrLifeCircle = arrLifeCircle.filter(v => timeNow >= v.remind)
     .reduce((a, b) => {

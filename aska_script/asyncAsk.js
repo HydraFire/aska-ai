@@ -29,8 +29,9 @@ module.exports.whatToSay = whatToSay;
 
 function whatToSayEXP(text, obj, key) {
   let choice = askaChoice(text);
-  let choicenArr = obj[`${key}${choice}`];
-  return choicenArr[Math.random() * choicenArr.length | 0];
+  console.log(choice);
+  // let choicenArr = obj[`${key}${choice}`];
+  return choice;// choicenArr[Math.random() * choicenArr.length | 0];
 }
 module.exports.whatToSayEXP = whatToSayEXP;
 // ////////////////////////////////////////////////////////////////////////////

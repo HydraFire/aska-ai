@@ -8,12 +8,12 @@ const { checkAssignments } = require('./mainTimeCircle');
 const { saveFile, commands } = require('./commands/Music/instrument');
 const { writeResultEXP } = require('./commands/Logbook/Logbook');
 // Функция нужна для автоматизации создания обэкта и стрингификации
-function send(ws, type, data) {
+function send(ws, type, data, buttons) {
   if (!ws.closeAllInterval) {
     if (type === 'console' && typeof data === 'object') {
       data = Object.keys(data).reduce((a, b) => a.concat(`${b}: ${data[b]}<br>`), '');
     }
-    ws.send(JSON.stringify({ type, data }));
+    ws.send(JSON.stringify({ type, data, buttons }));
   }
 }
 module.exports.send = send;

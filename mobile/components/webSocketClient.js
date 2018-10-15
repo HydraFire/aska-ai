@@ -40,13 +40,10 @@ function start() {
     console.log(message);
     switch (message.type) {
       case 'aska':
-        aska(message.data);
+        aska(message.data, message.buttons);
         break;
       case 'console':
         window.myconsole.log(message.data, 'html');
-        break;
-      case 'consoleButtons':
-        window.myconsole.log(message.data, 'buttons');
         break;
       case 'notificationPublicKey':
         pushNotification.setVapidPublicKey(message.data);

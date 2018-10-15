@@ -2,6 +2,7 @@ import React, { Fragment } from 'react';
 import { aska } from '../speechSynthesizer';
 import socket from '../webSocketClient';
 import { init } from './animation';
+import InteractWindow from './interactWindow';
 import '../../css/logo.css';
 
 // var previousOrientation = window.orientation;
@@ -34,6 +35,7 @@ class Logo extends React.Component {
   constructor() {
     super();
     this.state = {
+      interactWindow: false,
       console: false,
       arr: []
     };
@@ -42,9 +44,6 @@ class Logo extends React.Component {
     const arr = this.state.arr;
     arr.push({ text, type });
     this.setState({ arr });
-  }
-  expClick = (e) => {
-    socket.send(e.target.getAttribute('alt'),'expClick');
   }
   // //////////////////////////////////////////////////////////////////////////
   // ///////////////////////////////////////////////////////////////////////////
@@ -58,10 +57,6 @@ class Logo extends React.Component {
         return <p key={`${v.text}${i}`} className="console_chat">{v.text}</p>
       } else if (v.type === 'err') {
         return <p key={`${v.text}${i}`} className="console_err">{v.text}</p>
-      } else if (v.type === 'buttons') {
-        return v.text.map((w,i) => {
-          return <p key={`${w}`}><button alt={`${i}`} onClick={this.expClick} className="console_buttons">{w}</button></p>
-        });
       } else {
         return <p key={`${v.text}${i}`} className="console_aska">{v.text}</p>
       }
@@ -93,6 +88,14 @@ class Logo extends React.Component {
       setTimeout(() => {
         activeInput(true);
       }, 200);
+    }
+  }
+  handlerInteractWindow = (obj) => {
+    this.setState({interactWindow: obj});
+  }
+  renderInteractWindow = () => {
+    if (this.state.interactWindow) {
+      return <InteractWindow obj={this.state.interactWindow} handlerInteractWindow={this.handlerInteractWindow}/>
     }
   }
   componentDidMount() {
@@ -129,6 +132,7 @@ class Logo extends React.Component {
         <img className="circle-static" src={svg11} alt="ASKA" />
       </div>
       {this.console()}
+      {this.renderInteractWindow()}
       </Fragment>
     );
   }

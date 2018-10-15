@@ -15,6 +15,8 @@ const {
   renderDay,
   renderTime
 } = require('./aska_script/saveAska');
+const { LogbookNNtrain } = require('./aska_script/NN/LogbookPluginNN');
+const { getWeather } = require('./aska_script/commands/Weather/Weather');
 //
 const exp = express();
 exp.use(express.static(`${__dirname}/public`));
@@ -44,3 +46,5 @@ renderLargeURL();
 renderCount();
 renderDay();
 renderTime();
+LogbookNNtrain();
+// getWeather();
