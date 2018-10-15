@@ -28,13 +28,13 @@ function train() {
     errorThresh: 0.005,
     iterations: 10000,
     log: true,
-    logPeriod: 50,
-    learningRate: 0.05
+    logPeriod: 1,
+    learningRate: 0.1
   });
   const jsonTrain = net.toJSON();
-  console.log('Done');
   fs.writeFileSync(nnbufferpath, JSON.stringify(jsonTrain), 'utf8');
   configOn(false, 'logbooknntrain');
+  console.log('Done');
 }
 
 function askaChoice(text) {
