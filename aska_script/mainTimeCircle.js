@@ -175,7 +175,7 @@ const idleInterval = function idleInterval(ws) {
   // let onetime = true;
   ws.idleInterval = setInterval(() => {
     const now = Date.now();
-    pastTime += 1500;
+    pastTime += 10500;
     // console.log(`pastTime = ${pastTime} now = ${now}`);
     if (pastTime < now) {
       // sumtime += now - pastTime;
