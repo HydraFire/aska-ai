@@ -5,6 +5,7 @@ import ChartCom from './interface/chartComponent';
 import clientTimeout from './clientTimeout';
 import { initAudio } from './speechSynthesizer';
 import Logo from './interface/logo';
+import geo from './geolocation';
 
 
 import '../css/logotype.css';
@@ -12,6 +13,7 @@ import '../css/logotype.css';
 class App extends React.Component {
   componentDidMount() {
     initAudio();
+    geo.init();
   }
 
   render() {

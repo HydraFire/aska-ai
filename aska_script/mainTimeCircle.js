@@ -171,17 +171,17 @@ module.exports.mainTimeCircle = mainTimeCircle;
 const idleInterval = function idleInterval(ws) {
   console.log('/// START FUNCTION idleInterval()');
   let pastTime = Date.now();
-  // let symtime = 0;
+  // let sumtime = 0;
   // let onetime = true;
   ws.idleInterval = setInterval(() => {
     const now = Date.now();
     pastTime += 1500;
     // console.log(`pastTime = ${pastTime} now = ${now}`);
     if (pastTime < now) {
-      // symtime += now - pastTime;
-      const sym = (now - pastTime) / 1000 | 0;
-      const min = sym / 60 | 0;
-      const sec = sym % 60;
+      // sumtime += now - pastTime;
+      const sum = (now - pastTime) / 1000 | 0;
+      const min = sum / 60 | 0;
+      const sec = sum % 60;
       if (min == 0) {
         console.log(`${sec}s`);
       } else {
