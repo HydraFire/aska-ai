@@ -9,7 +9,6 @@ class InteractWindow extends React.Component {
   }
   typeLoogbook = (e) => {
     socket.send(e.target.getAttribute('alt'),'expClick');
-    socket.send('speech_end','AUDIO');
     this.props.handlerInteractWindow(false);
   }
   renderButtons = () => {
