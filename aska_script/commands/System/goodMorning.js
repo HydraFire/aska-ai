@@ -30,8 +30,12 @@ module.exports.sayIMissYou = sayIMissYou;
 
 function sayDateTime() {
   let dateNow = new Date();
+  let hours = dateNow.getHours();
+  let minutes = dateNow.getMinutes();
+  hours < 10 ? hours = `0${hours}` : '';
+  minutes < 10 ? minutes = `0${minutes}` : '';
   let arrMonth = ['января', 'февраля', 'марта', 'апреля', 'мая', 'июня', 'июля','августа','сентября','октября','ноября','декабря'];
-  return `сегодня ${dateNow.getDate()}-е ${arrMonth[dateNow.getMonth()]}, ${dateNow.getHours()}:${dateNow.getMinutes()}`;
+  return `сегодня ${dateNow.getDate()}-е ${arrMonth[dateNow.getMonth()]}, ${hours}:${minutes}`;
 }
 
 async function goodMorning(ws, value) {
