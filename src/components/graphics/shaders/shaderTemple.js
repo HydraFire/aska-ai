@@ -1,194 +1,166 @@
 /* eslint-disable */
-export const shaderTemple = `precision highp float;
-
+export const shaderTemple = `
+precision highp float;
 uniform vec3 iMouse;
 uniform vec2 iResolution;
 uniform float iTime;
 uniform float iAudio;
 
-// "Ancient Temple" by Kali
+const int	MaxRaySteps	= 128;		// # ray steps b4 bailout
+const float	MaxDist		= 3.3;		// ray distance b4 bailout
+const float	FudgeFactor	= 1.;		// accuracy/speed
+#define	Accuracy	2. / iResolution.x	// ray marching surface threshold
+#define NormAcc		2. / iResolution.x	// surface normal accuracy
 
-const int Iterations=14;
-const float detail=.00002;
-const float Scale=2.;
-
-vec3 lightdir=normalize(vec3(0.,-0.3,-1.));
-
-
-float ot=0.;
-float det=0.;
-
-float hitfloor;
-float hitrock;
-
-float smin( float a, float b, float k )
-{
-    float h = clamp( 0.5+0.5*(b-a)/k, 0.0, 1.0 );
-    return mix( b, a, h ) - k*h*(1.0-h);
+float s, c;
+#define rotate(p, a) mat2(c=cos(a), s=-sin(a), -s, c) * p
+void rotateXY(inout vec3 p, vec2 axy) {
+    p.yz = rotate(p.yz, axy.y);
+    p.xz = rotate(p.xz, axy.x);
 }
 
-float tt;
+vec3 fold(in vec3 p, in vec3 n) {
+    n = normalize(n);
+    p -= n * max(0., 2.*dot(p, n));
+    return p;
+}
 
-float de(vec3 pos) {
-    hitfloor=0.;
-    hitrock=0.;
-    vec3 p=pos;
-    p.xz=abs(.5-mod(pos.xz,1.))+.01;
-    float DEfactor=1.;
-    ot=1000.;
-    for (int i=0; i<Iterations; i++) {
-        p = abs(p)-vec3(0.,2.,0.);
-        float r2 = dot(p, p);
-        ot = min(ot,abs(length(p)));
-        float sc=Scale/clamp(r2,0.4,1.);
-        p*=sc;
-        DEfactor*=sc;
-        p = p - vec3(0.5,1.,0.5);
+float mapDE(in vec3 p) {
+	float f;
+
+    const float I = 64.;
+    for(float i=0.; i<I; i++) {
+        rotateXY(p, vec2(10.-.024273*iTime, .0045*iTime));
+        //p = abs(p);
+
+        p = fold(p, vec3(1., -1., 0.));
+        p = fold(p, vec3(-1., 0., -1.));
+        p -= .125*.025 / ((i+1.)/I);
+
     }
-    float rr=length(pos+vec3(0.,-3.03,1.85-tt))-.017;
-    float fl=pos.y-3.013;
-    float d=min(fl,length(p)/DEfactor-.0005);
-    d=min(d,-pos.y+3.9);
-    d=min(d,rr);
-    if (abs(d-fl)<.0001) hitfloor=1.;
-    if (abs(d-rr)<.0001) hitrock=1.;
-    return d;
+
+    f = length(p)-.007;
+    return f;
 }
 
-
-
-vec3 normal(vec3 p) {
-    vec3 e = vec3(0.0,det,0.0);
-
-    return normalize(vec3(
-            de(p+e.yxx)-de(p-e.yxx),
-            de(p+e.xyx)-de(p-e.xyx),
-            de(p+e.xxy)-de(p-e.xxy)
-            )
-        );
+vec3 mapSky(in vec3 p) {
+    p = normalize(p);
+    return
+        max(
+            vec3(0.),
+            1.25 * vec3(1., 1.2, 1.5)
+            * vec3(.5+.25*(sin(3.*p.x)+sin(3.*p.y)))
+            + vec3(.4, .2, .1)
+            - .25
+       	);
 }
 
-float shadow(vec3 pos, vec3 sdir) {
-        float totalDist =2.0*det, sh=1.;
-        for (int steps=0; steps<30; steps++) {
-            if (totalDist<1.) {
-                vec3 p = pos - totalDist * sdir;
-                float dist = de(p)*1.5;
-                if (dist < detail)  sh=0.;
-                totalDist += max(0.05,dist);
-            }
-        }
-        return max(0.,sh);
+vec3 getNorm(vec3 p) {
+	vec3 d = vec3(NormAcc, -NormAcc, 0.);
+    return normalize(vec3(mapDE(p+d.xzz) - mapDE(p+d.yzz), mapDE(p+d.zxz) - mapDE(p+d.zyz), mapDE(p+d.zzx) - mapDE(p+d.zzy)));
 }
 
-float calcAO( const vec3 pos, const vec3 nor ) {
-    float aodet=detail*80.;
-    float totao = 0.0;
-    float sca = 10.0;
-    for( int aoi=0; aoi<5; aoi++ ) {
-        float hr = aodet + aodet*float(aoi*aoi);
-        vec3 aopos =  nor * hr + pos;
-        float dd = de( aopos );
-        totao += -(dd-hr)*sca;
-        sca *= 0.75;
+// uses iq's soft shadows
+/*float getShadow(vec3 hit, vec3 lightDir, float lightDist) {
+	float dist;
+	float k = 132.; // shadow hardness
+	float totalDist = 2. / k; // starting distance based on shadow hardness
+	float res = 1.;
+	for(int steps=0; steps<MaxRaySteps; steps++) {
+		vec3 P = hit + totalDist * lightDir;
+		dist = mapDE(P);
+		if(dist < Accuracy) return 0.;
+        if(totalDist >= min(MaxDist, lightDist)) break;
+		res = min(res, k*dist/float(steps));
+		totalDist += dist;
+	}
+	return res;
+}*/
+
+// source lost; if this is yours, speak up :)
+float getAO(vec3 hit, vec3 norm) {
+    const float ns = 16.;
+    float AO = 0.;
+    float d = .1;
+    for(float i=1.; i<ns; i++) {
+    	float dist = mapDE(hit+d*norm*i/ns);
+        AO += .875 * ns / d * dist / i;
     }
-    return clamp( 1.0 - 5.0*totao, 0.0, 1.0 );
+    return clamp(AO/ns, 0., 1.);
 }
 
 
+// returns last and total distances from a ray traced from camPos to rayDir
+vec2 march(vec3 camPos, vec3 rayDir) {
+	float dist;
+	float totalDist = 0.;
+	vec3 p;
+	for(int steps=0; steps<MaxRaySteps; steps++) {
+		p = camPos + totalDist * rayDir;
+		dist = mapDE(p) * FudgeFactor;
+        totalDist += dist;
+		if(dist<Accuracy || totalDist>MaxDist) break;
+	}
+    return vec2(dist, totalDist);
 
-float kset(vec3 p) {
-    p=abs(.5-fract(p*20.));
-    float es, l=es=0.;
-    for (int i=0;i<13;i++) {
-        float pl=l;
-        l=length(p);
-        p=abs(p)/dot(p,p)-.5;
-        es+=exp(-1./abs(l-pl));
-    }
-    return es;
 }
 
-mat2 rot;
+vec3 getColor(vec3 hit, vec3 rayDir, vec2 dists) {
 
-vec3 light(in vec3 p, in vec3 dir) {
-    float hf=hitfloor;
-    float hr=hitrock;
-    vec3 n=normal(p);
-    float sh=clamp(shadow(p, lightdir)+hf+hr,.4,1.);
-    float ao=calcAO(p,n);
-    float diff=max(0.,dot(lightdir,-n))*sh*1.3;
-    float amb=max(0.2,dot(dir,-n))*.4;
-    vec3 r = reflect(lightdir,n);
-    float spec=pow(max(0.,dot(dir,-r))*sh,10.)*(.5+ao*.5);
-    float k=kset(p)*.18;
-    vec3 col=mix(vec3(k*1.1,k*k*1.3,k*k*k),vec3(k),.45)*2.;
-    vec3 pp=p-vec3(0.,3.03,tt);
-    pp.yz*=rot;
-    if (hr>0.) col=vec3(.9,.8,.7)*(1.+kset(pp*2.)*.3);
-    col=col*ao*(amb*vec3(.9,.85,1.)+diff*vec3(1.,.9,.9))+spec*vec3(1,.9,.5)*.7;
-    return col;
-}
+    vec3 col = vec3(0.);
 
+    // a surface was hit, do some shading
+    if(dists.x < Accuracy) {
+		vec3 norm = getNorm(hit);
 
-vec3 raymarch(in vec3 from, in vec3 dir)
-{
-    float t=iTime;
-    float cc=cos(t*.03); float ss=sin(t*.03);
-    rot=mat2(cc,ss,-ss,cc);
-    vec2 lig=vec2(sin(t*2.)*.6,cos(t)*.25-.25);
-    float fog,glow,d=1., totdist=glow=fog=0.;
-    vec3 p, col=vec3(0.);
-    float ref=0.;
-    float steps;
-    for (int i=0; i<130; i++) {
-        if (d>det && totdist<3.5) {
-            p=from+totdist*dir;
-            d=de(p);
-            det=detail*(1.+totdist*55.);
-            totdist+=d;
-            glow+=max(0.,.02-d)*exp(-totdist);
-            steps++;
-        }
-    }
-    //glow/=steps;
-    float l=pow(max(0.,dot(normalize(-dir),normalize(lightdir))),(15.-(iAudio/10.)));
-    vec3 backg=vec3(.8,.85,1.)*.25*(2.-l)+vec3(1.,.9,.65)*l*.4;
-    float hf=hitfloor;
-    if (d<det) {
-        col=light(p-det*dir*1.5, dir);
-        if (hf>0.5) col*=vec3(1.,.85,.8)*.6;
-        col*=min(1.2,.5+totdist*totdist*1.5);
-        col = mix(col, backg, 1.0-exp(-1.3*pow(totdist,1.3)));
+        vec3 diffuse = vec3(1., .7, .5) * mapSky(norm);
+
+        // angle of incidence
+        float aoi = pow(1.-dot(norm, -rayDir), 1.);
+
+        // ambient occlusion
+        float ao = pow(getAO(hit, norm), 4.) * 2.;
+
+        // initial color
+        col = diffuse;
+
+        // reflected sky
+        vec3 ref = mapSky(normalize(reflect(rayDir, norm)));
+
+        // mix in reflections
+        col = mix(col, ref, aoi);
+
+        // apply ao
+        col *= ao;
+
+        // mix sky into color (fog effect)
+        col = mix(col, mapSky(rayDir), pow(dists.y/MaxDist, 2.));
+
     } else {
-        col=backg;
+        // return sky only, for there's nothing else
+        col = mapSky(rayDir);
     }
-    col+=glow*vec3(1.,.9,.8)*.34;
-    col+=vec3(1,.8,.6)*pow(l,3.)*.5;
+
     return col;
 }
 
-void mainImage( out vec4 fragColor, in vec2 fragCoord )
-{
-    tt=iTime*.05;
-    vec2 uv = fragCoord.xy / iResolution.xy*2.-1.;
-    uv.y*=iResolution.y/iResolution.x;
-    vec2 mouse=(iMouse.xy/iResolution.xy-.5);
-    float t=iTime*.15;
-    float y=(cos(iTime*.1+3.)+1.);
-    if (iMouse.z<1.) mouse=vec2(sin(t*2.),cos(t)+.3)*.15*(.5+y)*min(1.,iTime*.1);
-    uv+=mouse*1.5;
-    uv.y-=.1;
-    //uv+=(texture(iChannel1,vec2(iTime*.15)).xy-.5)*max(0.,h)*7.;
-    vec3 from=vec3(0.0,3.04+y*.1,-2.+iTime*.05);
-    vec3 dir=normalize(vec3(uv*.85,1.));
-    vec3 color=raymarch(from,dir);
-    //col*=length(clamp((.6-pow(abs(uv2),vec2(3.))),vec2(0.),vec2(1.)));
-    color*=vec3(1.,.94,.87);
-    color=pow(color,vec3(1.2));
-    color=mix(vec3(length(color)),color,.85)*.95;
-    color+=vec3(1,.85,.7)*pow(max(0.,.3-length(uv-vec2(0.,.03)))/.3,1.5)*.65;
-    fragColor = vec4(color,1.);
+void mainImage( out vec4 fo, in vec2 fc ) {
+	vec2 res = iResolution.xy;
+    vec2 uv		= (fc-.5*res) / res.y;
+    vec2 mPos	= (iMouse.xy-.5*res) / res.y;
+
+    vec3 rayBeg		= vec3(0., 0., -3.);
+    vec3 rayDir		= normalize(vec3(uv, 1.*2.));
+
+    vec2 camRotXY = iMouse.z > 0. ? 4. * mPos.xy : vec2(.75+.0353*iTime, .75+.0485*iTime);
+    rotateXY(rayBeg, camRotXY);
+    rotateXY(rayDir, camRotXY);
+
+    vec2 dists	= march(rayBeg, rayDir);
+    vec3 hit	= rayBeg + dists.y * rayDir;
+    vec3 col = getColor(hit, rayDir, dists);
+
+	fo = vec4(col, 1.);
 }
 
 void main(){

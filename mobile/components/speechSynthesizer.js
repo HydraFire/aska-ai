@@ -9,6 +9,11 @@ let errorCount = 0;
 let aska_mute = false;
 let aska_hide = false;
 // //////////////////////////////////////////////////////////////////////////
+function switchModeOnMute(boolean) {
+  console.log('///////////////////// '+boolean);
+  aska_hide = boolean;
+}
+// //////////////////////////////////////////////////////////////////////////
 function askaWriteOnScreen(text, arr) {
   socket.send('speech_start','AUDIO');
   if (arr) {
@@ -144,6 +149,7 @@ function trueAska(text) {
 }
 // /////////////////////////////////////////////////////////////////////////////
 function aska(text, buttons) {
+  console.log(aska_hide);
   if (aska_hide) {
     askaWriteOnScreen(text, buttons);
   } else {
@@ -159,4 +165,4 @@ function aska(text, buttons) {
   window.myconsole.log(text, 'aska');
 }
 // /////////////////////////////////////////////////////////////////////////////
-export { aska, initAudio, stopAska };
+export { aska, initAudio, stopAska, switchModeOnMute };

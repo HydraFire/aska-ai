@@ -107,7 +107,7 @@ function shader(shaderString, option) {
     const m = analyser.frequencies();
     startTime -= m[100] * 1.7;
     time = (Date.now() - startTime) / 1000;
-    iAudio = m[150];
+    iAudio = m[50];
     drawScene();
   }
   /* eslint-enable */
@@ -119,7 +119,7 @@ function shader(shaderString, option) {
     resize();
 
     window.addEventListener('resize', resize);
-    mouseHendler();
+    //mouseHendler();
 
 
     const fragmentShader = getShaderA();

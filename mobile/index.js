@@ -16,7 +16,7 @@ import pushNotification from './components/pushNotification';
 
 render(<App />, document.querySelector('#main'));
 // ////////////////////////////////////////////////////////////////////////////
-socket.start();
+socket.askaSwitchMute();
 speechRec();
 // /////////////////////////////////////////////////////////////////////////////
 const askaButton = document.querySelector('.main');

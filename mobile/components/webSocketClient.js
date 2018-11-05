@@ -26,6 +26,11 @@ function send(data, type) {
     localStorage.inputMemory = data;
   }
 }
+function askaSwitchMute() {
+  let text = 'Включить звук ?';
+  let arr = [{ type: 'MuteMode', value: false, name: 'Да' }, { type: 'MuteMode', value: true, name: 'Нет' }];
+  window.myconsole.handlerInteractWindow({ type: 'switchMuteMode', text, arr });
+}
 // Чтобы веб сокеты запускалить после прогрузки страници и графики на ней
 function start() {
   socket = new WebSocket(serverAddress);
@@ -93,4 +98,4 @@ function start() {
   };
 }
 
-export default { start, send };
+export default { start, send, askaSwitchMute };

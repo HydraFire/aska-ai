@@ -1,5 +1,6 @@
 import React, { Fragment } from 'react';
 import socket from '../webSocketClient';
+import { switchModeOnMute } from '../speechSynthesizer';
 import '../../css/logo.css';
 
 class InteractWindow extends React.Component {
@@ -8,7 +9,18 @@ class InteractWindow extends React.Component {
     this.props.handlerInteractWindow(false);
   }
   typeLoogbook = (e) => {
-    socket.send(e.target.getAttribute('alt'),'expClick');
+    if (e.target.getAttribute('alt') === 'MuteMode') {
+      this.props.handlerInteractWindow(false);
+      window.myconsole.log(e.target.getAttribute('value'));
+      let value = e.target.getAttribute('value');
+      value == 'true' ? value = true : value = false ;
+      switchModeOnMute(value);
+      socket.start();
+    }
+    //this.props.handlerInteractWindow(false);
+  }
+  typeAskMute = (e) => {
+    switchModeOnMute(e.target.getAttribute('alt'));
     this.props.handlerInteractWindow(false);
   }
   renderButtons = () => {
@@ -22,9 +34,8 @@ class InteractWindow extends React.Component {
     return (
       <div className="interactWindow_bottom">
         {this.props.obj.arr.map((v, i) => {
-          return <p key={v.name}><button alt={i} onClick={this.typeLoogbook}>{v.name} {`${v.value}%`}</button></p>
+          return <p key={v.name}><button value={v.value} alt={v.type} onClick={this.typeLoogbook}>{v.name}</button></p>
         })}
-        <p key="ok"><button onClick={this.typeAska}>ok</button></p>
       </div>
     );
   }
