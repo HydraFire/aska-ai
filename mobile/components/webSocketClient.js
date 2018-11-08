@@ -10,6 +10,10 @@ let socket = null;
 // const serverAddress = "wss://nerv.pro/z-index.html";
 const serverAddress = process.env.HOSTNAME;
 
+function getImage(data) {
+  window.myconsole.binaryData(data);
+  return { type: 'console', data: 'GET IMAGE from WebSocket binary data' };
+}
 // Функция которая используеться для отправки на сервер
 function send(data, type) {
   if (data !== '') {
@@ -28,8 +32,8 @@ function send(data, type) {
 }
 function askaSwitchMute() {
   let text = 'Включить звук ?';
-  let arr = [{ type: 'MuteMode', value: false, name: 'Да' }, { type: 'MuteMode', value: true, name: 'Нет' }];
-  window.myconsole.handlerInteractWindow({ type: 'switchMuteMode', text, arr });
+  let arr = [{ type: 'MuteMode', value: true, name: 'Нет' }, { type: 'MuteMode', value: false, name: 'Да' }];
+  window.myconsole.handlerInteractWindow({ type: 'typeSwitchMuteMode', text, arr });
 }
 // Чтобы веб сокеты запускалить после прогрузки страници и графики на ней
 function start() {
@@ -41,7 +45,12 @@ function start() {
   };
 
   socket.onmessage = function onmessage(event) {
-    const message = JSON.parse(event.data);
+    let message = {};
+    if (event.data.size) {
+      message = getImage(event.data);
+    } else {
+      message = JSON.parse(event.data);
+    }
     console.log(message);
     switch (message.type) {
       case 'aska':

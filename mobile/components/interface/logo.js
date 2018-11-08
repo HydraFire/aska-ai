@@ -37,7 +37,8 @@ class Logo extends React.Component {
     this.state = {
       interactWindow: false,
       console: false,
-      arr: []
+      arr: [],
+      binaryData: null
     };
   }
   log = (text, type) => {
@@ -90,12 +91,15 @@ class Logo extends React.Component {
       }, 200);
     }
   }
+  binaryData = (data) => {
+    this.setState({binaryData: data});
+  }
   handlerInteractWindow = (obj) => {
     this.setState({interactWindow: obj});
   }
   renderInteractWindow = () => {
     if (this.state.interactWindow) {
-      return <InteractWindow obj={this.state.interactWindow} handlerInteractWindow={this.handlerInteractWindow}/>
+      return <InteractWindow binaryData={this.state.binaryData} obj={this.state.interactWindow} handlerInteractWindow={this.handlerInteractWindow}/>
     }
   }
   componentDidMount() {

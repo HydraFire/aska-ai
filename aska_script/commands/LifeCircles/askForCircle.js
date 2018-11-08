@@ -1,4 +1,5 @@
 const fs = require('fs');
+const MainNN = require('../../NN/MainNN');
 const socket = require('../../webSocketOnMessage');
 const asyncAsk = require('../../asyncAsk');
 const { checkURL, checkSmartURL } = require('../../saveAska');
@@ -6,6 +7,7 @@ const lifeCircles = require('./LifeCircles');
 const { calcNow, countToText, dateToText } = require('./calcTime');
 // /////////////////////////////////////
 // /////////////////////////////////////
+const fileCamera = process.env.CAMERAPATH;
 const fileOption = './data/commands/LifeCircles/option.json';
 const AskaSC = JSON.parse(fs.readFileSync(fileOption));
 // /////////////////////////////////////////////////////////////////////////////
@@ -13,12 +15,61 @@ const AskaSC = JSON.parse(fs.readFileSync(fileOption));
 // РЕКОМЕНДОВАНО К ВЫПОЛНЕНИЮ
 // /////////////////////////////////////////////////////////////////////////////
 function LifeCirclesNapominanie(ws, obj) {
+  try {
+    const img = fs.readFileSync(`${fileCamera}${obj.words}.jpg`);
+    console.log(img);
+    socket.send(ws, 'file', img);
+  } catch (err) {
+    console.log(err);
+  }
+  const arrButtons = [
+    {
+      mainType: 'typeLifeCircles',
+      type: 'negative',
+      value: obj.words,
+      name: 'Больше не напоминай'
+    },
+    {
+      mainType: 'typeLifeCircles',
+      type: 'default',
+      value: obj.words,
+      name: 'Пропустить'
+    },
+    {
+      mainType: 'typeLifeCircles',
+      type: 'positive',
+      value: obj.words,
+      name: 'Хорошо'
+    }
+  ];
+
+  const defaultFunction = function defaultFunction() {
+    console.log('TEST');
+  };
+
+  const positive = function positive() {
+    MainNN.start(ws, ws.ClientSay);
+  };
+
+  const packaging = function packaging() {
+    asyncAsk.selectFunctionFromWords(ws, [
+      {
+        func: positive,
+        words: ['whatever'],
+        end: true,
+        whatever: true
+      }
+    ], defaultFunction);
+  };
+  asyncAsk.readEndWait(ws, checkURL(`${asyncAsk.whatToSay(AskaSC, 'z0')}, ${obj.words}`), packaging, null, arrButtons);
+  /*
   const x = function x() {
     socket.send(ws, 'aska', checkURL(`${asyncAsk.whatToSay(AskaSC, 'z0')}, ${obj.words}`));
   };
   if (obj.words != '') {
     asyncAsk.onlyWait(ws, x, ws);
   }
+  */
 }
 module.exports.LifeCirclesNapominanie = LifeCirclesNapominanie;
 // /////////////////////////////////////////////////////////////////////////////

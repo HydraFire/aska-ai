@@ -13,7 +13,13 @@ function send(ws, type, data, buttons) {
     if (type === 'console' && typeof data === 'object') {
       data = Object.keys(data).reduce((a, b) => a.concat(`${b}: ${data[b]}<br>`), '');
     }
-    ws.send(JSON.stringify({ type, data, buttons }));
+
+    if (type === 'file') {
+      console.log(data);
+      ws.send(data);
+    } else {
+      ws.send(JSON.stringify({ type, data, buttons }));
+    }
   }
 }
 module.exports.send = send;

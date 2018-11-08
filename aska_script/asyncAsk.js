@@ -75,12 +75,12 @@ function selectFunctionFromWords(ws, options, defaultFunction) {
 }
 module.exports.selectFunctionFromWords = selectFunctionFromWords;
 // /////////////////////////////////////////////////////////////////////////////
-function readEndWait(ws, text, nextFun, param) {
+function readEndWait(ws, text, nextFun, param, arrButtons) {
   ws.NNListen = false;
   const int3 = setInterval(() => {
     if (ws.audio === 'speech_end') {
       clearInterval(int3);
-      socket.send(ws, 'aska', text);
+      socket.send(ws, 'aska', text, arrButtons);
       const int = setInterval(() => {
         if (ws.audio === 'speech_start') {
           clearInterval(int);

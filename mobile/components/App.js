@@ -13,7 +13,6 @@ class App extends React.Component {
   componentDidMount() {
     initAudio();
   }
-
   render() {
     return (
       <div>
