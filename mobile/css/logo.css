@@ -63,7 +63,6 @@
 .interactWindow_img {
   position: absolute;
   width: auto;
-  left: -50px;
   height: 720px;
 }
 .interactWindow_bottom {
