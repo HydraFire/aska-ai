@@ -5,6 +5,7 @@ import { init } from './animation';
 import InteractWindow from './interactWindow';
 import '../../css/logo.css';
 
+let BinaryDataImgFromServer = null
 // var previousOrientation = window.orientation;
 
 function activeInput(n) {
@@ -92,10 +93,13 @@ class Logo extends React.Component {
     }
   }
   binaryData = (data) => {
-    this.setState({binaryData: data});
+    BinaryDataImgFromServer = data;
   }
+  // ВОТ ЭТО МЕСТО
   handlerInteractWindow = (obj) => {
     this.setState({interactWindow: obj});
+    BinaryDataImgFromServer != null ?
+    this.setState({binaryData: BinaryDataImgFromServer}) : '';
   }
   renderInteractWindow = () => {
     if (this.state.interactWindow) {

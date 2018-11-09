@@ -42,7 +42,7 @@ function LifeCirclesNapominanie(ws, obj) {
       name: 'Хорошо'
     }
   ];
-
+/*
   const defaultFunction = function defaultFunction() {
     console.log('TEST');
   };
@@ -62,6 +62,8 @@ function LifeCirclesNapominanie(ws, obj) {
     ], defaultFunction);
   };
   asyncAsk.readEndWait(ws, checkURL(`${asyncAsk.whatToSay(AskaSC, 'z0')}, ${obj.words}`), packaging, null, arrButtons);
+  */
+  socket.send(ws, 'aska', checkURL(`${asyncAsk.whatToSay(AskaSC, 'z0')}, ${obj.words}`), arrButtons);
   /*
   const x = function x() {
     socket.send(ws, 'aska', checkURL(`${asyncAsk.whatToSay(AskaSC, 'z0')}, ${obj.words}`));

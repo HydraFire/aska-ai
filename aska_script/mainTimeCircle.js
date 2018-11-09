@@ -10,6 +10,7 @@ const { checkDate, sayWhatYouNeed } = require('./commands/System/systemNotificat
 // //////////////////////////////////////
 let displayOn = false;
 let lastTime = 0;
+let arrShortIntervalBuffer = [];
 // //////////////////////////////////////
 const fileOption = './data/commands/Quest/option.json';
 const AskaSC = JSON.parse(fs.readFileSync(fileOption));
@@ -60,14 +61,17 @@ function switchFunc(ws, v) {
   }
 }
 // //////////////////////////////////////////////////////////////////////////////
-const shortInterval = function shortInterval(ws, arrQuests) {
+const shortInterval = function shortInterval(ws) {
   // короткий интервал обслуживает запуст нескольких заданий поряд
-  let [first] = arrQuests.splice(0, 1);
-  if (Object.keys(first).length == 0) {
-    [first] = arrQuests.splice(0, 1);
+  if (arrShortIntervalBuffer.length != 0) {
+    let [first] = arrShortIntervalBuffer.splice(0, 1);
+    if (Object.keys(first).length == 0) {
+      [first] = arrShortIntervalBuffer.splice(0, 1);
+    }
+    switchFunc(ws, first);
   }
-  switchFunc(ws, first);
-  //
+  console.log(arrShortIntervalBuffer);
+  /*
   const int = setInterval(() => {
     if (ws.NNListen) {
       if (arrQuests.length !== 0) {
@@ -79,7 +83,9 @@ const shortInterval = function shortInterval(ws, arrQuests) {
     }
     ws.closeAllInterval ? clearInterval(int) : '';
   }, 5000);
+  */
 };
+module.exports.shortInterval = shortInterval;
 // //////////////////////////////////////////////////////////////////////////////
 const checkQuests = function checkQuests(ws) {
   // Текущее время
@@ -120,7 +126,10 @@ const checkQuests = function checkQuests(ws) {
   finalArray = finalArray.concat(systemNotif, arrEndQuests, arrQuests, arrLifeCircle);
   console.log(finalArray);
   // интервал который всё это дело будет по очереди запускать
-  shortInterval(ws, finalArray);
+  if (finalArray.length != 0) {
+    arrShortIntervalBuffer = finalArray;
+    shortInterval(ws);
+  }
 };
 // //////////////////////////////////////////////////////////////////////////////
 // Функция которая работает при подключении клиента

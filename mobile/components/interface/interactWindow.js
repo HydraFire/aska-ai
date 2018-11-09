@@ -25,7 +25,7 @@ class InteractWindow extends React.Component {
     } else if (e.target.getAttribute('alt') === 'negative') {
       socket.send(`я не хочу ${e.target.getAttribute('value')}`, 'aska');
     } else if (e.target.getAttribute('alt') === 'default') {
-      socket.send(`проверка`, 'aska');
+      socket.send(null, 'shortInterval');
     }
     this.props.handlerInteractWindow(false);
   }

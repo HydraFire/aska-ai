@@ -7,6 +7,7 @@ const { chartLoad } = require('./chartLoad');
 const { checkAssignments } = require('./mainTimeCircle');
 const { saveFile, commands } = require('./commands/Music/instrument');
 const { writeResultEXP } = require('./commands/Logbook/Logbook');
+const { shortInterval } = require('./mainTimeCircle');
 // Функция нужна для автоматизации создания обэкта и стрингификации
 function send(ws, type, data, buttons) {
   if (!ws.closeAllInterval) {
@@ -87,6 +88,9 @@ function webSocketOnMessage(ws) {
             break;
           case 'expClick':
             writeResultEXP(ws, obj.data);
+            break;
+          case 'shortInterval':
+            shortInterval(ws);
             break;
           default:
             // console.log(`Unknown type ${obj.type}`);

@@ -4,6 +4,7 @@ const asyncAsk = require('../../asyncAsk');
 const { checkURL } = require('../../saveAska');
 const { saveTimeEnd, saveExcuse, saveTimeStart } = require('./QuestInstrument');
 const { searchDate, searchTime } = require('../../textToTime');
+const mainTimeCircle = require('../../mainTimeCircle');
 // ///////////////////////////////////////
 // //////////////////////////////////////
 const fileOption = './data/commands/Quest/option.json';
@@ -150,6 +151,7 @@ const askPart2 = function askPart2(ws, obj) {
   const attentionCheck = function attentionCheck() {
     socket.send(ws, 'aska', checkURL(asyncAsk.whatToSay(AskaSC, 'p2')));
     saveTimeEnd(obj, ws.ClientSay);
+    mainTimeCircle.shortInterval(ws);
     // asyncAsk.onlyWait(ws, askPart3, obj);
   };
   const negative = function negative() {
