@@ -5,9 +5,26 @@ import { init } from './animation';
 import InteractWindow from './interactWindow';
 import '../../css/logo.css';
 
-let BinaryDataImgFromServer = null
+let BinaryDataImgFromServer = null;
+let int;
 // var previousOrientation = window.orientation;
 
+function closeWindowInterval(time) {
+  if (time) {
+    let i = 0;
+    int = setInterval(() => {
+      i += 1;
+      console.log(i);
+      if (i > time) {
+        window.myconsole.handlerInteractWindow(false);
+        BinaryDataImgFromServer = null;
+        clearInterval(int);
+      }
+    }, 1000);
+  } else {
+    clearInterval(int);
+  }
+}
 function activeInput(n) {
   const commandLine = document.querySelector('.inputCommandLine');
   if (n) {
@@ -97,9 +114,11 @@ class Logo extends React.Component {
   }
   // ВОТ ЭТО МЕСТО
   handlerInteractWindow = (obj) => {
+    console.log('What a fuck?');
     this.setState({interactWindow: obj});
     BinaryDataImgFromServer != null ?
     this.setState({binaryData: BinaryDataImgFromServer}) : '';
+    obj ? closeWindowInterval(30) : closeWindowInterval(false);
   }
   renderInteractWindow = () => {
     if (this.state.interactWindow) {

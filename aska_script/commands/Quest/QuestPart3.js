@@ -1,5 +1,6 @@
 const fs = require('fs');
 const socket = require('../../webSocketOnMessage');
+const mainTimeCircle = require('../../mainTimeCircle');
 const asyncAsk = require('../../asyncAsk');
 const { checkURL } = require('../../saveAska');
 const { saveExcuse, saveTimeStart, copyToVictoryFile } = require('./QuestInstrument');
@@ -66,7 +67,10 @@ const askPart5 = function askPart5(ws, obj) {
           }
         }
         if (x && y) {
-          socket.send(ws, 'aska', checkURL(asyncAsk.whatToSay(AskaSC, 'f3')));
+          let text = checkURL(asyncAsk.whatToSay(AskaSC, 'f3'));
+          asyncAsk.readEndWait(ws, text, () => {
+            mainTimeCircle.shortInterval(ws);
+          });
           clearInterval(int);
           saveTimeStart(obj, xString, yString);
           ws.NNListen = true;

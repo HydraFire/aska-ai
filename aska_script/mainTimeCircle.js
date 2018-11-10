@@ -70,7 +70,7 @@ const shortInterval = function shortInterval(ws) {
     }
     switchFunc(ws, first);
   }
-  console.log(arrShortIntervalBuffer);
+  // console.log(arrShortIntervalBuffer);
   /*
   const int = setInterval(() => {
     if (ws.NNListen) {
@@ -144,10 +144,17 @@ const checkAssignments = function checkAssignments(ws) {
 };
 module.exports.checkAssignments = checkAssignments;
 
+function lifeCircleSound(ws) {
+  let arrQuests = JSON.parse(fs.readFileSync(filepathLifeCircle));
+  arrQuests = arrQuests.filter(v => Date.now() > v.remind);
+  if (arrQuests.length > 0) {
+    console.log(arrQuests);
+    socket.send(ws, 'aska', '50Hz');
+  }
+}
 // /////////////////////////////////////////////////////////////////////////////
 // Функция запуска уведомлений
 // /////////////////////////////////////////////////////////////////////////////
-
 const mainTimeCircle = function mainTimeCircle(ws) {
   const timeTest = Date.now() + (30 * 60 * 1000);
   // x.setHours(howLong);
@@ -175,6 +182,7 @@ const mainTimeCircle = function mainTimeCircle(ws) {
     socket.send(ws, 'aska', '20Hz');
     socket.send(ws, 'quest', arrQuests);
   }
+  lifeCircleSound(ws);
 };
 
 module.exports.mainTimeCircle = mainTimeCircle;
@@ -211,6 +219,7 @@ const idleInterval = function idleInterval(ws) {
     } else {
       pastTime = now;
     }
+    // mainTimeCircle(ws);
   }, 1000);
 };
 module.exports.idleInterval = idleInterval;

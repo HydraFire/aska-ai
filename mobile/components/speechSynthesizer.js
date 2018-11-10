@@ -59,7 +59,9 @@ function trueAska(text) {
   function choseAudioTag(text, audioTag, num) {
     let par = false;
     function createURL(text) {
-      if (text == '20Hz') {
+      if (text == '50Hz') {
+        return 'http://localhost:8080/coub/50Hz.mp3';
+      } else if (text == '20Hz') {
         return 'http://localhost:8080/coub/20Hz.mp3';
       } else if (text.substring(0, 1) == '#' || par) {
         console.log(text);
@@ -111,7 +113,7 @@ function trueAska(text) {
     function playAudio(text) {
       audioTag.src = createURL(text);
       audioTag.onloadeddata = function onloadeddata() {
-        if (text.substring(0, 1) != '#' && text != '20Hz') {
+        if (text.substring(0, 1) != '#' && text != '20Hz' && text != '50Hz') {
           animeteLoadAudio(false);
         }
         audioTag.play();

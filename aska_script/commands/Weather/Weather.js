@@ -23,18 +23,17 @@ async function currentWeather() {
   console.log(json);
   return `на улице ${json.weather[0].description}, температура ${Math.round(json.main.temp)} градусов, влажност ${json.main.humidity}%, давление ${json.main.pressure}, ветер ${json.wind.speed}`;
 }
-async function getWeather(ws) {
+async function getWeather() {
   try {
     // Wait for the result of waitAndMaybeReject() to settle,
     // and assign the fulfilled value to fulfilledValue:
     const value = await currentWeather();
-    //const value = await forecastWeather();
+    // const value = await forecastWeather();
     // If the result of waitAndMaybeReject() rejects, our code
     // throws, and we jump to the catch block.
     // Otherwise, this block continues to run:
     return value;
-  }
-  catch (e) {
+  } catch (e) {
     return `${e}`;
   }
 }
