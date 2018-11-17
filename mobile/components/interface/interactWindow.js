@@ -4,6 +4,35 @@ import { switchModeOnMute } from '../speechSynthesizer';
 import '../../css/logo.css';
 
 class InteractWindow extends React.Component {
+  constructor() {
+    super();
+    this.state = {
+      triggerImgOrVideo: false
+    };
+  }
+  testData = () => {
+    let video = document.createElement('img');
+    video.src = URL.createObjectURL(this.props.binaryData);
+    video.addEventListener('error',() => {
+      console.log('ALLOY');
+      this.videoPick(true);
+    })
+  }
+  videoPick = (boolean) => {
+    if (!boolean) {
+      if (this.state.triggerImgOrVideo != false) {
+        this.setState({
+           triggerImgOrVideo: false
+        });
+      }
+    } else {
+      if (this.state.triggerImgOrVideo != true) {
+        this.setState({
+           triggerImgOrVideo: true
+        });
+      }
+    }
+  }
   typeAska = () => {
     socket.send('speech_end','AUDIO');
     this.props.handlerInteractWindow(false);
@@ -50,8 +79,13 @@ class InteractWindow extends React.Component {
     );
   }
   renderImageFromGallery = () => {
-    if (this.props.binaryData) {
-      return <img className="interactWindow_img" src={URL.createObjectURL(this.props.binaryData)} />
+  if (this.props.binaryData) {
+    this.testData();
+      if (this.state.triggerImgOrVideo) {
+        return <video loop autoPlay className="interactWindow_img" src={URL.createObjectURL(this.props.binaryData)} />
+      } else {
+        return <img className="interactWindow_img" src={URL.createObjectURL(this.props.binaryData)} />;
+      }
     }
   }
   render() {

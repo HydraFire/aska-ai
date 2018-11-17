@@ -16,9 +16,15 @@ const AskaSC = JSON.parse(fs.readFileSync(fileOption));
 // /////////////////////////////////////////////////////////////////////////////
 function LifeCirclesNapominanie(ws, obj) {
   try {
-    const img = fs.readFileSync(`${fileCamera}${obj.words}.jpg`);
-    console.log(img);
-    socket.send(ws, 'file', img);
+    try {
+      const video = fs.readFileSync(`${fileCamera}${obj.words}.mp4`);
+      //console.log(video);
+      socket.send(ws, 'file', video);
+    } catch (e) {
+      console.log(e);
+      const img = fs.readFileSync(`${fileCamera}${obj.words}.jpg`);
+      socket.send(ws, 'file', img);
+    }
   } catch (err) {
     console.log(err);
   }

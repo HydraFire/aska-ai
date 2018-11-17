@@ -74,6 +74,7 @@ const askPart5 = function askPart5(ws, obj) {
           clearInterval(int);
           saveTimeStart(obj, xString, yString);
           ws.NNListen = true;
+          mainTimeCircle.shortInterval(ws);
         }
       }
     //  }
