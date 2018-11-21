@@ -23,6 +23,12 @@ class App extends React.Component {
     socket.start(process.env.HOSTNAME);
     speechRec();
   }
+  resize = (e) => {
+    console.log(e.clientY);
+    const size = document.querySelector('#draw');
+    size.style.height = `${e.clientY + 50}px`;
+    console.log(size.style.height);
+  }
   render() {
     return (
       <div>
@@ -33,7 +39,7 @@ class App extends React.Component {
           <IconsoleUI logType="serverLog" />
           <IconsoleUI logType="clientLog" />
         </div>
-        <canvas id="draw" />
+        <canvas  onClick={this.resize} id="draw" />
         <InputCommandLine />
         <Music ref={(musicPlayer) => { window.musicPlayer = musicPlayer }} />
         <audio src="" id="audio" />

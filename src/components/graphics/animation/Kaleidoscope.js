@@ -1,10 +1,13 @@
 import analyserGetReady from '../../audioAnalyser';
 
+let myHeight = 400;
+
 function Kaleidoscope() {
   const analyser = analyserGetReady();
   const canvas = document.querySelector('#draw');
   const ctx = canvas.getContext('2d');
 
+  ctx.height = 2000;
 
   let offsetX = 0.0;
   let offsetY = 0.0;
@@ -152,10 +155,15 @@ function Kaleidoscope() {
     update(zzz);
   }, 1000 / 60);
 
+  function resizeOnMouseMove(e) {
+    //canvas.width = e.clientX;
+    canvas.height = e.clientY + 45;
+    // radius = (canvas.height) + 140;
+  }
   function resize(e) {
     if (e) {
       canvas.width = e.currentTarget.innerWidth;
-      canvas.height = (e.currentTarget.innerHeight / 100) * 57 | 0;
+      canvas.height = e.currentTarget.innerHeight;
       radius = (canvas.width / 2) + 50;
     } else {
       canvas.width = window.innerWidth;
@@ -165,5 +173,6 @@ function Kaleidoscope() {
   }
   resize();
   window.addEventListener('resize', resize);
+  canvas.addEventListener('click', resizeOnMouseMove);
 }
 export default Kaleidoscope;

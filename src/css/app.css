@@ -26,6 +26,8 @@
   /* Канвас с Шейдером */
   #draw {
     margin: 45px 0px 0px 0px;
+    width: 100%;
+    height: 600px;
     padding: 0px;
     border-top: 3px solid #333;
   }
