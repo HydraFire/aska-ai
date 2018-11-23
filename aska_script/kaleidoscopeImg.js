@@ -1,9 +1,11 @@
+/*
 const Scraper = require ('images-scraper')
   , google = new Scraper.Google();
 const socket = require('./webSocketOnMessage');
-
+*/
 
 function getImgs(ws) {
+  /*
   google.list({
       keyword: 'ANIME',
       num: 200,
@@ -20,5 +22,7 @@ function getImgs(ws) {
   }).catch(function(err) {
       console.log('err', err);
   });
+  */
+  console.log('new metod');
 }
 module.exports.getImgs = getImgs;
