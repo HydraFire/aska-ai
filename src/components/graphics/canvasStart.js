@@ -1,5 +1,5 @@
 import Equalizer from './animation/Equalizer';
-import Kaleidoscope from './animation/Kaleidoscope';
+import { Kaleidoscope } from './animation/Kaleidoscope';
 import Anime from './animation/Anime';
 
 function canvasStart(options) {

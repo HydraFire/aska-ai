@@ -1,12 +1,30 @@
+
 import analyserGetReady from '../../audioAnalyser';
+import socket from '../../webSocketClient';
 
 let myHeight = 400;
+
+let imagesArray = new Array(50);
+imagesArray.fill('lol');
+imagesArray = imagesArray.map((v, i) => `image/${i}.jpg`);
+
+function loadImages(){
+  socket.send('lol','kaleidoscopeImg');
+}
+
+function newImagesLoad(message) {
+  imagesArray = imagesArray.map((v, i) => `${message[i]}`);
+  console.log(imagesArray);
+}
+
 
 function Kaleidoscope() {
   const analyser = analyserGetReady();
   const canvas = document.querySelector('#draw');
   const ctx = canvas.getContext('2d');
-
+  setTimeout(() => {
+    loadImages();
+  }, 1000);
   ctx.height = 2000;
 
   let offsetX = 0.0;
@@ -31,7 +49,7 @@ function Kaleidoscope() {
   const zoom = 1;
 
   let radius = canvas.width / 2;
-  const slice = 32;
+  const slice = 18;
 
   const step = TWO_PI / slice;
   const cx = canvas.width / 2;
@@ -110,9 +128,6 @@ function Kaleidoscope() {
     }
   };
 
-  let imagesArray = new Array(50);
-  imagesArray.fill('lol');
-  imagesArray = imagesArray.map((v, i) => `image/${i}.jpg`);
   /*
   const hh = new Image();
   hh.src = imagesArray[0];
@@ -175,4 +190,4 @@ function Kaleidoscope() {
   window.addEventListener('resize', resize);
   canvas.addEventListener('click', resizeOnMouseMove);
 }
-export default Kaleidoscope;
+export { Kaleidoscope, newImagesLoad };

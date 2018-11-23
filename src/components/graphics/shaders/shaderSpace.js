@@ -1,97 +1,123 @@
 /* eslint-disable */
 export const shaderSpace = `precision highp float;
 
+const float pi = 3.14159265359;
+
 uniform float iTime;
 uniform vec2 iMouse;
 uniform vec2 iResolution;
 uniform float iAudio;
 
 
-#define iterations 17
-#define formuparam 0.53
+float t;
+float cc,ss;
 
-#define volsteps 18
-#define stepsize 0.050
+float cosPath(vec3 p, vec3 dec){return dec.x * cos(p.z * dec.y + dec.z);}
+float sinPath(vec3 p, vec3 dec){return dec.x * sin(p.z * dec.y + dec.z);}
 
-#define zoom   0.800
-#define tile   0.850
-#define speed  0.05
-
-#define brightness 0.0015
-#define darkmatter 0.300
-#define distfading 0.760
-#define saturation 0.800
-
-
-void mainImage( out vec4 fragColor, in vec2 fragCoord )
+vec2 getCylinder(vec3 p, vec2 pos, float r, vec3 c, vec3 s)
 {
-    //get coords and direction
-    vec2 uv=fragCoord.xy/iResolution.xy-.5;
-    uv.y*=iResolution.y/iResolution.x;
-    vec3 dir=vec3(uv*zoom,1.);
-    float time=(iTime-3345.)*speed;
-
-
-    vec3 from=vec3(1.,.5,0.5);
-
-
-    vec3 forward = vec3(0.,0.,1.);
-
-    //mouse rotation
-    float a1 = .6;//3.1415926 * ((iMouse.x/5000.)/iResolution.x-.5);
-    mat2 rot1 = mat2(cos(a1),sin(a1),-sin(a1),cos(a1));
-    float a2 = .3;//3.1415926 * ((iMouse.y/10.)/iResolution.y-.5);
-    mat2 rot2 = mat2(cos(a2),sin(a2),-sin(a2),cos(a2));
-    dir.xz*=rot1;
-    forward.xz *= rot1;
-    dir.yz*=rot2;
-    forward.yz *= rot2;
-
-    // pan (dodgy)
-     from += ((iMouse.x/10.)/iResolution.x-.5)*vec3(-forward.z,0.,forward.x);
-     from += (iMouse.y/iResolution.x-.5)*vec3(0.,forward.y,0.);
-
-    //zoom
-    float zooom = time;
-    from += forward* zooom;
-    float sampleShift = mod( zooom, stepsize );
-    float zoffset = -sampleShift;
-    sampleShift /= stepsize; // make from 0 to 1
-
-    //volumetric rendering
-    float s=0.1;
-    vec3 v=vec3(0.);
-    for (int r=0; r<volsteps; r++) {
-        vec3 p=from+(s+zoffset)*dir;// + vec3(0.,0.,zoffset);
-        p = abs(vec3(tile)-mod(p,vec3(tile*2.))); // tiling fold
-        float pa,a=pa=0.;
-        for (int i=0; i<iterations; i++) {
-            p=abs(p)/dot(p,p)-formuparam; // the magic formula
-            //p=abs(p)/max(dot(p,p),0.005)-formuparam; // another interesting way to reduce noise
-            float D = abs(length(p)-pa); // absolute sum of average change
-            a += i > 7 ? min( 12., D) : D;
-            pa=length(p);
-        }
-        //float dm=max(0.,darkmatter-a*a*.001); //dark matter
-        a*=a*a; // add contrast
-        //if (r>3) fade*=1.-dm; // dark matter, don't render near
-        // brightens stuff up a bit
-        float s1 = s+zoffset;
-        // need closed form expression for this, now that we shift samples
-        float fade = pow(distfading,max(0.,float(r)-sampleShift));
-        v+=fade;
-
-        // fade out samples as they approach the camera
-        if( r == 0 )
-            fade *= 1. - sampleShift;
-        // fade in samples as they approach from the distance
-        if( r == volsteps-1 )
-            fade *= sampleShift;
-        v+=vec3(2.*s1,4.*s1*s1,16.*s1*s1*s1*s1)*a*brightness*fade; // coloring based on distance
-        s+=stepsize;
+    return p.xy - pos - vec2(cosPath(p, c), sinPath(p, s));
+}
+vec4 formula (vec4 p) {
+    p.y-=t*.25;
+    p.y=abs(3.-mod(p.y-t,6.));
+    for (int i=0; i<6; i++) {
+        p.xyz = abs(p.xyz)-vec3(.0,1.,.0);
+        p=p*1.6/clamp(dot(p.xyz,p.xyz),.2,1.)-vec4(0.4,1.5,0.4,0.);
+        p.xz*=mat2(cc,ss,-ss,cc);
     }
-    v=mix(vec3(length(v)),v,saturation); //color adjust
-    fragColor = vec4(v*.01,1.);
+    return p;
+}
+float texture2 (vec3 p) {
+    //p.xz=abs(.75-mod(p.xz,1.5));
+    p=formula(vec4(p,0.)).xyz;
+    return .13+clamp(pow(max(0.,1.-max(abs(p.x),abs(p.z))),2.)*2.,.1,.7);
+}
+/////////////////////////
+// FROM Shader Cloudy spikeball from duke : https://www.shadertoy.com/view/MljXDw
+float noise(vec3 p) {
+    vec3 i = floor(p);
+    vec4 a = dot(i, vec3(1., 57., 21.)) + vec4(0., 57., 21., 78.);
+    vec3 f = cos((p-i)*pi)*(-.5) + .5;
+    a = mix(sin(cos(a)*a), sin(cos(1.+a)*(1.+a)), f.x);
+    a.xy = mix(a.xz, a.yw, f.y);
+    return mix(a.x, a.y, f.z);
+}
+
+float fpn(vec3 p) 
+{
+    p += t*5.;
+    return noise(p*0.02)*1.98 + noise(p*0.02)*0.62 + noise(p*0.09)*0.39;
+}
+/////////////////////////
+
+float map(vec3 p)
+{
+    float pnNoise = fpn(p*13.)*.8;
+    float path = sinPath(p ,vec3(6.2, .33, 0.));
+    float bottom = p.y + pnNoise;
+    float cyl = 0.;vec2 vecOld;
+    for (float i=0.;i<6.;i++)
+    {
+        float x = 1. * i;
+        float y = .88 + 0.0102*i;
+        float z  = -0.02 -0.16*i;
+        float r = 4.4 + 2.45 * i;
+        vec2 vec = getCylinder(p, vec2(path, 3.7 * i), r , vec3(x,y,z), vec3(z,x,y));
+        cyl = r - min(length(vec), length(vecOld));
+        vecOld = vec;   
+    }
+    cyl += pnNoise;
+    cyl = min(cyl, bottom);
+    return cyl;
+}
+
+vec3 cam(vec2 uv, vec3 ro, vec3 cu, vec3 cv)
+{
+    vec3 rov = normalize(cv-ro);
+    vec3 u =  normalize(cross(cu, rov));
+    vec3 v =  normalize(cross(rov, u));
+    float fov = 3.;
+    vec3 rd = normalize(rov + fov*u*uv.x + fov*v*uv.y);
+    return rd;
+}
+
+void mainImage( out vec4 f, in vec2 g )
+{
+    t = iTime*2.5;
+    f = vec4(0,0.15,0.32,1);
+    vec2 si = iResolution.xy;
+    vec2 uv = (2.*g-si)/min(si.x, si.y);
+    vec3 ro = vec3(0), p=ro;
+    ro.y = sin(t*.2)*15.+15.;
+    ro.x = sin(t*.5)*5.;
+    ro.z = t*5.;
+    vec3 rd = cam(uv, p, vec3(0,1,0), p + vec3(0,0,1));
+    float s = 1., h = .15, td = 0., d=1.,dd=0., w;
+    float var = 0.03;
+    if (iMouse.y>0.) var = 0.1*iMouse.y/iResolution.y;
+    for(float i=0.;i<200.;i++)
+    {      
+        if(s<0.01||d>500.||td>.95) break;
+        s = map(p) * (s>0.001?var:.2);
+        if (s < h)
+        {
+            w = (1.-td) * (h-s)*i/200.;
+            f += w;
+            td += w;
+        }
+        dd += 0.012;
+        td += 0.005;
+        s = max(s, 0.05);
+        d+=s;   
+        p = ro+rd*d;    
+    }
+    f.rgb = mix( f.rgb, vec3(0,0.15,0.52), 1.0 - exp( -0.001*d*d) )/dd; // fog
+    
+    // vigneting from iq Shader Mike : https://www.shadertoy.com/view/MsXGWr
+    vec2 q = g/si;
+    f.rgb *= 0.5 + 0.5*pow( 16.0*q.x*q.y*(1.0-q.x)*(1.0-q.y), 0.25 );
 }
 
 void main(){

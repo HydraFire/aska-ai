@@ -2,6 +2,7 @@ import iconsole from './interface/iconsole';
 import pushNotification from './pushNotification';
 import aska from './speechSynthesizer';
 import clientFunction from './functions/functionStart';
+import { newImagesLoad } from './graphics/animation/Kaleidoscope';
 // ////////////////////////// SOCKET CLIENT /////////////////////////////////////
 // ////////////////////////// SOCKET CLIENT /////////////////////////////////////
 // ////////////////////////// SOCKET CLIENT /////////////////////////////////////
@@ -73,6 +74,9 @@ function start(ip) {
         } else {
           window.musicPlayer.play(message.data);
         }
+        break;
+      case 'getImgsKaleidos':
+        newImagesLoad(message.data);
         break;
       default:
         iconsole.logS(message.data);

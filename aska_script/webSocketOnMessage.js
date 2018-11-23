@@ -8,6 +8,7 @@ const { checkAssignments } = require('./mainTimeCircle');
 const { saveFile, commands } = require('./commands/Music/instrument');
 const { writeResultEXP } = require('./commands/Logbook/Logbook');
 const { shortInterval } = require('./mainTimeCircle');
+const { getImgs } = require('./kaleidoscopeImg');
 // Функция нужна для автоматизации создания обэкта и стрингификации
 function send(ws, type, data, buttons) {
   if (!ws.closeAllInterval) {
@@ -92,6 +93,10 @@ function webSocketOnMessage(ws) {
           case 'shortInterval':
             shortInterval(ws);
             break;
+          case 'kaleidoscopeImg':
+            getImgs(ws);
+            break;
+
           default:
             // console.log(`Unknown type ${obj.type}`);
         }
