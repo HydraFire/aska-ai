@@ -7,13 +7,8 @@ import clientTimeout from './clientTimeout';
 import { twoArr, chargeImpulse } from './quest';
 
 let socket = null;
-// const serverAddress = "wss://nerv.pro/z-index.html";
-const serverAddress = process.env.HOSTNAME;
 
-function getImage(data) {
-  window.myconsole.binaryData(data);
-  return { type: 'console', data: 'GET IMAGE from WebSocket binary data' };
-}
+const serverAddress = process.env.HOSTNAME;
 // Функция которая используеться для отправки на сервер
 function send(data, type) {
   if (data !== '') {
@@ -45,12 +40,7 @@ function start() {
   };
 
   socket.onmessage = function onmessage(event) {
-    let message = {};
-    if (event.data.size) {
-      message = getImage(event.data);
-    } else {
-      message = JSON.parse(event.data);
-    }
+    let message = JSON.parse(event.data);
     console.log(message);
     switch (message.type) {
       case 'aska':

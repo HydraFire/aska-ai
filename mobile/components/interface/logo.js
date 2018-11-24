@@ -14,7 +14,6 @@ function closeWindowInterval(time) {
     let i = 0;
     int = setInterval(() => {
       i += 1;
-      console.log(i);
       if (i > time) {
         window.myconsole.handlerInteractWindow(false);
         BinaryDataImgFromServer = null;
@@ -45,7 +44,6 @@ function restoreCharts() {
   localStorage.chartButtons = [];
   window.myconsole.log('localStorage.chartButtons = [];', 'err');
 }
-
 // /////////////////////////////////////////////////////////////////////////////
 // /////////////////////////////////////////////////////////////////////////////
 
@@ -55,8 +53,7 @@ class Logo extends React.Component {
     this.state = {
       interactWindow: false,
       console: false,
-      arr: [],
-      binaryData: null
+      arr: []
     };
   }
   log = (text, type) => {
@@ -109,20 +106,14 @@ class Logo extends React.Component {
       }, 200);
     }
   }
-  binaryData = (data) => {
-    BinaryDataImgFromServer = data;
-  }
   // ВОТ ЭТО МЕСТО
   handlerInteractWindow = (obj) => {
-    console.log('What a fuck?');
     this.setState({interactWindow: obj});
-    BinaryDataImgFromServer != null ?
-    this.setState({binaryData: BinaryDataImgFromServer}) : '';
     obj ? closeWindowInterval(30) : closeWindowInterval(false);
   }
   renderInteractWindow = () => {
     if (this.state.interactWindow) {
-      return <InteractWindow binaryData={this.state.binaryData} obj={this.state.interactWindow} handlerInteractWindow={this.handlerInteractWindow}/>
+      return <InteractWindow obj={this.state.interactWindow} handlerInteractWindow={this.handlerInteractWindow}/>
     }
   }
   componentDidMount() {

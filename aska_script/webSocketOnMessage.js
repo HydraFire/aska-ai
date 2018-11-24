@@ -15,13 +15,7 @@ function send(ws, type, data, buttons) {
     if (type === 'console' && typeof data === 'object') {
       data = Object.keys(data).reduce((a, b) => a.concat(`${b}: ${data[b]}<br>`), '');
     }
-
-    if (type === 'file') {
-      console.log(data);
-      ws.send(data);
-    } else {
-      ws.send(JSON.stringify({ type, data, buttons }));
-    }
+    ws.send(JSON.stringify({ type, data, buttons }));
   }
 }
 module.exports.send = send;
@@ -96,7 +90,6 @@ function webSocketOnMessage(ws) {
           case 'kaleidoscopeImg':
             getImgs(ws);
             break;
-
           default:
             // console.log(`Unknown type ${obj.type}`);
         }

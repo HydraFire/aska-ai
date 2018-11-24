@@ -112,7 +112,7 @@ function onlyWait(ws, nextFun, params) {
       nextFun(ws, params);
     }
     ws.closeAllInterval ? clearInterval(int) : '';
-    socket.send(ws, 'console', `onlyWait ${i}s`);
+    //socket.send(ws, 'console', `onlyWait ${i}s`);
   }, 250);
 }
 module.exports.onlyWait = onlyWait;

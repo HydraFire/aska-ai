@@ -1,38 +1,10 @@
 import React, { Fragment } from 'react';
+import fileType from 'file-type';
 import socket from '../webSocketClient';
 import { switchModeOnMute } from '../speechSynthesizer';
 import '../../css/logo.css';
 
 class InteractWindow extends React.Component {
-  constructor() {
-    super();
-    this.state = {
-      triggerImgOrVideo: false
-    };
-  }
-  testData = () => {
-    let video = document.createElement('img');
-    video.src = URL.createObjectURL(this.props.binaryData);
-    video.addEventListener('error',() => {
-      console.log('ALLOY');
-      this.videoPick(true);
-    })
-  }
-  videoPick = (boolean) => {
-    if (!boolean) {
-      if (this.state.triggerImgOrVideo != false) {
-        this.setState({
-           triggerImgOrVideo: false
-        });
-      }
-    } else {
-      if (this.state.triggerImgOrVideo != true) {
-        this.setState({
-           triggerImgOrVideo: true
-        });
-      }
-    }
-  }
   typeAska = () => {
     socket.send('speech_end','AUDIO');
     this.props.handlerInteractWindow(false);
@@ -48,6 +20,10 @@ class InteractWindow extends React.Component {
     }
     //this.props.handlerInteractWindow(false);
   }
+  typeAskMute = (e) => {
+    switchModeOnMute(e.target.getAttribute('alt'));
+    this.props.handlerInteractWindow(false);
+  }
   typeLifeCircles = (e) => {
     if (e.target.getAttribute('alt') === 'positive') {
       socket.send(`я ${e.target.getAttribute('value')}`,'aska');
@@ -56,10 +32,6 @@ class InteractWindow extends React.Component {
     } else if (e.target.getAttribute('alt') === 'default') {
       socket.send(null, 'shortInterval');
     }
-    this.props.handlerInteractWindow(false);
-  }
-  typeAskMute = (e) => {
-    switchModeOnMute(e.target.getAttribute('alt'));
     this.props.handlerInteractWindow(false);
   }
   renderButtons = () => {
@@ -79,12 +51,14 @@ class InteractWindow extends React.Component {
     );
   }
   renderImageFromGallery = () => {
-  if (this.props.binaryData) {
-    this.testData();
-      if (this.state.triggerImgOrVideo) {
-        return <video loop autoPlay className="interactWindow_img" src={URL.createObjectURL(this.props.binaryData)} />
+  console.log('renderImageFromGallery');
+  if (this.props.obj.filedata) {
+      const bytes = new Uint8Array(this.props.obj.filedata.data.data);
+      const blob = new Blob([bytes.buffer]);
+      if (this.props.obj.filedata.type === 'video') {
+        return <video loop autoPlay className="interactWindow_img" src={URL.createObjectURL(blob)} />
       } else {
-        return <img className="interactWindow_img" src={URL.createObjectURL(this.props.binaryData)} />;
+        return <img className="interactWindow_img" src={URL.createObjectURL(blob)} />;
       }
     }
   }

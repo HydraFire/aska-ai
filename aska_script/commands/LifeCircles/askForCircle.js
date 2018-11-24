@@ -15,20 +15,8 @@ const AskaSC = JSON.parse(fs.readFileSync(fileOption));
 // РЕКОМЕНДОВАНО К ВЫПОЛНЕНИЮ
 // /////////////////////////////////////////////////////////////////////////////
 function LifeCirclesNapominanie(ws, obj) {
-  try {
-    try {
-      const video = fs.readFileSync(`${fileCamera}${obj.words}.mp4`);
-      //console.log(video);
-      socket.send(ws, 'file', video);
-    } catch (e) {
-      console.log(e);
-      const img = fs.readFileSync(`${fileCamera}${obj.words}.jpg`);
-      socket.send(ws, 'file', img);
-    }
-  } catch (err) {
-    console.log(err);
-  }
-  const arrButtons = [
+
+  const buttons = [
     {
       mainType: 'typeLifeCircles',
       type: 'negative',
@@ -48,6 +36,31 @@ function LifeCirclesNapominanie(ws, obj) {
       name: 'Хорошо'
     }
   ];
+
+
+
+
+  try {
+    try {
+      const file = fs.readFileSync(`${fileCamera}${obj.words}.mp4`);
+      const arrButtons = {
+        content: { type:'video', data: file},
+        buttons
+      };
+      socket.send(ws, 'aska', checkURL(`${asyncAsk.whatToSay(AskaSC, 'z0')}, ${obj.words}`), arrButtons);
+    } catch (e) {
+      const file = fs.readFileSync(`${fileCamera}${obj.words}.jpg`);
+      const arrButtons = {
+        content: { type:'img', data: file},
+        buttons
+      };
+      socket.send(ws, 'aska', checkURL(`${asyncAsk.whatToSay(AskaSC, 'z0')}, ${obj.words}`), arrButtons);
+    }
+  } catch (err) {
+    console.log(err);
+  }
+
+
 /*
   const defaultFunction = function defaultFunction() {
     console.log('TEST');
@@ -68,9 +81,6 @@ function LifeCirclesNapominanie(ws, obj) {
     ], defaultFunction);
   };
   asyncAsk.readEndWait(ws, checkURL(`${asyncAsk.whatToSay(AskaSC, 'z0')}, ${obj.words}`), packaging, null, arrButtons);
-  */
-  socket.send(ws, 'aska', checkURL(`${asyncAsk.whatToSay(AskaSC, 'z0')}, ${obj.words}`), arrButtons);
-  /*
   const x = function x() {
     socket.send(ws, 'aska', checkURL(`${asyncAsk.whatToSay(AskaSC, 'z0')}, ${obj.words}`));
   };

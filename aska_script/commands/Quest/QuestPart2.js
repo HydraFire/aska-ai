@@ -152,8 +152,8 @@ const askPart2 = function askPart2(ws, obj) {
   const attentionCheck = function attentionCheck() {
     socket.send(ws, 'aska', checkURL(asyncAsk.whatToSay(AskaSC, 'p2')));
     saveTimeEnd(obj, ws.ClientSay);
-    mainTimeCircle.shortInterval(ws);
-    // asyncAsk.onlyWait(ws, askPart3, obj);
+    ;
+    asyncAsk.onlyWait(ws, mainTimeCircle.shortInterval);
   };
   const negative = function negative() {
     socket.send(ws, 'aska', checkURL(asyncAsk.whatToSay(AskaSC, 'p3')));
