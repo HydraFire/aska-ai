@@ -1,5 +1,4 @@
 import React, { Fragment } from 'react';
-import fileType from 'file-type';
 import socket from '../webSocketClient';
 import { switchModeOnMute } from '../speechSynthesizer';
 import '../../css/logo.css';
