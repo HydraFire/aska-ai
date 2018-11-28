@@ -26,7 +26,7 @@ function verifToken(ws, token) {
         socket.send(ws, 'aska', checkURL(asyncAsk.whatToSay(AskaSC, 'b1')));
       } else {
         ws.accessed = true;
-        idleInterval(ws);
+        //idleInterval(ws);
         checkAssignments(ws);
         console.log('connection accessed');
       }
