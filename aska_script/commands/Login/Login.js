@@ -61,7 +61,7 @@ function Login(ws, option) {
     ws.accessed = true;
     // Запуск проверки заданий и лайф циклов
     setTimeout(() => {
-      idleInterval(ws);
+      //idleInterval(ws);
       checkAssignments(ws);
     }, 3000);
   };
