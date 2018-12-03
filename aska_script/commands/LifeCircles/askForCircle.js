@@ -229,7 +229,7 @@ module.exports.go = go;
 // /////////////////////////////////////////////////////////////////////////////
 function clientTimeout(ws, arr, i) {
   if (arr[i].timeOut > 0) {
-    socket.send(ws, 'clientTimeout', JSON.stringify([checkURL(asyncAsk.whatToSay(AskaSC, 'z1')), arr[i].timeOut]));
+    socket.send(ws, 'clientTimeout', JSON.stringify([checkURL(asyncAsk.whatToSay(AskaSC, arr[i].optionKey)), arr[i].timeOut]));
   }
 }
 module.exports.clientTimeout = clientTimeout;
