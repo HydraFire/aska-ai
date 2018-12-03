@@ -96,7 +96,7 @@ const checkQuests = function checkQuests(ws) {
   let systemNotif = '';
   let arrQuests = readFile();
   let arrEndQuests = JSON.parse(JSON.stringify(arrQuests));
-  let arrLifeCircle = readFileLifeCircle();
+  //let arrLifeCircle = readFileLifeCircle();
   //
 
   // проверка наличия окончания задания
@@ -109,8 +109,10 @@ const checkQuests = function checkQuests(ws) {
   // проверка утрений разговор
   systemNotif = checkDate();
   // проверка наличия лайф циклов
+  /*
   arrLifeCircle = arrLifeCircle.filter(v => timeNow >= v.remind)
     .map(v => ({ startWith: 'LifeCircle', words: v.words[0] }));
+  */
   /*
     arrLifeCircle = arrLifeCircle.filter(v => timeNow >= v.remind)
       .reduce((a, b) => {
@@ -123,7 +125,7 @@ const checkQuests = function checkQuests(ws) {
   */
   //  .map(v => Object.assign(v, { startWith: 'LifeCircle' }));
   // сливаем всё в один масив
-  finalArray = finalArray.concat(systemNotif, arrEndQuests, arrQuests, arrLifeCircle);
+  finalArray = finalArray.concat(systemNotif, arrEndQuests, arrQuests);
   //console.log(finalArray);
   // интервал который всё это дело будет по очереди запускать
   if (finalArray.length != 0) {
