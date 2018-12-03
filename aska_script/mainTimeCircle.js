@@ -222,3 +222,4 @@ const idleInterval = function idleInterval(ws) {
     // mainTimeCircle(ws);
   }, 1000);
 };
+module.exports.idleInterval = idleInterval;
