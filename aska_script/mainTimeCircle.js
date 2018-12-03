@@ -184,7 +184,7 @@ const mainTimeCircle = function mainTimeCircle(ws) {
     socket.send(ws, 'aska', '20Hz');
     socket.send(ws, 'quest', arrQuests);
   }
-  lifeCircleSound(ws);
+  //lifeCircleSound(ws);
 };
 
 module.exports.mainTimeCircle = mainTimeCircle;
