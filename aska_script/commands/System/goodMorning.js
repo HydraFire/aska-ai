@@ -23,7 +23,10 @@ function iMissYou(value) {
 module.exports.iMissYou = iMissYou;
 
 function sayIMissYou(ws, value) {
-  socket.send(ws, 'aska', iMissYou(value));
+  let text = iMissYou(value);
+  asyncAsk.readEndWait(ws, text, () => {
+    mainTimeCircle.shortInterval(ws);
+  });
 }
 module.exports.sayIMissYou = sayIMissYou;
 
@@ -31,26 +34,35 @@ module.exports.sayIMissYou = sayIMissYou;
 
 function sayDateTime() {
   let dateNow = new Date();
+  let month = dateNow.getMonth();
+  let day = dateNow.getDay();
   let hours = dateNow.getHours();
   let minutes = dateNow.getMinutes();
   hours < 10 ? hours = `0${hours}` : '';
   minutes < 10 ? minutes = `0${minutes}` : '';
+  let arrDay = ['воскресенье','понедельник','вторник','среда','четверг','пятница','суббота'];
   let arrMonth = ['января', 'февраля', 'марта', 'апреля', 'мая', 'июня', 'июля','августа','сентября','октября','ноября','декабря'];
-  return `сегодня ${dateNow.getDate()}-е ${arrMonth[dateNow.getMonth()]}, ${hours}:${minutes}`;
+  return `сегодня ${arrDay[day]}, ${dateNow.getDate()}-е ${arrMonth[month]}, ${hours}:${minutes}, `;
 }
-
-async function goodMorning(ws, value) {
-  let missYou = '';
-  if (value.timeLeft) {
-    missYou = iMissYou(value);
-  }
-  let text = `${asyncAsk.whatToSay(AskaSC, 'a0')}, ${sayDateTime()}, ${missYou}.${await getWeather()}`;
-  asyncAsk.readEndWait(ws, text, () => {
-    mainTimeCircle.shortInterval(ws);
-  });
-  let x = value.obj;
-  x.timeLastRun = Date.now();
-  x.timeLastGoodMorning = Date.now();
-  fs.writeFileSync(filepath, JSON.stringify(x), 'utf8');
+function sayWind(windValue) {
+  const arr = ['','','очень слабый ветер','слабый ветер', 'ветер немного чувствуется','немного есть ветер', 'сильный ветер', 'сильный ветер','очень сильный ветер'];
+  return arr[windValue];
+}
+function goodMorning(ws, value) {
+  getWeather(ws).then((json) => {
+    let sayWeather = `на улице ${json.weather[0].description}, температура ${Math.round(json.main.temp)} градусов, ${sayWind(json.wind.speed)}`;
+    let missYou = '';
+    if (value.timeLeft) {
+      missYou = iMissYou(value);
+    }
+    let text = `${asyncAsk.whatToSay(AskaSC, 'a0')}, ${sayDateTime()}, ${missYou}.${sayWeather}`;
+    asyncAsk.readEndWait(ws, text, () => {
+      mainTimeCircle.shortInterval(ws);
+    });
+    let x = value.obj;
+    x.timeLastRun = Date.now();
+    x.timeLastGoodMorning = Date.now();
+    fs.writeFileSync(filepath, JSON.stringify(x), 'utf8');
+  }).catch(err => console.log(err));
 }
 module.exports.goodMorning = goodMorning;

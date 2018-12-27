@@ -162,6 +162,7 @@ const QuestPart3 = function QuestPart3(ws, obj) {
   const attentionCheck = function attentionCheck() {
     socket.send(ws, 'aska', checkURL(asyncAsk.whatToSay(AskaSC, 'z2')));
     copyToVictoryFile(obj);
+    mainTimeCircle.shortInterval(ws);
     // asyncAsk.onlyWait(ws, askPart4, obj);
   };
   const negative = function negative() {

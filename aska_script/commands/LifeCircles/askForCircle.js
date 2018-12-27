@@ -7,7 +7,6 @@ const lifeCircles = require('./LifeCircles');
 const { calcNow, countToText, dateToText } = require('./calcTime');
 // /////////////////////////////////////
 // /////////////////////////////////////
-const fileCamera = process.env.CAMERAPATH;
 const fileOption = './data/commands/LifeCircles/option.json';
 const AskaSC = JSON.parse(fs.readFileSync(fileOption));
 // /////////////////////////////////////////////////////////////////////////////
@@ -37,9 +36,14 @@ function LifeCirclesNapominanie(ws, obj) {
     }
   ];
 
+  const arrButtons = {
+    content: { type:'video', data: 'test'},
+    buttons
+  };
+  socket.send(ws, 'aska', checkURL(`${asyncAsk.whatToSay(AskaSC, 'z0')}, ${obj.words}`), arrButtons);
 
 
-
+/*
   try {
     try {
       const file = fs.readFileSync(`${fileCamera}${obj.words}.mp4`);
@@ -59,7 +63,7 @@ function LifeCirclesNapominanie(ws, obj) {
   } catch (err) {
     console.log(err);
   }
-
+*/
 
 /*
   const defaultFunction = function defaultFunction() {

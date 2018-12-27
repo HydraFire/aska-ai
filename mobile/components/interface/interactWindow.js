@@ -3,7 +3,33 @@ import socket from '../webSocketClient';
 import { switchModeOnMute } from '../speechSynthesizer';
 import '../../css/logo.css';
 
+let imgfilepath = 'http://localhost:6060/';
+
 class InteractWindow extends React.Component {
+  constructor() {
+    super();
+    this.state = {
+      triggerImgOrVideo: 'img',
+      errStatus: 0,
+      final: true
+    };
+  }
+  componentDidMount() {
+    if (this.state.final) {
+      window.myconsole.log(`${imgfilepath}${this.props.obj.arr[0].value}`, 'chat');
+      let img = document.createElement('img');
+      img.src = `${imgfilepath}${this.props.obj.arr[0].value}.jpg`;
+      img.addEventListener('error',() => {
+        if (this.state.triggerImgOrVideo === 'img' && this.state.errStatus < 2) {
+          this.changeFormatMedia('video', this.state.errStatus + 1);
+        } else if (this.state.triggerImgOrVideo === 'video' && this.state.errStatus < 2) {
+          this.changeFormatMedia('img', this.state.errStatus + 1);
+        } else {
+          this.changeFormatMedia('none', 0);
+        }
+      })
+    }
+  }
   typeAska = () => {
     socket.send('speech_end','AUDIO');
     this.props.handlerInteractWindow(false);
@@ -33,6 +59,13 @@ class InteractWindow extends React.Component {
     }
     this.props.handlerInteractWindow(false);
   }
+  changeFormatMedia = (type, num) => {
+    this.setState({
+       triggerImgOrVideo: type,
+       errStatus: num,
+       final: false
+    });
+  }
   renderButtons = () => {
     if (this.props.obj.type == 'aska') {
       return (
@@ -50,17 +83,16 @@ class InteractWindow extends React.Component {
     );
   }
   renderImageFromGallery = () => {
-  console.log('renderImageFromGallery');
-  if (this.props.obj.filedata) {
-      const bytes = new Uint8Array(this.props.obj.filedata.data.data);
-      const blob = new Blob([bytes.buffer]);
-      if (this.props.obj.filedata.type === 'video') {
-        return <video loop autoPlay className="interactWindow_img" src={URL.createObjectURL(blob)} />
-      } else {
-        return <img className="interactWindow_img" src={URL.createObjectURL(blob)} />;
-      }
+    if (this.state.triggerImgOrVideo === 'img') {
+      return <img className="interactWindow_img" src={`${imgfilepath}${this.props.obj.arr[0].value}.jpg`} />;
+    } else if (this.state.triggerImgOrVideo === 'video') {
+      return <video loop autoPlay className="interactWindow_img" src={`${imgfilepath}${this.props.obj.arr[0].value}.mp4`} />
+    } else {
+      return <span>none</span>;
     }
   }
+
+
   render() {
     return (
       <div className="interactWindow">

@@ -7,7 +7,7 @@ const { calcForecast } = require('./calcForecast');
 // ////////////////////////////////////////////////////////////////////////////
 const fileOption = './data/commands/Weather/option.json';
 const AskaSC = JSON.parse(fs.readFileSync(fileOption));
-
+/*
 async function forecastWeather() {
   const url = `https://api.openweathermap.org/data/2.5/forecast?id=703448&APPID=028445577f2c7694553877aba8e9a74a&units=metric&lang=ru`;
   const response = await fetch(url);
@@ -23,6 +23,7 @@ async function currentWeather() {
   console.log(json);
   return `на улице ${json.weather[0].description}, температура ${Math.round(json.main.temp)} градусов, влажност ${json.main.humidity}%, давление ${json.main.pressure}, ветер ${json.wind.speed}`;
 }
+
 async function getWeather() {
   try {
     // Wait for the result of waitAndMaybeReject() to settle,
@@ -38,10 +39,21 @@ async function getWeather() {
   }
 }
 module.exports.getWeather = getWeather;
-
-async function sayWeather(ws) {
-  socket.send(ws, 'aska', await getWeather());
+*/
+function getWeather(ws) {
+  const url = `https://api.openweathermap.org/data/2.5/weather?id=703448&APPID=028445577f2c7694553877aba8e9a74a&units=metric&lang=ru`;
+  return fetch(url).then(res => res.json()).catch(err => console.log(err));
 }
+module.exports.getWeather = getWeather;
+
+
+function sayWeather(ws) {
+  getWeather(ws).then((json) => {
+    //console.log(json);
+    socket.send(ws, 'aska', `на улице ${json.weather[0].description}, температура ${Math.round(json.main.temp)} градусов, влажност ${json.main.humidity}%, давление ${json.main.pressure}, ветер ${json.wind.speed}`);
+  });
+}
+
 
 function Weather(ws, options) {
   if (options == '1') {

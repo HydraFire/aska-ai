@@ -25,9 +25,9 @@ function train(select) {
   });
   net.train(data, {
     errorThresh: 0.005,
-    iterations: 10000,
+    iterations: 50000,
     log: true,
-    logPeriod: 50,
+    logPeriod: 100,
     learningRate: 0.05
   });
   const jsonTrain = net.toJSON();
@@ -49,3 +49,16 @@ function getOptions(ws, text, select) {
   return commandSelect;
 }
 module.exports.getOptions = getOptions;
+// //////////////////////////////////////////////////////////////
+function testOptions(text, select) {
+  const net = new brain.NeuralNetwork();
+  // превращаем наш текст в формат для нейронки
+  net.fromJSON(JSON.parse(fs.readFileSync(`./data/commands/${select}/nn`)));
+  const textObjLike = text.split(' ')
+    .reduce((a, b, i) => Object.assign(a, { [b]: (99 - i) / 100 }), {});
+  const output = net.run(textObjLike);
+  // Сортируем полученые даный на предмет большого процентного соотношения
+  const commandSelect = Object.keys(output).sort((a, b) => output[b] - output[a])[0];
+  return commandSelect;
+}
+module.exports.testOptions = testOptions;

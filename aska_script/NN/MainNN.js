@@ -53,3 +53,16 @@ function start(ws, text) {
   commands[commandSelect[0]](ws, options, parameters);
 }
 module.exports.start = start;
+// /////////////////////////////////////////////////////////////////////////////
+function test(text) {
+  // статус того что уже начался разговор со стороный клиента
+  // превращаем наш текст в формат для нейронки
+  const textObjLike = text.split(' ')
+    .reduce((a, b, i) => Object.assign(a, { [b]: (99 - i) / 100 }), {});
+  const output = net.run(textObjLike);
+  // Сортируем полученые даный на предмет большого процентного соотношения
+  const commandSelect = Object.keys(output).sort((a, b) => output[b] - output[a]);
+
+  return commandSelect[0];
+}
+module.exports.test = test;
