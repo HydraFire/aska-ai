@@ -14,23 +14,9 @@ function switchModeOnMute(boolean) {
   aska_hide = boolean;
 }
 // //////////////////////////////////////////////////////////////////////////
-function ifVideoPlayingStopIt(id) {
-  let videoElement = document.querySelector(id);
-  if (videoElement) {
-    try {
-      videoElement.remove();
-      //videoElement.removeAttribute('src');
-      //videoElement.load();
-    } catch (err) {
-      window.myconsole.log(err, 'err');
-    }
-  }
-}
-
 function askaWriteOnScreen(text, arr) {
   socket.send('speech_start','AUDIO');
   if (arr) {
-    ifVideoPlayingStopIt(".interactWindow_img");
     window.myconsole.handlerInteractWindow({ type: arr.buttons[0].mainType, text , arr: arr.buttons, filedata: arr.content });
   } else {
     window.myconsole.handlerInteractWindow({ type:'aska', text });

@@ -99,7 +99,7 @@ class InteractWindow extends React.Component {
         <div className="interactWindow_center">
           {this.props.obj.text}
         </div>
-        <div>
+        <div className="interactWindow_img">
           {this.renderImageFromGallery()}
         </div>
         {this.renderButtons()}

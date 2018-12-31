@@ -45,7 +45,6 @@ function start() {
     switch (message.type) {
       case 'aska':
         aska(message.data, message.buttons);
-        setTimeout(()=>{aska(message.data, message.buttons)},15000);
         break;
       case 'console':
         window.myconsole.log(message.data, 'html');
