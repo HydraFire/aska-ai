@@ -17,9 +17,13 @@ function switchModeOnMute(boolean) {
 function ifVideoPlayingStopIt(id) {
   let videoElement = document.querySelector(id);
   if (videoElement) {
-    videoElement.pause();
-    videoElement.removeAttribute('src');
-    videoElement.load();
+    try {
+      videoElement.pause();
+      videoElement.removeAttribute('src');
+      videoElement.load();
+    } catch (err) {
+      console.log(err);
+    }
   }
 }
 
