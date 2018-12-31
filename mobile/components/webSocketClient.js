@@ -45,7 +45,7 @@ function start() {
     switch (message.type) {
       case 'aska':
         aska(message.data, message.buttons);
-        window.myconsole.log(message.data, 'html');
+        window.myconsole.log(message.buttons, 'html');
         break;
       case 'console':
         window.myconsole.log(message.data, 'html');
