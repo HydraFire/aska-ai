@@ -19,8 +19,8 @@ function ifVideoPlayingStopIt(id) {
   if (videoElement) {
     try {
       videoElement.pause();
-      videoElement.removeAttribute('src');
-      videoElement.load();
+      //videoElement.removeAttribute('src');
+      //videoElement.load();
     } catch (err) {
       console.log(err);
     }
