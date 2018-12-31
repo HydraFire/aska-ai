@@ -14,10 +14,19 @@ function switchModeOnMute(boolean) {
   aska_hide = boolean;
 }
 // //////////////////////////////////////////////////////////////////////////
+function ifVideoPlayingStopIt(id) {
+  let videoElement = document.querySelector(id);
+  if (videoElement) {
+    videoElement.pause();
+    videoElement.removeAttribute('src');
+    videoElement.load();
+  }
+}
+
 function askaWriteOnScreen(text, arr) {
   socket.send('speech_start','AUDIO');
   if (arr) {
-    document.querySelector(".interactWindow_img") ? document.querySelector(".interactWindow_img").remove():'';
+    ifVideoPlayingStopIt(".interactWindow_img");
     window.myconsole.handlerInteractWindow({ type: arr.buttons[0].mainType, text , arr: arr.buttons, filedata: arr.content });
   } else {
     window.myconsole.handlerInteractWindow({ type:'aska', text });
