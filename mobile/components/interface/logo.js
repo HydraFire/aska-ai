@@ -109,7 +109,7 @@ class Logo extends React.Component {
   // ВОТ ЭТО МЕСТО
   handlerInteractWindow = (obj) => {
     this.setState({interactWindow: obj});
-    obj ? closeWindowInterval(30) : closeWindowInterval(false);
+    obj ? closeWindowInterval(28) : closeWindowInterval(false);
   }
   renderInteractWindow = () => {
     if (this.state.interactWindow) {
