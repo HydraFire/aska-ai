@@ -17,6 +17,7 @@ function switchModeOnMute(boolean) {
 function askaWriteOnScreen(text, arr) {
   socket.send('speech_start','AUDIO');
   if (arr) {
+    window.myconsole.handlerInteractWindow(false);
     window.myconsole.handlerInteractWindow({ type: arr.buttons[0].mainType, text , arr: arr.buttons, filedata: arr.content });
   } else {
     window.myconsole.handlerInteractWindow({ type:'aska', text });
