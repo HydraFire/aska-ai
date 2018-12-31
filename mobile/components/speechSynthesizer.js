@@ -18,7 +18,7 @@ function ifVideoPlayingStopIt(id) {
   let videoElement = document.querySelector(id);
   if (videoElement) {
     try {
-      videoElement.pause();
+      videoElement.remove();
       //videoElement.removeAttribute('src');
       //videoElement.load();
     } catch (err) {
