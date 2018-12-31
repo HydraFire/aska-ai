@@ -22,7 +22,7 @@ function ifVideoPlayingStopIt(id) {
       //videoElement.removeAttribute('src');
       //videoElement.load();
     } catch (err) {
-      console.log(err);
+      window.myconsole.log(err, 'err');
     }
   }
 }
