@@ -1,5 +1,6 @@
 import md5 from 'blueimp-md5';
 import socket from './webSocketClient';
+import { getIp } from './checkIp';
 import { animeteLoadAudio, animetePlayAudio, animeteUltraSound } from './interface/animation';
 // import { startStopRec } from './speechRecognition';
 /* eslint-disable */
@@ -152,6 +153,7 @@ function trueAska(text) {
 // /////////////////////////////////////////////////////////////////////////////
 function aska(text, buttons) {
   console.log(aska_hide);
+  getIp();
   if (aska_hide) {
     askaWriteOnScreen(text, buttons);
   } else {
