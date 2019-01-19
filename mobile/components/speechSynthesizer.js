@@ -46,6 +46,10 @@ function initAudio() {
   audio = document.getElementById('audio');
   audio2 = document.getElementById('audio2');
   audio.addEventListener('error', handleMediaError);
+  navigator.connection.addEventListener('change', (e) => {
+    window.myconsole.log('connection change = ' + e, 'err');
+    getIp(switchModeOnMute);
+  });
 }
 // /////////////////////////////////////////////////////////////////////////////
 function stopAska() {
@@ -152,8 +156,8 @@ function trueAska(text) {
 }
 // /////////////////////////////////////////////////////////////////////////////
 function aska(text, buttons) {
-  console.log(aska_hide);
-  getIp();
+  //console.log(aska_hide);
+  //getIp();
   if (aska_hide) {
     askaWriteOnScreen(text, buttons);
   } else {

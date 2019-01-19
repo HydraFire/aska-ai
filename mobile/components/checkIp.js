@@ -1,14 +1,14 @@
 
-function getIp() {
+function getIp(switchModeOnMute) {
   let promise = new Promise((resolve, reject) => {
     window.myconsole.log('start', 'err');
     let i = 0;
     let int = setInterval(() => {
       i += 1;
       window.myconsole.log(i, 'err');
-      if (i > 10) {
+      if (i > 30) {
         clearInterval(int);
-        resolve(false);
+        resolve(true);
       }
     }, 100);
     fetch('https://api.ipify.org?format=json')
@@ -16,10 +16,10 @@ function getIp() {
       .then((obj) => {
         if (obj.ip == '159.224.183.122'){
           clearInterval(int);
-          resolve(true);
+          resolve(false);
         } else {
           clearInterval(int);
-          resolve(false);
+          resolve(true);
         }
       })
       .catch((err) => {
@@ -29,10 +29,12 @@ function getIp() {
   });
   promise.then(
       result => {
-        window.myconsole.log('ip promise result = ' + result, 'err');
+        window.myconsole.log('ip promise result, aska_hide = ' + result, 'err');
+        switchModeOnMute(result);
       },
       error => {
-        window.myconsole.log('ip promise result = ' + error, 'err');
+        window.myconsole.log('ip promise result, aska_hide = ' + error, 'err');
+        switchModeOnMute(result);
       }
   );
 }
