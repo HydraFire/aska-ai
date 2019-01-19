@@ -16,11 +16,12 @@ function switchModeOnMute(boolean) {
 }
 // //////////////////////////////////////////////////////////////////////////
 function askaWriteOnScreen(text, arr) {
+  text = text.replace('#', '');
   socket.send('speech_start','AUDIO');
   if (arr) {
-    window.myconsole.handlerInteractWindow({ type: arr.buttons[0].mainType, text , arr: arr.buttons, filedata: arr.content });
+    window.myconsole.handlerInteractWindow({ type: arr.buttons[0].mainType, text, arr: arr.buttons, filedata: arr.content });
   } else {
-    window.myconsole.handlerInteractWindow({ type:'aska', text });
+    window.myconsole.handlerInteractWindow({ type:'aska', text, arr:[{value:'mute'}] });//.obj.arr[0].value
   }
 }
 // //////////////////////////////////////////////////////////////////////////
@@ -47,8 +48,17 @@ function initAudio() {
   audio2 = document.getElementById('audio2');
   audio.addEventListener('error', handleMediaError);
   navigator.connection.addEventListener('change', (e) => {
-    window.myconsole.log('connection change = ' + e, 'err');
-    getIp(switchModeOnMute);
+    window.myconsole.log('connection change', 'err');
+    getIp().then(
+        result => {
+          window.myconsole.log('ip promise result, aska_hide = ' + result, 'err');
+          switchModeOnMute(result);
+        },
+        error => {
+          window.myconsole.log('ip promise result, aska_hide = ' + error, 'err');
+          switchModeOnMute(result);
+        }
+    );
   });
 }
 // /////////////////////////////////////////////////////////////////////////////

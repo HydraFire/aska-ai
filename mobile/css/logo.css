@@ -52,13 +52,15 @@
 }
 .interactWindow_center {
   position: absolute;
-  text-align: center;
-  white-space: normal;
   width: 340px;
-  color: black;
   overflow-y: scroll;
   margin: 5px 10px 5px 10px;
   z-index: 15;
+  text-align: center;
+  white-space: normal;
+  text-shadow: 1px 1px 2px black, 0 0 2em white;
+  font-size: 32px;
+  color: #fff;
 }
 .interactWindow_img {
   position: absolute;

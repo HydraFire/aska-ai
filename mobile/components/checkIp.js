@@ -1,5 +1,5 @@
 
-function getIp(switchModeOnMute) {
+function getIp() {
   let promise = new Promise((resolve, reject) => {
     window.myconsole.log('start', 'err');
     let i = 0;
@@ -27,15 +27,6 @@ function getIp(switchModeOnMute) {
         window.myconsole.log('ip promise fetch = ' + err, 'err');
       });
   });
-  promise.then(
-      result => {
-        window.myconsole.log('ip promise result, aska_hide = ' + result, 'err');
-        switchModeOnMute(result);
-      },
-      error => {
-        window.myconsole.log('ip promise result, aska_hide = ' + error, 'err');
-        switchModeOnMute(result);
-      }
-  );
+  return promise;
 }
 module.exports.getIp = getIp;
