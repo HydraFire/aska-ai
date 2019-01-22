@@ -2,16 +2,16 @@ import socket from './webSocketClient';
 import { switchModeOnMute } from './speechSynthesizer';
 
 function impulseToServer() {
+  window.myconsole.log('navigator.connection.type = ' + navigator.connection.type, 'err');
   if (navigator.connection.type == 'wifi') {
     getIp()
     .then(
           result => {
-            window.myconsole.log('ip promise result, aska_hide = ' + result, 'err');
             switchModeOnMute(result);
             socket.send('impulse', 'impulse');
           },
           error => {
-            window.myconsole.log('ip promise result, aska_hide = ' + error, 'err');
+            window.myconsole.log('ip error = ' + error, 'err');
             switchModeOnMute(result);
             socket.send('impulse', 'impulse');
           }
