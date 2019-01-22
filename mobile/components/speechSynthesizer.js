@@ -11,7 +11,6 @@ let aska_mute = false;
 let aska_hide = false;
 // //////////////////////////////////////////////////////////////////////////
 function switchModeOnMute(boolean) {
-  console.log('///////////////////// '+boolean);
   aska_hide = boolean;
 }
 // //////////////////////////////////////////////////////////////////////////
@@ -47,19 +46,6 @@ function initAudio() {
   audio = document.getElementById('audio');
   audio2 = document.getElementById('audio2');
   audio.addEventListener('error', handleMediaError);
-  navigator.connection.addEventListener('change', (e) => {
-    window.myconsole.log('connection change', 'err');
-    getIp().then(
-        result => {
-          window.myconsole.log('ip promise result, aska_hide = ' + result, 'err');
-          switchModeOnMute(result);
-        },
-        error => {
-          window.myconsole.log('ip promise result, aska_hide = ' + error, 'err');
-          switchModeOnMute(result);
-        }
-    );
-  });
 }
 // /////////////////////////////////////////////////////////////////////////////
 function stopAska() {
@@ -166,8 +152,6 @@ function trueAska(text) {
 }
 // /////////////////////////////////////////////////////////////////////////////
 function aska(text, buttons) {
-  //console.log(aska_hide);
-  //getIp();
   if (aska_hide) {
     askaWriteOnScreen(text, buttons);
   } else {

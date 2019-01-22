@@ -5,7 +5,7 @@ import { init } from './animation';
 import InteractWindow from './interactWindow';
 import '../../css/logo.css';
 
-let BinaryDataImgFromServer = null;
+//let BinaryDataImgFromServer = null;
 let int;
 // var previousOrientation = window.orientation;
 
@@ -16,7 +16,7 @@ function closeWindowInterval(time) {
       i += 1;
       if (i > time) {
         window.myconsole.handlerInteractWindow(false);
-        BinaryDataImgFromServer = null;
+        //BinaryDataImgFromServer = null;
         clearInterval(int);
       }
     }, 1000);

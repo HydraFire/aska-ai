@@ -1,3 +1,26 @@
+import socket from './webSocketClient';
+import { switchModeOnMute } from './speechSynthesizer';
+
+function impulseToServer() {
+  if (navigator.connection.type == 'wifi') {
+    getIp()
+    .then(
+          result => {
+            window.myconsole.log('ip promise result, aska_hide = ' + result, 'err');
+            switchModeOnMute(result);
+            socket.send('impulse', 'impulse');
+          },
+          error => {
+            window.myconsole.log('ip promise result, aska_hide = ' + error, 'err');
+            switchModeOnMute(result);
+            socket.send('impulse', 'impulse');
+          }
+      );
+  } else {
+    socket.send('impulse', 'impulse');
+    //window.myconsole.log('socket.send(impulse, impulse);', 'string');
+  }
+}
 
 function getIp() {
   let promise = new Promise((resolve, reject) => {
@@ -29,4 +52,4 @@ function getIp() {
   });
   return promise;
 }
-module.exports.getIp = getIp;
+export { impulseToServer };

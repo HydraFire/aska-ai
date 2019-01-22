@@ -1,5 +1,6 @@
 import socket from './webSocketClient';
 import { aska } from './speechSynthesizer';
+import { impulseToServer } from './checkIp';
 
 let mainInterval = 0;
 let impulseInterval = 0;
@@ -34,8 +35,7 @@ function getmainInterval() {
 }
 
 function deviceHandler() {
-  socket.send('impulse', 'impulse');
-  window.myconsole.log('socket.send(impulse, impulse);', 'string');
+  impulseToServer();
 }
 function chargeImpulse() {
   window.myconsole.log('chargeImpulse', 'err');
@@ -45,8 +45,7 @@ function chargeImpulse() {
 function intervalGO(arr) {
   function finishIntervals(obj) {
     window.myconsole.log(JSON.stringify(obj), 'string');
-    socket.send('impulse', 'impulse');
-    window.myconsole.log('socket.send(impulse, impulse);', 'string');
+    impulseToServer();
     clearInterval(impulseInterval);
     impulseInterval = 0;
 
