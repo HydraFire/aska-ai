@@ -17,6 +17,7 @@ function impulseToServer() {
           }
       );
   } else {
+    switchModeOnMute(true);
     socket.send('impulse', 'impulse');
     //window.myconsole.log('socket.send(impulse, impulse);', 'string');
   }
