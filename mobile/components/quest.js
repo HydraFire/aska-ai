@@ -1,5 +1,5 @@
 import socket from './webSocketClient';
-import { aska, askStateAskaHide } from './speechSynthesizer';
+import { aska, askStateAskaHide, switchModeOnMute } from './speechSynthesizer';
 import { impulseToServer, getIp } from './checkIp';
 
 let mainInterval = 0;
