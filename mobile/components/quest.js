@@ -1,6 +1,6 @@
 import socket from './webSocketClient';
-import { aska } from './speechSynthesizer';
-import { impulseToServer } from './checkIp';
+import { aska, askStateAskaHide } from './speechSynthesizer';
+import { impulseToServer, getIp } from './checkIp';
 
 let mainInterval = 0;
 let impulseInterval = 0;
@@ -57,13 +57,21 @@ function intervalGO(arr) {
       stop20Hz();
     }
   }
+  // ////////////////////////////////////////////////////////////////
+  function askMode(obj) {
+    if (askStateAskaHide()) {
+      aska('50Hz');
+    } else {
+      aska(obj.say[Math.random() * obj.say.length | 0]);
+    }
+  }
   function impulse(obj) {
     let i = 0;
     let t = 0;
     impulseInterval = setInterval(() => {
       i += 10;
       t += 10;
-      t < 70 ? aska(obj.say[Math.random() * obj.say.length | 0]) : '';
+      t < 70 ? askMode(obj) : '';
       t > 300 ? t = 0 : '';
       i > 1800 ? finishIntervals(obj) : '';
     }, 10000);
@@ -73,7 +81,27 @@ function intervalGO(arr) {
   }
 
   mainInterval = setInterval(() => {
-    arr.forEach(v => Date.now() > v.startDate && impulseInterval == 0 ? impulse(v) : '');
+    arr.forEach((v) => {
+      if (Date.now() > v.startDate && impulseInterval == 0) {
+        window.myconsole.log('navigator.connection.type = ' + navigator.connection.type, 'text');
+        if (navigator.connection.type == 'wifi') {
+          getIp().then(
+                result => {
+                  switchModeOnMute(result);
+                  impulse(v);
+                },
+                error => {
+                  window.myconsole.log('ip error = ' + error, 'err');
+                  switchModeOnMute(result);
+                  impulse(v);
+                }
+            );
+        } else {
+          switchModeOnMute(true);
+          impulse(v);
+        }
+      }
+    });
   }, 60000);
 }
 

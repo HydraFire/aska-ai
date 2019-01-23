@@ -53,4 +53,4 @@ function getIp() {
   });
   return promise;
 }
-export { impulseToServer };
+export { impulseToServer, getIp };

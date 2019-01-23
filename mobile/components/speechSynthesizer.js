@@ -15,6 +15,10 @@ function switchModeOnMute(boolean) {
   aska_hide = boolean;
 }
 // //////////////////////////////////////////////////////////////////////////
+function askStateAskaHide() {
+  return aska_hide;
+}
+// //////////////////////////////////////////////////////////////////////////
 function askaWriteOnScreen(text, arr) {
   text = text.replace('#', '');
   socket.send('speech_start','AUDIO');
@@ -168,4 +172,4 @@ function aska(text, buttons) {
   window.myconsole.log(text, 'aska');
 }
 // /////////////////////////////////////////////////////////////////////////////
-export { aska, initAudio, stopAska, switchModeOnMute };
+export { aska, initAudio, stopAska, switchModeOnMute, askStateAskaHide };
