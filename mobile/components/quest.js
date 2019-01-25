@@ -6,6 +6,14 @@ let mainInterval = 0;
 let impulseInterval = 0;
 let removeEvent = false;
 
+function play50Hz() {
+  const audio = document.getElementById('audio');
+  audio.src = 'http://localhost:8080/coub/50Hz.mp3';
+  audio.onloadeddata = () => {
+    audio.play();
+  };
+}
+
 function play20Hz() {
   const audio2 = document.getElementById('audio2');
   function lol() {
@@ -60,7 +68,7 @@ function intervalGO(arr) {
   // ////////////////////////////////////////////////////////////////
   function askMode(obj) {
     if (askStateAskaHide()) {
-      aska('50Hz');
+      play50Hz();
     } else {
       aska(obj.say[Math.random() * obj.say.length | 0]);
     }
