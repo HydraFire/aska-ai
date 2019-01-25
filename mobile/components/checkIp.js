@@ -38,6 +38,7 @@ function getIp() {
     fetch('https://api.ipify.org?format=json')
       .then(res => res.json())
       .then((obj) => {
+        window.myconsole.log('ip = ' + obj.ip, 'text');
         if (obj.ip == '159.224.183.122'){
           clearInterval(int);
           resolve(false);
