@@ -4,7 +4,7 @@ const brain = require('brain.js');
 function calcLayers(data) {
   const input = data.reduce((a, b) => Object.keys(b.input).length + a, 0);
   const output = data.reduce((a, b) => Object.keys(b.output).length + a, 0);
-  return [input, (input + output), output];
+  return [input, ((input + output) * 2), output];
 }
 module.exports.calcLayers = calcLayers;
 // ////////////////////////////////////////////////////////////////////////////
@@ -41,7 +41,7 @@ function trainMain() {
     errorThresh: 0.005,
     iterations: 10000,
     log: true,
-    logPeriod: 50,
+    logPeriod: 10,
     learningRate: 0.05
   });
   // Протренированую сеть сохраняем в файл
