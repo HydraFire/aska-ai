@@ -30,12 +30,17 @@ function askaWriteOnScreen(text, arr) {
 }
 // //////////////////////////////////////////////////////////////////////////
 function psevdo() {
-  animeteUltraSound(true);
-  socket.send('speech_start','AUDIO');
+  const audio = document.getElementById('audio');
+  audio.src = 'http://localhost:8080/coub/80Hz.mp3';
+  audio.onloadeddata = () => {
+    audio.play();
+    animeteUltraSound(true);
+    socket.send('speech_start','AUDIO');
+  };
   setTimeout(()=>{
     socket.send('speech_end','AUDIO');
     animeteUltraSound(false);
-  }, 1500);
+  }, 2500);
 }
 // /////////////////////////////////////////////////////////////////////////////
 function handleMediaError(e) {
