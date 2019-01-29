@@ -1,7 +1,7 @@
 # aska-ai
 
 FAQ: 
- 1) Error: Uncaught (in promise) DOMException.
-    Open chrome://flags/#autoplay-policy
-    Setting No user gesture is required
-    Relaunch Chrome
+ 1) Error: <strong>Uncaught (in promise) DOMException.</strong></br>
+    Open chrome://flags/#autoplay-policy </br>
+    Setting No user gesture is required </br>
+    Relaunch Chrome </br>
