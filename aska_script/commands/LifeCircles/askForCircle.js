@@ -5,7 +5,7 @@ const asyncAsk = require('../../asyncAsk');
 const { checkURL, checkSmartURL } = require('../../saveAska');
 const lifeCircles = require('./LifeCircles');
 const { calcNow, countToText, dateToText } = require('./calcTime');
-const mainTimeCircle = require('../../mainTimeCircle');
+const { shortInterval } = require('../../mainTimeCircle');
 // /////////////////////////////////////
 // /////////////////////////////////////
 const fileOption = './data/commands/LifeCircles/option.json';
@@ -270,6 +270,6 @@ function special(ws, arr, i, key) {
 module.exports.special = special;
 // /////////////////////////////////////////////////////////////////////////////
 function setNotRemind(ws, word) {
-  asyncAsk.readEndWait(ws, checkURL(`${word}, ${asyncAsk.whatToSay(AskaSC, 'z4')}`), mainTimeCircle.shortInterval);
+  asyncAsk.readEndWait(ws, checkURL(`${word}, ${asyncAsk.whatToSay(AskaSC, 'z4')}`), shortInterval);
 }
 module.exports.setNotRemind = setNotRemind;

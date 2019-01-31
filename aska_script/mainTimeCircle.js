@@ -3,7 +3,7 @@ const socket = require('./webSocketOnMessage');
 const { QuestPart2 } = require('./commands/Quest/QuestPart2');
 const { QuestPart3 } = require('./commands/Quest/QuestPart3');
 const { QuestPartSimple } = require('./commands/Quest/QuestPartSimple');
-const { LifeCirclesNapominanie } = require('./commands/LifeCircles/askForCircle');
+const  askForCircle = require('./commands/LifeCircles/askForCircle');
 const { checkArray } = require('./saveAska');
 const { checkDate, sayWhatYouNeed } = require('./commands/System/systemNotification');
 // const { sendNotification, getNotificationID } = require('./notification/pushNotification');
@@ -52,7 +52,7 @@ function switchFunc(ws, v) {
         }
         break;
       case 'LifeCircle':
-        LifeCirclesNapominanie(ws, v);
+        askForCircle.LifeCirclesNapominanie(ws, v);
         break;
       case 'System':
         sayWhatYouNeed(ws, v);
