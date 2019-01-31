@@ -106,7 +106,7 @@ function ok(ws, arr, i, value) {
   time = dateToText(time);
   let n = arr[i].incident.length + arr[i].startIncident;
   n = countToText(n);
-  socket.send(ws, 'aska', checkSmartURL(`${asyncAsk.whatToSay(AskaSC, 'm0')}@*@${value} ${asyncAsk.whatToSay(AskaSC, 'm1')}@*@#${n}@*@#${asyncAsk.whatToSay(AskaSC, 'm2')} ${time}`));
+  asyncAsk.readEndWait(ws, checkSmartURL(`${asyncAsk.whatToSay(AskaSC, 'm0')}@*@${value} ${asyncAsk.whatToSay(AskaSC, 'm1')}@*@#${n}@*@#${asyncAsk.whatToSay(AskaSC, 'm2')} ${time}`), shortInterval);
 }
 module.exports.ok = ok;
 // ////////////////////////////////////////////////////////////////////////////
