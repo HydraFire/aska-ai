@@ -79,6 +79,7 @@ function webSocketOnMessage(ws) {
             commands(ws, obj.data);
             break;
           case 'impulse':
+            console.log('GET IMPULSE');
             checkAssignments(ws);
             break;
           case 'expClick':

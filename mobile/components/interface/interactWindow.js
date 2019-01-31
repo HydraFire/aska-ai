@@ -1,6 +1,6 @@
 import React, { Fragment } from 'react';
 import socket from '../webSocketClient';
-import { switchModeOnMute } from '../speechSynthesizer';
+import { switchModeOnMute, askStateAskaHide } from '../speechSynthesizer';
 import '../../css/logo.css';
 
 let imgfilepath = 'http://localhost:6060/';
@@ -86,10 +86,12 @@ class InteractWindow extends React.Component {
     if (this.state.triggerImgOrVideo === 'img') {
       return <img className="interactWindow_img" src={`${imgfilepath}${this.props.obj.arr[0].value}.jpg`} />;
     } else if (this.state.triggerImgOrVideo === 'video') {
-      return <video loop autoPlay className="interactWindow_img" src={`${imgfilepath}${this.props.obj.arr[0].value}.mp4`} />
-    } else {
-      return <span>none</span>;
+      if (askStateAskaHide()) {
+        return <video muted autoPlay className="interactWindow_img" src={`${imgfilepath}${this.props.obj.arr[0].value}.mp4`} />
+      }
+      return <video autoPlay className="interactWindow_img" src={`${imgfilepath}${this.props.obj.arr[0].value}.mp4`} />
     }
+    return <span>none</span>;
   }
 
 
