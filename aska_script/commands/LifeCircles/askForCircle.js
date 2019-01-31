@@ -5,7 +5,7 @@ const asyncAsk = require('../../asyncAsk');
 const { checkURL, checkSmartURL } = require('../../saveAska');
 const lifeCircles = require('./LifeCircles');
 const { calcNow, countToText, dateToText } = require('./calcTime');
-const { shortInterval } = require('./mainTimeCircle');
+const { shortInterval } = require('../../mainTimeCircle');
 // /////////////////////////////////////
 // /////////////////////////////////////
 const fileOption = './data/commands/LifeCircles/option.json';
