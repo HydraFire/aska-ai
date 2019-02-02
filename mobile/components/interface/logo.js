@@ -5,9 +5,7 @@ import { init } from './animation';
 import InteractWindow from './interactWindow';
 import '../../css/logo.css';
 
-//let BinaryDataImgFromServer = null;
 let int;
-// var previousOrientation = window.orientation;
 
 function closeWindowInterval(time) {
   if (time) {
@@ -15,8 +13,8 @@ function closeWindowInterval(time) {
     int = setInterval(() => {
       i += 1;
       if (i > time) {
+        socket.send('speech_end','AUDIO');
         window.myconsole.handlerInteractWindow(false);
-        //BinaryDataImgFromServer = null;
         clearInterval(int);
       }
     }, 1000);
