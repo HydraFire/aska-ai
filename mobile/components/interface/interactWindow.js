@@ -16,7 +16,7 @@ class InteractWindow extends React.Component {
   }
   componentDidMount() {
     if (this.state.final) {
-      window.myconsole.log(`${imgfilepath}${this.props.obj.arr[0].value}`, 'chat');
+      //window.myconsole.log(`${imgfilepath}${this.props.obj.arr[0].value}`, 'chat');
       let img = document.createElement('img');
       img.src = `${imgfilepath}${this.props.obj.arr[0].value}.jpg`;
       img.addEventListener('error',() => {
@@ -51,8 +51,10 @@ class InteractWindow extends React.Component {
   }
   typeLifeCircles = (e) => {
     if (e.target.getAttribute('alt') === 'positive') {
+      socket.send('speech_end','AUDIO');
       socket.send(`я ${e.target.getAttribute('value')}`,'aska');
     } else if (e.target.getAttribute('alt') === 'negative') {
+      socket.send('speech_end','AUDIO');
       socket.send(`я не хочу ${e.target.getAttribute('value')}`, 'aska');
     } else if (e.target.getAttribute('alt') === 'default') {
       socket.send(null, 'shortInterval');
@@ -111,4 +113,3 @@ class InteractWindow extends React.Component {
 }
 
 export default InteractWindow;
-// {this.myRender()}

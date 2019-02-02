@@ -20,8 +20,8 @@ function askStateAskaHide() {
 }
 // //////////////////////////////////////////////////////////////////////////
 function askaWriteOnScreen(text, arr) {
-  text = text.replace(new RegExp('#', 'g'), ' ');
-  text = text.replace(new RegExp('@*@', 'g'), ' ');
+  text = text.replace(/#/g,' ');
+  text = text.replace(/@\*@/g,'');
   socket.send('speech_start','AUDIO');
   if (arr) {
     window.myconsole.handlerInteractWindow({ type: arr.buttons[0].mainType, text, arr: arr.buttons, filedata: arr.content });
