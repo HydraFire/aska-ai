@@ -36,6 +36,7 @@ class App extends React.Component {
         </div>
         <audio src="" id="audio" />
         <audio src="" id="audio2" />
+        <audio src="" id="audio3" />
       </div>
     );
   }

@@ -42,57 +42,6 @@ function LifeCirclesNapominanie(ws, obj) {
     buttons
   };
   socket.send(ws, 'aska', checkURL(`${asyncAsk.whatToSay(AskaSC, 'z0')}, ${obj.words}`), arrButtons);
-
-
-/*
-  try {
-    try {
-      const file = fs.readFileSync(`${fileCamera}${obj.words}.mp4`);
-      const arrButtons = {
-        content: { type:'video', data: file},
-        buttons
-      };
-      socket.send(ws, 'aska', checkURL(`${asyncAsk.whatToSay(AskaSC, 'z0')}, ${obj.words}`), arrButtons);
-    } catch (e) {
-      const file = fs.readFileSync(`${fileCamera}${obj.words}.jpg`);
-      const arrButtons = {
-        content: { type:'img', data: file},
-        buttons
-      };
-      socket.send(ws, 'aska', checkURL(`${asyncAsk.whatToSay(AskaSC, 'z0')}, ${obj.words}`), arrButtons);
-    }
-  } catch (err) {
-    console.log(err);
-  }
-*/
-
-/*
-  const defaultFunction = function defaultFunction() {
-    console.log('TEST');
-  };
-
-  const positive = function positive() {
-    MainNN.start(ws, ws.ClientSay);
-  };
-
-  const packaging = function packaging() {
-    asyncAsk.selectFunctionFromWords(ws, [
-      {
-        func: positive,
-        words: ['whatever'],
-        end: true,
-        whatever: true
-      }
-    ], defaultFunction);
-  };
-  asyncAsk.readEndWait(ws, checkURL(`${asyncAsk.whatToSay(AskaSC, 'z0')}, ${obj.words}`), packaging, null, arrButtons);
-  const x = function x() {
-    socket.send(ws, 'aska', checkURL(`${asyncAsk.whatToSay(AskaSC, 'z0')}, ${obj.words}`));
-  };
-  if (obj.words != '') {
-    asyncAsk.onlyWait(ws, x, ws);
-  }
-  */
 }
 module.exports.LifeCirclesNapominanie = LifeCirclesNapominanie;
 // /////////////////////////////////////////////////////////////////////////////

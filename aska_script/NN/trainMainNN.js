@@ -4,7 +4,7 @@ const brain = require('brain.js');
 function calcLayers(data) {
   const input = data.reduce((a, b) => Object.keys(b.input).length + a, 0);
   const output = data.reduce((a, b) => Object.keys(b.output).length + a, 0);
-  return [input, ((input + output) * 2), output];
+  return [input, ((input + output) * 3), output];
 }
 module.exports.calcLayers = calcLayers;
 // ////////////////////////////////////////////////////////////////////////////
@@ -38,7 +38,7 @@ function trainMain() {
     hiddenLayers: calcLayers(data)
   });
   net.train(data, {
-    errorThresh: 0.005,
+    errorThresh: 0.003,
     iterations: 10000,
     log: true,
     logPeriod: 10,

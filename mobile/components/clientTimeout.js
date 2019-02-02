@@ -1,7 +1,14 @@
 
-import { aska } from './speechSynthesizer';
+import { aska, askStateAskaHide } from './speechSynthesizer';
 import { getmainInterval, play20Hz, stop20Hz } from './quest';
 
+function play110Hz() {
+  const audio = document.getElementById('audio');
+  audio.src = 'http://localhost:8080/coub/110Hz.mp3';
+  audio.onloadeddata = () => {
+    audio.play();
+  };
+}
 
 function clientTimeout(arr) {
   if (getmainInterval() == 0) {
@@ -11,7 +18,11 @@ function clientTimeout(arr) {
   let r = 1;
   const int = setInterval(() => {
     if (r >= (parseFloat(arr[1]))) {
-      aska(arr[0]);
+      if (askStateAskaHide()) {
+        play110Hz();
+      } else {
+        aska(arr[0]);
+      }
       clearInterval(int);
       if (getmainInterval() == 0) {
         stop20Hz();

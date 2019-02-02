@@ -3,8 +3,8 @@ import pushNotification from './pushNotification';
 import { aska } from './speechSynthesizer';
 import { animeteErr } from './interface/animation';
 import clientTimeout from './clientTimeout';
-// import NNEditor from './interface/NNEditor';
 import { twoArr, chargeImpulse } from './quest';
+import { controls } from './asmrControls';
 
 let socket = null;
 
@@ -79,6 +79,9 @@ function start() {
         break;
       case 'chargeImpulse':
         chargeImpulse();
+        break;
+      case 'asmr':
+        controls(message.data);
         break;
       default:
         // iconsole.logS(message.data);

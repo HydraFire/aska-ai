@@ -78,6 +78,7 @@ module.exports.selectFunctionFromWords = selectFunctionFromWords;
 function readEndWait(ws, text, nextFun, param, arrButtons) {
   ws.NNListen = false;
   const int3 = setInterval(() => {
+    console.log(ws.audio);
     if (ws.audio === 'speech_end') {
       clearInterval(int3);
       socket.send(ws, 'aska', text, arrButtons);

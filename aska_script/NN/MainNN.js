@@ -4,6 +4,7 @@ const socket = require('../webSocketOnMessage');
 const { getOptions } = require('./optionalNN');
 const { getParameters } = require('./parameterNN');
 // Нужно сделать автоматический require
+const { Asmr } = require('../commands/Asmr/Asmr');
 const { LifeCircles } = require('../commands/LifeCircles/LifeCircles');
 const { Quest } = require('../commands/Quest/Quest');
 const { Logbook } = require('../commands/Logbook/Logbook');
@@ -14,6 +15,7 @@ const { Music } = require('../commands/Music/Music');
 const { Weather } = require('../commands/Weather/Weather');
 
 const commands = {
+  Asmr,
   LifeCircles,
   Quest,
   Logbook,
