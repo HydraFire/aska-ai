@@ -7,16 +7,16 @@ let questInterval;
 function playAsmr(state) {
   typeof state != 'string' ? state = 'play' : '';
   const audio = document.getElementById('audio3');
-  console.log(`state = ${state}`);
+  //console.log(`state = ${state}`);
   if (state != 'stop') {
     let track = chooseTrack();
-    console.log(`track = ${track}`);
+    //console.log(`track = ${track}`);
     audio.src = `http://localhost:8080/asmr/${track}`;
     audio.onloadeddata = () => {
       audio.currentTime = Math.random() * audio.duration | 0;
-      console.log(`Math.random() = ${Math.random() * audio.duration | 0}`);
+      //console.log(`Math.random() = ${Math.random() * audio.duration | 0}`);
       audio.play();
-      console.log(`audio.currentTime = ${audio.currentTime}`);
+      //console.log(`audio.currentTime = ${audio.currentTime}`);
       isitPlaying = true;
     };
     if (state == 'play') {
@@ -31,9 +31,9 @@ function playAsmr(state) {
 
 function chooseTrack() {
   let test = trackList;
-  console.log(test);
+  //console.log(test);
   test = test.filter(v => v != prevTrack);
-  console.log(test);
+  //console.log(test);
   if (test.length > 0) {
     prevTrack = test[Math.random() * test.length | 0];
   } else {
@@ -53,7 +53,7 @@ function checkPlaing(arr) {
 }
 
 function getControlQuestInterval(state) {
-  console.log(`getControlQuestInterval = ${state};`);
+  //console.log(`getControlQuestInterval = ${state};`);
   if (state == 'start') {
     /*
     questInterval = setInterval(()=>{
@@ -66,7 +66,7 @@ function getControlQuestInterval(state) {
 }
 
 function stopAsmr() {
-  console.log(`isitPlaying = ${isitPlaying}`);
+  //console.log(`isitPlaying = ${isitPlaying}`);
   if(isitPlaying) {
     playAsmr('stop');
     getControlQuestInterval('stop');
@@ -74,7 +74,7 @@ function stopAsmr() {
 }
 
 function controls(obj) {
-  console.log(obj);
+  //console.log(obj);
   switch (obj.command) {
     case 'start':
       checkPlaing(obj.trackList);
@@ -83,7 +83,7 @@ function controls(obj) {
       stopAsmr();
       break;
     default:
-      console.log(obj.command);
+      //console.log(obj.command);
       break;
   }
 }

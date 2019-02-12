@@ -45,7 +45,8 @@ function sayDateTime() {
   return `сегодня ${arrDay[day]}, ${dateNow.getDate()}-е ${arrMonth[month]}, ${hours}:${minutes}, `;
 }
 function sayWind(windValue) {
-  const arr = ['','','очень слабый ветер','слабый ветер', 'ветер немного чувствуется','немного есть ветер', 'сильный ветер', 'сильный ветер','очень сильный ветер'];
+  windValue = windValue | 0;
+  const arr = ['','','очень слабый ветер','слабый ветер', 'ветер немного чувствуется','немного есть ветер', 'сильный ветер', 'сильный сильный ветер','очень сильный ветер'];
   return arr[windValue];
 }
 function goodMorning(ws, value) {

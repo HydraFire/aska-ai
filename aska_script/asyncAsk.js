@@ -71,7 +71,7 @@ function selectFunctionFromWords(ws, options, defaultFunction) {
       skazanoe = ws.ClientSay;
     }
     ws.closeAllInterval ? clearInterval(int) : '';
-  }, 250);
+  }, 100);
 }
 module.exports.selectFunctionFromWords = selectFunctionFromWords;
 // /////////////////////////////////////////////////////////////////////////////
@@ -92,13 +92,13 @@ function readEndWait(ws, text, nextFun, param, arrButtons) {
               nextFun(ws, param);
             }
             ws.closeAllInterval ? clearInterval(int2) : '';
-          }, 500);
+          }, 100);
         }
         ws.closeAllInterval ? clearInterval(int) : '';
-      }, 500);
+      }, 100);
     }
     ws.closeAllInterval ? clearInterval(int3) : '';
-  }, 500);
+  }, 100);
 }
 module.exports.readEndWait = readEndWait;
 // /////////////////////////////////////////////////////////////////////////////
@@ -114,7 +114,7 @@ function onlyWait(ws, nextFun, params) {
     }
     ws.closeAllInterval ? clearInterval(int) : '';
     //socket.send(ws, 'console', `onlyWait ${i}s`);
-  }, 250);
+  }, 100);
 }
 module.exports.onlyWait = onlyWait;
 // /////////////////////////////////////////////////////////////////////////////

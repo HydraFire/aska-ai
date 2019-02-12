@@ -34,6 +34,7 @@ function saveResult(value) {
   fs.writeFileSync(fileSyspath, JSON.stringify(x), 'utf8');
 }
 // ////////////////////////////////////////////////////////////////////////////
+/*
 const askPart3 = function askPart3(ws, obj) {
 
   const defaultFunction = function defaultFunction(string) {
@@ -71,7 +72,7 @@ const askPart3 = function askPart3(ws, obj) {
     asyncAsk.readEndWait(ws, checkURL(asyncAsk.whatToSay(AskaSC, 'z0')), packaging);
   }
 };
-// ////////////////////////////////////////////////////////////////////////////
+
 const askPart2 = function askPart2(ws, obj) {
 
   const defaultFunction = function defaultFunction(string) {
@@ -109,6 +110,7 @@ const askPart2 = function askPart2(ws, obj) {
     asyncAsk.readEndWait(ws, checkURL(asyncAsk.whatToSay(AskaSC, 'k0')), packaging);
   }
 };
+*/
 // ////////////////////////////////////////////////////////////////////////////
 const askPart1 = function askPart1(ws, obj) {
 
@@ -119,7 +121,8 @@ const askPart1 = function askPart1(ws, obj) {
   const positive = function positive() {
     newTextArr.push(ws.ClientSay);
     socket.send(ws, 'aska', checkURL(asyncAsk.whatToSay(AskaSC, 'p4')));
-    asyncAsk.onlyWait(ws, askPart2, obj);
+    //asyncAsk.onlyWait(ws, askPart2, obj);
+    saveResult(obj);
   };
 
   const negative = function negative() {
