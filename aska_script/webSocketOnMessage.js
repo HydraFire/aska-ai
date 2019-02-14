@@ -15,6 +15,9 @@ function send(ws, type, data, buttons) {
     if (type === 'console' && typeof data === 'object') {
       data = Object.keys(data).reduce((a, b) => a.concat(`${b}: ${data[b]}<br>`), '');
     }
+    if (type === 'aska') {
+      ws.audio = 'speech_start';
+    }
     ws.send(JSON.stringify({ type, data, buttons }));
   }
 }
