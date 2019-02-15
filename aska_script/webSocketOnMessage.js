@@ -1,5 +1,5 @@
 const { getKey, setKey } = require('./notification/typeNotification');
-const { start } = require('./NN/MainNN');
+const { start } = require('./NN/fuckOffNN');
 const { verifToken, verifAccess } = require('./commands/Login/Login');
 const { editorLoad, editorSave } = require('./NN/editor');
 const { challengeLogLoad } = require('./challengeLog');

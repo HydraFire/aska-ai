@@ -1,11 +1,12 @@
 const { webSocketOnMessage, send } = require('./webSocketOnMessage');
+const { init } = require('./NN/fuckOffNN');
 
 function webSocketOnConnect(wss) {
   wss.on('connection', (ws) => {
     // Дальше сделаем проверку по IP адресу и логин и команду запомнить адрем
-    let userIp = ws._socket.remoteAddress;
-    userIp = userIp.substring(7, userIp.length);
-    send(ws, 'console', userIp);
+    //let userIp = ws._socket.remoteAddress;
+    //userIp = userIp.substring(7, userIp.length);
+    //send(ws, 'console', userIp);
     // NNListen переключает режим когда сказаное поступает в нейроную сеть
     // для выбора команды и режимом когда интервалы запушеные предыдушей
     // фразой ожидают новых разговорных даных от клиента для продолжения
@@ -24,6 +25,7 @@ function webSocketOnConnect(wss) {
     // Стейт обозначаюший что еще не одна комаднда не была запущена
     ws.onlyOpened = true;
     // Запуск евент листенера на меседжи
+    init();
     webSocketOnMessage(ws);
     // Впринципе хотелось бы зделать чтоб был лог всег IP заходивших на nerv
     ws.addEventListener('close', () => {
