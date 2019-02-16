@@ -18,12 +18,14 @@ render(<App />, document.querySelector('#main'));
 // ////////////////////////////////////////////////////////////////////////////
 socket.askaSwitchMute();
 speechRec();
-turn_Off_On_Sound();
+//turn_Off_On_Sound();
 // /////////////////////////////////////////////////////////////////////////////
 const askaButton = document.querySelector('.main');
 askaButton.addEventListener('click', startStopRec);
 // /////////////////////////////////////////////////////////////////////////////
 // /////////////////////////////////////////////////////////////////////////////
+
+/*
 function turn_Off_On_Sound() {
   chrome.tabs.query({url: []}, function (tabs) {
     for (var i = 0; i < tabs.length; i++) {
@@ -32,6 +34,7 @@ function turn_Off_On_Sound() {
     }
   });
 }
+*/
 /*
 const snapConfig = {
   scrollSnapDestination: '100% 0%',
