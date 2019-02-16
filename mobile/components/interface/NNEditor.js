@@ -110,6 +110,9 @@ class NNEditor extends React.Component {
   editChange = (e) => {
     this.setState({ newText: e.target.value });
   }
+  editHardChange = (value) => {
+    this.setState({ newText: value });
+  }
   // ///////// Главная функция прорисовует весь основной интерфейс ////////////
 
   // //////////////////////////////////////////////////////////////////////////
@@ -123,6 +126,7 @@ class NNEditor extends React.Component {
     if (this.state.inputLayer) {
       return <InputLayer
         editChange = {this.editChange}
+        editHardChange = {this.editHardChange}
         editStateHandler = {this.editStateHandler}
         editCancelHandler = {this.editCancelHandler}
         nowpicktext = {this.state.nowpicktext}
@@ -139,7 +143,7 @@ class NNEditor extends React.Component {
 
     this.setState({
       loadbutton: false,
-      nowpickFunc: 'LifeCircles',
+      nowpickFunc: 'Asmr',
       nowpickSector: 'description',
       data
     });

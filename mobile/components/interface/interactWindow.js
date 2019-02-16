@@ -14,7 +14,7 @@ class InteractWindow extends React.Component {
       final: true
     };
   }
-  componentDidMount() {
+  componentWillMount() {
     if (this.state.final) {
       //window.myconsole.log(`${imgfilepath}${this.props.obj.arr[0].value}`, 'chat');
       let img = document.createElement('img');
