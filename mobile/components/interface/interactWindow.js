@@ -4,6 +4,7 @@ import { switchModeOnMute, askStateAskaHide } from '../speechSynthesizer';
 import '../../css/logo.css';
 
 let imgfilepath = 'http://localhost:6060/';
+let img = document.createElement('img');
 
 class InteractWindow extends React.Component {
   constructor() {
@@ -14,21 +15,25 @@ class InteractWindow extends React.Component {
       final: true
     };
   }
+  test = () => {
+      if (this.state.triggerImgOrVideo === 'img' && this.state.errStatus < 2) {
+        this.changeFormatMedia('video', this.state.errStatus + 1);
+      } else if (this.state.triggerImgOrVideo === 'video' && this.state.errStatus < 2) {
+        this.changeFormatMedia('img', this.state.errStatus + 1);
+      } else {
+        this.changeFormatMedia('none', 0);
+      }
+  }
   componentWillMount() {
     if (this.state.final) {
       //window.myconsole.log(`${imgfilepath}${this.props.obj.arr[0].value}`, 'chat');
-      let img = document.createElement('img');
+      // let img = document.createElement('img');
       img.src = `${imgfilepath}${this.props.obj.arr[0].value}.jpg`;
-      img.addEventListener('error',() => {
-        if (this.state.triggerImgOrVideo === 'img' && this.state.errStatus < 2) {
-          this.changeFormatMedia('video', this.state.errStatus + 1);
-        } else if (this.state.triggerImgOrVideo === 'video' && this.state.errStatus < 2) {
-          this.changeFormatMedia('img', this.state.errStatus + 1);
-        } else {
-          this.changeFormatMedia('none', 0);
-        }
-      })
+      img.addEventListener('error', this.test );
     }
+  }
+  componentWillUnmount() {
+    img.removeEventListener('error', this.test );
   }
   typeAska = () => {
     socket.send('speech_end','AUDIO');

@@ -117,10 +117,14 @@ const askPart1 = function askPart1(ws, obj) {
   const defaultFunction = function defaultFunction(string) {
     console.log(string);
   };
+  const nextSay = function nextSay(ws) {
+    socket.send(ws, 'aska', checkURL(asyncAsk.whatToSay(AskaSC, 'p5')));
+  };
 
   const positive = function positive() {
     newTextArr.push(ws.ClientSay);
-    socket.send(ws, 'aska', checkURL(asyncAsk.whatToSay(AskaSC, 'p4')));
+
+    asyncAsk.readEndWait(ws, checkURL(asyncAsk.whatToSay(AskaSC, 'p4')), nextSay);
     //asyncAsk.onlyWait(ws, askPart2, obj);
     saveResult(obj);
   };

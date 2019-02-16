@@ -16,18 +16,17 @@ function transcriptText(text) {
   /* eslint-enable */
   return text;
 }
+
+recognitionInputWindow.addEventListener('result', (e) => {
+  if (e.results[0].isFinal) {
+    let inp = document.querySelector('.input_tag');
+    inp.value += transcriptText(e.results);;
+    window.editorComponent.editHardChange(inp.value);
+  }
+});
 // /////////////////////////////////////////////////////////////////////////////
 class InputLayer extends React.Component {
-  componentWillMount() {
-    recognitionInputWindow.addEventListener('result', (e) => {
-      // Финальное значение разпознавания
-      if (e.results[0].isFinal) {
-        let inp = document.querySelector('.input_tag');
-        inp.value += transcriptText(e.results);;
-        this.props.editHardChange(inp.value);
-      }
-    });
-  }
+
   testwithAska = () => {
     aska(this.props.newText);
   }
