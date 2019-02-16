@@ -28,7 +28,6 @@
   },
   "dependencies": {
     "blueimp-md5": "^2.10.0",
-    "brain.js": "^1.1.2",
     "chart.js": "^2.7.2",
     "dotenv": "^5.0.1",
     "express": "^4.16.2",
@@ -38,8 +37,8 @@
     "react": "^16.4.0",
     "react-chartjs2": "^1.2.1",
     "react-dom": "^16.4.0",
+    "react-native-system-setting": "^1.7.2",
     "request": "^2.85.0",
-    "scroll-snap": "^1.0.6",
     "web-audio-analyser": "^2.0.1",
     "web-push": "^3.3.0",
     "ws": "^5.0.0"
