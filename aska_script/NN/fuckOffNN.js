@@ -47,8 +47,30 @@ function buildIntelligentObjects(src, fileName, exception) {
   return collection;
 }
 // /////////////////////////////////////////////////////////////////////////////
+function checkWordPattern(pattern, text){
+  let arr = pattern.split('...');
+  let mass = arr.join(' ').length;
+  // console.log(mass);
+  arr = arr.map(v => text.search(v))
+  // console.log(arr);
+  arr = arr.reduce((prev, next) => {
+    if (next >= prev) {
+      return next;
+    } else {
+      return undefined;
+    }
+  }, 0);
+  // console.log(arr);
+  mass = mass <= text.length;
+  arr = arr != undefined;
+  return mass && arr;
+}
+// /////////////////////////////////////////////////////////////////////////////
 function decisionMaking(text) {
  return intelligentObjects.filter(f => {
+   if (f.keyWords.search('...') != -1) {
+     return checkWordPattern(f.keyWords, text);
+   }
    return text.search(f.keyWords) != -1;
  }).sort((a, b) => {
    return b.mass - a.mass
@@ -60,7 +82,7 @@ function start(ws, text) {
   let decision = decisionMaking(text);
   console.log(decision);
   if (decision.length == 0) {
-    commands['Reaction'](ws, `1`, '');
+    commands['Reaction'](ws, '1', '');
   } else {
     decision = decision[0];
     commands[decision.decisionName](ws, `${decision.option + 1}`, getParameters(text, decision.decisionName));
