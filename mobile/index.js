@@ -1,7 +1,6 @@
 /* eslint-disable */
 import React from 'react';
 import { render } from 'react-dom';
-import SystemSetting from 'react-native-system-setting'
 // import ScrollSnap from 'scroll-snap';
 
 import App from './components/App';
@@ -19,15 +18,20 @@ render(<App />, document.querySelector('#main'));
 // ////////////////////////////////////////////////////////////////////////////
 socket.askaSwitchMute();
 speechRec();
+turn_Off_On_Sound();
 // /////////////////////////////////////////////////////////////////////////////
 const askaButton = document.querySelector('.main');
 askaButton.addEventListener('click', startStopRec);
 // /////////////////////////////////////////////////////////////////////////////
 // /////////////////////////////////////////////////////////////////////////////
-const volumeListener = SystemSetting.addVolumeListener((data) => {
-    const volume = data.value;
-    window.myconsole.log(volume, 'err');
-});
+function turn_Off_On_Sound() {
+  chrome.tabs.query({url: []}, function (tabs) {
+    for (var i = 0; i < tabs.length; i++) {
+      var mutedInfo = tabs[i].mutedInfo;
+      if (mutedInfo) chrome.tabs.update(tabs[i].id, {"muted": true});
+    }
+  });
+}
 /*
 const snapConfig = {
   scrollSnapDestination: '100% 0%',

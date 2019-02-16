@@ -3,12 +3,16 @@
   "name": "Neurophysiological Complex",
   "icons": [
     {
-      "src": "aska.webp",
-      "sizes": "180x180",
-      "type": "image/webp"
+      "src": "aska.png",
+      "sizes": "460x460",
+      "type": "image/png"
     }
   ],
   "start_url": "localhost:8080/mobile.html",
   "display": "fullscreen",
-  "orientation": "any"
+  "orientation": "portrait",
+  "permissions": [
+  	"geolocation",
+    "tabs"
+  ]
 }

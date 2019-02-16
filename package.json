@@ -37,7 +37,6 @@
     "react": "^16.4.0",
     "react-chartjs2": "^1.2.1",
     "react-dom": "^16.4.0",
-    "react-native-system-setting": "^1.7.2",
     "request": "^2.85.0",
     "web-audio-analyser": "^2.0.1",
     "web-push": "^3.3.0",
