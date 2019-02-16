@@ -13,6 +13,7 @@ recognition.lang = 'ru-RU';
 export const startStopRec = () => {
   recognition.start();
   animeteMic(true);
+  window.myconsole.log(chrome.tabs, 'chat');
 };
 
 export const speechRec = () => {
