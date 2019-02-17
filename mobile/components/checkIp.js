@@ -30,7 +30,7 @@ function getIp() {
     let int = setInterval(() => {
       i += 1;
       //window.myconsole.log(i, 'err');
-      if (i > 20) {
+      if (i > 35) {
         clearInterval(int);
         resolve(true);
       }
