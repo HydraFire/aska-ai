@@ -10,23 +10,6 @@ let errorCount = 0;
 let aska_mute = false;
 let aska_hide = false;
 // //////////////////////////////////////////////////////////////////////////
-function updateDeviceList() {
-  navigator.mediaDevices.enumerateDevices()
-  .then(function(devices) {
-    devices.forEach(function(device) {
-      let [kind, type, direction] = device.kind.match(/(\w+)(input|output)/i);
-      let info = `<strong>${device.label}</strong> (${direction})`;
-      if (type === 'audio') {
-        if (direction === 'output') {
-          window.myconsole.log(info, 'html');
-        }
-      } else if (type === "video") {
-        window.myconsole.log(info, 'err');
-      }
-    });
-  });
-}
-// //////////////////////////////////////////////////////////////////////////
 function switchModeOnMute(boolean) {
   window.myconsole.log('ip promise result, aska_hide = ' + boolean, 'err');
   aska_hide = boolean;
@@ -73,11 +56,7 @@ function handleMediaError(e) {
 function initAudio() {
   audio = document.getElementById('audio');
   audio2 = document.getElementById('audio2');
-  updateDeviceList();
   audio.addEventListener('error', handleMediaError);
-  navigator.mediaDevices.ondevicechange = function(event) {
-    updateDeviceList();
-  }
 }
 // /////////////////////////////////////////////////////////////////////////////
 function stopAska() {

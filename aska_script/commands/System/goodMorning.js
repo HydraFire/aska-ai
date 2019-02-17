@@ -2,7 +2,7 @@ const fs = require('fs');
 const socket = require('../../webSocketOnMessage');
 const mainTimeCircle = require('../../mainTimeCircle');
 const asyncAsk = require('../../asyncAsk');
-const { getWeather } = require('../Weather/Weather');
+const { sayMorning } = require('../Weather/Weather');
 const { checkURL, checkSmartURL } = require('../../saveAska');
 
 const filepath = './data/system.json';
@@ -50,13 +50,12 @@ function sayWind(windValue) {
   return arr[windValue];
 }
 function goodMorning(ws, value) {
-  getWeather(ws).then((json) => {
-    let sayWeather = `на улице ${json.weather[0].description}, температура ${Math.round(json.main.temp)} градусов, ${sayWind(json.wind.speed)}`;
+  sayMorning().then(result => {
     let missYou = '';
     if (value.timeLeft) {
       missYou = iMissYou(value);
     }
-    let text = `${asyncAsk.whatToSay(AskaSC, 'a0')}, ${sayDateTime()}, ${missYou}.${sayWeather}`;
+    let text = `${asyncAsk.whatToSay(AskaSC, 'a0')}, ${sayDateTime()}, ${missYou}.${result}`;
     asyncAsk.readEndWait(ws, text, () => {
       mainTimeCircle.shortInterval(ws);
     });
@@ -64,6 +63,6 @@ function goodMorning(ws, value) {
     x.timeLastRun = Date.now();
     x.timeLastGoodMorning = Date.now();
     fs.writeFileSync(filepath, JSON.stringify(x), 'utf8');
-  }).catch(err => console.log(err));
+  }, err => console.log(err));
 }
 module.exports.goodMorning = goodMorning;

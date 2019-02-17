@@ -1,65 +1,56 @@
 const fs = require('fs');
 const fetch = require('node-fetch');
 const socket = require('../../webSocketOnMessage');
-const asyncAsk = require('../../asyncAsk');
-const { checkURL } = require('../../saveAska');
-const { calcForecast } = require('./calcForecast');
 // ////////////////////////////////////////////////////////////////////////////
-const fileOption = './data/commands/Weather/option.json';
-const AskaSC = JSON.parse(fs.readFileSync(fileOption));
-/*
-async function forecastWeather() {
-  const url = `https://api.openweathermap.org/data/2.5/forecast?id=703448&APPID=028445577f2c7694553877aba8e9a74a&units=metric&lang=ru`;
-  const response = await fetch(url);
-  const json = await response.json();
-  console.log(json);
-  return calcForecast(json);
-}
-
-async function currentWeather() {
-  const url = `https://api.openweathermap.org/data/2.5/weather?id=703448&APPID=028445577f2c7694553877aba8e9a74a&units=metric&lang=ru`;
-  const response = await fetch(url);
-  const json = await response.json();
-  console.log(json);
-  return `на улице ${json.weather[0].description}, температура ${Math.round(json.main.temp)} градусов, влажност ${json.main.humidity}%, давление ${json.main.pressure}, ветер ${json.wind.speed}`;
-}
-
-async function getWeather() {
-  try {
-    // Wait for the result of waitAndMaybeReject() to settle,
-    // and assign the fulfilled value to fulfilledValue:
-    const value = await currentWeather();
-    // const value = await forecastWeather();
-    // If the result of waitAndMaybeReject() rejects, our code
-    // throws, and we jump to the catch block.
-    // Otherwise, this block continues to run:
-    return value;
-  } catch (e) {
-    return `${e}`;
-  }
-}
-module.exports.getWeather = getWeather;
-*/
-function getWeather(ws) {
-  const url = `https://api.openweathermap.org/data/2.5/weather?id=703448&APPID=028445577f2c7694553877aba8e9a74a&units=metric&lang=ru`;
-  return fetch(url).then(res => res.json()).catch(err => console.log(err));
-}
-module.exports.getWeather = getWeather;
-
-
+const { checkURL } = require('../../saveAska');
+const { searchDate } = require('../../textToTime');
+const { sayForecast, sayWeatherNow } = require('./calcForecast');
+const { getWeather, getForecast, dataBuild } = require('./fetchAndBuildObj');
+// ////////////////////////////////////////////////////////////////////////////
 function sayWeather(ws) {
   getWeather(ws).then((json) => {
-    //console.log(json);
-    socket.send(ws, 'aska', `на улице ${json.weather[0].description}, температура ${Math.round(json.main.temp)} градусов, влажност ${json.main.humidity}%, давление ${json.main.pressure}, ветер ${json.wind.speed}`);
+    socket.send(ws, 'aska', sayWeatherNow(json));
   });
 }
 
+function startForecast(ws, params) {
+  getForecast(ws).then(dataArr => {
+    let text = sayForecast(dataBuild(dataArr, parseFloat(searchDate(params[0]).split('-')[2]), ws), params);
+    socket.send(ws, 'aska', text);
+  });
+}
 
-function Weather(ws, options) {
-  if (options == '1') {
-    sayWeather(ws);
-  } else {
-    socket.send(ws, 'aska', `${ws.ClientSay}`);
+function sayMorning() {
+  return new Promise((resolve, reject) => {
+    getWeather(ws).then((json) => {
+       let text = sayWeatherNow(json);
+       getForecast(ws).then(dataArr => {
+         text += '. ' + sayForecast(dataBuild(dataArr, new Date().getDate()), 'now');
+         resolve(text);
+       });
+    });
+  });
+}
+module.exports.sayMorning = sayMorning;
+// ////////////////////////////////////////////////////////////////////////////
+
+function Weather(ws, option, params) {
+  console.log(`params = ${params}`);
+  switch (option) {
+    case '1':
+      sayWeather(ws);
+      break;
+    case '2':
+      startForecast(ws, params);
+      break;
+    case '3':
+      console.log('error option');
+      break;
+    case '4':
+      console.log('error option');
+      break;
+    default:
+      console.log('error option');
   }
 }
 module.exports.Weather = Weather;
