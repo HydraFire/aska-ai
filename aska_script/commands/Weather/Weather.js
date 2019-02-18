@@ -20,7 +20,7 @@ function startForecast(ws, params) {
   });
 }
 
-function sayMorning() {
+function sayMorning(ws) {
   return new Promise((resolve, reject) => {
     getWeather(ws).then((json) => {
        let text = sayWeatherNow(json);

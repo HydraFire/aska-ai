@@ -50,7 +50,7 @@ function sayWind(windValue) {
   return arr[windValue];
 }
 function goodMorning(ws, value) {
-  sayMorning().then(result => {
+  sayMorning(ws).then(result => {
     let missYou = '';
     if (value.timeLeft) {
       missYou = iMissYou(value);
