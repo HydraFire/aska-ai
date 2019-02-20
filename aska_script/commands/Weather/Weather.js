@@ -4,8 +4,8 @@ const socket = require('../../webSocketOnMessage');
 // ////////////////////////////////////////////////////////////////////////////
 const { checkURL } = require('../../saveAska');
 const { searchDate } = require('../../textToTime');
-const { sayForecast, sayWeatherNow } = require('./calcForecast');
-const { getWeather, getForecast, dataBuild } = require('./fetchAndBuildObj');
+const { sayForecast, sayWeatherNow, sayAnalyticWeather, calcWatchWeather } = require('./calcForecast');
+const { getWeather, getForecast, dataBuild, buildForecastDaysColection, writeData, readData } = require('./fetchAndBuildObj');
 // ////////////////////////////////////////////////////////////////////////////
 function sayWeather(ws) {
   getWeather(ws).then((json) => {
@@ -15,18 +15,40 @@ function sayWeather(ws) {
 
 function startForecast(ws, params) {
   getForecast(ws).then(dataArr => {
-    let text = sayForecast(dataBuild(dataArr, parseFloat(searchDate(params[0]).split('-')[2]), ws), params);
-    socket.send(ws, 'aska', text);
+    let obj = dataBuild(dataArr, parseFloat(searchDate(params[0]).split('-')[2]), ws);
+    socket.send(ws, 'aska', sayForecast(obj, params));
   });
 }
+
+function startAnalyticWeather(ws, param) {
+  getForecast(ws).then(dataArr => {
+    let arr = buildForecastDaysColection(dataArr.list);
+    socket.send(ws, 'aska', sayAnalyticWeather(arr, param));
+  });
+}
+
+function checkWatchWeather() {
+  return readData().watch.length > 0;
+}
+module.exports.checkWatchWeather = checkWatchWeather;
+
+function sayWatchWeather(ws) {
+  let obj = readData();
+  socket.send(ws, 'aska', obj.watch);
+  obj.times > 1 ? writeData(obj.times - 1) : writeData('');
+}
+module.exports.sayWatchWeather = sayWatchWeather;
 
 function sayMorning(ws) {
   return new Promise((resolve, reject) => {
     getWeather(ws).then((json) => {
        let text = sayWeatherNow(json);
        getForecast(ws).then(dataArr => {
-         text += '. ' + sayForecast(dataBuild(dataArr, new Date().getDate()), 'now');
+         let arr = buildForecastDaysColection(dataArr.list);
+         console.log(arr);
+         text += '. ' + sayForecast(arr[0], 'now');
          resolve(text);
+         calcWatchWeather(writeData(arr[0]), arr[1]);
        });
     });
   });
@@ -35,7 +57,6 @@ module.exports.sayMorning = sayMorning;
 // ////////////////////////////////////////////////////////////////////////////
 
 function Weather(ws, option, params) {
-  console.log(`params = ${params}`);
   switch (option) {
     case '1':
       sayWeather(ws);
@@ -44,10 +65,10 @@ function Weather(ws, option, params) {
       startForecast(ws, params);
       break;
     case '3':
-      console.log('error option');
+      startAnalyticWeather(ws, 'rain');
       break;
     case '4':
-      console.log('error option');
+      startAnalyticWeather(ws, 'sunny');
       break;
     default:
       console.log('error option');

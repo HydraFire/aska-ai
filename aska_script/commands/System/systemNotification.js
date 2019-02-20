@@ -1,6 +1,7 @@
 const fs = require('fs');
 const { goodMorning, sayIMissYou } = require('./goodMorning');
 const { eveningTalk } = require('./eveningTalk');
+const { checkWatchWeather, sayWatchWeather } = require('../Weather/Weather');
 
 const filepath = './data/system.json';
 
@@ -38,6 +39,9 @@ function checkDate() {
   if (timeLeft > (24 * 60 * 60 * 1000)) {
     buildArr.timeLeft = timeLeft;
   }
+  if (checkWatchWeather()) {
+    buildArr.watchWeather = true;
+  }
   if (Object.keys(buildArr).length > 0) {
     buildArr.startWith = 'System';
     buildArr.obj = obj;
@@ -53,7 +57,9 @@ function sayWhatYouNeed(ws, value) {
     eveningTalk(ws, value);
   } else if (value.timeLeft) {
     sayIMissYou(ws, value);
-  } else {};
+  } else if (value.watchWeather){
+    sayWatchWeather(ws);
+  };
   // место для еще какогото системного оповещения
 }
 module.exports.sayWhatYouNeed = sayWhatYouNeed;
