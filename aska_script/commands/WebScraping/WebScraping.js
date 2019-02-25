@@ -64,13 +64,13 @@ function sayAction(ws, obj) {
   };
   switch (obj.prioritySay) {
       case 'low':
-        asyncAsk.readEndWait(ws, perseValue(obj), nextLow);
+        asyncAsk.readEndWait(ws, parseValue(obj), nextLow);
         break;
       case 'medium':
-        asyncAsk.readEndWait(ws, perseValue(obj), nextMedium);
+        asyncAsk.readEndWait(ws, parseValue(obj), nextMedium);
         break;
       case 'high':
-        asyncAsk.readEndWait(ws, perseValue(obj), nextHigh);
+        asyncAsk.readEndWait(ws, parseValue(obj), nextHigh);
         break;
       default:
         console.log('obj.prioritySay = undefined');
