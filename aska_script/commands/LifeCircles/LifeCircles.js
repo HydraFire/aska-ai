@@ -1,7 +1,8 @@
 const fs = require('fs');
-const textAnalitic = require('./textAnalitic');
 const socket = require('../../webSocketOnMessage');
+const { reloadFileLifeCircle } = require('../../mainTimeCircle');
 const askForCircle = require('./askForCircle');
+const textAnalitic = require('./textAnalitic');
 const { calcLast } = require('./calcTime');
 // //////////////////////////////////////
 // //////////////////////////////////////
@@ -19,13 +20,13 @@ function readFile(p) {
     return JSON.parse(fs.readFileSync(p));
   } catch (err) {
     console.log(err);
-    // fs.writeFileSync(p, JSON.stringify(example), 'utf8');
     return example;
   }
 }
 // /////////////////////////////////////////////////////////////////////////////
 function saveFile(p, arr) {
   fs.writeFileSync(p, JSON.stringify(arr), 'utf8');
+  reloadFileLifeCircle();
 }
 // /////////////////////////////////////////////////////////////////////////////
 function saveIncidentFirstTime(arr, value, startCount) {

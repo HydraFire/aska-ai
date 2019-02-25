@@ -91,7 +91,7 @@ const askPart4 = function askPart4(ws, obj) {
     newText += `${string}, `;
   };
 
-  const first = function attentionCheck() {
+  const first = function first() {
     if (newText !== '') {
       saveExcuse(obj, newText);
       socket.send(ws, 'aska', checkURL(asyncAsk.whatToSay(AskaSC, 'u1')));
@@ -152,7 +152,6 @@ const askPart2 = function askPart2(ws, obj) {
   const attentionCheck = function attentionCheck() {
     socket.send(ws, 'aska', checkURL(asyncAsk.whatToSay(AskaSC, 'p2')));
     saveTimeEnd(obj, ws.ClientSay);
-    ;
     asyncAsk.onlyWait(ws, mainTimeCircle.shortInterval);
   };
   const negative = function negative() {

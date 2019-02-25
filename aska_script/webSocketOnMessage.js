@@ -47,6 +47,9 @@ function webSocketOnMessage(ws) {
             // Отправляет обратно пользователю в консоль
             send(ws, 'console', obj.data);
             break;
+          case 'code':
+            ws.ClientSay = obj.data;
+            break;
             // Запрос на получение ключа для подписки на уведомление
           case 'notificationGetKey':
             getKey(ws);

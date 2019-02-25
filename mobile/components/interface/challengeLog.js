@@ -20,6 +20,9 @@ class ChallengeLog extends React.Component {
   getData = () => {
     socket.send('load','challengeLog');
   }
+  getColor = (v) => {
+    return v.color ? 'challenge_info_color' : 'challenge_info';
+  }
   myRender = () => {
     if (this.state.data != null) {
       return this.state.data.map((v) => {
@@ -31,9 +34,9 @@ class ChallengeLog extends React.Component {
         let y = x.getFullYear();
         let str = `${d}.${m}.${y}`;
         return (
-          <div key={v.info} className="block">
-            <div className="date">{str}</div>
-            <div className="challenge_info">
+          <div key={v.info} className="challenge_block">
+            <div className="challenge_date">{str}</div>
+            <div className={this.getColor(v)}>
                 {v.quest}
             </div>
           </div>
@@ -45,7 +48,7 @@ class ChallengeLog extends React.Component {
     if (this.state.loadbutton) {
       return 'Load';
     } else {
-      return `Всего достижений : ${this.state.data.length}`;
+      return `Всего наблюдаемых ресорсов : ${this.state.data.filter(f => f.color).length}`;
     }
   }
   render() {

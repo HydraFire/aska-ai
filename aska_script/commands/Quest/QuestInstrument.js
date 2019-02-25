@@ -1,4 +1,5 @@
 const { textToTime, normalizeTimeZone } = require('../../textToTime');
+const { reloadFileQuest } = require('../../mainTimeCircle');
 const fs = require('fs');
 
 const filepath = './data/QuestData.json';
@@ -23,6 +24,7 @@ function saveResult(day, time, text, options) {
   const arr = JSON.parse(fs.readFileSync(filepath));
   arr.push(obj);
   fs.writeFileSync(filepath, JSON.stringify(arr), 'utf8');
+  reloadFileQuest();
 }
 module.exports.saveResult = saveResult;
 // /////////////////////////////////////////////////////////////////////////////
@@ -32,6 +34,7 @@ function saveObjtoFile(obj) {
   const arrIndex = arr.findIndex(v => v.quest === obj.quest);
   arr.splice(arrIndex, 1, obj);
   fs.writeFileSync(filepath, JSON.stringify(arr), 'utf8');
+  reloadFileQuest();
 }
 // /////////////////////////////////////////////////////////////////////////////
 function copyToVictoryFile(obj) {
@@ -44,7 +47,7 @@ function copyToVictoryFile(obj) {
   const arrIndex = arr.findIndex(v => v.quest === obj.quest);
   arr.splice(arrIndex, 1);
   fs.writeFileSync(filepath, JSON.stringify(arr), 'utf8');
-
+  reloadFileQuest();
   let arr2 = [];
   try {
     arr2 = JSON.parse(fs.readFileSync(fileVictorypath));
@@ -103,5 +106,6 @@ const saveVictory = function saveVictory(obj) {
   const arrIndex = arr.findIndex(v => v.quest === obj.quest);
   arr.splice(arrIndex, 1);
   fs.writeFileSync(filepath, JSON.stringify(arr), 'utf8');
+  reloadFileQuest();
 };
 module.exports.saveVictory = saveVictory;

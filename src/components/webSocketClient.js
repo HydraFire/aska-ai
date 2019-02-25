@@ -8,6 +8,7 @@ import { newImagesLoad } from './graphics/animation/Kaleidoscope';
 // ////////////////////////// SOCKET CLIENT /////////////////////////////////////
 // ////////////////////////// SOCKET CLIENT /////////////////////////////////////
 let socket = null;
+let impulseInterval;
 // Функция которая используеться для отправки на сервер
 function send(data, type) {
   if (data !== '') {
@@ -28,6 +29,9 @@ function send(data, type) {
     }
   }
 }
+function goToUrl(url) {
+  document.location.href = url;
+}
 // Чтобы веб сокеты запускалить после прогрузки страници и графики на ней
 // ////////////////////////// SOCKET CLIENT /////////////////////////////////////
 // ////////////////////////// SOCKET CLIENT /////////////////////////////////////
@@ -45,6 +49,9 @@ function start(ip) {
     iconsole.logC('SOCKET CONNECT');
     localStorage.aska_ip = ip;
     localStorage.test_token ? send(localStorage.test_token, 'TOKEN') : send('*', 'TOKEN');
+    impulseInterval = setInterval(() => {
+      send('impulse','impulse');
+    }, 5*60*1000);
   };
 
   socket.onmessage = function onmessage(event) {
@@ -78,6 +85,9 @@ function start(ip) {
       case 'getImgsKaleidos':
         newImagesLoad(message.data);
         break;
+      case 'goToUrl':
+        goToUrl(message.data);
+        break;
       default:
         iconsole.logS(message.data);
         break;
@@ -87,6 +97,7 @@ function start(ip) {
 // ////////////////////////// SOCKET CLIENT /////////////////////////////////////
 // ////////////////////////// SOCKET CLIENT /////////////////////////////////////
   socket.onclose = function onclose(event) {
+    clearInterval(impulseInterval);
     if (event.wasClean) {
       iconsole.logCE('Соединение закрыто чисто');
     } else {

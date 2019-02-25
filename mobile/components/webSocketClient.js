@@ -25,6 +25,9 @@ function send(data, type) {
     localStorage.inputMemory = data;
   }
 }
+function goToUrl(url) {
+  document.location.href = url;
+}
 function askaSwitchMute() {
   let text = 'Включить звук ?';
   let arr = [{ type: 'MuteMode', value: true, name: 'Нет' }, { type: 'MuteMode', value: false, name: 'Да' }];
@@ -82,6 +85,9 @@ function start() {
         break;
       case 'asmr':
         controls(message.data);
+        break;
+      case 'goToUrl':
+        goToUrl(message.data);
         break;
       default:
         // iconsole.logS(message.data);

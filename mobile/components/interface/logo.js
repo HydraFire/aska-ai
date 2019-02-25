@@ -29,7 +29,11 @@ function activeInput(n) {
       if (e.keyCode === 13) {
         if (this.value !== '') {
           window.myconsole.log(this.value, 'chat');
-          socket.send(this.value);
+          if (this.value.includes('nightmare')) {
+            socket.send(this.value, 'code');
+          } else {
+            socket.send(this.value, 'aska');
+          }
           this.value = '';
         }
       }

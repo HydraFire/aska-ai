@@ -52,7 +52,7 @@ function chargeImpulse() {
 // /////////////////////////////////////////////////////////////////////////////
 function intervalGO(arr) {
   function finishIntervals(obj) {
-    window.myconsole.log(JSON.stringify(obj), 'string');
+    //window.myconsole.log(JSON.stringify(obj), 'string');
     impulseToServer();
     clearInterval(impulseInterval);
     impulseInterval = 0;
@@ -91,7 +91,7 @@ function intervalGO(arr) {
   mainInterval = setInterval(() => {
     arr.forEach((v) => {
       if (Date.now() > v.startDate && impulseInterval == 0) {
-        window.myconsole.log('navigator.connection.type = ' + navigator.connection.type, 'text');
+        //window.myconsole.log('navigator.connection.type = ' + navigator.connection.type, 'text');
         if (navigator.connection.type == 'wifi') {
           getIp().then(
                 result => {
@@ -115,13 +115,13 @@ function intervalGO(arr) {
 
 function twoArr(arr) {
   if (mainInterval == 0) {
-    window.myconsole.log('intervalGO(arr);', 'string');
+    //window.myconsole.log('intervalGO(arr);', 'string');
     play20Hz();
     intervalGO(arr);
   } else {
     clearInterval(mainInterval);
-    window.myconsole.log('clearInterval(mainInterval);', 'string');
-    window.myconsole.log('intervalGO(arr);', 'string');
+    //window.myconsole.log('clearInterval(mainInterval);', 'string');
+    //window.myconsole.log('intervalGO(arr);', 'string');
     intervalGO(arr);
   }
 }

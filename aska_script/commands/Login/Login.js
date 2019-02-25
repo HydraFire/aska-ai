@@ -3,7 +3,7 @@ const jwt = require('jsonwebtoken');
 const socket = require('../../webSocketOnMessage');
 const asyncAsk = require('../../asyncAsk');
 const { checkURL } = require('../../saveAska');
-const { checkAssignments, idleInterval } = require('../../mainTimeCircle');
+const mainTimeCircle = require('../../mainTimeCircle');
 // ///////////////////////////////
 // ///////////////////////////////
 const fileDescription = './data/commands/Login/description.json';
@@ -26,8 +26,8 @@ function verifToken(ws, token) {
         socket.send(ws, 'aska', checkURL(asyncAsk.whatToSay(AskaSC, 'b1')));
       } else {
         ws.accessed = true;
-        idleInterval(ws);
-        checkAssignments(ws);
+        mainTimeCircle.idleInterval(ws);
+        mainTimeCircle.checkAssignments(ws);
         console.log('connection accessed');
       }
     });
@@ -61,8 +61,8 @@ function Login(ws, option) {
     ws.accessed = true;
     // Запуск проверки заданий и лайф циклов
     setTimeout(() => {
-      idleInterval(ws);
-      checkAssignments(ws);
+      mainTimeCircle.idleInterval(ws);
+      mainTimeCircle.checkAssignments(ws);
     }, 3000);
   };
   const negative = function negative() {

@@ -5,14 +5,14 @@
   overflow-y: scroll;
   background: #353436;
 }
-.block {
+.challenge_block {
   width: 358px;
   border-bottom: 1px dashed white;
   border-left: 1px dashed white;
   border-right: 1px dashed white;
 }
 
-.date {
+.challenge_date {
  color: #adadad;
  font-size: 14px;
  width: 120px;
@@ -22,6 +22,17 @@
 }
 .challenge_info {
   color: #ddd;
+  text-align: center;
+  width: 228px;
+  font-size: 16px;
+  white-space:normal;
+  vertical-align: middle;
+  display: inline-block;
+  margin: 10px 5px 10px 5px;
+}
+.challenge_info_color {
+  color: #111;
+  background: #f4e486;
   text-align: center;
   width: 228px;
   font-size: 16px;

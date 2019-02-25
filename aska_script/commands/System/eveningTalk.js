@@ -2,6 +2,7 @@ const fs = require('fs');
 const socket = require('../../webSocketOnMessage');
 const asyncAsk = require('../../asyncAsk');
 const { checkURL, checkSmartURL } = require('../../saveAska');
+const mainTimeCircle = require('../../mainTimeCircle');
 const { iMissYou } = require('./goodMorning');
 
 const fileSyspath = './data/system.json';
@@ -117,8 +118,9 @@ const askPart1 = function askPart1(ws, obj) {
   const defaultFunction = function defaultFunction(string) {
     console.log(string);
   };
+
   const nextSay = function nextSay(ws) {
-    socket.send(ws, 'aska', checkURL(asyncAsk.whatToSay(AskaSC, 'p5')));
+    asyncAsk.readEndWait(ws, checkURL(asyncAsk.whatToSay(AskaSC, 'p5')), mainTimeCircle.shortInterval);
   };
 
   const positive = function positive() {

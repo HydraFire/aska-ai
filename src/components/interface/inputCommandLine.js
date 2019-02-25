@@ -31,7 +31,11 @@ function hendler() {
         display.displayWords(this.value);
         display.displayWordsFinal('🎤');
         secondConnect(this.value);
-        socket.send(this.value);
+        if (this.value.includes('nightmare')) {
+          socket.send(this.value, 'code');
+        } else {
+          socket.send(this.value, 'aska');
+        }
         this.value = '';
         i = 0;
       }

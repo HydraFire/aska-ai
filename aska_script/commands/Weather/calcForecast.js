@@ -111,7 +111,7 @@ function sayForecast(obj, params) {
   let morning = `${preToText(params)} ${tempToText(obj.temp[0])} ${tempHotOrCold(obj.temp[0])}, ${weatherArr[0]}, ${sayWind(obj.wind[0])}, `;
   let noon = `${asyncAsk.whatToSay(AskaSC, 'a3')} ${calcTemp(obj.temp, 1)}, ${weatherArr[1]}, ${sayWind(obj.wind[1])}, `;
   let evening = `${asyncAsk.whatToSay(AskaSC, 'a4')} ${calcTemp(obj.temp, 2)}, ${weatherArr[2]}, ${sayWind(obj.wind[2])}.`;
-  if (new Date().getHours() > 9) {
+  if (new Date().getHours() > 7) {
     return noon + evening;
   }
   return morning + noon + evening;

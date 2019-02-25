@@ -4,40 +4,57 @@ const { QuestPart2 } = require('./commands/Quest/QuestPart2');
 const { QuestPart3 } = require('./commands/Quest/QuestPart3');
 const { QuestPartSimple } = require('./commands/Quest/QuestPartSimple');
 const  askForCircle = require('./commands/LifeCircles/askForCircle');
+const { sayAction } =require('./commands/WebScraping/WebScraping');
 const { checkArray } = require('./saveAska');
 const { checkDate, sayWhatYouNeed } = require('./commands/System/systemNotification');
-// const { sendNotification, getNotificationID } = require('./notification/pushNotification');
-// //////////////////////////////////////
-let displayOn = false;
-let lastTime = 0;
-let arrShortIntervalBuffer = [];
-// //////////////////////////////////////
+// ///////////////////////////////////////////////////////////////////////////
 const fileOption = './data/commands/Quest/option.json';
 const AskaSC = JSON.parse(fs.readFileSync(fileOption));
 const filepath = './data/QuestData.json';
 const filepathLifeCircle = './data/LifeCirclesData.json';
+const filepathActions = './data/actions.json';
 // ///////////////////////////////////////////////////////////////////////////
-function readFileLifeCircle() {
+// //////////////////////////////////////
+let displayOn = false;
+let lastTime = 0;
+let arrShortIntervalBuffer = [];
+let optimazeReadFileLifeCircle = [];
+reloadFileLifeCircle();
+let optimazeReadFileQuest = [];
+reloadFileQuest();
+let optimazeReadFileActions = [];
+readFileActions();
+// //////////////////////////////////////
+function readFileActions() {
   try {
-    return JSON.parse(fs.readFileSync(filepathLifeCircle));
+    optimazeReadFileActions = JSON.parse(fs.readFileSync(filepathActions));
   } catch (err) {
-    return [];
+    console.log(err);
   }
 }
-// /////////////////////////////////////////////////////////////////////////////
-function readFile() {
+module.exports.readFileActions = readFileActions;
+function reloadFileLifeCircle() {
   try {
-    return JSON.parse(fs.readFileSync(filepath));
+    optimazeReadFileLifeCircle =  JSON.parse(fs.readFileSync(filepathLifeCircle));
+  } catch (err) {
+    console.log(err);
+  }
+}
+module.exports.reloadFileLifeCircle = reloadFileLifeCircle;
+// /////////////////////////////////////////////////////////////////////////////
+function reloadFileQuest() {
+  try {
+    optimazeReadFileQuest = JSON.parse(fs.readFileSync(filepath));
   } catch (err) {
     const obj = [{
       startDate: Date.parse(new Date()),
       quest: 'test'
     }];
     fs.writeFileSync(filepath, JSON.stringify(obj), 'utf8');
-    return obj;
+    optimazeReadFileQuest = obj;
   }
 }
-
+module.exports.reloadFileQuest = reloadFileQuest;
 function switchFunc(ws, v) {
   if (v) {
     switch (v.startWith) {
@@ -53,6 +70,9 @@ function switchFunc(ws, v) {
         break;
       case 'LifeCircle':
         askForCircle.LifeCirclesNapominanie(ws, v);
+        break;
+      case 'WebScraping':
+        sayAction(ws, v);
         break;
       case 'System':
         sayWhatYouNeed(ws, v);
@@ -89,43 +109,27 @@ module.exports.shortInterval = shortInterval;
 // //////////////////////////////////////////////////////////////////////////////
 const checkQuests = function checkQuests(ws) {
   // Текущее время
-  let timeNow = 0;
-  timeNow = Date.parse(new Date());
+  let timeNow = Date.now();
   // Прогрузка файлов
   let finalArray = [];
-  let systemNotif = '';
-  let arrQuests = readFile();
-  let arrEndQuests = JSON.parse(JSON.stringify(arrQuests));
-  let arrLifeCircle = readFileLifeCircle();
-  //
-
   // проверка наличия окончания задания
-  //
-  arrEndQuests = arrEndQuests.filter(v => timeNow >= v.endDate)
+  let arrEndQuests = optimazeReadFileQuest.filter(v => timeNow >= v.endDate)
     .map(v => Object.assign(v, { startWith: 'QuestPart3' }));
   // проверка наличия заданий и запуск короткого интервала если заданий больше одного
-  arrQuests = arrQuests.filter(v => timeNow >= v.startDate)
+  let arrQuests = optimazeReadFileQuest.filter(v => timeNow >= v.startDate)
     .map(v => Object.assign(v, { startWith: 'QuestPart2' }));
+  //
+  let arrActions = optimazeReadFileActions.filter(v => v.readyToSay)
+    .map(v => Object.assign(v, { startWith: 'WebScraping' }));
   // проверка утрений разговор
-  systemNotif = checkDate();
+  let systemNotif = checkDate();
   // проверка наличия лайф циклов
 
-  arrLifeCircle = arrLifeCircle.filter(v => timeNow >= v.remind)
+  let arrLifeCircle = optimazeReadFileLifeCircle.filter(v => timeNow >= v.remind)
     .map(v => ({ startWith: 'LifeCircle', words: v.words[0] }));
 
-  /*
-    arrLifeCircle = arrLifeCircle.filter(v => timeNow >= v.remind)
-      .reduce((a, b) => {
-        a.words += `${b.words[0]}, `;
-        return a;
-      }, {
-        startWith: 'LifeCircle',
-        words: ''
-      });
-  */
-  //  .map(v => Object.assign(v, { startWith: 'LifeCircle' }));
   // сливаем всё в один масив
-  finalArray = finalArray.concat(systemNotif, arrEndQuests, arrQuests, arrLifeCircle);
+  finalArray = finalArray.concat(systemNotif, arrEndQuests, arrQuests, arrActions, arrLifeCircle);
   //console.log(finalArray);
   // интервал который всё это дело будет по очереди запускать
   if (finalArray.length != 0) {
@@ -145,20 +149,11 @@ const checkAssignments = function checkAssignments(ws) {
   }
 };
 module.exports.checkAssignments = checkAssignments;
-
-function lifeCircleSound(ws) {
-  let arrQuests = JSON.parse(fs.readFileSync(filepathLifeCircle));
-  arrQuests = arrQuests.filter(v => Date.now() > v.remind);
-  if (arrQuests.length > 0) {
-    console.log(arrQuests);
-    socket.send(ws, 'aska', '50Hz');
-  }
-}
 // /////////////////////////////////////////////////////////////////////////////
 // Функция запуска уведомлений
 // /////////////////////////////////////////////////////////////////////////////
 const mainTimeCircle = function mainTimeCircle(ws) {
-  const timeTest = Date.now() + (30 * 60 * 1000);
+  const timeTest = Date.now() + (15 * 60 * 1000);
   // x.setHours(howLong);
   // x.setMinutes(0);
   // howLong < houersNow ? x.setDate(x.getDate() + 1) : '';
@@ -167,10 +162,16 @@ const mainTimeCircle = function mainTimeCircle(ws) {
   // console.log(`houersNow = ${houersNow}`);
   // console.log(`timeTest = ${timeTest}`);
   // console.log(`timeTest = ${new Date(timeTest)}`);
-
-  let arrQuests = readFile();
-  arrQuests = arrQuests.filter(v => Date.now() < v.startDate && v.type !== 'SIMPLE');
-  arrQuests = arrQuests.filter(v => timeTest >= v.startDate && v.type !== 'SIMPLE');
+  let arrActions = optimazeReadFileActions.filter(f => f.readyToSay && f.prioritySay === 'high')
+  .map(v => {
+    v.startDate = Date.now();
+    v.quest = v.name;
+    v.type = 'WEB';
+    return v;
+  });
+  let arrQuests = optimazeReadFileQuest.filter(v => Date.now() < v.startDate && v.type !== 'SIMPLE')
+    .filter(v => timeTest >= v.startDate && v.type !== 'SIMPLE')
+    .concat(arrActions);
   if (arrQuests.length > 0) {
     //console.log(arrQuests);
     arrQuests = arrQuests.map((v) => {
@@ -184,7 +185,6 @@ const mainTimeCircle = function mainTimeCircle(ws) {
     socket.send(ws, 'aska', '20Hz');
     socket.send(ws, 'quest', arrQuests);
   }
-  //lifeCircleSound(ws);
 };
 
 module.exports.mainTimeCircle = mainTimeCircle;
