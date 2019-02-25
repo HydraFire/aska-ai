@@ -1,6 +1,6 @@
 const fs = require('fs');
 const socket = require('../../webSocketOnMessage');
-const { reloadFileLifeCircle } = require('../../mainTimeCircle');
+const mainTimeCircle = require('../../mainTimeCircle');
 const askForCircle = require('./askForCircle');
 const textAnalitic = require('./textAnalitic');
 const { calcLast } = require('./calcTime');
@@ -26,7 +26,7 @@ function readFile(p) {
 // /////////////////////////////////////////////////////////////////////////////
 function saveFile(p, arr) {
   fs.writeFileSync(p, JSON.stringify(arr), 'utf8');
-  reloadFileLifeCircle();
+  mainTimeCircle.reloadFileLifeCircle();
 }
 // /////////////////////////////////////////////////////////////////////////////
 function saveIncidentFirstTime(arr, value, startCount) {
