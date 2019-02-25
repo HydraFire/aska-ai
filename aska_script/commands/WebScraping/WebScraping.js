@@ -33,7 +33,7 @@ function sayAction(ws, obj) {
     if (v.askaSay.includes('value')) {
       if (typeof v.value === 'object') {
         let i = -1;
-        return v.askaSay.replace('value', () => {
+        return v.askaSay.replace(/value/g, () => {
           i += 1;
           return v.value[i];
         });
