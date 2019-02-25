@@ -2,6 +2,7 @@ const fs = require('fs');
 const fetch = require('node-fetch');
 const socket = require('../../webSocketOnMessage');
 // ////////////////////////////////////////////////////////////////////////////
+const mainTimeCircle = require('../../mainTimeCircle');
 const { checkURL } = require('../../saveAska');
 const { searchDate } = require('../../textToTime');
 const { sayForecast, sayWeatherNow, sayAnalyticWeather, calcWatchWeather } = require('./calcForecast');
@@ -36,6 +37,7 @@ function sayWatchWeather(ws) {
   let obj = readData();
   socket.send(ws, 'aska', obj.watch);
   obj.times > 1 ? writeData(obj.times - 1) : writeData('');
+  mainTimeCircle.shortInterval(ws);
 }
 module.exports.sayWatchWeather = sayWatchWeather;
 
