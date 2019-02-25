@@ -5,7 +5,7 @@ const asyncAsk = require('../../asyncAsk');
 const { checkURL, checkSmartURL } = require('../../saveAska');
 const lifeCircles = require('./LifeCircles');
 const { calcNow, countToText, dateToText } = require('./calcTime');
-const { shortInterval } = require('../../mainTimeCircle');
+const mainTimeCircle = require('../../mainTimeCircle');
 // /////////////////////////////////////
 // /////////////////////////////////////
 const fileOption = './data/commands/LifeCircles/option.json';
@@ -55,7 +55,7 @@ function ok(ws, arr, i, value) {
   time = dateToText(time);
   let n = arr[i].incident.length + arr[i].startIncident;
   n = countToText(n);
-  asyncAsk.readEndWait(ws, checkSmartURL(`${asyncAsk.whatToSay(AskaSC, 'm0')}@*@${value} ${asyncAsk.whatToSay(AskaSC, 'm1')}@*@#${n}@*@#${asyncAsk.whatToSay(AskaSC, 'm2')} ${time}`), shortInterval);
+  asyncAsk.readEndWait(ws, checkSmartURL(`${asyncAsk.whatToSay(AskaSC, 'm0')}@*@${value} ${asyncAsk.whatToSay(AskaSC, 'm1')}@*@#${n}@*@#${asyncAsk.whatToSay(AskaSC, 'm2')} ${time}`), mainTimeCircle.shortInterval);
 }
 module.exports.ok = ok;
 // ////////////////////////////////////////////////////////////////////////////
@@ -219,6 +219,6 @@ function special(ws, arr, i, key) {
 module.exports.special = special;
 // /////////////////////////////////////////////////////////////////////////////
 function setNotRemind(ws, word) {
-  asyncAsk.readEndWait(ws, checkURL(`${word}, ${asyncAsk.whatToSay(AskaSC, 'z4')}`), shortInterval);
+  asyncAsk.readEndWait(ws, checkURL(`${word}, ${asyncAsk.whatToSay(AskaSC, 'z4')}`), mainTimeCircle.shortInterval);
 }
 module.exports.setNotRemind = setNotRemind;
