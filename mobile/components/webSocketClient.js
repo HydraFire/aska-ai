@@ -1,6 +1,6 @@
 // import iconsole from './interface/iconsole';
 import pushNotification from './pushNotification';
-import { aska } from './speechSynthesizer';
+import { aska, setVolume } from './speechSynthesizer';
 import { animeteErr } from './interface/animation';
 import clientTimeout from './clientTimeout';
 import { twoArr, chargeImpulse } from './quest';
@@ -88,6 +88,9 @@ function start() {
         break;
       case 'goToUrl':
         goToUrl(message.data);
+        break;
+      case 'volume':
+        setVolume(message.data);
         break;
       default:
         // iconsole.logS(message.data);

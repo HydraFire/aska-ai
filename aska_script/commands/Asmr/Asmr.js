@@ -16,7 +16,11 @@ function start(ws, sayWords) {
       chosen = v;
       trackList = fs.readdirSync(`./public/asmr/${v}`);
       trackList = trackList.map(value => `${chosen}/${value}`);
-      //socket.send(ws, 'aska', checkURL(asyncAsk.whatToSay(AskaSC, 'a1')));
+      socket.send(ws, 'volume', 0.2);
+      socket.send(ws, 'aska', checkURL(asyncAsk.whatToSay(AskaSC, 'a1')));
+      // fully shuffleArray
+      trackList = trackList.map(a => [Math.random(), a])
+        .sort((a, b) => a[0] - b[0]).map(a => a[1]);
       socket.send(ws, 'asmr', { command: 'start', trackList });
       i += 1;
     }
@@ -41,13 +45,15 @@ function askStart(ws) {
   asyncAsk.readEndWait(ws, checkURL(asyncAsk.whatToSay(AskaSC, 'a0')), packaging);
 }
 // /////////////////////////////////////////////////////////////////////////////
-function next(ws, sayWords) {
-  start(ws, chosen);
+function next(ws) {
+  socket.send(ws, 'asmr', { command: 'next' });
 }
-
 function stop(ws) {
+  function packaging() {
+    socket.send(ws, 'volume', 1);
+  }
   socket.send(ws, 'asmr', { command: 'stop' });
-  socket.send(ws, 'aska', checkURL(asyncAsk.whatToSay(AskaSC, 'a3')));
+  asyncAsk.readEndWait(ws, checkURL(asyncAsk.whatToSay(AskaSC, 'a3')), packaging);
 }
 // /////////////////////////////////////////////////////////////////////////////
 function Asmr(ws, option, parameters) {
@@ -60,7 +66,7 @@ function Asmr(ws, option, parameters) {
       start(ws, sayWords);
       break;
     case '3':
-      next(ws, sayWords);
+      next(ws);
       break;
     case '4':
       stop(ws);

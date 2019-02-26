@@ -64,6 +64,10 @@ function stopAska() {
   audio2.pause();
   socket.send('speech_end','AUDIO');
 }
+function setVolume(number) {
+  audio.volume = number;
+  audio2.volume = number;
+}
 // /////////////////////////////////////////////////////////////////////////////
 
 // /////////////////////////////////////////////////////////////////////////////
@@ -178,4 +182,4 @@ function aska(text, buttons) {
   window.myconsole.log(text, 'aska');
 }
 // /////////////////////////////////////////////////////////////////////////////
-export { aska, initAudio, stopAska, switchModeOnMute, askStateAskaHide };
+export { aska, initAudio, stopAska, switchModeOnMute, askStateAskaHide, setVolume };
