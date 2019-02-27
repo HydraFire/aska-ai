@@ -1,7 +1,7 @@
 import aska from '../speechSynthesizer';
 /* eslint-disable */
 const read = function read() {
-  let extensionId = 'jaolhkfjhkkakocggfihkelgobjbclol';
+  let extensionId = localStorage.askaChromeExtensionID;
   chrome.runtime.sendMessage(
     extensionId,
     { method: 'getClipboard' },
@@ -12,7 +12,7 @@ const read = function read() {
 }
 // /////////////////////////////////////////////////////////////////////////////
 const translate = function translate() {
-  let extensionId = 'jaolhkfjhkkakocggfihkelgobjbclol';
+  let extensionId = localStorage.askaChromeExtensionID;
   chrome.runtime.sendMessage(
     extensionId,
     { method: 'getClipboard' },
