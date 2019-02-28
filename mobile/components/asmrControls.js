@@ -1,6 +1,10 @@
+import socket from './webSocketClient';
+
 let trackList = [];
 let prevTrack = -1;
 let isPlaying = false;
+let impulseInterval = false;
+
 
 function chooseTrack() {
   prevTrack += 1;
@@ -46,6 +50,11 @@ function controls(obj) {
       prevTrack = -1;
       trackList = obj.trackList;
       playAsmr('next');
+      if (!impulseInterval) {
+        impulseInterval = setInterval(() => {
+          socket.send('impulse', 'impulse');
+        }, 5*60*1000);
+      }
       break;
     case 'next':
       playAsmr('stop');
@@ -53,6 +62,8 @@ function controls(obj) {
       break;
     case 'stop':
       playAsmr('stop');
+      clear(impulseInterval);
+      impulseInterval = false;
       break;
     default:
       //console.log(obj.command);
