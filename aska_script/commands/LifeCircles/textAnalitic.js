@@ -1,4 +1,14 @@
 /* eslint-disable */
+const levenshtein = require('js-levenshtein');
+
+function go(text0, text1) {
+  //console.log(`text0 = ${text0}, text1 = ${text1}`);
+  //console.log(levenshtein(text0, text1))
+  let sym = ((text0.length + text1.length) / 2) - levenshtein(text0, text1);
+  //console.log('       '+sym+'%')
+  return 34 + sym;
+}
+/*
 function go(text0, text1) {
   let procent0 = 0;
   let procent1 = 0;
@@ -68,4 +78,5 @@ function go(text0, text1) {
   let sym = (procent0+procent1+procent1)/3
   return sym
 };
+*/
 module.exports.go = go;
