@@ -1,5 +1,6 @@
+/*
 const fs = require('fs');
-//const brain = require('brain.js');
+const brain = require('brain.js');
 
 function calcLayers(data) {
   const input = data.reduce((a, b) => Object.keys(b.input).length + a, 0);
@@ -50,3 +51,4 @@ function trainMain() {
   fs.writeFileSync('./data/NN_train_buffer.json', JSON.stringify(jsonTrain), 'utf8');
 }
 module.exports.trainMain = trainMain;
+*/

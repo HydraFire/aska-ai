@@ -1,5 +1,6 @@
+/*
 const fs = require('fs');
-//const brain = require('brain.js');
+const brain = require('brain.js');
 const socket = require('../webSocketOnMessage');
 const { calcLayers } = require('./trainMainNN');
 
@@ -62,3 +63,4 @@ function testOptions(text, select) {
   return commandSelect;
 }
 module.exports.testOptions = testOptions;
+*/

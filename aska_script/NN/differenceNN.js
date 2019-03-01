@@ -1,3 +1,4 @@
+/*
 const fs = require('fs');
 const { trainMain } = require('./trainMainNN');
 const MainNN = require('./MainNN');
@@ -52,3 +53,4 @@ function SmartTrain() {
   });
 }
 module.exports.SmartTrain = SmartTrain;
+*/
