@@ -1,5 +1,5 @@
 const fs = require('fs');
-const brain = require('brain.js');
+//const brain = require('brain.js');
 const { calcLayers } = require('./trainMainNN');
 const { configOn, readConfig } = require('../saveAska');
 

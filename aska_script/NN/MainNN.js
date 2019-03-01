@@ -1,5 +1,5 @@
 const fs = require('fs');
-const brain = require('brain.js');
+//const brain = require('brain.js');
 const socket = require('../webSocketOnMessage');
 const { getOptions } = require('./optionalNN');
 const { getParameters } = require('./parameterNN');
