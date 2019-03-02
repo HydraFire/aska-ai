@@ -54,6 +54,9 @@ function controls(obj) {
         impulseInterval = setInterval(() => {
           socket.send('impulse', 'impulse');
         }, 5*60*1000);
+        document.getElementById('audio3').addEventListener('pause',() => {
+          window.myconsole.log('audio3 paused', 'err');
+        })
       }
       break;
     case 'next':

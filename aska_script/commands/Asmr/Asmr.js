@@ -16,7 +16,7 @@ function start(ws, sayWords) {
       chosen = v;
       trackList = fs.readdirSync(`./public/asmr/${v}`);
       trackList = trackList.map(value => `${chosen}/${value}`);
-      socket.send(ws, 'volume', 0.2);
+      socket.send(ws, 'volume', 0.1);
       socket.send(ws, 'aska', checkURL(asyncAsk.whatToSay(AskaSC, 'a1')));
       // fully shuffleArray
       trackList = trackList.map(a => [Math.random(), a])
