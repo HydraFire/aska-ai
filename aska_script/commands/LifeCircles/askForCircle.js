@@ -58,6 +58,35 @@ function ok(ws, arr, i, value) {
   asyncAsk.readEndWait(ws, checkSmartURL(`${asyncAsk.whatToSay(AskaSC, 'm0')}@*@${value} ${asyncAsk.whatToSay(AskaSC, 'm1')}@*@#${n}@*@#${asyncAsk.whatToSay(AskaSC, 'm2')} ${time}`), mainTimeCircle.shortInterval);
 }
 module.exports.ok = ok;
+// ///////////////////////////////////////////////////////////////////////////////
+function countToZero(ws, arr, i, sayWords) {
+  const defaultFunction = function defaultFunction() {
+    socket.send(ws, 'aska', checkURL(asyncAsk.whatToSay(AskaSC, 'k2')));
+  };
+
+  const positive = function positive() {
+    lifeCircles.eventCountToZero(ws, arr, i, parseFloat(ws.ClientSay))
+    socket.send(ws, 'aska', checkURL(asyncAsk.whatToSay(AskaSC, 'k3')));
+  };
+
+  const packaging = function packaging() {
+    asyncAsk.selectFunctionFromWords(ws, [
+      {
+        func: positive,
+        words: [''],
+        isNumber: true,
+        end: true
+      }
+    ], defaultFunction);
+  };
+  asyncAsk.readEndWait(ws, checkURL(asyncAsk.whatToSay(AskaSC, 'k0')), packaging);
+}
+module.exports.countToZero = countToZero;
+
+function sayEventDelete(ws, sayWords) {
+  socket.send(ws, 'aska', 'событие '+ sayWords + ' успешно удалено');
+}
+module.exports.sayEventDelete = sayEventDelete;
 // ////////////////////////////////////////////////////////////////////////////
 function askForStartCount(ws, arr, value) {
   const defaultFunction = function defaultFunction() {

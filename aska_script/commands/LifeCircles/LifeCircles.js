@@ -107,6 +107,18 @@ function setTimeInterval(ws, arr, i, sayWords) {
     askForCircle.noTimeIntervalSay(ws, sayWords.join(' '));
   }
 }
+// ////////////////////////////////////////////////////////////////////////////
+function eventCountToZero(ws, arr, i, value) {
+  arr[i].startIncident = value;
+  arr[i].incident = [];
+  saveFile(filepath, arr);
+}
+module.exports.eventCountToZero = eventCountToZero;
+function eventDelete(ws, arr, i, sayWords) {
+  arr.splice(i, 1);
+  askForCircle.sayEventDelete(ws, sayWords);
+  saveFile(filepath, arr);
+}
 // /////////////////////////////////////////////////////////////////////////////
 // ПРОВЕРКА НАЛИЧИЯ СУЩЕСТВОВАНИЯ ПАРАМЕТРОВ В БАЗЕ
 // /////////////////////////////////////////////////////////////////////////////
@@ -148,6 +160,12 @@ function switchOption(ws, arr, i, sayWords, option) {
       break;
     case '5':
       setTimeInterval(ws, arr, i, sayWords);
+      break;
+    case '6':
+      askForCircle.countToZero(ws, arr, i, sayWords);
+      break;
+    case '7':
+      eventDelete(ws, arr, i, sayWords);
       break;
     default:
       console.log('error option');

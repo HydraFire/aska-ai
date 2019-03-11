@@ -151,6 +151,32 @@ class ChartCom extends React.Component {
     });
     this.enabledButtonsEnableChart(chartButtons);
   }
+  buttonO = (e) => {
+    const name = e.target.getAttribute('alt');
+    socket.send('обнули событие '+ name, 'aska');
+    const chartButtons = this.state.chartButtons.map((v) => {
+      if (v.name === name) {
+        v.borderColor = `rgb(255,255,255)`;
+        return v;
+      } else {
+        return v;
+      }
+    });
+    this.enabledButtonsColorChart(chartButtons);
+  }
+  buttonX = (e) => {
+    const name = e.target.getAttribute('alt');
+    socket.send('удали событие '+ name, 'aska');
+    const chartButtons = this.state.chartButtons.map((v) => {
+      if (v.name === name) {
+        v.borderColor = `rgb(255,255,255)`;
+        return v;
+      } else {
+        return v;
+      }
+    });
+    this.enabledButtonsColorChart(chartButtons);
+  }
   // ///////////////////////////////////////////////////////////////////////////
   checkColor = (chartButtons) => {
     this.state.chartButtons.forEach((v) => {
@@ -269,8 +295,8 @@ class ChartCom extends React.Component {
           <div className="text">
             <button alt={v.name} onClick={this.enabledButtons} style={enColor}  className="buttonEnabled">{ v.enabled ? 'Enabled' : 'disabled'}</button>
             <button alt={v.name} onClick={this.changeColor} style={color} className="buttonColor">{'Color'}</button>
-            <button className="buttonGO">{'GO'}</button>
-            <button className="buttonX">{'X'}</button>
+            <button alt={v.name} onClick={this.buttonO} className="buttonGO">zero</button>
+            <button alt={v.name} onClick={this.buttonX} className="buttonX">X</button>
           </div>
         </div>
       )

@@ -49,9 +49,12 @@ function selectFunctionFromWords(ws, options, defaultFunction) {
           let includeStatus;
           if (v.include) {
             includeStatus = ws.ClientSay.includes(word);
+          } else if (v.isNumber) {
+            includeStatus = typeof parseFloat(ws.ClientSay) === 'number';
           } else {
             includeStatus = ws.ClientSay === word;
           }
+          
           if (v.whatever) {
             includeStatus = true;
           }
