@@ -103,9 +103,9 @@ function askForStartCount(ws, arr, value) {
     asyncAsk.selectFunctionFromWords(ws, [
       {
         func: positive,
-        words: AskaSC.k1,
-        end: true,
-        include: true
+        words: [''],
+        isNumber: true,
+        end: true
       }
     ], defaultFunction);
   };

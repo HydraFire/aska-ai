@@ -41,7 +41,7 @@ function sayAction(ws, obj) {
         return v.askaSay.replace('value', v.value);
       }
     }
-    return v.askaSay;
+    return checkURL(v.askaSay);
   }
   function nextLow() {
     obj.readyToSay = false;
