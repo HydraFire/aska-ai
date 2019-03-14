@@ -4,7 +4,25 @@ let trackList = [];
 let prevTrack = -1;
 let isPlaying = false;
 let impulseInterval = false;
+let waitingInterval = false;
 
+function keepPlaing() {
+  if (waitingInterval) {
+    clear(waitingInterval);
+  }
+}
+
+function pausedWaiting() {
+  let i = 0;
+  waitingInterval = setInterval(() => {
+    i += 1;
+    window.myconsole.log(i, 'err');
+    if (i > 20) {
+      stopAll();
+      clear(waitingInterval);
+    }
+  }, 1000);
+}
 
 function chooseTrack() {
   prevTrack += 1;
@@ -43,6 +61,12 @@ function playAsmr(state) {
   }
 }
 
+function stopAll() {
+  playAsmr('stop');
+  clear(impulseInterval);
+  impulseInterval = false;
+}
+
 function controls(obj) {
   //console.log(obj);
   switch (obj.command) {
@@ -57,7 +81,15 @@ function controls(obj) {
         }, 5*60*1000);
         document.getElementById('audio3').addEventListener('pause',() => {
           window.myconsole.log('audio3 paused', 'err');
-        })
+          pausedWaiting();
+        });
+        document.getElementById('audio3').addEventListener('waiting',() => {
+          window.myconsole.log('audio3 waiting', 'err');
+        });
+        document.getElementById('audio3').addEventListener('play',() => {
+          window.myconsole.log('audio3 play', 'err');
+          keepPlaing();
+        });
       }
       break;
     case 'next':
@@ -65,9 +97,7 @@ function controls(obj) {
       playAsmr('next');
       break;
     case 'stop':
-      playAsmr('stop');
-      clear(impulseInterval);
-      impulseInterval = false;
+      stopAll();
       break;
     default:
       //console.log(obj.command);
