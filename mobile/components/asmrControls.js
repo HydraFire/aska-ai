@@ -8,20 +8,23 @@ let waitingInterval = false;
 
 function keepPlaing() {
   if (waitingInterval) {
-    clear(waitingInterval);
+    clearInterval(waitingInterval);
   }
 }
 
 function pausedWaiting() {
   let i = 0;
-  waitingInterval = setInterval(() => {
-    i += 1;
-    window.myconsole.log(i, 'err');
-    if (i > 20) {
-      stopAll();
-      clear(waitingInterval);
-    }
-  }, 1000);
+  if (!waitingInterval) {
+    waitingInterval = setInterval(() => {
+      i += 1;
+      window.myconsole.log(i, 'err');
+      if (i > 20) {
+        stopAll();
+        clearInterval(waitingInterval);
+        waitingInterval = false;
+      }
+    }, 1000);
+  }
 }
 
 function chooseTrack() {
@@ -35,8 +38,8 @@ function randomDuration(audio) {
 }
 
 function playAsmr(state) {
-  window.myconsole.log('not first time, audio3 ended state: '+state, 'err');
   typeof state != 'string' ? state = 'play' : '';
+  window.myconsole.log('not first time, audio3 ended state: '+state, 'err');
   const audio = document.getElementById('audio3');
   //console.log(`state = ${state}`);
   if (state != 'stop') {
@@ -63,7 +66,7 @@ function playAsmr(state) {
 
 function stopAll() {
   playAsmr('stop');
-  clear(impulseInterval);
+  clearInterval(impulseInterval);
   impulseInterval = false;
 }
 
@@ -82,9 +85,6 @@ function controls(obj) {
         document.getElementById('audio3').addEventListener('pause',() => {
           window.myconsole.log('audio3 paused', 'err');
           pausedWaiting();
-        });
-        document.getElementById('audio3').addEventListener('waiting',() => {
-          window.myconsole.log('audio3 waiting', 'err');
         });
         document.getElementById('audio3').addEventListener('play',() => {
           window.myconsole.log('audio3 play', 'err');
