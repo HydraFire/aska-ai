@@ -90,6 +90,7 @@ function controls(obj) {
         }, 5*60*1000);
         document.getElementById('audio3').addEventListener('pause', pausedWaiting);
         document.getElementById('audio3').addEventListener('play', keepPlaing);
+      }
       break;
     case 'next':
       playAsmr('stop');
