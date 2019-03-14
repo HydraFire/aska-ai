@@ -70,6 +70,8 @@ function stopAll() {
   playAsmr('stop');
   clearInterval(impulseInterval);
   impulseInterval = false;
+  document.getElementById('audio3').removeEventListener('pause', pausedWaiting);
+  document.getElementById('audio3').removeEventListener('play', keepPlaing);
   speech.setVolume(1);
 }
 
@@ -85,15 +87,8 @@ function controls(obj) {
         impulseInterval = setInterval(() => {
           socket.send('impulse', 'impulse');
         }, 5*60*1000);
-        document.getElementById('audio3').addEventListener('pause',() => {
-          //window.myconsole.log('audio3 paused', 'err');
-          pausedWaiting();
-        });
-        document.getElementById('audio3').addEventListener('play',() => {
-          //window.myconsole.log('audio3 play', 'err');
-          keepPlaing();
-        });
-      }
+        document.getElementById('audio3').addEventListener('pause', pausedWaiting);
+        document.getElementById('audio3').addEventListener('play', keepPlaing);
       break;
     case 'next':
       playAsmr('stop');
