@@ -1,4 +1,5 @@
 import socket from './webSocketClient';
+import speech from './speechSynthesizer';
 
 let trackList = [];
 let prevTrack = -1;
@@ -68,6 +69,7 @@ function stopAll() {
   playAsmr('stop');
   clearInterval(impulseInterval);
   impulseInterval = false;
+  speech.setVolume(1);
 }
 
 function controls(obj) {
