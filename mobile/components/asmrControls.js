@@ -10,6 +10,7 @@ let waitingInterval = false;
 function keepPlaing() {
   if (waitingInterval) {
     clearInterval(waitingInterval);
+    waitingInterval = false;
   }
 }
 
