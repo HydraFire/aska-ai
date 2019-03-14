@@ -1,5 +1,5 @@
 import socket from './webSocketClient';
-import speech from './speechSynthesizer';
+import { setVolume } from './speechSynthesizer';
 
 let trackList = [];
 let prevTrack = -1;
@@ -73,7 +73,7 @@ function stopAll() {
   impulseInterval = false;
   document.getElementById('audio3').removeEventListener('pause', pausedWaiting);
   document.getElementById('audio3').removeEventListener('play', keepPlaing);
-  speech.setVolume(1);
+  setVolume(1);
 }
 
 function controls(obj) {
