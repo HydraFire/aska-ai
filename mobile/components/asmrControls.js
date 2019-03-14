@@ -19,7 +19,7 @@ function pausedWaiting() {
   if (!waitingInterval) {
     waitingInterval = setInterval(() => {
       i += 1;
-      //window.myconsole.log(i, 'err');
+      window.myconsole.log(i, 'err');
       if (i > 20) {
         stopAll();
         clearInterval(waitingInterval);
