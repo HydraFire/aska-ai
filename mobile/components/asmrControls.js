@@ -17,6 +17,7 @@ function randomDuration(audio) {
 }
 
 function playAsmr(state) {
+  window.myconsole.log('not first time, audio3 ended', 'err');
   typeof state != 'string' ? state = 'play' : '';
   const audio = document.getElementById('audio3');
   //console.log(`state = ${state}`);
