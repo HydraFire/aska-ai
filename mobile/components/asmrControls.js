@@ -18,7 +18,7 @@ function pausedWaiting() {
   if (!waitingInterval) {
     waitingInterval = setInterval(() => {
       i += 1;
-      window.myconsole.log(i, 'err');
+      //window.myconsole.log(i, 'err');
       if (i > 20) {
         stopAll();
         clearInterval(waitingInterval);
@@ -31,6 +31,7 @@ function pausedWaiting() {
 function chooseTrack() {
   prevTrack += 1;
   prevTrack === trackList.length ? prevTrack = 0 : '';
+  window.myconsole.log(trackList[prevTrack], 'err');
   return trackList[prevTrack];
 }
 
@@ -40,7 +41,7 @@ function randomDuration(audio) {
 
 function playAsmr(state) {
   typeof state != 'string' ? state = 'play' : '';
-  window.myconsole.log('not first time, audio3 ended state: '+state, 'err');
+  //window.myconsole.log('not first time, audio3 ended state: '+state, 'err');
   const audio = document.getElementById('audio3');
   //console.log(`state = ${state}`);
   if (state != 'stop') {
@@ -85,11 +86,11 @@ function controls(obj) {
           socket.send('impulse', 'impulse');
         }, 5*60*1000);
         document.getElementById('audio3').addEventListener('pause',() => {
-          window.myconsole.log('audio3 paused', 'err');
+          //window.myconsole.log('audio3 paused', 'err');
           pausedWaiting();
         });
         document.getElementById('audio3').addEventListener('play',() => {
-          window.myconsole.log('audio3 play', 'err');
+          //window.myconsole.log('audio3 play', 'err');
           keepPlaing();
         });
       }
