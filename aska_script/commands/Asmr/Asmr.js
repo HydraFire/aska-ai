@@ -50,9 +50,8 @@ function next(ws) {
 }
 function stop(ws) {
   function packaging() {
-    socket.send(ws, 'volume', 1);
+    socket.send(ws, 'asmr', { command: 'stop' });
   }
-  socket.send(ws, 'asmr', { command: 'stop' });
   asyncAsk.readEndWait(ws, checkURL(asyncAsk.whatToSay(AskaSC, 'a3')), packaging);
 }
 // /////////////////////////////////////////////////////////////////////////////
