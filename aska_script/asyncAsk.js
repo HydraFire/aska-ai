@@ -54,9 +54,11 @@ function selectFunctionFromWords(ws, options, defaultFunction) {
           } else {
             includeStatus = ws.ClientSay === word;
           }
-          
+
           if (v.whatever) {
-            includeStatus = true;
+            if (ws.ClientSay.length > 2) {
+              includeStatus = true;
+            }
           }
           if (includeStatus) {
             if (v.end) {

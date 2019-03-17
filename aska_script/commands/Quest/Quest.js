@@ -11,28 +11,22 @@ const fileOption = './data/commands/Quest/option.json';
 const AskaSC = JSON.parse(fs.readFileSync(fileOption));
 // /////////////////////////////////////////////////////////////////////////////
 function note(ws, day, time, options) {
-  //
-  let newText = '';
-  //
-  const defaultFunction = function defaultFunction(string) {
-    socket.send(ws, 'aska', checkURL(asyncAsk.whatToSay(AskaSC, 'x5')));
-    newText += `${string}, `;
+
+  function defaultFunction(string) {
+    socket.send(ws, 'aska', checkURL(asyncAsk.whatToSay(AskaSC, 'x4')));
   };
 
-  const first = function attentionCheck() {
-    if (newText !== '') {
-      saveResult(day, time, newText, options);
+  function first() {
+      saveResult(day, time, ws.ClientSay, options);
       socket.send(ws, 'aska', checkURL(asyncAsk.whatToSay(AskaSC, 'f3')));
-    } else {
-      socket.send(ws, 'aska', checkURL(asyncAsk.whatToSay(AskaSC, 'x4')));
-    }
   };
 
-  const packaging = function packaging() {
+  function packaging() {
     asyncAsk.selectFunctionFromWords(ws, [
       {
         func: first,
-        words: AskaSC.x6,
+        words: [''],
+        whatever: true,
         end: true
       }
     ], defaultFunction);
