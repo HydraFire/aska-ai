@@ -36,9 +36,9 @@ function Kaleidoscope() {
   let fHigh;
   let fBass;
   let times = 0;
-  let volumeCoo = (parseFloat(localStorage.audioVolume) / 2) + 0.65;
+  let volumeCoo = (parseFloat(localStorage.audioVolume) / 2) + 3;
   setInterval(() => {
-    volumeCoo = (parseFloat(localStorage.audioVolume) / 2) + 0.65;
+    volumeCoo = (parseFloat(localStorage.audioVolume) / 2) + 3;
   }, 2000);
 
   const HALF_PI = Math.PI / 2;
