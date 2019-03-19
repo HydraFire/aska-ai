@@ -251,3 +251,8 @@ function setNotRemind(ws, word) {
   asyncAsk.readEndWait(ws, checkURL(`${word}, ${asyncAsk.whatToSay(AskaSC, 'z4')}`), mainTimeCircle.shortInterval);
 }
 module.exports.setNotRemind = setNotRemind;
+
+function setNotRemindOneDay(ws, word) {
+  asyncAsk.readEndWait(ws, checkURL(`${word}, ${asyncAsk.whatToSay(AskaSC, 'z7')}`), mainTimeCircle.shortInterval);
+}
+module.exports.setNotRemindOneDay = setNotRemindOneDay;

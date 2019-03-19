@@ -78,6 +78,11 @@ function doNotRemind(ws, arr, i) {
   saveFile(filepath, arr);
   askForCircle.setNotRemind(ws, arr[i].words[0]);
 }
+function doNotRemindOneDay(ws, arr, i) {
+  arr[i].remind = arr[i].remind + (24*60*60*1000);
+  saveFile(filepath, arr);
+  askForCircle.setNotRemindOneDay(ws, arr[i].words[0]);
+}
 function setTime(ws, arr, i, sayWords) {
   sayWords = askForCircle.special(ws, arr, i, 'ignor');
   if (isNaN(parseFloat(sayWords))) {
@@ -166,6 +171,9 @@ function switchOption(ws, arr, i, sayWords, option) {
       break;
     case '7':
       eventDelete(ws, arr, i, sayWords);
+      break;
+    case '8':
+      doNotRemindOneDay(ws, arr, i, sayWords);
       break;
     default:
       console.log('error option');

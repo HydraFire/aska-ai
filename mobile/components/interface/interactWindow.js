@@ -60,7 +60,7 @@ class InteractWindow extends React.Component {
       socket.send(`я ${e.target.getAttribute('value')}`,'aska');
     } else if (e.target.getAttribute('alt') === 'negative') {
       socket.send('speech_end','AUDIO');
-      socket.send(`я не хочу ${e.target.getAttribute('value')}`, 'aska');
+      socket.send(`давай не сегодня ${e.target.getAttribute('value')}`, 'aska');
     } else if (e.target.getAttribute('alt') === 'default') {
       socket.send(null, 'shortInterval');
     }
