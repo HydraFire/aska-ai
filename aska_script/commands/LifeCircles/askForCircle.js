@@ -22,11 +22,11 @@ function difference(a, b) {
   return Math.abs((a - b) / 100000000 | 0);
 }
 function arrayToChartFormatView(elementArray, words) {
-  elementArray.push(Date.now());
-  let data = elementArray.map((v, i) => {
+  //elementArray.push(Date.now());
+  let data = elementArray.filter(f => f > (Date.now() - (94*24*60*60*1000))).map((v, i) => {
     let diffpar = elementArray[i - 1];
     !diffpar ? diffpar = v : '';
-    return { x: dateFormated(v), y: - difference(diffpar, v) };
+    return { x: dateFormated(v), y: difference(diffpar, v) };
   });
   return {
     datasets: [{
