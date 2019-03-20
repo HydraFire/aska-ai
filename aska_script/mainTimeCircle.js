@@ -126,7 +126,7 @@ const checkQuests = function checkQuests(ws) {
   // проверка наличия лайф циклов
 
   let arrLifeCircle = optimazeReadFileLifeCircle.filter(v => timeNow >= v.remind)
-    .map(v => ({ startWith: 'LifeCircle', words: v.words[0] }));
+    .map(v => ({ startWith: 'LifeCircle', words: v.words[0], data: v.incident }));
 
   // сливаем всё в один масив
   finalArray = finalArray.concat(systemNotif, arrEndQuests, arrQuests, arrActions, arrLifeCircle);

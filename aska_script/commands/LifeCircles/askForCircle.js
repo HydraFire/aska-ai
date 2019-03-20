@@ -14,20 +14,47 @@ const AskaSC = JSON.parse(fs.readFileSync(fileOption));
 // /////////////////////////////////////////////////////////////////////////////
 // РЕКОМЕНДОВАНО К ВЫПОЛНЕНИЮ
 // /////////////////////////////////////////////////////////////////////////////
+function dateFormated(d) {
+  const objData = new Date(d);
+  return `${objData.getMonth() + 1}/${objData.getDate()}/${objData.getFullYear()} ${objData.getHours()}:${objData.getMinutes()}`;
+}
+function difference(a, b) {
+  return Math.abs((a - b) / 100000000 | 0);
+}
+function arrayToChartFormatView(elementArray, words) {
+  elementArray.push(Date.now());
+  let data = elementArray.map((v, i) => {
+    let diffpar = elementArray[i - 1];
+    !diffpar ? diffpar = v : '';
+    return { x: dateFormated(v), y: - difference(diffpar, v) };
+  });
+  return {
+    datasets: [{
+      label: words,
+      data,
+      borderColor: 'rgb(255, 255, 255)',
+      backgroundColor: 'rgb(100, 100, 100)',
+      borderWidth: 2,
+      type: 'line'
+    }]
+  }
+}
+// /////////////////////////////////////////////////////////////////////////////
 function LifeCirclesNapominanie(ws, obj) {
-
+  console.log(arrayToChartFormatView(obj.data, obj.words));
   const buttons = [
     {
       mainType: 'typeLifeCircles',
       type: 'negative',
       value: obj.words,
-      name: 'Больше не напоминай'
+      name: 'Сегодня не напоминай',
+      chartData: arrayToChartFormatView(obj.data, obj.words)
     },
     {
       mainType: 'typeLifeCircles',
       type: 'default',
       value: obj.words,
-      name: 'Пропустить'
+      name: '...'
     },
     {
       mainType: 'typeLifeCircles',
@@ -66,7 +93,7 @@ function countToZero(ws, arr, i, sayWords) {
 
   const positive = function positive() {
     lifeCircles.eventCountToZero(ws, arr, i, parseFloat(ws.ClientSay))
-    socket.send(ws, 'aska', checkURL(asyncAsk.whatToSay(AskaSC, 'k3')));
+    socket.send(ws, 'aska', checkURL(asyncAsk.whatToSay(AskaSC, 'k4')));
   };
 
   const packaging = function packaging() {

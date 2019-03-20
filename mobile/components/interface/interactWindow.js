@@ -1,40 +1,108 @@
 import React, { Fragment } from 'react';
+import RC2 from 'react-chartjs2';
 import socket from '../webSocketClient';
 import { switchModeOnMute, askStateAskaHide } from '../speechSynthesizer';
 import '../../css/logo.css';
 
 let imgfilepath = 'http://localhost:6060/';
-let img = document.createElement('img');
+let triggerImgOrVideo = 'img';
+
+let errStatus = 0;
+let final = false;
+
+function formatDateMax() {
+  const x = new Date();
+  return `${x.getUTCMonth() + 1}/${x.getUTCDate()+1}/${x.getFullYear()} 00:00`;
+}
+function formatDateMin() {
+  const x = new Date();
+  let m = x.getUTCMonth() - 1;
+  m < 1 ? m = 1 : '';
+  return `${m}/${x.getUTCDate()}/${x.getFullYear()} 00:00`;
+}
+
+let chartOptions = {
+      animation: {
+          // Chart object
+          duration: 2000,
+          // Animation easing to use
+          easing: 'easeInOutQuad',
+      },
+      legend: {
+          display: false,
+      },
+      tooltips: {
+        enabled: false
+      },
+      scales: {
+        xAxes: [{
+          type: "time",
+          time: {
+            parser: 'MM/DD/YYYY HH:mm',
+            max: formatDateMax(),
+            min: formatDateMin()
+          }
+        }],
+        yAxes: [{
+          ticks: {
+            source:'data'
+          }
+        }]
+  }
+};
 
 class InteractWindow extends React.Component {
   constructor() {
     super();
     this.state = {
-      triggerImgOrVideo: 'img',
-      errStatus: 0,
-      final: true
+      renderImgOrVideo: 'none',
+      errStatus: 0
     };
   }
-  test = () => {
-      if (this.state.triggerImgOrVideo === 'img' && this.state.errStatus < 2) {
-        this.changeFormatMedia('video', this.state.errStatus + 1);
-      } else if (this.state.triggerImgOrVideo === 'video' && this.state.errStatus < 2) {
-        this.changeFormatMedia('img', this.state.errStatus + 1);
-      } else {
-        this.changeFormatMedia('none', 0);
-      }
-  }
+
   componentWillMount() {
-    if (this.state.final) {
-      //window.myconsole.log(`${imgfilepath}${this.props.obj.arr[0].value}`, 'chat');
-      // let img = document.createElement('img');
-      img.src = `${imgfilepath}${this.props.obj.arr[0].value}.jpg`;
-      img.addEventListener('error', this.test );
+    triggerImgOrVideo = 'img';
+    final = false;
+    this.lol();
+  }
+  work = () => {
+    console.log('work '+triggerImgOrVideo);
+    final = true;
+    this.setState({
+      renderImgOrVideo: triggerImgOrVideo,
+      errStatus: 0
+    });
+  }
+  test = () => {
+      if (triggerImgOrVideo === 'img') {
+        triggerImgOrVideo = 'video';
+      } else if (triggerImgOrVideo === 'video') {
+        final = true;
+      }
+      this.lol();
+  }
+  lol = () => {
+    console.log('alo '+final);
+    if (!final) {
+      if (triggerImgOrVideo === 'img') {
+        let img = document.createElement('img');
+        img.src = `${imgfilepath}${this.props.obj.arr[0].value}.jpg`;
+        img.onload = this.work;
+        img.addEventListener('error', this.test, { once: true });
+      } else if(triggerImgOrVideo === 'video') {
+        let video = document.createElement('video');
+        video.src = `${imgfilepath}${this.props.obj.arr[0].value}.mp4`;
+        video.onloadeddata = this.work;
+        video.addEventListener('error', this.test, { once: true });
+      }
     }
   }
+
+  /*
   componentWillUnmount() {
     img.removeEventListener('error', this.test );
   }
+ */
   typeAska = () => {
     socket.send('speech_end','AUDIO');
     this.props.handlerInteractWindow(false);
@@ -66,12 +134,21 @@ class InteractWindow extends React.Component {
     }
     this.props.handlerInteractWindow(false);
   }
+  /*
   changeFormatMedia = (type, num) => {
-    this.setState({
-       triggerImgOrVideo: type,
-       errStatus: num,
-       final: false
-    });
+    console.log('changeFormatMedia');
+
+  }
+  */
+  renderChart = () => {
+    //console.log(this.props.obj.arr[0].chartData);
+    if (this.props.obj.arr[0].chartData && this.state.renderImgOrVideo === 'none') {
+      return (
+        <div className="interactWindow_chart">
+          <RC2 width={360} height={300} data={this.props.obj.arr[0].chartData} options={chartOptions} type="line" />
+        </div>
+      );
+    }
   }
   renderButtons = () => {
     if (this.props.obj.type == 'aska') {
@@ -82,23 +159,26 @@ class InteractWindow extends React.Component {
       );
     }
     return (
-      <div className="interactWindow_bottom">
-        {this.props.obj.arr.map((v, i) => {
-          return <p key={v.name}><button value={v.value} alt={v.type} lol={this.props.obj.type} onClick={this[`${this.props.obj.type}`]}>{v.name}</button></p>
-        })}
-      </div>
+      <Fragment>
+        {this.renderChart()}
+        <div className="interactWindow_bottom">
+          {this.props.obj.arr.map((v, i) => {
+            return <p key={v.name}><button value={v.value} alt={v.type} lol={this.props.obj.type} onClick={this[`${this.props.obj.type}`]}>{v.name}</button></p>
+          })}
+        </div>
+      </Fragment>
     );
   }
   renderImageFromGallery = () => {
-    if (this.state.triggerImgOrVideo === 'img') {
+    if (this.state.renderImgOrVideo === 'img') {
       return <img className="interactWindow_img" src={`${imgfilepath}${this.props.obj.arr[0].value}.jpg`} />;
-    } else if (this.state.triggerImgOrVideo === 'video') {
+    } else if (this.state.renderImgOrVideo === 'video') {
       if (askStateAskaHide()) {
         return <video muted autoPlay className="interactWindow_img" src={`${imgfilepath}${this.props.obj.arr[0].value}.mp4`} />
       }
       return <video autoPlay className="interactWindow_img" src={`${imgfilepath}${this.props.obj.arr[0].value}.mp4`} />
     }
-    return <span>none</span>;
+    return <span></span>;
   }
 
 

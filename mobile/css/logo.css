@@ -67,6 +67,12 @@
   width: auto;
   height: 720px;
 }
+.interactWindow_chart {
+  height: 620px;
+  margin-top: 100px;
+  position: absolute;
+  z-index: 25;
+}
 .interactWindow_bottom {
   height: 720px;
   display: flex;

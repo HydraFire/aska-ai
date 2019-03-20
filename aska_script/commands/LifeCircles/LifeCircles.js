@@ -114,8 +114,7 @@ function setTimeInterval(ws, arr, i, sayWords) {
 }
 // ////////////////////////////////////////////////////////////////////////////
 function eventCountToZero(ws, arr, i, value) {
-  arr[i].startIncident = value;
-  arr[i].incident = [];
+  arr[i].startIncident = (- (arr[i].incident.length - 1)) + value;
   saveFile(filepath, arr);
 }
 module.exports.eventCountToZero = eventCountToZero;
