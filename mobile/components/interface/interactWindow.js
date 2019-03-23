@@ -10,67 +10,90 @@ let triggerImgOrVideo = 'img';
 let errStatus = 0;
 let final = false;
 
-function formatDateMax() {
-  const x = new Date();
-  return `${x.getUTCMonth() + 1}/${x.getUTCDate()+1}/${x.getFullYear()} 00:00`;
+function getMinOfArray(numArray) {
+  numArray = numArray.map(v => v.y);
+  return Math.min.apply(null, numArray);
 }
-function formatDateMin() {
-  const x = new Date();
-  let m = x.getUTCMonth() - 1;
-  m < 1 ? m = 1 : '';
-  return `${m}/${x.getUTCDate()}/${x.getFullYear()} 00:00`;
+function calcTicksMin(arr) {
+  let minNumber = getMinOfArray(arr);
+  minNumber = minNumber - ((minNumber/100) * 5);
+  minNumber = (Math.round(minNumber * 10))/10;
+  return minNumber;
 }
 
-let chartOptions = {
-      animation: {
-          // Chart object
-          duration: 2000,
-          // Animation easing to use
-          easing: 'easeInOutQuad',
-      },
-      legend: {
-          display: false,
-      },
-      tooltips: {
-        enabled: false
-      },
-      scales: {
-        xAxes: [{
-          type: "time",
-          time: {
-            parser: 'MM/DD/YYYY HH:mm',
-            max: formatDateMax(),
-            min: formatDateMin()
-          }
-        }],
-        yAxes: [{
-          ticks: {
-            source:'data'
-          }
-        }]
+function getMaxOfArray(numArray) {
+  numArray = numArray.map(v => v.y);
+  return Math.max.apply(null, numArray);
+}
+function calcTicksMax(arr) {
+  let maxNumber = getMaxOfArray(arr);
+  maxNumber = maxNumber + ((maxNumber/100) * 20);
+  maxNumber = (Math.round(maxNumber * 10))/10;
+  return maxNumber;
+}
+// ////////////////////////////////////////////////////////////////////////////
+function formatDateMax() {
+  const x = new Date();
+  return `${x.getUTCMonth() + 1}/${x.getUTCDate()}/${x.getUTCFullYear()} ${x.getUTCHours()}:${x.getUTCMinutes()}`;
+}
+function formatDateMin(arr) {
+  const x = new Date();
+  let m = x.getUTCMonth();
+  m < 1 ? m = 1 : '';
+  return `${m}/${x.getUTCDate()}/${x.getUTCFullYear()} 00:00`;
+}
+function createChartOptions(data) {
+  /*
+  animation: {
+      // Chart object
+      duration: 2000,
+      // Animation easing to use
+      easing: 'easeInOutQuad',
   }
-};
+  */
+  return {
+        animation: false,
+        legend: {
+            display: false,
+        },
+        tooltips: {
+          enabled: false
+        },
+        scales: {
+          xAxes: [{
+            type: "time",
+            time: {
+              parser: 'MM/DD/YYYY HH:mm',
+              max: formatDateMax(),
+              min: formatDateMin(data.datasets[0].data)
+            }
+          }],
+          yAxes: [{
+            ticks:{
+              min: calcTicksMin(data.datasets[0].data),
+              max: calcTicksMax(data.datasets[0].data)
+            }
+          }]
+    }
+  };
+}
 
 class InteractWindow extends React.Component {
   constructor() {
     super();
     this.state = {
-      renderImgOrVideo: 'none',
-      errStatus: 0
+      renderImgOrVideo: 'none'
     };
   }
-
   componentWillMount() {
     triggerImgOrVideo = 'img';
     final = false;
     this.lol();
   }
   work = () => {
-    console.log('work '+triggerImgOrVideo);
     final = true;
     this.setState({
-      renderImgOrVideo: triggerImgOrVideo,
-      errStatus: 0
+      renderImgOrVideo: triggerImgOrVideo
     });
   }
   test = () => {
@@ -82,7 +105,6 @@ class InteractWindow extends React.Component {
       this.lol();
   }
   lol = () => {
-    console.log('alo '+final);
     if (!final) {
       if (triggerImgOrVideo === 'img') {
         let img = document.createElement('img');
@@ -110,7 +132,7 @@ class InteractWindow extends React.Component {
   typeSwitchMuteMode = (e) => {
     if (e.target.getAttribute('alt') === 'MuteMode') {
       this.props.handlerInteractWindow(false);
-      window.myconsole.log(e.target.getAttribute('value'));
+      //window.myconsole.log(e.target.getAttribute('value'));
       let value = e.target.getAttribute('value');
       value == 'true' ? value = true : value = false ;
       switchModeOnMute(value);
@@ -145,7 +167,7 @@ class InteractWindow extends React.Component {
     if (this.props.obj.arr[0].chartData && this.state.renderImgOrVideo === 'none') {
       return (
         <div className="interactWindow_chart">
-          <RC2 width={360} height={300} data={this.props.obj.arr[0].chartData} options={chartOptions} type="line" />
+          <RC2 width={360} height={300} data={this.props.obj.arr[0].chartData} options={createChartOptions(this.props.obj.arr[0].chartData)} type="line" />
         </div>
       );
     }

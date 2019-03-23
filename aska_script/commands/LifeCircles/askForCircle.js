@@ -19,29 +19,31 @@ function dateFormated(d) {
   return `${objData.getMonth() + 1}/${objData.getDate()}/${objData.getFullYear()} ${objData.getHours()}:${objData.getMinutes()}`;
 }
 function difference(a, b) {
-  return Math.abs((a - b) / 100000000 | 0);
+  let x = Math.abs((a - b) / (24*60*60*1000)).toFixed(1);
+  return x;
 }
 function arrayToChartFormatView(elementArray, words) {
-  //elementArray.push(Date.now());
-  let data = elementArray.filter(f => f > (Date.now() - (94*24*60*60*1000))).map((v, i) => {
-    let diffpar = elementArray[i - 1];
-    !diffpar ? diffpar = v : '';
-    return { x: dateFormated(v), y: difference(diffpar, v) };
-  });
+  //elementArray.push(Date.now()+7*24*60*60*1000);
+  let data = elementArray.filter(f => f > (Date.now() - (37*24*60*60*1000)));
+  data = data.map((v, i) => {
+      let diffpar = data[i - 1];
+      !diffpar ? diffpar = v : '';
+      return { x: dateFormated(v), y: difference(diffpar, v) };
+    })
+    //.filter(f => f.y >= 0.1);
   return {
     datasets: [{
       label: words,
       data,
       borderColor: 'rgb(255, 255, 255)',
-      backgroundColor: 'rgb(100, 100, 100)',
-      borderWidth: 2,
+      borderWidth: 1,
       type: 'line'
     }]
   }
 }
 // /////////////////////////////////////////////////////////////////////////////
 function LifeCirclesNapominanie(ws, obj) {
-  console.log(arrayToChartFormatView(obj.data, obj.words));
+  //console.log(arrayToChartFormatView(obj.data, obj.words));
   const buttons = [
     {
       mainType: 'typeLifeCircles',
