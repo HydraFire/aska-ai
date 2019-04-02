@@ -90,7 +90,7 @@ function scenario(ws, money) {
           sayMoneyError(ws, money, tarif);
         }
       } else {
-        sayDateFinalError(ws, dateFinal);
+        sayDateFinalError(ws, obj.value[0]);
       }
     } else {
       sayDataError(ws, obj.value);
