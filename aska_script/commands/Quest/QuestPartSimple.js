@@ -5,7 +5,7 @@ const mainTimeCircle = require('../../mainTimeCircle');
 // //////////////////////////////////////
 // ////////////////////////////////////////////////////////////////////////////
 function QuestPartSimple(ws, obj) {
-  const packaging = function packaging() {
+  function packaging() {
     saveVictory(obj);
     mainTimeCircle.shortInterval(ws);
   };

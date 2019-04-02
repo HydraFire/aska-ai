@@ -1,26 +1,5 @@
 const socket = require('./webSocketOnMessage');
 const { askaChoice } = require('./NN/LogbookPluginNN');
-/*
-function ask(ws, funTrue, funFalse) {
-  ws.NNListen = false;
-  const skazanoe = ws.ClientSay;
-  const int = setInterval(() => {
-    if (skazanoe !== ws.ClientSay) {
-      if (ws.ClientSay === 'да') {
-        clearInterval(int);
-        ws.NNListen = true;
-        funTrue();
-      } else if (ws.ClientSay === 'нет') {
-        clearInterval(int);
-        ws.NNListen = true;
-        funFalse();
-      }
-    }
-    ws.closeAllInterval ? clearInterval(int) : '';
-  }, 250);
-}
-module.exports.ask = ask;
-*/
 // Стандартная функция выбора ответа
 function whatToSay(arr, key) {
   return arr[key][Math.random() * arr[key].length | 0];
@@ -50,7 +29,7 @@ function selectFunctionFromWords(ws, options, defaultFunction) {
           if (v.include) {
             includeStatus = ws.ClientSay.includes(word);
           } else if (v.isNumber) {
-            includeStatus = typeof parseFloat(ws.ClientSay) === 'number';
+            includeStatus = !isNaN(parseFloat(ws.ClientSay));
           } else {
             includeStatus = ws.ClientSay === word;
           }
@@ -70,10 +49,10 @@ function selectFunctionFromWords(ws, options, defaultFunction) {
           }
         });
       });
+      skazanoe = ws.ClientSay;
       if (flag === 0) {
         defaultFunction(ws.ClientSay);
       }
-      skazanoe = ws.ClientSay;
     }
     ws.closeAllInterval ? clearInterval(int) : '';
   }, 100);
@@ -83,7 +62,7 @@ module.exports.selectFunctionFromWords = selectFunctionFromWords;
 function readEndWait(ws, text, nextFun, param, arrButtons) {
   ws.NNListen = false;
   const int3 = setInterval(() => {
-    console.log(ws.audio);
+    //console.log(ws.audio);
     if (ws.audio === 'speech_end') {
       clearInterval(int3);
       socket.send(ws, 'aska', text, arrButtons);
@@ -107,34 +86,3 @@ function readEndWait(ws, text, nextFun, param, arrButtons) {
 }
 module.exports.readEndWait = readEndWait;
 // /////////////////////////////////////////////////////////////////////////////
-function onlyWait(ws, nextFun, params) {
-  ws.NNListen = false;
-  let i = 0;
-  const int = setInterval(() => {
-    i += 0.25;
-    if (ws.audio === 'speech_end') {
-      clearInterval(int);
-      ws.NNListen = true;
-      nextFun(ws, params);
-    }
-    ws.closeAllInterval ? clearInterval(int) : '';
-    //socket.send(ws, 'console', `onlyWait ${i}s`);
-  }, 100);
-}
-module.exports.onlyWait = onlyWait;
-// /////////////////////////////////////////////////////////////////////////////
-function waitForNNListen(ws, nextFun, params) {
-  let i = 0;
-  const int = setInterval(() => {
-    i += 1.25;
-    if (ws.NNListen) {
-      if (ws.audio === 'speech_end') {
-        clearInterval(int);
-        nextFun(...params);
-      }
-    }
-    ws.closeAllInterval ? clearInterval(int) : '';
-    socket.send(ws, 'console', `onlyWait ${i}s`);
-  }, 2000);
-}
-module.exports.waitForNNListen = waitForNNListen;

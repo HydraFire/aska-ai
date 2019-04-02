@@ -13,6 +13,7 @@ const { ReadClipboard } = require('../commands/ReadClipboard/ReadClipboard');
 const { Music } = require('../commands/Music/Music');
 const { Weather } = require('../commands/Weather/Weather');
 const { WebScraping } = require('../commands/WebScraping/WebScraping');
+const { WebInteract } = require('../commands/WebInteract/WebInteract');
 // /////////////////////////////////////////////////////////////////////////////
 const commands = {
   Asmr,
@@ -24,7 +25,8 @@ const commands = {
   ReadClipboard,
   Music,
   Weather,
-  WebScraping
+  WebScraping,
+  WebInteract
 };
 // /////////////////////////////////////////////////////////////////////////////
 let intelligentObjects = [];

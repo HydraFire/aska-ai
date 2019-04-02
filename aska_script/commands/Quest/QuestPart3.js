@@ -130,11 +130,11 @@ const askPart2 = function askPart2(ws, obj) {
   const first = function attentionCheck() {
     if (newText !== '') {
       saveExcuse(obj, newText);
-      socket.send(ws, 'aska', checkURL(asyncAsk.whatToSay(AskaSC, 'r2')));
-      asyncAsk.onlyWait(ws, askPart5, obj);
+      asyncAsk.readEndWait(ws, checkURL(asyncAsk.whatToSay(AskaSC, 'r2')), askPart5, obj);
+      //asyncAsk.onlyWait(ws, askPart5, obj);
     } else {
-      socket.send(ws, 'aska', checkURL(asyncAsk.whatToSay(AskaSC, 'r3')));
-      asyncAsk.onlyWait(ws, askPart5, obj);
+      asyncAsk.readEndWait(ws, checkURL(asyncAsk.whatToSay(AskaSC, 'r3')), askPart5, obj);
+      //asyncAsk.onlyWait(ws, askPart5, obj);
     }
   };
 
@@ -160,14 +160,11 @@ const QuestPart3 = function QuestPart3(ws, obj) {
   };
 
   const attentionCheck = function attentionCheck() {
-    socket.send(ws, 'aska', checkURL(asyncAsk.whatToSay(AskaSC, 'z2')));
     copyToVictoryFile(obj);
-    mainTimeCircle.shortInterval(ws);
-    // asyncAsk.onlyWait(ws, askPart4, obj);
+    asyncAsk.readEndWait(ws, checkURL(asyncAsk.whatToSay(AskaSC, 'z2')), mainTimeCircle.shortInterval);
   };
   const negative = function negative() {
-    socket.send(ws, 'aska', checkURL(asyncAsk.whatToSay(AskaSC, 'z3')));
-    asyncAsk.onlyWait(ws, askPart2, obj);
+    asyncAsk.readEndWait(ws, checkURL(asyncAsk.whatToSay(AskaSC, 'z3')), askPart2, obj);
   };
 
   const packaging = function packaging() {

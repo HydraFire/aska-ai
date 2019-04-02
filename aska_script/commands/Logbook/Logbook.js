@@ -7,11 +7,13 @@ const { checkURL, checkLargeURL, configOn } = require('../../saveAska');
 const filepath = './data/LogBook.json';
 const fileOption = './data/commands/Logbook/option.json';
 const AskaSC = JSON.parse(fs.readFileSync(fileOption));
+/*
 const fileOptionEXP = './data/commands/Logbook/exp.json';
 const AskaEXP = JSON.parse(fs.readFileSync(fileOptionEXP));
 
 let allmostSay = '';
 // //////////////////////////////////////////////////////////////////////////////
+
 function writeResultEXP(ws, index) {
   if (allmostSay != ws.ClientSay) {
     let objExp = JSON.parse(fs.readFileSync(fileOptionEXP));
@@ -22,6 +24,7 @@ function writeResultEXP(ws, index) {
   }
 }
 module.exports.writeResultEXP = writeResultEXP;
+*/
 // /////////////////////////////////////////////////////////////////////////////
 function readFile(p) {
   try {
@@ -58,86 +61,48 @@ function saveToFile(newText) {
   checkLargeURL(newText);
 }
 // /////////////////////////////////////////////////////////////////////////////
-function oneIteration(ws, text) {
-  let newText = '';
-  const defaultFunction = function defaultFunction(string) {
-    newText += `${string}, `;
-    socket.send(ws, 'aska', checkURL(asyncAsk.whatToSay(AskaSC, 't3')));
-    // let x = asyncAsk.whatToSayEXP(string);
-    // const commandSelect = Object.keys(x).sort((a, b) => x[b] - x[a])[0];
-    // let choicenArr = AskaEXP[`say${commandSelect}`];
-    // choicenArr = choicenArr[Math.random() * choicenArr.length | 0];
-    // let arrButtons = Object.keys(x).map(v => ({ name: AskaEXP[`say${v}`][0], value: (x[v].toFixed(2) * 100 | 0) }));
-    // socket.send(ws, 'aska', checkURL(choicenArr), arrButtons);
-  };
-  const saveOfPart = function saveOfPart() {
-    if (newText !== '') {
-      saveToFile(newText);
-      socket.send(ws, 'aska', checkURL(asyncAsk.whatToSay(AskaSC, 't0')));
-    } else {
-      socket.send(ws, 'aska', checkURL(asyncAsk.whatToSay(AskaSC, 't2')));
-    }
-  };
-  const newPart = function newPart() {
-    saveToFile(newText);
-    newText = '';
-  };
-  const x = function x() {
-    asyncAsk.selectFunctionFromWords(ws, [
-      {
-        func: saveOfPart,
-        words: AskaSC.s0,
-        end: true
-      }, {
-        func: newPart,
-        words: AskaSC.s1,
-        end: false
-      }
-    ], defaultFunction);
-  };
-  const n = function n() {
-    asyncAsk.readEndWait(ws, checkURL(asyncAsk.whatToSay(AskaSC, 't1')), x);
-  };
-  asyncAsk.readEndWait(ws, `#${text}`, n);
-}
-// /////////////////////////////////////////////////////////////////////////////
-
-// /////////////////////////////////////////////////////////////////////////////
-
-// /////////////////////////////////////////////////////////////////////////////
 function Logbook(ws) {
-  const packaging = function packaging(ms, text) {
-    oneIteration(ms, text);
-  };
+  function oneIteration(key) {
+    let newText = '';
+    asyncAsk.readEndWait(ws, `#${obj[key]}`, () => {
+      asyncAsk.readEndWait(ws, checkURL(asyncAsk.whatToSay(AskaSC, 't1')), () => {
+        asyncAsk.selectFunctionFromWords(ws, [
+          {
+            func: () => {
+              if (newText !== '') {
+                saveToFile(newText);
+                asyncAsk.readEndWait(ws, checkURL(asyncAsk.whatToSay(AskaSC, 't0')), arrayIterations)
+              } else {
+                asyncAsk.readEndWait(ws, checkURL(asyncAsk.whatToSay(AskaSC, 't2')), arrayIterations);
+              }
+            },
+            words: AskaSC.s0,
+            end: true
+          }, {
+            func: () => {
+              saveToFile(newText);
+              newText = '';
+            },
+            words: AskaSC.s1,
+            end: false
+          }
+        ], (string) => {
+          newText += `${string}, `;
+          socket.send(ws, 'aska', checkURL(asyncAsk.whatToSay(AskaSC, 't3')));
+        });
+      });
+    });
+  }
+  function arrayIterations() {
+    if (arrKeys.length === 0) {
+      socket.send(ws, 'aska', checkURL(asyncAsk.whatToSay(AskaSC, 't4')));
+    } else {
+      oneIteration(...arrKeys.splice(0, 1));
+    }
+  }
   const array = readFile(filepath);
   const obj = array[array.length - 1];
-
-  let intervalTimer = 0;
-  let arrayAllParts = Object.keys(obj);
-  let functionAlReadyStart = false;
-
-  const int = setInterval(() => {
-    intervalTimer += 0.5;
-    if (ws.NNListen) {
-      functionAlReadyStart = false;
-      arrayAllParts = arrayAllParts.filter((v) => {
-        if (v === 'date') {
-          return false;
-        }
-        if (!functionAlReadyStart) {
-          functionAlReadyStart = true;
-          asyncAsk.onlyWait(ws, packaging, obj[v]);
-          return false;
-        }
-        return true;
-      });
-      if (arrayAllParts.length === 0) {
-        clearInterval(int);
-        asyncAsk.waitForNNListen(ws, socket.send, [ws, 'aska', checkURL(asyncAsk.whatToSay(AskaSC, 't4'))]);
-      }
-    }
-    ws.closeAllInterval ? clearInterval(int) : '';
-    // socket.send(ws, 'console', `Logbook Interval ${intervalTimer}s`);
-  }, 500);
+  let arrKeys = Object.keys(obj).filter(v => v !== 'date');
+  arrayIterations();
 }
 module.exports.Logbook = Logbook;

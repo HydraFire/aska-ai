@@ -103,19 +103,16 @@ function askPrioritySay(ws) {
   };
 
   function low() {
-    socket.send(ws, 'aska', checkURL(asyncAsk.whatToSay(AskaSC, 'ps2')));
     createObj.prioritySay = 'low';
-    asyncAsk.onlyWait(ws, askAskaSay);
+    asyncAsk.readEndWait(ws, checkURL(asyncAsk.whatToSay(AskaSC, 'ps2')), askAskaSay);
   };
   function medium() {
     createObj.prioritySay = 'medium';
-    socket.send(ws, 'aska', checkURL(asyncAsk.whatToSay(AskaSC, 'ps3')));
-    asyncAsk.onlyWait(ws, askAskaSay);
+    asyncAsk.readEndWait(ws, checkURL(asyncAsk.whatToSay(AskaSC, 'ps3')), askAskaSay);
   };
   function high() {
     createObj.prioritySay = 'high';
-    socket.send(ws, 'aska', checkURL(asyncAsk.whatToSay(AskaSC, 'ps4')));
-    asyncAsk.onlyWait(ws, askAskaSay);
+    asyncAsk.readEndWait(ws, checkURL(asyncAsk.whatToSay(AskaSC, 'ps4')), askAskaSay);
   };
 
   function packaging() {
@@ -144,19 +141,16 @@ function askPriorityCheck(ws) {
   };
 
   function low() {
-    socket.send(ws, 'aska', checkURL(asyncAsk.whatToSay(AskaSC, 'pc2')));
     createObj.priorityCheck = 'low';
-    asyncAsk.onlyWait(ws, askPrioritySay);
+    asyncAsk.readEndWait(ws, checkURL(asyncAsk.whatToSay(AskaSC, 'pc2')), askPrioritySay);
   };
   function medium() {
     createObj.priorityCheck = 'medium';
-    socket.send(ws, 'aska', checkURL(asyncAsk.whatToSay(AskaSC, 'pc3')));
-    asyncAsk.onlyWait(ws, askPrioritySay);
+    asyncAsk.readEndWait(ws, checkURL(asyncAsk.whatToSay(AskaSC, 'pc3')), askPrioritySay);
   };
   function high() {
     createObj.priorityCheck = 'high';
-    socket.send(ws, 'aska', checkURL(asyncAsk.whatToSay(AskaSC, 'pc4')));
-    asyncAsk.onlyWait(ws, askPrioritySay);
+    asyncAsk.readEndWait(ws, checkURL(asyncAsk.whatToSay(AskaSC, 'pc4')), askPrioritySay);
   };
 
   function packaging() {
@@ -185,14 +179,12 @@ function askRetry(ws) {
   };
 
   function positive() {
-    socket.send(ws, 'aska', checkURL(asyncAsk.whatToSay(AskaSC, 'r2')));
     createObj.retry = true;
-    asyncAsk.onlyWait(ws, askPriorityCheck);
+    asyncAsk.readEndWait(ws, checkURL(asyncAsk.whatToSay(AskaSC, 'r2')), askPriorityCheck);
   };
   function negative() {
     createObj.retry = false;
-    socket.send(ws, 'aska', checkURL(asyncAsk.whatToSay(AskaSC, 'r2')));
-    asyncAsk.onlyWait(ws, askPriorityCheck);
+    asyncAsk.readEndWait(ws, checkURL(asyncAsk.whatToSay(AskaSC, 'r2')), askPriorityCheck);
   };
 
   function packaging() {
@@ -217,9 +209,8 @@ function askCode(ws) {
   };
 
   function codeCheck() {
-    socket.send(ws, 'aska', checkURL(asyncAsk.whatToSay(AskaSC, 'p2')));
     createObj.code = ws.ClientSay;
-    asyncAsk.onlyWait(ws, askRetry);
+    asyncAsk.readEndWait(ws, checkURL(asyncAsk.whatToSay(AskaSC, 'p2')), askRetry);
   };
   function negative() {
     socket.send(ws, 'aska', checkURL(asyncAsk.whatToSay(AskaSC, 'p3')));
@@ -249,9 +240,8 @@ function addListener(ws) {
   };
 
   function codeCheck() {
-    socket.send(ws, 'aska', checkURL(asyncAsk.whatToSay(AskaSC, 'a1')));
     createObj.name = ws.ClientSay;
-    asyncAsk.onlyWait(ws, askCode);
+    asyncAsk.readEndWait(ws, checkURL(asyncAsk.whatToSay(AskaSC, 'a1')), askCode);
   };
   function negative() {
     socket.send(ws, 'aska', checkURL(asyncAsk.whatToSay(AskaSC, 'p3')));

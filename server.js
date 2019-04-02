@@ -17,16 +17,16 @@ const {
   renderDay,
   renderTime
 } = require('./aska_script/saveAska');
-//
-const exp = express();
-exp.use(express.static(`${__dirname}/public`));
-exp.use(bodyParser.json());
 
-exp.get('/actions', function(req, res){
+const app = express();
+app.use(express.static(`${__dirname}/public`));
+app.use(bodyParser.json());
+
+app.get('/actions', function(req, res){
   res.sendFile(`${__dirname}/data/actions.json`);
   console.log('SendData to nightmare');
 });
-exp.post('/actions', function(req, res){
+app.post('/actions', function(req, res){
   fs.writeFileSync('./data/actions.json', JSON.stringify(JSON.parse(fs.readFileSync('./data/actions.json')).map(v => {
     let temp = req.body.filter(f => v.name === f.name);
     if (temp.length > 0) {
@@ -50,9 +50,9 @@ const options = {
 //
 //
 // http Server
-const server = http.createServer(exp).listen(process.env.PORT);
+const server = http.createServer(app).listen(process.env.PORT);
 // https server
-const serverHttps = https.createServer(options, exp).listen(process.env.PORTS);
+const serverHttps = https.createServer(options, app).listen(process.env.PORTS);
 // WebSocketServer
 const wss = new WebSocketServer({ server });
 const wsp = new WebSocketServer({ server: serverHttps });

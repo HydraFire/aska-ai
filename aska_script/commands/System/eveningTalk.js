@@ -165,8 +165,7 @@ const askPart0 = function askPart0(ws, obj, text) {
 
   const positive = function positive() {
     newTextArr.push(ws.ClientSay);
-    socket.send(ws, 'aska', checkURL(asyncAsk.whatToSay(AskaSC, 'p4')));
-    asyncAsk.onlyWait(ws, askPart1, obj);
+    asyncAsk.readEndWait(ws, checkURL(asyncAsk.whatToSay(AskaSC, 'p4')), askPart1, obj)
   };
 
   const negative = function negative() {

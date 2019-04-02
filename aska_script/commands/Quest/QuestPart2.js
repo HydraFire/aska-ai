@@ -94,8 +94,7 @@ const askPart4 = function askPart4(ws, obj) {
   const first = function first() {
     if (newText !== '') {
       saveExcuse(obj, newText);
-      socket.send(ws, 'aska', checkURL(asyncAsk.whatToSay(AskaSC, 'u1')));
-      asyncAsk.onlyWait(ws, askPart5, obj);
+      asyncAsk.readEndWait(ws, checkURL(asyncAsk.whatToSay(AskaSC, 'u1')), askPart5, obj);
     } else {
       socket.send(ws, 'aska', checkURL(asyncAsk.whatToSay(AskaSC, 'u2')));
     }
@@ -150,13 +149,13 @@ const askPart2 = function askPart2(ws, obj) {
   };
 
   const attentionCheck = function attentionCheck() {
-    socket.send(ws, 'aska', checkURL(asyncAsk.whatToSay(AskaSC, 'p2')));
     saveTimeEnd(obj, ws.ClientSay);
-    asyncAsk.onlyWait(ws, mainTimeCircle.shortInterval);
+    asyncAsk.readEndWait(ws, checkURL(asyncAsk.whatToSay(AskaSC, 'p2')), mainTimeCircle.shortInterval);
+    //asyncAsk.onlyWait(ws, mainTimeCircle.shortInterval);
   };
   const negative = function negative() {
-    socket.send(ws, 'aska', checkURL(asyncAsk.whatToSay(AskaSC, 'p3')));
-    asyncAsk.onlyWait(ws, askPart4, obj);
+    asyncAsk.readEndWait(ws, checkURL(asyncAsk.whatToSay(AskaSC, 'p3')), askPart4, obj);
+    //asyncAsk.onlyWait(ws, askPart4, obj);
   };
 
   const packaging = function packaging() {
