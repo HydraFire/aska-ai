@@ -231,7 +231,7 @@ function scenario(ws, money) {
                 if (document.querySelector('#warning_msg')) {
                   return document.querySelector('#warning_msg').outerText;
                 } else {
-                  return 'xxx';
+                  return document.querySelector('h3[class="payment-success-title"]').outerText;
                 }
           });
       } else {
