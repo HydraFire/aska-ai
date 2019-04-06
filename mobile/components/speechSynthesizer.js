@@ -9,6 +9,7 @@ let audio2
 let errorCount = 0;
 let aska_mute = false;
 let aska_hide = false;
+let aska_yandex_id = process.env.YANDEX_ID;
 // //////////////////////////////////////////////////////////////////////////
 function switchModeOnMute(boolean) {
   window.myconsole.log('ip promise result, aska_hide = ' + boolean, 'err');
@@ -85,7 +86,7 @@ function trueAska(text) {
       } else {
         animeteLoadAudio(true);
         return 'https://tts.voicetech.yandex.net/generate?'+
-            'key=222499e2-1e45-4b6d-aaaa-70b53b87c2ec'+
+            'key='+aska_yandex_id+
             '&text='+encodeURI(text)+
             '&format=mp3'+
             '&lang=ru-RU'+

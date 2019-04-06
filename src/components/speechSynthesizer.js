@@ -3,6 +3,8 @@ import iconsole from './interface/iconsole';
 import socket from './webSocketClient';
 import { recStop, recStart } from './speechRecognition';
 
+let aska_yandex_id = process.env.YANDEX_ID;
+
 function getServerUrl() {
   if (localStorage.aska_ip) {
     return `https://${localStorage.aska_ip.split('//')[1]}/sample/`;
@@ -27,7 +29,7 @@ function aska(text) {
         return `${getServerUrl()}${md5(text.substring(1, text.length))}.mp3`;
       } else {
         return 'https://tts.voicetech.yandex.net/generate?'+
-            'key=222499e2-1e45-4b6d-aaaa-70b53b87c2ec'+
+            'key='+aska_yandex_id+
             '&text='+encodeURI(text)+
             '&format=mp3'+
             '&lang=ru-RU'+
