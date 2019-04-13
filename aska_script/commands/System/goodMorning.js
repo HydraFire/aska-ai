@@ -42,12 +42,7 @@ function sayDateTime() {
   minutes < 10 ? minutes = `0${minutes}` : '';
   let arrDay = ['воскресенье','понедельник','вторник','среда','четверг','пятница','суббота'];
   let arrMonth = ['января', 'февраля', 'марта', 'апреля', 'мая', 'июня', 'июля','августа','сентября','октября','ноября','декабря'];
-  return `сегодня ${arrDay[day]}, ${dateNow.getDate()}-е ${arrMonth[month]}, ${hours}:${minutes}, `;
-}
-function sayWind(windValue) {
-  windValue = windValue | 0;
-  const arr = ['','','очень слабый ветер','слабый ветер', 'ветер немного чувствуется','немного есть ветер', 'сильный ветер', 'сильный сильный ветер','очень сильный ветер'];
-  return arr[windValue];
+  return `сегодня ${arrDay[day]}. ${dateNow.getDate()}-е ${arrMonth[month]}. ${hours}:${minutes}. `;
 }
 function goodMorning(ws, value) {
   sayMorning(ws).then(result => {
@@ -55,10 +50,8 @@ function goodMorning(ws, value) {
     if (value.timeLeft) {
       missYou = iMissYou(value);
     }
-    let text = `${asyncAsk.whatToSay(AskaSC, 'a0')}, ${sayDateTime()}, ${missYou}.${result}`;
-    asyncAsk.readEndWait(ws, text, () => {
-      mainTimeCircle.shortInterval(ws);
-    });
+    let text = `${asyncAsk.whatToSay(AskaSC, 'a0')}. ${sayDateTime()} ${missYou}. ${result}`;
+    asyncAsk.readEndWait(ws, text, mainTimeCircle.shortInterval);
     let x = value.obj;
     x.timeLastRun = Date.now();
     x.timeLastGoodMorning = Date.now();

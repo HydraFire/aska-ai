@@ -32,7 +32,7 @@ function webSocketOnMessage(ws) {
   const arr = verifAccess();
   ws.on('message', (message) => {
     if (ws.accessed) {
-      if (message.length < 30000) {
+    //  if (message.length < 30000) {
         const obj = JSON.parse(message);
         // Пошол розбор полетов
         switch (obj.type) {
@@ -47,6 +47,7 @@ function webSocketOnMessage(ws) {
             // Отправляет обратно пользователю в консоль
             send(ws, 'console', obj.data);
             break;
+
           case 'code':
             ws.ClientSay = obj.data;
             break;
@@ -61,6 +62,7 @@ function webSocketOnMessage(ws) {
 
           case 'AUDIO':
             ws.audio = obj.data;
+            send(ws, 'console', ws.audio);
             break;
             // Подгружает даные для editora на клиенте
           case 'editor':
@@ -100,9 +102,9 @@ function webSocketOnMessage(ws) {
           default:
             // console.log(`Unknown type ${obj.type}`);
         }
-      } else {
-        saveFile(message);
-      }
+      //} else {
+        //saveFile(message);
+      //}
     } else {
       const obj = JSON.parse(message);
       switch (obj.type) {
