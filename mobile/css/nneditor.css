@@ -28,9 +28,6 @@
   margin: 10px 0px 10px 0px;
   color: #999;
 }
-.editor_count {
-  
-}
 .editor_count:after {
     content: " ";
     display: block;
@@ -43,4 +40,5 @@
   border: 1px solid black;
   float: left;
   background: #bbb;
+  white-space: normal;
 }

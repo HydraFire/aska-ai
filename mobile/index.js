@@ -14,6 +14,12 @@ import { newMessage } from './components/interface/displayCanvasMessage';
 // import Coub from './graphics/Coub';
 // import pushNotification from './components/pushNotification';
 
+// What a fuck you doing ?
+/*
+String.prototype.splice = function(idx, rem, str) {
+    return this.slice(0, idx) + str + this.slice(idx + Math.abs(rem));
+};
+*/
 render(<App />, document.querySelector('#main'));
 // ////////////////////////////////////////////////////////////////////////////
 socket.askaSwitchMute();
