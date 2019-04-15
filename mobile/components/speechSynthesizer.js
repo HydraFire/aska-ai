@@ -133,9 +133,12 @@ function trueAska(text) {
         if (text.substring(0, 1) != '#' && text != '20Hz' && text != '50Hz') {
           animeteLoadAudio(false);
         }
+        window.myconsole.log(audioTag.src, 'aska');
         audioTag.play();
-        socket.send('speech_start','AUDIO');
-        animetePlayAudio(true);
+        //if (text != '20Hz') {
+          socket.send('speech_start','AUDIO');
+          animetePlayAudio(true);
+        //}
       }
     };
     function splitAndPlay(text){
@@ -180,7 +183,7 @@ function aska(text, buttons) {
       askaWriteOnScreen(text, buttons);
     }
   }
-  window.myconsole.log(text, 'aska');
+  //window.myconsole.log(text, 'aska');
 }
 // /////////////////////////////////////////////////////////////////////////////
 export { aska, initAudio, stopAska, switchModeOnMute, askStateAskaHide, setVolume };
