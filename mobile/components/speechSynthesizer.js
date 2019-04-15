@@ -133,12 +133,12 @@ function trueAska(text) {
         if (text.substring(0, 1) != '#' && text != '20Hz' && text != '50Hz') {
           animeteLoadAudio(false);
         }
-        window.myconsole.log(audioTag.src, 'aska');
+        //window.myconsole.log(text, 'aska');
         audioTag.play();
-        //if (text != '20Hz') {
+        if (text != '20Hz' && text != '50Hz') {
           socket.send('speech_start','AUDIO');
           animetePlayAudio(true);
-        //}
+        }
       }
     };
     function splitAndPlay(text){
