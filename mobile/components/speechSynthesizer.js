@@ -136,7 +136,7 @@ function trueAska(text) {
         //window.myconsole.log(text, 'aska');
         audioTag.play();
         if (text != '20Hz' && text != '50Hz') {
-          socket.send('speech_start','AUDIO');
+          //socket.send('speech_start','AUDIO');
           animetePlayAudio(true);
         }
       }
@@ -183,7 +183,7 @@ function aska(text, buttons) {
       askaWriteOnScreen(text, buttons);
     }
   }
-  //window.myconsole.log(text, 'aska');
+  window.myconsole.log(text, 'aska');
 }
 // /////////////////////////////////////////////////////////////////////////////
 export { aska, initAudio, stopAska, switchModeOnMute, askStateAskaHide, setVolume };

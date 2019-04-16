@@ -16,7 +16,7 @@ function send(ws, type, data, buttons) {
       data = Object.keys(data).reduce((a, b) => a.concat(`${b}: ${data[b]}<br>`), '');
     }
     if (type === 'aska') {
-      //ws.audio = 'speech_start';
+      ws.audio = 'speech_start';
     }
     ws.send(JSON.stringify({ type, data, buttons }));
   }
@@ -62,7 +62,7 @@ function webSocketOnMessage(ws) {
 
           case 'AUDIO':
             ws.audio = obj.data;
-            send(ws, 'console', ws.audio);
+            //send(ws, 'console', ws.audio);
             break;
             // Подгружает даные для editora на клиенте
           case 'editor':

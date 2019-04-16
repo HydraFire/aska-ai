@@ -109,3 +109,8 @@ const saveVictory = function saveVictory(obj) {
   mainTimeCircle.reloadFileQuest();
 };
 module.exports.saveVictory = saveVictory;
+
+const convertAllDataToSimpleQuest = function(ws, obj, range, newText) {
+  console.log(`${obj.words[0]} ${range} ${newText}`);
+}
+module.exports.convertAllDataToSimpleQuest = convertAllDataToSimpleQuest;

@@ -183,6 +183,7 @@ module.exports.switchOption = switchOption;
 function paramTest(arr, words) {
   return arr.findIndex(v => v.words.some(w => w === words));
 }
+module.exports.paramTest = paramTest;
 // /////////////////////////////////////////////////////////////////////////////
 function LifeCircles(ws, option, parameters) {
   const sayWords = parameters.join(' ');

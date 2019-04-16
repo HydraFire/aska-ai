@@ -3,7 +3,7 @@ import InputLayer from './inputLayer';
 import socket from '../webSocketClient';
 import myRender from './NNEditorRender';
 import '../../css/nneditor.css';
-
+/*
 function autoAddOptionToDescription(objFunc) {
   objFunc.nn.reduce((a, b) => a.concat(b), []).forEach(v => {
     if (!objFunc.description.some(value => v === value)) {
@@ -12,6 +12,7 @@ function autoAddOptionToDescription(objFunc) {
   })
   return objFunc;
 }
+*/
 // /////////////////////////////////////////////////////////////////////////////
 class NNEditor extends React.Component {
   constructor() {
@@ -81,7 +82,7 @@ class NNEditor extends React.Component {
       } else if (pickT !== '+' && newText != '') {
         objFunc.nn[pickA].splice(objFunc.nn[pickA].indexOf(pickT), 1, newText);
       }
-      objFunc = autoAddOptionToDescription(objFunc);
+      //objFunc = autoAddOptionToDescription(objFunc);
     }
 
     if (pickS === 'says') {

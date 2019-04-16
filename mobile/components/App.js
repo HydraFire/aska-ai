@@ -21,13 +21,13 @@ class App extends React.Component {
             <Logo ref={(myconsole) => { window.myconsole = myconsole }}/>
           </div>
           <div className="page">
-            <div id="cube1">
-              <ChallengeLog ref={(cLogComponent) => { window.cLogComponent = cLogComponent }} />
+            <div id="cube2">
+              <NNEditor ref={(editorComponent) => { window.editorComponent = editorComponent }}/>
             </div>
           </div>
           <div className="page">
-            <div id="cube2">
-              <NNEditor ref={(editorComponent) => { window.editorComponent = editorComponent }}/>
+            <div id="cube1">
+              <ChallengeLog ref={(cLogComponent) => { window.cLogComponent = cLogComponent }} />
             </div>
           </div>
           <div className="page2x">

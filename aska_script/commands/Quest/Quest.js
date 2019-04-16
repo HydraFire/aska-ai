@@ -5,6 +5,7 @@ const { checkURL } = require('../../saveAska');
 const { questSimple } = require('./QuestSimple');
 const { searchDate, searchTime } = require('../../textToTime');
 const { saveResult } = require('./QuestInstrument');
+const { questSpecial } = require('./QuestSpecial');
 // ///////////////////////////////
 // ///////////////////////////////
 const fileOption = './data/commands/Quest/option.json';
@@ -89,11 +90,25 @@ function questHard(ws, options, parameters) {
   }, 1000);
 }
 // /////////////////////////////////////////////////////////////////////////////
-function Quest(ws, options, parameters) {
-  if (options === '3') {
-    questSimple(ws, parameters);
-  } else {
-    questHard(ws, options, parameters);
+function Quest(ws, option, parameters) {
+  switch (option) {
+    case '1':
+      questHard(ws, option, parameters);
+      break;
+    case '2':
+      questHard(ws, option, parameters);
+      break;
+    case '3':
+      questSimple(ws, parameters);
+      break;
+    case '4':
+      questSpecial(ws);
+      break;
+    case '5':
+      console.log('error option');
+      break;
+    default:
+      console.log('error option');
   }
 }
 module.exports.Quest = Quest;
