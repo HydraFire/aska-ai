@@ -240,14 +240,12 @@ function go(ws, arr, value, allWordsArray, option) {
 module.exports.go = go;
 // /////////////////////////////////////////////////////////////////////////////
 function clientTimeout(ws, arr, i) {
-  if (arr[i].timeOut > 0) {
-    socket.send(ws, 'clientTimeout', JSON.stringify([checkURL(asyncAsk.whatToSay(AskaSC, arr[i].optionKey)), arr[i].timeOut]));
-  }
+  socket.send(ws, 'clientTimeout', JSON.stringify([checkURL(asyncAsk.whatToSay(AskaSC, arr[i].optionKey)), arr[i].timeOut]));
 }
 module.exports.clientTimeout = clientTimeout;
 // ////////////////////////////////////////////////////////////////////////////
-function setTimer(ws, i) {
-  socket.send(ws, 'aska', checkURL(`${asyncAsk.whatToSay(AskaSC, 'z2')} ${i} минут`));
+function setTimer(i) {
+  return checkURL(`${asyncAsk.whatToSay(AskaSC, 'z2')} ${i} минут`);
 }
 module.exports.setTimer = setTimer;
 function setTimeIntervalSay(ws, i) {

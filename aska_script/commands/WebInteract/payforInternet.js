@@ -11,21 +11,27 @@ const AskaSC = JSON.parse(fs.readFileSync(fileOption));
 // /////////////////////////////////////////////////////////////////////////////
 function sayDataError(ws, err) {
   console.log(err);
+  ws.lifeCirclesResponse = 'error';
   socket.send(ws, 'aska', checkURL(asyncAsk.whatToSay(AskaSC, arguments.callee.name)));
 }
 function sayDateFinalError(ws, dateFinal) {
+  ws.lifeCirclesResponse = 'error';
   socket.send(ws, 'aska', `${AskaSC.sayDateFinalError[0]} ${dateFinal}`);
 }
 function sayMoneyError(ws, money, tarif) {
+  ws.lifeCirclesResponse = 'error';
   socket.send(ws, 'aska', `${AskaSC.sayMoneyError[0]} ${tarif},${AskaSC.sayMoneyError[1]} ${money}`);
 }
 function sayPaySiteError(ws) {
+  ws.lifeCirclesResponse = 'error';
   socket.send(ws, 'aska', checkURL(asyncAsk.whatToSay(AskaSC, arguments.callee.name)));
 }
 function payError(ws, errText) {
+  ws.lifeCirclesResponse = 'error';
   socket.send(ws, 'aska', checkURL(`${asyncAsk.whatToSay(AskaSC, arguments.callee.name)}, ${errText}`));
 }
 function allIsDone(ws) {
+  ws.lifeCirclesResponse = 'done';
   socket.send(ws, 'aska', checkURL(asyncAsk.whatToSay(AskaSC, arguments.callee.name)));
 }
 function askMoneyCheckError(ws) {

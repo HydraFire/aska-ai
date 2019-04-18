@@ -10,9 +10,11 @@ const AskaSC = JSON.parse(fs.readFileSync(fileOption));
 // /////////////////////////////////////////////////////////////////////////////
 function sayConnectError(ws, err) {
   console.log(err);
+  ws.lifeCirclesResponse = 'error';
   socket.send(ws, 'aska', checkURL(asyncAsk.whatToSay(AskaSC, arguments.callee.name)));
 }
 function sayIsBusy(ws) {
+  ws.lifeCirclesResponse = 'error';
   socket.send(ws, 'aska', checkURL(asyncAsk.whatToSay(AskaSC, arguments.callee.name)));
 }
 // ////////////////////////////////////////////////////////////////////////////
@@ -54,7 +56,7 @@ function assembleTheParts(...array) {
                   clearInterval(int);
                   resolve(answer.secondRes);
                 }
-                if (i > 500) {
+                if (i > 360) {
                   clearInterval(int);
                   reject();
                 }

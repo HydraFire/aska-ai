@@ -1,10 +1,15 @@
 const fs = require('fs');
+const main = require('../../NN/fuckOffNN');
 const socket = require('../../webSocketOnMessage');
 const mainTimeCircle = require('../../mainTimeCircle');
+const asyncAsk = require('../../asyncAsk');
+const { checkURL } = require('../../saveAska');
 const askForCircle = require('./askForCircle');
 const textAnalitic = require('./textAnalitic');
 const { calcLast } = require('./calcTime');
 // //////////////////////////////////////
+const fileOption = './data/commands/LifeCircles/option.json';
+const AskaSC = JSON.parse(fs.readFileSync(fileOption));
 // //////////////////////////////////////
 const filepath = './data/LifeCirclesData.json';
 const example = [{
@@ -42,7 +47,14 @@ function saveIncidentFirstTime(arr, value, startCount) {
 module.exports.saveIncidentFirstTime = saveIncidentFirstTime;
 // /////////////////////////////////////////////////////////////////////////////
 function remindCalc(ws, arr, i) {
-  if (arr[i].timeInterval) {
+  if (arr[i].DayOfMonth) {
+    let r = new Date();
+    let month = r.getMonth();
+    r.getDate() >= arr[i].DayOfMonth ? month += 1 : '';
+    arr[i].remind = Date.parse(new Date(r.getFullYear(), month, arr[i].DayOfMonth, 20, 0, 0, 0));
+    return arr;
+  }
+  if (arr[i].timeInterval && arr[i].timeInterval[0]) {
     let zzz = arr[i].incident[arr[i].incident.length - 1];
     zzz += arr[i].timeInterval[0] * 3600000;
     const m = arr[i].timeInterval.shift();
@@ -59,14 +71,46 @@ function remindCalc(ws, arr, i) {
 }
 
 // /////////////////////////////////////////////////////////////////////////////
-
-// /////////////////////////////////////////////////////////////////////////////
-function itsHappened(ws, arr, i, value) {
-  askForCircle.ok(ws, arr, i, value);
+function itsHappened(ws, arr, i) {
   arr[i].incident.push(Date.parse(new Date()));
+  // изменяем розчет времени
   arr = remindCalc(ws, arr, i);
-  askForCircle.clientTimeout(ws, arr, i);
   saveFile(filepath, arr);
+}
+
+function waitIntervalEndFunc(ws, arr, i, value) {
+
+  const int = setInterval(() => {
+    if (ws.lifeCirclesResponse === 'done') {
+      ws.audio = 'speech_start';
+      if (arr[i].startFunction) {
+        askForCircle.ok(ws, arr, i, value);
+      }
+      itsHappened(ws, arr, i, value);
+      ws.lifeCirclesResponse = 'none';
+      clearInterval(int);
+    } else if (ws.lifeCirclesResponse === 'error') {
+      ws.lifeCirclesResponse = 'none';
+      clearInterval(int);
+    }
+    ws.closeAllInterval ? clearInterval(int) : '';
+  }, 1000);
+
+  if (arr[i].startFunction) {
+    main.start(ws, arr[i].startFunction);
+  } else {
+    askForCircle.ok(ws, arr, i, value);
+    askForCircle.clientTimeout(ws, arr, i);
+  }
+}
+// /////////////////////////////////////////////////////////////////////////////
+function selectScriptBranch(ws, arr, i, value) {
+  if (arr[i].timeOut || arr[i].startFunction) {
+    waitIntervalEndFunc(ws, arr, i, value);
+  } else {
+    askForCircle.ok(ws, arr, i, value);
+    itsHappened(ws, arr, i);
+  }
 }
 
 function whenDidItHappen(ws, arr, i, value) {
@@ -84,6 +128,44 @@ function doNotRemindOneDay(ws, arr, i) {
   askForCircle.setNotRemindOneDay(ws, arr[i].words[0]);
 }
 function setTime(ws, arr, i, sayWords) {
+  asyncAsk.readEndWait(ws, checkURL(asyncAsk.whatToSay(AskaSC, arguments.callee.name)), () => {
+    asyncAsk.selectFunctionFromWords(ws, [
+      {
+        func: () => {
+          socket.send(ws, 'aska', checkURL(asyncAsk.whatToSay(AskaSC, 'setTimeCancel')));
+        },
+        words: AskaSC.wordsNo,
+        end: true
+      },
+      {
+        func: () => {
+          socket.send(ws, 'aska', askForCircle.setTimer(parseFloat(ws.ClientSay)));
+          arr[i].timeOut = parseFloat(ws.ClientSay);
+          saveFile(filepath, arr);
+        },
+        words: [''],
+        isNumber: true,
+        end: true
+      },
+      {
+        func: () => {
+          console.log('ok');
+        },
+        words: ['end'],
+        end: true
+      }
+    ], () => {
+      if (main.checkIntelligentObject(ws.ClientSay)) {
+        socket.send(ws, 'aska', `${asyncAsk.whatToSay(AskaSC, 'setOKFunc')} ${ws.ClientSay}`);
+        arr[i].startFunction = ws.ClientSay;
+        saveFile(filepath, arr);
+        ws.ClientSay = 'end';
+      } else {
+        socket.send(ws, 'aska', checkURL(asyncAsk.whatToSay(AskaSC, 'setTimeDef')));
+      }
+    });
+  });
+  /*
   sayWords = askForCircle.special(ws, arr, i, 'ignor');
   if (isNaN(parseFloat(sayWords))) {
     askForCircle.noTimeInt(ws);
@@ -92,10 +174,9 @@ function setTime(ws, arr, i, sayWords) {
     saveFile(filepath, arr);
     askForCircle.setTimer(ws, parseFloat(sayWords));
   }
+  */
 }
-
-function setTimeInterval(ws, arr, i, sayWords) {
-  sayWords = askForCircle.special(ws, arr, i, 'ignor');
+function checkTimeInterval(ws, arr, i, sayWords) {
   sayWords = sayWords.split(' ');
   sayWords = sayWords.map(v => v.replace(/[, ]+/g, " ").trim());
   sayWords = sayWords.map((v) => {
@@ -111,6 +192,38 @@ function setTimeInterval(ws, arr, i, sayWords) {
     socket.send(ws, 'console', `sayWords = ${sayWords}`);
     askForCircle.noTimeIntervalSay(ws, sayWords.join(' '));
   }
+}
+function setTimeInterval(ws, arr, i, sayWords) {
+  asyncAsk.readEndWait(ws, checkURL(asyncAsk.whatToSay(AskaSC, arguments.callee.name)), () => {
+    asyncAsk.selectFunctionFromWords(ws, [
+      {
+        func: () => {
+          socket.send(ws, 'aska', checkURL(asyncAsk.whatToSay(AskaSC, 'setTimeCancel')));
+        },
+        words: AskaSC.wordsNo,
+        end: true
+      },
+      {
+        func: () => {
+          console.log('ok');
+        },
+        words: ['end'],
+        end: true
+      }
+    ], () => {
+      if (ws.ClientSay.includes('числа')) {
+        socket.send(ws, 'aska', `${asyncAsk.whatToSay(AskaSC, 'setOKDate')} ${parseFloat(ws.ClientSay)} числа`);
+        if (parseFloat(ws.ClientSay) < 31) {
+          arr[i].DayOfMonth = parseFloat(ws.ClientSay);
+          saveFile(filepath, arr);
+        }
+        ws.ClientSay = 'end';
+      } else {
+        checkTimeInterval(ws, arr, i, ws.ClientSay);
+        ws.ClientSay = 'end';
+      }
+    });
+  });
 }
 // ////////////////////////////////////////////////////////////////////////////
 function eventCountToZero(ws, arr, i, value) {
@@ -151,7 +264,7 @@ function allWordsTest(ws, arr, value, option) {
 function switchOption(ws, arr, i, sayWords, option) {
   switch (option) {
     case '1':
-      itsHappened(ws, arr, i, sayWords);
+      selectScriptBranch(ws, arr, i, sayWords);
       break;
     case '2':
       whenDidItHappen(ws, arr, i, sayWords);

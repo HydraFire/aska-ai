@@ -90,14 +90,16 @@ function webSocketOnMessage(ws) {
             console.log('GET IMPULSE');
             checkAssignments(ws);
             break;
+            /*
           case 'expClick':
             writeResultEXP(ws, obj.data);
             break;
+            */
           case 'shortInterval':
             shortInterval(ws);
             break;
-          case 'kaleidoscopeImg':
-            getImgs(ws);
+          case 'lifeCirclesResponse':
+            ws.lifeCirclesResponse = obj.data;
             break;
           default:
             // console.log(`Unknown type ${obj.type}`);

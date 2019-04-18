@@ -15,6 +15,7 @@ function webSocketOnConnect(wss) {
     ws.accessed = false;
     // позволит запустить новую комманду
     ws.NNListen = true;
+    ws.lifeCirclesResponse = 'none';
     // статус проигрования аудио на клиенте, speech_end тоесть сейчас не проигрываеться
     ws.audio = 'speech_end';
     ws.endedTracks = [];

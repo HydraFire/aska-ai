@@ -95,6 +95,7 @@ function Logbook(ws) {
   }
   function arrayIterations() {
     if (arrKeys.length === 0) {
+      ws.lifeCirclesResponse = 'done';
       socket.send(ws, 'aska', checkURL(asyncAsk.whatToSay(AskaSC, 't4')));
     } else {
       oneIteration(...arrKeys.splice(0, 1));

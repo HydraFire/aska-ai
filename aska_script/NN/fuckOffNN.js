@@ -31,6 +31,10 @@ const commands = {
 // /////////////////////////////////////////////////////////////////////////////
 let intelligentObjects = [];
 // /////////////////////////////////////////////////////////////////////////////
+module.exports.checkIntelligentObject = function(str) {
+  return intelligentObjects.some(v => v.keyWords == str);
+}
+// /////////////////////////////////////////////////////////////////////////////
 function buildIntelligentObjects(src, fileName, exception) {
   const list = fs.readdirSync(src).filter(f => f != exception).map((v) =>
       ({ [v]: JSON.parse(fs.readFileSync(`${src}${v}${fileName}`)).nn })

@@ -1,4 +1,4 @@
-
+import socket from './webSocketClient';
 import { aska, askStateAskaHide } from './speechSynthesizer';
 import { getmainInterval, play20Hz, stop20Hz } from './quest';
 
@@ -24,6 +24,7 @@ function clientTimeout(arr) {
         aska(arr[0]);
       }
       clearInterval(int);
+      socket.send('done', 'lifeCirclesResponse');
       if (getmainInterval() == 0) {
         stop20Hz();
       }
