@@ -37,7 +37,6 @@ function note(ws, day, time, options) {
 
 // ////////////////////////////////////////////////////////////////////////////
 function questHard(ws, options, parameters) {
-  //  const a = parameters.join(' ');
   ws.NNListen = false;
   let skazanoe = '';
   let x = false;
@@ -70,7 +69,7 @@ function questHard(ws, options, parameters) {
         }
       }
       if (!z) {
-        console.log(`parameters ${parameters}***`);
+        //console.log(`parameters ${parameters}***`);
         if (parameters != '') {
           z = true;
         } else if (question) {
@@ -105,7 +104,7 @@ function Quest(ws, option, parameters) {
       questSpecial(ws);
       break;
     case '5':
-      console.log('error option');
+      questHard(ws, option, parameters);
       break;
     default:
       console.log('error option');

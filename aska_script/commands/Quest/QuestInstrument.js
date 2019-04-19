@@ -1,6 +1,8 @@
+const fs = require('fs');
 const { textToTime, normalizeTimeZone } = require('../../textToTime');
 const mainTimeCircle = require('../../mainTimeCircle');
-const fs = require('fs');
+const { checkURL } = require('../../saveAska');
+
 
 const filepath = './data/QuestData.json';
 const fileVictorypath = './data/QuestVictoryData.json';
@@ -10,17 +12,27 @@ function saveResult(day, time, text, options) {
     options = 'HARD';
   } else if (options === '2') {
     options = 'LITE';
+  } else if (options === '5') {
+    options = 'LITE_Infinity';
   } else {
     options = 'SIMPLE';
   }
   const str = day + time;
   const normalDate = Date.parse(new Date(str));
+  if (options === 'LITE_Infinity') {
+    text = checkURL(text);
+  }
   const obj = {
     startDate: normalizeTimeZone(normalDate),
     endDate: 9999999999999,
     quest: text,
     type: options
   };
+  /*
+  if (options === 'LITE_Infinity') {
+    obj.TimeInterval =
+  }
+  */
   const arr = JSON.parse(fs.readFileSync(filepath));
   arr.push(obj);
   fs.writeFileSync(filepath, JSON.stringify(arr), 'utf8');
@@ -36,6 +48,7 @@ function saveObjtoFile(obj) {
   fs.writeFileSync(filepath, JSON.stringify(arr), 'utf8');
   mainTimeCircle.reloadFileQuest();
 }
+module.exports.saveObjtoFile = saveObjtoFile;
 // /////////////////////////////////////////////////////////////////////////////
 function copyToVictoryFile(obj) {
   delete obj.startWith;
