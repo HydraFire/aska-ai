@@ -86,7 +86,7 @@ function readEndWait(ws, text, nextFun, param, arrButtons) {
       ws.closeAllInterval ? clearInterval(int3) : '';
     }, 100);
   } else {
-    console.log('readEndWait Error input Text');
+    console.log('readEndWait input Text === "" or undefined');
   }
 }
 module.exports.readEndWait = readEndWait;

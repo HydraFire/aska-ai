@@ -60,12 +60,15 @@ function goodMorning(ws, value) {
     asyncAsk.readEndWait(ws, checkURL(missYou));
     //console.log(result);
     result.split(',')
-      .filter(v => v != '' && v != ' ' && v != ', ' && v != ' ,')
-      .forEach(v => asyncAsk.readEndWait(ws, checkURL(v)));
+      .filter(v => v != '' && v != ' ' && v != ', ' && v != ' ,' && v != ',')
+      .forEach((v, i, arr) => {
+        if (i === arr.length - 1) {
+          asyncAsk.readEndWait(ws, checkURL(v), mainTimeCircle.shortInterval)
+        } else {
+          asyncAsk.readEndWait(ws, checkURL(v));
+        }
+      });
 
-
-
-    //asyncAsk.readEndWait(ws, text4, mainTimeCircle.shortInterval);
     let x = value.obj;
     x.timeLastRun = Date.now();
     x.timeLastGoodMorning = Date.now();

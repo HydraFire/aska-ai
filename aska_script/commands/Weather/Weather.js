@@ -11,7 +11,10 @@ const { getWeather, getForecast, dataBuild, buildForecastDaysColection, writeDat
 // ////////////////////////////////////////////////////////////////////////////
 function sayWeather(ws) {
   getWeather(ws).then((json) => {
-    socket.send(ws, 'aska', sayWeatherNow(json));
+    sayWeatherNow(json)
+      .split(',')
+      .filter(v => v != '' && v != ' ' && v != ', ' && v != ' ,' && v != ',')
+      .forEach(v => asyncAsk.readEndWait(ws, checkURL(v)));
   });
 }
 
@@ -20,7 +23,7 @@ function startForecast(ws, params) {
     let obj = dataBuild(dataArr, parseFloat(searchDate(params[0]).split('-')[2]), ws);
     sayForecast(obj, params)
       .split(',')
-      .filter(v => v != '' && v != ' ' && v != ', ' && v != ' ,')
+      .filter(v => v != '' && v != ' ' && v != ', ' && v != ' ,' && v != ',')
       .forEach(v => asyncAsk.readEndWait(ws, checkURL(v)));
   });
 }
