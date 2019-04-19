@@ -67,14 +67,16 @@ function saveAudio(text, p) {
 }
 // ////////////////////////////////////////////
 function checkURL(text, p) {
-  if (arrAska.all.some(v => v == text)) {
-    text = `#${text}`;
-  } else {
-    setTimeout(() => {
-      saveAudio(text, p);
-    }, 3000);
+  if (text != '') {
+    if (arrAska.all.some(v => v == text)) {
+      text = `#${text}`;
+    } else {
+      setTimeout(() => {
+        saveAudio(text, p);
+      }, 3000);
+    }
+    return text;
   }
-  return text;
 }
 module.exports.checkURL = checkURL;
 // ////////////////////////////////////////////

@@ -84,6 +84,21 @@ function animeteUltraSound(boolean) {
     animUS.cancel();
   }
 }
+function animeteIPcheck(boolean) {
+  if (boolean) {
+    animUS = document.querySelector('#c6').animate([
+      // keyframes
+      { transform: 'rotate(0deg) scale(1.3)' },
+      { transform: 'rotate(360deg) scale(0.2)' }
+    ], {
+      // timing options
+      duration: 1000,
+      iterations: Infinity
+    });
+  } else {
+    animUS.cancel();
+  }
+}
 // ////////////////////////////////////////////////////////////////////////////////
 function getStarted() {
   const arr = new Array(10);
@@ -139,4 +154,4 @@ function animetePlayAudio(boolean) {
   }
 }
 
-export { init, animetePlayAudio, animeteLoadAudio, animeteMic, animeteUltraSound, animeteErr };
+export { init, animetePlayAudio, animeteLoadAudio, animeteMic, animeteUltraSound, animeteErr, animeteIPcheck };

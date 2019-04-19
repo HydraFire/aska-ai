@@ -5,7 +5,7 @@ function whatToSay(arr, key) {
   return arr[key][Math.random() * arr[key].length | 0];
 }
 module.exports.whatToSay = whatToSay;
-
+/*
 function whatToSayEXP(text, obj, key) {
   let choice = askaChoice(text);
   console.log(choice);
@@ -13,6 +13,7 @@ function whatToSayEXP(text, obj, key) {
   return choice;// choicenArr[Math.random() * choicenArr.length | 0];
 }
 module.exports.whatToSayEXP = whatToSayEXP;
+*/
 // ////////////////////////////////////////////////////////////////////////////
 
 function selectFunctionFromWords(ws, options, defaultFunction) {
@@ -60,29 +61,33 @@ function selectFunctionFromWords(ws, options, defaultFunction) {
 module.exports.selectFunctionFromWords = selectFunctionFromWords;
 // /////////////////////////////////////////////////////////////////////////////
 function readEndWait(ws, text, nextFun, param, arrButtons) {
-  ws.NNListen = false;
-  const int3 = setInterval(() => {
-    //console.log(ws.audio);
-    if (ws.audio === 'speech_end') {
-      clearInterval(int3);
-      socket.send(ws, 'aska', text, arrButtons);
-      const int = setInterval(() => {
-        if (ws.audio === 'speech_start') {
-          clearInterval(int);
-          const int2 = setInterval(() => {
-            if (ws.audio === 'speech_end') {
-              clearInterval(int2);
-              ws.NNListen = true;
-              nextFun(ws, param);
-            }
-            ws.closeAllInterval ? clearInterval(int2) : '';
-          }, 100);
-        }
-        ws.closeAllInterval ? clearInterval(int) : '';
-      }, 100);
-    }
-    ws.closeAllInterval ? clearInterval(int3) : '';
-  }, 100);
+  if (text != '' && text != undefined) {
+    ws.NNListen = false;
+    const int3 = setInterval(() => {
+      //console.log(ws.audio);
+      if (ws.audio === 'speech_end') {
+        clearInterval(int3);
+        socket.send(ws, 'aska', text, arrButtons);
+        const int = setInterval(() => {
+          if (ws.audio === 'speech_start') {
+            clearInterval(int);
+            const int2 = setInterval(() => {
+              if (ws.audio === 'speech_end') {
+                clearInterval(int2);
+                ws.NNListen = true;
+                nextFun ? nextFun(ws, param) : '';
+              }
+              ws.closeAllInterval ? clearInterval(int2) : '';
+            }, 100);
+          }
+          ws.closeAllInterval ? clearInterval(int) : '';
+        }, 100);
+      }
+      ws.closeAllInterval ? clearInterval(int3) : '';
+    }, 100);
+  } else {
+    console.log('readEndWait Error input Text');
+  }
 }
 module.exports.readEndWait = readEndWait;
 // /////////////////////////////////////////////////////////////////////////////

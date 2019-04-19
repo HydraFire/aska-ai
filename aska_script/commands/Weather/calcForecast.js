@@ -108,9 +108,9 @@ function sayForecast(obj, params) {
     v === 'ясно' ? v = asyncAsk.whatToSay(AskaSC, 'p0') : '';
     return v;
   });
-  let morning = `${preToText(params)} ${tempToText(obj.temp[0])} ${tempHotOrCold(obj.temp[0])}, ${weatherArr[0]}, ${sayWind(obj.wind[0])}. `;
-  let noon = `${asyncAsk.whatToSay(AskaSC, 'a3')} ${calcTemp(obj.temp, 1)}, ${weatherArr[1]}, ${sayWind(obj.wind[1])}. `;
-  let evening = `${asyncAsk.whatToSay(AskaSC, 'a4')} ${calcTemp(obj.temp, 2)}, ${weatherArr[2]}, ${sayWind(obj.wind[2])}.`;
+  let morning = `${preToText(params)} ${tempToText(obj.temp[0])} ${tempHotOrCold(obj.temp[0])},${weatherArr[0]},${sayWind(obj.wind[0])},`;
+  let noon = `${asyncAsk.whatToSay(AskaSC, 'a3')} ${calcTemp(obj.temp, 1)},${weatherArr[1]},${sayWind(obj.wind[1])},`;
+  let evening = `${asyncAsk.whatToSay(AskaSC, 'a4')} ${calcTemp(obj.temp, 2)},${weatherArr[2]},${sayWind(obj.wind[2])}`;
   if (new Date().getHours() > 7 && params === 'now') {
     return noon + evening;
   }
@@ -119,7 +119,7 @@ function sayForecast(obj, params) {
 module.exports.sayForecast = sayForecast;
 
 function sayWeatherNow(json) {
-  return `${asyncAsk.whatToSay(AskaSC, 'a0')} ${json.weather[0].description},  ${tempToText(json.main.temp)} ${tempHotOrCold(json.main.temp)}, ${sayWind(json.wind.speed, 'now')}`;
+  return `${asyncAsk.whatToSay(AskaSC, 'a0')} ${json.weather[0].description},${tempToText(json.main.temp)} ${tempHotOrCold(json.main.temp)},${sayWind(json.wind.speed, 'now')}`;
 }
 module.exports.sayWeatherNow = sayWeatherNow;
 
@@ -157,7 +157,7 @@ function calcWatchWeather(pastCollection, nextDayForecast) {
   // console.log(`tempToDay = ${tempToDay}`);
   let tempToMorrow = (nextDayForecast.temp[0]+nextDayForecast.temp[1]+nextDayForecast.temp[2]) / 3;
   // console.log(`tempToMorrow = ${tempToMorrow}`);
-  if (Math.abs(tempToDay - tempToMorrow) > 5 && tempPast) {
+  if (Math.abs(tempToDay - tempToMorrow) > 4 && tempPast) {
     if (tempToDay > tempToMorrow) {
       str += `, ${asyncAsk.whatToSay(AskaSC, 'calcWatch3')} ${tempToText(Math.abs(tempToDay - tempToMorrow))}`;
     } else {
@@ -167,7 +167,7 @@ function calcWatchWeather(pastCollection, nextDayForecast) {
   // console.log(`${y} ${str}`);
   if (str.length > 0) {
     str = `${asyncAsk.whatToSay(AskaSC, 'calcWatch0')} ${str}`;
-    writeData(str);
+    writeData(checkURL(str));
     writeData(3);
   }
 

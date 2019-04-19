@@ -1,7 +1,7 @@
 import md5 from 'blueimp-md5';
 import socket from './webSocketClient';
 import { getIp } from './checkIp';
-import { animeteLoadAudio, animetePlayAudio, animeteUltraSound } from './interface/animation';
+import { animeteLoadAudio, animetePlayAudio, animeteUltraSound, animeteIPcheck } from './interface/animation';
 // import { startStopRec } from './speechRecognition';
 /* eslint-disable */
 let audio

@@ -3,6 +3,7 @@ const fetch = require('node-fetch');
 const socket = require('../../webSocketOnMessage');
 // ////////////////////////////////////////////////////////////////////////////
 const mainTimeCircle = require('../../mainTimeCircle');
+const asyncAsk = require('../../asyncAsk');
 const { checkURL } = require('../../saveAska');
 const { searchDate } = require('../../textToTime');
 const { sayForecast, sayWeatherNow, sayAnalyticWeather, calcWatchWeather } = require('./calcForecast');
@@ -17,14 +18,17 @@ function sayWeather(ws) {
 function startForecast(ws, params) {
   getForecast(ws).then(dataArr => {
     let obj = dataBuild(dataArr, parseFloat(searchDate(params[0]).split('-')[2]), ws);
-    socket.send(ws, 'aska', sayForecast(obj, params));
+    sayForecast(obj, params)
+      .split(',')
+      .filter(v => v != '' && v != ' ' && v != ', ' && v != ' ,')
+      .forEach(v => asyncAsk.readEndWait(ws, checkURL(v)));
   });
 }
 
 function startAnalyticWeather(ws, param) {
   getForecast(ws).then(dataArr => {
     let arr = buildForecastDaysColection(dataArr.list);
-    socket.send(ws, 'aska', sayAnalyticWeather(arr, param));
+    socket.send(ws, 'aska', checkURL(sayAnalyticWeather(arr, param)));
   });
 }
 
@@ -47,8 +51,8 @@ function sayMorning(ws) {
        let text = sayWeatherNow(json);
        getForecast(ws).then(dataArr => {
          let arr = buildForecastDaysColection(dataArr.list);
-         console.log(arr);
-         text += '. ' + sayForecast(arr[0], 'now');
+         //console.log(arr);
+         text += ', ' + sayForecast(arr[0], 'now');
          resolve(text);
          calcWatchWeather(writeData(arr[0]), arr[1]);
        });

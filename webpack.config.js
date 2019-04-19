@@ -49,7 +49,8 @@ module.exports = {
 
     new webpack.DefinePlugin({
       'process.env.HOSTNAME': JSON.stringify(process.env.HOSTNAME),
-      'process.env.YANDEX_ID': JSON.stringify(process.env.YANDEX_ID)
+      'process.env.YANDEX_ID': JSON.stringify(process.env.YANDEX_ID),
+      'process.env.ASKA_HOME_IP': JSON.stringify(process.env.ASKA_HOME_IP)
     })
   ]
 };

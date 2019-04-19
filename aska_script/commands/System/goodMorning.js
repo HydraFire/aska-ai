@@ -32,17 +32,21 @@ module.exports.sayIMissYou = sayIMissYou;
 
 // /////////////////////////////////////////////////////////////////////////
 
-function sayDateTime() {
+function sayDay() {
+  let dateNow = new Date();
+  let day = dateNow.getDay();
+  //let hours = dateNow.getHours();
+  //let minutes = dateNow.getMinutes();
+  //hours < 10 ? hours = `0${hours}` : '';
+  //minutes < 10 ? minutes = `0${minutes}` : '';
+  let arrDay = ['воскресенье','понедельник','вторник','среда','четверг','пятница','суббота'];
+  return `сегодня ${arrDay[day]}`;
+}
+function sayDateMonth() {
   let dateNow = new Date();
   let month = dateNow.getMonth();
-  let day = dateNow.getDay();
-  let hours = dateNow.getHours();
-  let minutes = dateNow.getMinutes();
-  hours < 10 ? hours = `0${hours}` : '';
-  minutes < 10 ? minutes = `0${minutes}` : '';
-  let arrDay = ['воскресенье','понедельник','вторник','среда','четверг','пятница','суббота'];
   let arrMonth = ['января', 'февраля', 'марта', 'апреля', 'мая', 'июня', 'июля','августа','сентября','октября','ноября','декабря'];
-  return `сегодня ${arrDay[day]}. ${dateNow.getDate()}-е ${arrMonth[month]}. ${hours}:${minutes}. `;
+  return `${dateNow.getDate()}-е ${arrMonth[month]}`;
 }
 function goodMorning(ws, value) {
   sayMorning(ws).then(result => {
@@ -50,8 +54,18 @@ function goodMorning(ws, value) {
     if (value.timeLeft) {
       missYou = iMissYou(value);
     }
-    let text = `${asyncAsk.whatToSay(AskaSC, 'a0')}. ${sayDateTime()} ${missYou}. ${result}`;
-    asyncAsk.readEndWait(ws, text, mainTimeCircle.shortInterval);
+    asyncAsk.readEndWait(ws, checkURL(asyncAsk.whatToSay(AskaSC, 'a0')));
+    asyncAsk.readEndWait(ws, checkURL(sayDay()));
+    asyncAsk.readEndWait(ws, checkURL(sayDateMonth()));
+    asyncAsk.readEndWait(ws, checkURL(missYou));
+    //console.log(result);
+    result.split(',')
+      .filter(v => v != '' && v != ' ' && v != ', ' && v != ' ,')
+      .forEach(v => asyncAsk.readEndWait(ws, checkURL(v)));
+
+
+
+    //asyncAsk.readEndWait(ws, text4, mainTimeCircle.shortInterval);
     let x = value.obj;
     x.timeLastRun = Date.now();
     x.timeLastGoodMorning = Date.now();
