@@ -12,7 +12,6 @@ const fileOption = './data/commands/Quest/option.json';
 const AskaSC = JSON.parse(fs.readFileSync(fileOption));
 // /////////////////////////////////////////////////////////////////////////////
 function note(ws, day, time, options) {
-
   function defaultFunction(string) {
     socket.send(ws, 'aska', checkURL(asyncAsk.whatToSay(AskaSC, 'x4')));
   };
@@ -32,7 +31,9 @@ function note(ws, day, time, options) {
       }
     ], defaultFunction);
   };
-  asyncAsk.readEndWait(ws, checkURL(asyncAsk.whatToSay(AskaSC, `x${options}`)), packaging);
+  let sayParameter = options;
+  sayParameter === '5' ? sayParameter = '2' : '';
+  asyncAsk.readEndWait(ws, checkURL(asyncAsk.whatToSay(AskaSC, `x${sayParameter}`)), packaging);
 }
 
 // ////////////////////////////////////////////////////////////////////////////

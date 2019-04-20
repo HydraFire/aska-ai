@@ -71,9 +71,10 @@ function remindCalc(ws, arr, i) {
 }
 
 // /////////////////////////////////////////////////////////////////////////////
-function itsHappened(ws, arr, i) {
+function itsHappened(ws, arrOld, iOld) {
+  let arr = readFile(filepath);
+  let i = arr.findIndex(v => v.words[0] == arrOld[iOld].words[0]);
   arr[i].incident.push(Date.parse(new Date()));
-  // изменяем розчет времени
   arr = remindCalc(ws, arr, i);
   saveFile(filepath, arr);
 }
