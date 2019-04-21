@@ -119,15 +119,10 @@ const askPart1 = function askPart1(ws, obj) {
     console.log(string);
   };
 
-  const nextSay = function nextSay(ws) {
-    asyncAsk.readEndWait(ws, checkURL(asyncAsk.whatToSay(AskaSC, 'p5')), mainTimeCircle.shortInterval);
-  };
-
   const positive = function positive() {
     newTextArr.push(ws.ClientSay);
-
-    asyncAsk.readEndWait(ws, checkURL(asyncAsk.whatToSay(AskaSC, 'p4')), nextSay);
-    //asyncAsk.onlyWait(ws, askPart2, obj);
+    asyncAsk.readEndWait(ws, checkURL(asyncAsk.whatToSay(AskaSC, 'p4')));
+    asyncAsk.readEndWait(ws, checkURL(asyncAsk.whatToSay(AskaSC, 'p5')), mainTimeCircle.shortInterval);
     saveResult(obj);
   };
 

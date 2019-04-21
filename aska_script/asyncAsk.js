@@ -24,6 +24,7 @@ function selectFunctionFromWords(ws, options, defaultFunction) {
   const int = setInterval(() => {
     if (skazanoe !== ws.ClientSay) {
       flag = 0;
+      skazanoe = ws.ClientSay;
       options.forEach((v) => {
         v.words.forEach((word) => {
           let includeStatus;
@@ -50,7 +51,7 @@ function selectFunctionFromWords(ws, options, defaultFunction) {
           }
         });
       });
-      skazanoe = ws.ClientSay;
+
       if (flag === 0) {
         defaultFunction(ws.ClientSay);
       }

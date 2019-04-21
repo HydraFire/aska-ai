@@ -1,4 +1,5 @@
 const { payforInternet } = require('./payforInternet');
+const { payforEnergy } = require('./payforEnergy');
 const { sayMoney } = require('./checkMoney');
 // /////////////////////////////////////////////////////////////////////////////
 function WebInteract(ws, option, parameter) {
@@ -12,7 +13,7 @@ function WebInteract(ws, option, parameter) {
       sayMoney(ws);
       break;
     case '3':
-      //deleteListener(ws, parameter);
+      payforEnergy(ws);
       break;
     default:
       console.log('error option');

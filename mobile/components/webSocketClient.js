@@ -47,14 +47,11 @@ function start() {
     console.log(message);
     switch (message.type) {
       case 'aska':
+        window.myconsole.log(message.data, 'aska');
         aska(message.data, message.buttons);
         break;
       case 'console':
         window.myconsole.log(message.data, 'html');
-        break;
-      case 'notificationPublicKey':
-        pushNotification.setVapidPublicKey(message.data);
-        // iconsole.logS(message.data);
         break;
       case 'token':
         localStorage.test_token = message.data;

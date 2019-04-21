@@ -4,9 +4,7 @@ let analyser;
 let int;
 let w;
 let arrZ = [];
-let animMic;
-let animUS;
-let animLoad;
+let animMic, animUS, animLoad, animIp;
 const arr = new Array(10);
 const arrW = [5, 10, 25, 50, 100, 150, 200, 250, 350, 500];
 for (let i = 0; i < 10; i += 1) {
@@ -86,7 +84,7 @@ function animeteUltraSound(boolean) {
 }
 function animeteIPcheck(boolean) {
   if (boolean) {
-    animUS = document.querySelector('#c6').animate([
+    animIp = document.querySelector('#c6').animate([
       // keyframes
       { transform: 'rotate(0deg) scale(1.3)' },
       { transform: 'rotate(360deg) scale(0.2)' }
@@ -96,7 +94,7 @@ function animeteIPcheck(boolean) {
       iterations: Infinity
     });
   } else {
-    animUS.cancel();
+    animIp.cancel();
   }
 }
 // ////////////////////////////////////////////////////////////////////////////////

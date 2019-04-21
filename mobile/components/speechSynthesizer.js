@@ -23,7 +23,7 @@ function askStateAskaHide() {
 function askaWriteOnScreen(text, arr) {
   text = text.replace(/#/g,' ');
   text = text.replace(/@\*@/g,' ');
-  socket.send('speech_start','AUDIO');
+  //socket.send('speech_start','AUDIO');
   if (arr) {
     window.myconsole.handlerInteractWindow({ type: arr.buttons[0].mainType, text, arr: arr.buttons, filedata: arr.content });
   } else {
@@ -49,8 +49,8 @@ function handleMediaError(e) {
   errorCount += 1;
   if (errorCount > 1) {
     window.myconsole.log(JSON.stringify(e.target.error.code), 'err');
-    window.myconsole.log('aska_mute', 'err');
-    aska_mute = true;
+    //window.myconsole.log('aska_mute', 'err');
+    //aska_mute = true;
     psevdo();
   }
 }
@@ -81,7 +81,6 @@ function trueAska(text) {
       } else if (text == '20Hz') {
         return 'http://localhost:8080/coub/20Hz.mp3';
       } else if (text.substring(0, 1) == '#' || par) {
-        console.log(text);
         return `http://localhost:8080/sample/${md5(text.substring(1, text.length))}.mp3`;
       } else {
         animeteLoadAudio(true);
@@ -133,7 +132,6 @@ function trueAska(text) {
         if (text.substring(0, 1) != '#' && text != '20Hz' && text != '50Hz') {
           animeteLoadAudio(false);
         }
-        //window.myconsole.log(text, 'aska');
         audioTag.play();
         if (text != '20Hz' && text != '50Hz') {
           //socket.send('speech_start','AUDIO');
@@ -172,6 +170,7 @@ function trueAska(text) {
 // /////////////////////////////////////////////////////////////////////////////
 function aska(text, buttons) {
   if (aska_hide) {
+    window.myconsole.log(`askaWriteOnScreen(${text})`, 'err');
     askaWriteOnScreen(text, buttons);
   } else {
     if (!aska_mute || text.substring(0, 1) == '#') {
@@ -183,7 +182,6 @@ function aska(text, buttons) {
       askaWriteOnScreen(text, buttons);
     }
   }
-  window.myconsole.log(text, 'aska');
 }
 // /////////////////////////////////////////////////////////////////////////////
 export { aska, initAudio, stopAska, switchModeOnMute, askStateAskaHide, setVolume };
