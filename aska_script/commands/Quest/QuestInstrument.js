@@ -28,11 +28,6 @@ function saveResult(day, time, text, options) {
     quest: text,
     type: options
   };
-  /*
-  if (options === 'LITE_Infinity') {
-    obj.TimeInterval =
-  }
-  */
   const arr = JSON.parse(fs.readFileSync(filepath));
   arr.push(obj);
   fs.writeFileSync(filepath, JSON.stringify(arr), 'utf8');

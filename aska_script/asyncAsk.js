@@ -65,8 +65,7 @@ function readEndWait(ws, text, nextFun, param, arrButtons) {
   if (text != '' && text != undefined) {
     ws.NNListen = false;
     const int3 = setInterval(() => {
-      //console.log(ws.audio);
-      if (ws.audio === 'speech_end') {
+      if (ws.audio === 'speech_end' && ws.readEndWaitIntervalArrey.indexOf(int3) === 0) {
         clearInterval(int3);
         socket.send(ws, 'aska', text, arrButtons);
         const int = setInterval(() => {
@@ -77,6 +76,7 @@ function readEndWait(ws, text, nextFun, param, arrButtons) {
                 clearInterval(int2);
                 ws.NNListen = true;
                 nextFun ? nextFun(ws, param) : '';
+                ws.readEndWaitIntervalArrey.splice(ws.readEndWaitIntervalArrey.indexOf(int3), 1);
               }
               ws.closeAllInterval ? clearInterval(int2) : '';
             }, 100);
@@ -86,6 +86,7 @@ function readEndWait(ws, text, nextFun, param, arrButtons) {
       }
       ws.closeAllInterval ? clearInterval(int3) : '';
     }, 100);
+    ws.readEndWaitIntervalArrey.push(int3);
   } else {
     console.log('readEndWait input Text === "" or undefined');
   }

@@ -11,7 +11,8 @@ const AskaSC = JSON.parse(fs.readFileSync(fileOption));
 // ////////////////////////////////////////////////////////////////////////////
 function prepairQuest(obj, num) {
   obj.TimeInterval = num;
-  obj.startDate += ((num * 3600000) - 300000);
+  obj.startDate = Date.now() + ((num * 3600000) - 300000);
+  console.log(obj.startDate)
   saveObjtoFile(obj);
 }
 
@@ -40,6 +41,8 @@ function questInfinityAsk(ws, obj) {
         func: () => {
           if (obj.TimeInterval) {
             socket.send(ws, 'aska', checkURL(asyncAsk.whatToSay(AskaSC, 'qIAyesAnswer')));
+            console.log(`obj.TimeInterval = ${obj.TimeInterval}`);
+            console.log(obj)
             prepairQuest(obj, obj.TimeInterval);
           } else {
             setQuestInterval(ws, obj);
