@@ -134,7 +134,7 @@ function scenario(ws, money, metDay, metNight) {
 
   function allOk(obj) {
     console.log(obj.value);
-    if (obj.value[0] === 'Приват24 пароль') {
+    if (obj.value[0] === 'Прошла успешно') {
       allIsDone(ws)
     } else {
       payError(ws, obj.value)
@@ -144,6 +144,10 @@ function scenario(ws, money, metDay, metNight) {
   sendAnswer(ws, 'sendCode', assembleTheParts(part0, part1), checkAllParameter);
 
 }
+// /////////////////////////////////////////////////////////////////////////////
+
+// ////////////////////////////////////////////////////////////////////////////
+
 // /////////////////////////////////////////////////////////////////////////////
 function askMeterReadingsNight(ws, money, metDay) {
   let metNight = '';

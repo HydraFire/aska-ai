@@ -169,17 +169,21 @@ function trueAska(text) {
 }
 // /////////////////////////////////////////////////////////////////////////////
 function aska(text, buttons) {
-  if (aska_hide) {
-    window.myconsole.log(`askaWriteOnScreen(${text})`, 'err');
-    askaWriteOnScreen(text, buttons);
+  if (text == '20Hz') {
+    trueAska(text);
   } else {
-    if (!aska_mute || text.substring(0, 1) == '#') {
-      trueAska(text);
-    } else {
-      psevdo(text);
-    }
-    if (buttons) {
+    if (aska_hide) {
+      window.myconsole.log(`askaWriteOnScreen(${text})`, 'err');
       askaWriteOnScreen(text, buttons);
+    } else {
+      if (!aska_mute || text.substring(0, 1) == '#') {
+        trueAska(text);
+      } else {
+        psevdo(text);
+      }
+      if (buttons) {
+        askaWriteOnScreen(text, buttons);
+      }
     }
   }
 }
