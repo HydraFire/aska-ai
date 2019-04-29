@@ -62,7 +62,7 @@ function saveAudio(text, p) {
     .catch((error) => {
       console.log('request failed', error);
       if (p == 'big') {
-        configOn(true, 'logbook');
+        //configOn(true, 'logbook');
         configOn(true, 'quest');
       }
     });
