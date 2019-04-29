@@ -207,12 +207,13 @@ function renderLargeURL() {
       .filter(v => v.substring(0, 1) == '#')
       .map(v => v.substring(1));
     //console.timeEnd();
-    //console.time();
+    console.log(arr);
     arr = arr.reduce((a, b) => {
       return a.concat(checkBigURL(b));
     }, []);
-    arr = arr.filter(v => listMd5.some(w => w == `${md5(v)}.mp3`));
-    //console.timeEnd();
+    console.log(arr);
+    arr = arr.filter(v => listMd5.every(w => w != `${md5(v)}.mp3`));
+    console.log(arr);
     if (arr.length != 0) {
       saveArrayURL(arr);
     } else {
