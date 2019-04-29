@@ -201,19 +201,19 @@ function renderLargeURL() {
   } else if (config.quest) {
     const listMd5 = readListMD5();
     console.log('START DOWNLOAD QUEST FILES');
-    //console.time();
+    console.time();
     let arr = readQuestFile()
       .map(v => v.quest)
       .filter(v => v.substring(0, 1) == '#')
       .map(v => v.substring(1));
-    //console.timeEnd();
-    console.log(arr);
+    console.timeEnd();
+
     arr = arr.reduce((a, b) => {
       return a.concat(checkBigURL(b));
     }, []);
-    console.log(arr);
+
     arr = arr.filter(v => listMd5.every(w => w != `${md5(v)}.mp3`));
-    console.log(arr);
+
     if (arr.length != 0) {
       saveArrayURL(arr);
     } else {
