@@ -1,7 +1,7 @@
 const fs = require('fs');
 const { textToTime, normalizeTimeZone } = require('../../textToTime');
 const mainTimeCircle = require('../../mainTimeCircle');
-const { checkURL } = require('../../saveAska');
+const { checkURL, checkLargeURL } = require('../../saveAska');
 
 
 const filepath = './data/QuestData.json';
@@ -19,9 +19,10 @@ function saveResult(day, time, text, options) {
   }
   const str = day + time;
   const normalDate = Date.parse(new Date(str));
-  if (options === 'LITE_Infinity') {
-    text = checkURL(text);
-  }
+
+  checkLargeURL(text);
+  text = `#${text}`;
+
   const obj = {
     startDate: normalizeTimeZone(normalDate),
     endDate: 9999999999999,
@@ -119,6 +120,8 @@ const saveVictory = function saveVictory(obj) {
 module.exports.saveVictory = saveVictory;
 // /////////////////////////////////////////////////////////////////////////////////////////////////////////
 function saveSpecialResult(dateNum, tag, text) {
+  checkLargeURL(text);
+  text = `#${text}`;
   const obj = {
     startDate: dateNum,
     endDate: 9999999999999,

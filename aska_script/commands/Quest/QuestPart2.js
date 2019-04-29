@@ -11,30 +11,6 @@ const fileOption = './data/commands/Quest/option.json';
 const AskaSC = JSON.parse(fs.readFileSync(fileOption));
 // /////////////////////////////////////////////////////////////////////////////
 const askPart5 = function askPart5(ws, obj) {
-  // Закрываем все ожидания чтобы создать новое
-  // ws.closeAllInterval = true;
-
-
-  /*
-  const defaultFunction = function defaultFunction() {
-    socket.send(ws, 'aska', asyncAsk.whatToSay(AskaSC, 'h1'));
-  };
-
-  const first = function attentionCheck() {
-    socket.send(ws, 'aska', asyncAsk.whatToSay(AskaSC, 'h2'));
-    saveTimeStart(obj, ws.ClientSay);
-  };
-
-  const packaging = function packaging() {
-    asyncAsk.selectFunctionFromWords(ws, [
-      {
-        func: first,
-        words: AskaSC.h3,
-        end: true
-      }
-    ], defaultFunction);
-  };
-  */
   const packaging = function packaging() {
     ws.NNListen = false;
     let skazanoe = ws.ClientSay;
@@ -177,44 +153,13 @@ const askPart2 = function askPart2(ws, obj) {
 // /////////////////////////////////////////////////////////////////////////////
 
 const QuestPart2 = function QuestPart2(ws, obj) {
-  // Закрываем все ожидания чтобы создать новое
-  /*
-  if (!ws.onlyOpened) {
-    const defaultFunction = function defaultFunction() {
-      socket.send(ws, 'aska', asyncAsk.whatToSay(AskaSC, 'y2'));
-    };
-
-    const attentionCheck = function attentionCheck() {
-      socket.send(ws, 'aska', `${asyncAsk.whatToSay(AskaSC, 'y1')}, ${obj.quest}`);
-      asyncAsk.onlyWait(ws, askPart2, obj);
-    };
-    const negative = function negative() {
-      socket.send(ws, 'aska', asyncAsk.whatToSay(AskaSC, 'y3'));
-    };
-
-    const packaging = function packaging() {
-      asyncAsk.selectFunctionFromWords(ws, [
-        {
-          func: attentionCheck,
-          words: AskaSC.y4,
-          end: true
-        }, {
-          func: negative,
-          words: AskaSC.y5,
-          end: true
-        }
-      ], defaultFunction);
-    };
-    asyncAsk.readEndWait(ws, asyncAsk.whatToSay(AskaSC, 'y0'), packaging);
-  } else {
-  */
-  let n = '';
+  asyncAsk.readEndWait(ws, checkURL(asyncAsk.whatToSay(AskaSC, 'y0')));
   if (obj.excuse) {
-    n = `${asyncAsk.whatToSay(AskaSC, 'y0')}, ${obj.quest}, ${asyncAsk.whatToSay(AskaSC, 'y1')}, ${obj.excuse}`;
+    asyncAsk.readEndWait(ws, obj.quest);
+    asyncAsk.readEndWait(ws, checkURL(asyncAsk.whatToSay(AskaSC, 'y1')));
+    asyncAsk.readEndWait(ws, obj.excuse, askPart2, obj);
   } else {
-    n = `${asyncAsk.whatToSay(AskaSC, 'y0')}, ${obj.quest}`;
+    asyncAsk.readEndWait(ws, obj.quest, askPart2, obj);
   }
-  asyncAsk.readEndWait(ws, n, askPart2, obj);
-  // }
 };
 module.exports.QuestPart2 = QuestPart2;

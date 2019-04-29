@@ -8,6 +8,7 @@ const filepath = './data/saveAska.json';
 const savepath = './public/sample/';
 const configpath = './config.json';
 const logbookpath = './data/LogBook.json';
+const questpath = './data/QuestData.json';
 const fileOption = './data/commands/LifeCircles/option.json';
 const AskaSC = JSON.parse(fs.readFileSync(fileOption));
 // //////////////////////////////////////
@@ -34,7 +35,7 @@ function saveAudio(text, p) {
   console.log('SAVE // '+tex);
   let hash = md5(text);
   let url = 'https://tts.voicetech.yandex.net/generate?'+
-      'key=222499e2-1e45-4b6d-aaaa-70b53b87c2ec'+
+      'key='+process.env.YANDEX_ID+
       '&text='+encodeURI(text)+
       '&format=mp3'+
       '&lang=ru-RU'+
@@ -62,6 +63,7 @@ function saveAudio(text, p) {
       console.log('request failed', error);
       if (p == 'big') {
         configOn(true, 'logbook');
+        configOn(true, 'quest');
       }
     });
 }
@@ -139,6 +141,14 @@ function readLogBookFile() {
     return [];
   }
 }
+function readQuestFile() {
+  try {
+    return JSON.parse(fs.readFileSync(questpath));
+  } catch (err) {
+    console.log('// Config__quest file not found');
+    return [];
+  }
+}
 function readConfig() {
   try {
     return JSON.parse(fs.readFileSync(configpath));
@@ -163,8 +173,8 @@ function saveArrayURL(arr) {
 }
 function renderLargeURL() {
   const config = readConfig();
-  const listMd5 = readListMD5();
   if (config.logbook) {
+    const listMd5 = readListMD5();
     console.log('START DOWNLOAD LOGBOOK FILES');
     console.time();
     let arr = [];
@@ -187,6 +197,27 @@ function renderLargeURL() {
     } else {
       configOn(false, 'logbook');
       console.log('configOn(false, logbook);');
+    }
+  } else if (config.quest) {
+    const listMd5 = readListMD5();
+    console.log('START DOWNLOAD QUEST FILES');
+    //console.time();
+    let arr = readQuestFile()
+      .map(v => v.quest)
+      .filter(v => v.substring(0, 1) == '#')
+      .map(v => v.substring(1));
+    //console.timeEnd();
+    //console.time();
+    arr = arr.reduce((a, b) => {
+      return a.concat(checkBigURL(b));
+    }, []);
+    arr = arr.filter(v => listMd5.some(w => w == `${md5(v)}.mp3`));
+    //console.timeEnd();
+    if (arr.length != 0) {
+      saveArrayURL(arr);
+    } else {
+      configOn(false, 'quest');
+      console.log('configOn(false, quest);');
     }
   }
 }

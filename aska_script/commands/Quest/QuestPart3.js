@@ -11,30 +11,6 @@ const fileOption = './data/commands/Quest/option.json';
 const AskaSC = JSON.parse(fs.readFileSync(fileOption));
 // /////////////////////////////////////////////////////////////////////////////
 const askPart5 = function askPart5(ws, obj) {
-  // Закрываем все ожидания чтобы создать новое
-  // ws.closeAllInterval = true;
-
-
-  /*
-  const defaultFunction = function defaultFunction() {
-    socket.send(ws, 'aska', asyncAsk.whatToSay(AskaSC, 'h1'));
-  };
-
-  const first = function attentionCheck() {
-    socket.send(ws, 'aska', asyncAsk.whatToSay(AskaSC, 'h2'));
-    saveTimeStart(obj, ws.ClientSay);
-  };
-
-  const packaging = function packaging() {
-    asyncAsk.selectFunctionFromWords(ws, [
-      {
-        func: first,
-        words: AskaSC.h3,
-        end: true
-      }
-    ], defaultFunction);
-  };
-  */
   const packaging = function packaging() {
     ws.NNListen = false;
     let skazanoe = ws.ClientSay;
@@ -84,39 +60,6 @@ const askPart5 = function askPart5(ws, obj) {
 };
 
 // /////////////////////////////////////////////////////////////////////////////
-/*
-const askPart4 = function askPart4(ws, obj) {
-  //
-  let newText = '';
-  //
-  const defaultFunction = function defaultFunction(string) {
-    socket.send(ws, 'aska', asyncAsk.whatToSay(AskaSC, 'e1'));
-    newText += `${string}, `;
-  };
-
-  const first = function attentionCheck() {
-    if (newText !== '') {
-      saveVictory(obj, newText);
-      socket.send(ws, 'aska', asyncAsk.whatToSay(AskaSC, 'e2'));
-    } else {
-      socket.send(ws, 'aska', asyncAsk.whatToSay(AskaSC, 'e3'));
-    }
-  };
-
-  const packaging = function packaging() {
-    asyncAsk.selectFunctionFromWords(ws, [
-      {
-        func: first,
-        words: AskaSC.e4,
-        end: true
-      }
-    ], defaultFunction);
-  };
-  asyncAsk.readEndWait(ws, asyncAsk.whatToSay(AskaSC, 'e0'), packaging);
-};
-*/
-// /////////////////////////////////////////////////////////////////////////////
-// /////////////////////////////////////////////////////////////////////////////
 
 const askPart2 = function askPart2(ws, obj) {
   //
@@ -153,8 +96,6 @@ const askPart2 = function askPart2(ws, obj) {
 // /////////////////////////////////////////////////////////////////////////////
 
 const QuestPart3 = function QuestPart3(ws, obj) {
-  // Закрываем все ожидания чтобы создать новое
-  // ws.closeAllInterval = true;
   const defaultFunction = function defaultFunction() {
     socket.send(ws, 'aska', `${asyncAsk.whatToSay(AskaSC, 'z1')} ${obj.quest}?`);
   };
@@ -180,6 +121,7 @@ const QuestPart3 = function QuestPart3(ws, obj) {
       }
     ], defaultFunction);
   };
-  asyncAsk.readEndWait(ws, `${asyncAsk.whatToSay(AskaSC, 'z0')} ${obj.quest}?`, packaging);
+  asyncAsk.readEndWait(ws, checkURL(asyncAsk.whatToSay(AskaSC, 'z0')));
+  asyncAsk.readEndWait(ws, obj.quest, packaging);
 };
 module.exports.QuestPart3 = QuestPart3;
