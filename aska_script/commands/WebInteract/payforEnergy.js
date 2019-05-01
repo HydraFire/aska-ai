@@ -126,15 +126,15 @@ function scenario(ws, money, metDay, metNight) {
     .type('#card-pay__user-email', '${process.env.MAIN_EMAIL}')
     .wait(1000)
     .click('button[data-action="cardPayment"]')
-    .wait(10000)
+    .wait(12000)
     .evaluate(() => {
-      document.querySelector('button[type="submit"]').disabled = false;
+      return document.querySelector('.page_title').outerText;
     })
       `;
 
   function allOk(obj) {
     console.log(obj.value);
-    if (obj.value[0] === 'Прошла успешно') {
+    if (obj.value[0] === 'Платеж успешно произведен') {
       allIsDone(ws)
     } else {
       payError(ws, obj.value)
