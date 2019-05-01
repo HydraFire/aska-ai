@@ -53,7 +53,7 @@ class NNEditor extends React.Component {
   }
   // ////////////////// После нажатия на SAVE вносит изменения в state  ///////
   editStateHandler = () => {
-    const newText = this.state.newText;
+    const newText = this.state.newText.replace(/\s+$/g, '');
     const pickF = this.state.nowpickFunc;
     const pickS = this.state.nowpickSector;
     const pickA = this.state.nowpickArr;
