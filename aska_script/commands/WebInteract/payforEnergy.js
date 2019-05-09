@@ -134,7 +134,7 @@ function scenario(ws, money, metDay, metNight) {
 
   function allOk(obj) {
     console.log(obj.value);
-    if (obj.value[0] === 'Платеж успешно произведен') {
+    if (obj.value == 'Платеж успешно произведен') {
       allIsDone(ws)
     } else {
       payError(ws, obj.value)
