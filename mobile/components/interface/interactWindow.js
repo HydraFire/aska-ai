@@ -1,6 +1,7 @@
 import React, { Fragment } from 'react';
 import RC2 from 'react-chartjs2';
 import socket from '../webSocketClient';
+import { init } from './animation';
 import { switchModeOnMute, askStateAskaHide } from '../speechSynthesizer';
 import '../../css/logo.css';
 
@@ -136,6 +137,7 @@ class InteractWindow extends React.Component {
       let value = e.target.getAttribute('value');
       value == 'true' ? value = true : value = false ;
       switchModeOnMute(value);
+      init();
       socket.start();
     }
     //this.props.handlerInteractWindow(false);

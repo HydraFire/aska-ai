@@ -1,7 +1,6 @@
 import React, { Fragment } from 'react';
 import { aska } from '../speechSynthesizer';
 import socket from '../webSocketClient';
-import { init } from './animation';
 import InteractWindow from './interactWindow';
 import '../../css/logo.css';
 
@@ -85,13 +84,13 @@ class Logo extends React.Component {
       return (
         <div className="console">
           <div className="console_top">
-            ASKA version: 3.1    <span onClick={restoreCharts}>I give you this pain with love</span>
-          </div>
-          <div className="console_center">
-            {this.myRender()}
+            ASKA version: 3.7  <br/>  <span onClick={restoreCharts}>I give you this pain with love</span>
           </div>
           <div className="console_bottom">
             <input className="inputCommandLine" type="text" placeholder="" />
+          </div>
+          <div className="console_center">
+            {this.myRender()}
           </div>
         </div>
       );
@@ -118,9 +117,9 @@ class Logo extends React.Component {
       return <InteractWindow obj={this.state.interactWindow} handlerInteractWindow={this.handlerInteractWindow}/>
     }
   }
-  componentDidMount() {
-    init();
-  }
+//  componentDidMount() {
+
+//  }
   render() {
     const svg1 = 'http://localhost:8080/coub/index-portal-red-semi-085b4e44d49b2ffe935cc1b2b3094ce8.svg';
     const svg2 = 'http://localhost:8080/coub/index-portal-red-be5d1b8a52c13bf286560aba3e4c8c30.svg';

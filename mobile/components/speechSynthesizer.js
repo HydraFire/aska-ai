@@ -12,7 +12,7 @@ let aska_hide = false;
 let aska_yandex_id = process.env.YANDEX_ID;
 // //////////////////////////////////////////////////////////////////////////
 function switchModeOnMute(boolean) {
-  window.myconsole.log('ip promise result, aska_hide = ' + boolean, 'err');
+  window.myconsole.log('aska_hide = ' + boolean, 'chat');
   aska_hide = boolean;
 }
 // //////////////////////////////////////////////////////////////////////////
@@ -58,6 +58,10 @@ function initAudio() {
   audio = document.getElementById('audio');
   audio2 = document.getElementById('audio2');
   audio.addEventListener('error', handleMediaError);
+}
+// /////////////////////////////////////////////////////////////////////////////
+function checkPlaing() {
+  return audio.paused;
 }
 // /////////////////////////////////////////////////////////////////////////////
 function stopAska() {
@@ -188,4 +192,4 @@ function aska(text, buttons) {
   }
 }
 // /////////////////////////////////////////////////////////////////////////////
-export { aska, initAudio, stopAska, switchModeOnMute, askStateAskaHide, setVolume };
+export { aska, initAudio, stopAska, switchModeOnMute, askStateAskaHide, setVolume, checkPlaing };

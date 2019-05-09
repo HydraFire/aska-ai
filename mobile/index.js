@@ -8,13 +8,13 @@ import './css/logotype.css';
 import './css/inputCommandLine.css';
 
 import socket from './components/webSocketClient';
-import { speechRec, startStopRec } from './components/speechRecognition';
-import { newMessage } from './components/interface/displayCanvasMessage';
+import { speechRecInit, startStopRec } from './components/speechRecognition';
+//import { newMessage } from './components/interface/displayCanvasMessage';
 
 render(<App />, document.querySelector('#main'));
 // ////////////////////////////////////////////////////////////////////////////
 socket.askaSwitchMute();
-speechRec();
+speechRecInit();
 // /////////////////////////////////////////////////////////////////////////////
 const askaButton = document.querySelector('.main');
 askaButton.addEventListener('click', startStopRec);

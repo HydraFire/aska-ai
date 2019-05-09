@@ -30,9 +30,9 @@
 
 .consoleButton {
   margin-top: 10px;
-  margin-left: 0px;
+  margin-left: 10px;
   position: absolute;
-  width: 50px;
+  width: 95%;
   height: 50px;
   background: rgba(0,0,0,0);
   color: #fff;
@@ -102,43 +102,58 @@
 }
 .console_top {
   width: 100%;
+  font-size: 18px;
   height: 30px;
-  margin: 5px 10px 5px 10px;
+  margin: 5px 10px 5px 20px;
+  padding-top: 10px;
+}
+.console_top span {
+  font-size: 14px;
+  padding-right: 30px;
+  color: #222;
+  float: right;
 }
 .console_center {
   white-space: normal;
   width: 340px;
   height: 650px;
   overflow-y: scroll;
-  margin: 5px 10px 5px 10px;
+  margin: 5px 10px 5px 20px;
 }
 .inputCommandLine {
-  width: 100%;
-  font-size: 14px;
+  width: 80%;
+  font-size: 18px;
   vertical-align: middle;
   text-align: center;
-  margin: 0px 5px 10px 5px;
+  margin: 25px auto 42px auto;
+  display: block;
   color: #ddd;
-  border: 0px;
+  border-color: #333;
+  border-style: dashed;
   background: rgba(0, 0, 0, 0);
 }
 .console_string {
+  font-size: 10px;
   color: #777;
   margin-bottom: 5px;
 }
 .console_html {
+  font-size: 10px;
   color: #76a;
   margin-bottom: 5px;
 }
 .console_chat {
+  font-size: 10px;
   color: #fff;
   margin-bottom: 5px;
 }
 .console_err {
+  font-size: 10px;
   color: red;
   margin: 10px 0px 10px 0px;
 }
 .console_aska {
+  font-size: 10px;
   color: #fa2;
   margin-bottom: 5px;
 }

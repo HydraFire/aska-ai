@@ -2,6 +2,7 @@
 import socket from './webSocketClient';
 import { newMessage } from './interface/displayCanvasMessage';
 import { animeteMic } from './interface/animation';
+import { checkPlaing } from './speechSynthesizer';
 // Cтатус розпознавания речи, включено true, выключено false
 /* eslint-disable */
 window.SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
@@ -11,12 +12,13 @@ recognition.lang = 'ru-RU';
 /* eslint-enable */
 
 export const startStopRec = () => {
-  recognition.start();
-  animeteMic(true);
-  //window.myconsole.log(chrome.tabs, 'chat');
+  if (checkPlaing()) {
+    recognition.start();
+    animeteMic(true);
+  }
 };
 
-export const speechRec = () => {
+export const speechRecInit = () => {
   // Дополнительные функции
   function transcriptText(text) {
     /* eslint-disable */
