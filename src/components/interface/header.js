@@ -20,6 +20,7 @@ function buttonStart() {
     });
   }));
 }
+/*
 function subscribeButton() {
   if (!localStorage.subscribeNotification) {
     localStorage.subscribeNotification = 'false';
@@ -30,6 +31,7 @@ function subscribeButton() {
   // return (<button id="unsubscribe" className="subscribeButton">unsubscribe</button>);
   return false;
 }
+*/
 // /////////////////////////////////////////////////////////////////
 class Header extends React.Component {
   componentDidMount() {
@@ -48,7 +50,6 @@ class Header extends React.Component {
         <button className="canvasButton">Equalizer</button>
         <button className="canvasButton">Kaleidoscope</button>
         <button className="canvasButton">Anime</button>
-        {subscribeButton()}
       </div>
     );
   }

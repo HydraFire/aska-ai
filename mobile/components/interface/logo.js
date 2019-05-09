@@ -84,7 +84,7 @@ class Logo extends React.Component {
       return (
         <div className="console">
           <div className="console_top">
-            ASKA version: 3.7  <br/>  <span onClick={restoreCharts}>I give you this pain with love</span>
+            ASKA version: 3.7  <br/>  <span>I give you this pain with love</span>
           </div>
           <div className="console_bottom">
             <input className="inputCommandLine" type="text" placeholder="" />
