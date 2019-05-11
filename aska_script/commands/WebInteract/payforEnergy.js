@@ -22,9 +22,17 @@ function payError(ws, errText) {
   ws.lifeCirclesResponse = 'error';
   socket.send(ws, 'aska', checkURL(asyncAsk.whatToSay(AskaSC, arguments.callee.name)));
 }
-function allIsDone(ws) {
-  ws.lifeCirclesResponse = 'done';
-  socket.send(ws, 'aska', checkURL(asyncAsk.whatToSay(AskaSC, arguments.callee.name)));
+function allIsDone(ws, money) {
+  asyncAsk.readEndWait(ws, checkURL(asyncAsk.whatToSay(AskaSC, arguments.callee.name)));
+  checkMoney().then((moneyNew) => {
+    let lost = money - moneyNew;
+    asyncAsk.readEndWait(ws, `${lost}`);
+    ws.lifeCirclesResponse = 'done';
+  })
+}
+function sayMoneyError(ws, money, tarif) {
+  ws.lifeCirclesResponse = 'error';
+  socket.send(ws, 'aska', `${AskaSC.sayMoneyError[0]} ${tarif},${AskaSC.sayMoneyError[1]} ${money}`);
 }
 
 function askMoneyCheckError(ws) {
@@ -135,7 +143,7 @@ function scenario(ws, money, metDay, metNight) {
   function allOk(obj) {
     console.log(obj.value);
     if (obj.value == 'Платеж успешно произведен') {
-      allIsDone(ws)
+      allIsDone(ws, money)
     } else {
       payError(ws, obj.value)
     }

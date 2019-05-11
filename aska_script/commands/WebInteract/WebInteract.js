@@ -1,5 +1,6 @@
 const { payforInternet } = require('./payforInternet');
 const { payforEnergy } = require('./payforEnergy');
+const { payforHome } = require('./payforHome');
 const { sayMoney } = require('./checkMoney');
 // /////////////////////////////////////////////////////////////////////////////
 function WebInteract(ws, option, parameter) {
@@ -14,6 +15,9 @@ function WebInteract(ws, option, parameter) {
       break;
     case '3':
       payforEnergy(ws);
+      break;
+    case '4':
+      payforHome(ws);
       break;
     default:
       console.log('error option');
