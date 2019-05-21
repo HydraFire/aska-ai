@@ -20,8 +20,10 @@ function saveResult(day, time, text, options) {
   const str = day + time;
   const normalDate = Date.parse(new Date(str));
 
-  checkLargeURL(text);
-  text = `#${text}`;
+  if (options == 'LITE_Infinity') {
+    checkLargeURL(text);
+    text = `#${text}`;
+  }
 
   const obj = {
     startDate: normalizeTimeZone(normalDate),
@@ -29,6 +31,7 @@ function saveResult(day, time, text, options) {
     quest: text,
     type: options
   };
+  
   const arr = JSON.parse(fs.readFileSync(filepath));
   arr.push(obj);
   fs.writeFileSync(filepath, JSON.stringify(arr), 'utf8');

@@ -9,10 +9,20 @@ const mainTimeCircle = require('../../mainTimeCircle');
 const fileOption = './data/commands/Quest/option.json';
 const AskaSC = JSON.parse(fs.readFileSync(fileOption));
 // ////////////////////////////////////////////////////////////////////////////
+function getMinutes(obj) {
+  let lastTime = new Date(obj.startDate);
+  return [lastTime.getHours(), lastTime.getMinutes()];
+}
+function getSameMinutes(timePlus, hm) {
+  let r = new Date(Date.now() + timePlus).setHours(hm[0]);
+  return new Date(r).setMinutes(hm[1]);
+}
+// obj.skipToday когда спрашивает можно сказать "пропускай этот день недели";
+
 function prepairQuest(obj, num) {
   obj.TimeInterval = num;
-  obj.startDate = Date.now() + ((num * 3600000) - 300000);
-  console.log(obj.startDate)
+  obj.startDate = getSameMinutes(num * 3600000, getMinutes(obj));
+  console.log(new Date(obj.startDate));
   saveObjtoFile(obj);
 }
 
@@ -41,8 +51,8 @@ function questInfinityAsk(ws, obj) {
         func: () => {
           if (obj.TimeInterval) {
             socket.send(ws, 'aska', checkURL(asyncAsk.whatToSay(AskaSC, 'qIAyesAnswer')));
-            console.log(`obj.TimeInterval = ${obj.TimeInterval}`);
-            console.log(obj)
+            //console.log(`obj.TimeInterval = ${obj.TimeInterval}`);
+            //console.log(obj)
             prepairQuest(obj, obj.TimeInterval);
           } else {
             setQuestInterval(ws, obj);
