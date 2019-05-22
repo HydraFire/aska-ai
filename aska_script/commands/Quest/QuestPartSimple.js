@@ -19,14 +19,23 @@ function getSameMinutes(timePlus, hm) {
   return new Date(r).setMinutes(hm[1]);
 }
 // obj.skipToday когда спрашивает можно сказать "пропускай этот день недели";
+function notThisDayFunc(obj) {
+  obj.startDate = getSameMinutes(obj.TimeInterval * 3600000, getMinutes(obj));
+  if (obj.notThisDay) {
+    obj.notThisDay.push(new Date().getDay());
+  } else {
+    obj.notThisDay = [new Date().getDay()];
+  }
+  saveObjtoFile(obj);
+}
 
 function prepairQuest(obj, num) {
   obj.TimeInterval = num;
   //obj.startDate = normalizeTimeZone(getSameMinutes(num * 3600000, getMinutes(obj)));
   obj.startDate = getSameMinutes(num * 3600000, getMinutes(obj));
-  console.log(new Date(obj.startDate));
   saveObjtoFile(obj);
 }
+module.exports.prepairQuest = prepairQuest;
 
 function setQuestInterval(ws, obj) {
   asyncAsk.readEndWait(ws, checkURL(asyncAsk.whatToSay(AskaSC, arguments.callee.name)), () => {
@@ -69,6 +78,14 @@ function questInfinityAsk(ws, obj) {
           saveVictory(obj);
         },
         words: AskaSC.qIAno,
+        end: true
+      },
+      {
+        func: () => {
+          asyncAsk.readEndWait(ws, checkURL(asyncAsk.whatToSay(AskaSC, 'notThisDayAnswer')), mainTimeCircle.shortInterval);
+          notThisDayFunc(obj); //    <-------------
+        },
+        words: AskaSC.notThisDay,
         end: true
       },
       {

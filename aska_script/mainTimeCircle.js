@@ -2,7 +2,7 @@ const fs = require('fs');
 const socket = require('./webSocketOnMessage');
 const { QuestPart2 } = require('./commands/Quest/QuestPart2');
 const { QuestPart3 } = require('./commands/Quest/QuestPart3');
-const { QuestPartSimple } = require('./commands/Quest/QuestPartSimple');
+const { QuestPartSimple, prepairQuest } = require('./commands/Quest/QuestPartSimple');
 const  askForCircle = require('./commands/LifeCircles/askForCircle');
 const { sayAction } =require('./commands/WebScraping/WebScraping');
 const { checkArray } = require('./saveAska');
@@ -116,7 +116,18 @@ const checkQuests = function checkQuests(ws) {
   let arrEndQuests = optimazeReadFileQuest.filter(v => timeNow >= v.endDate)
     .map(v => Object.assign(v, { startWith: 'QuestPart3' }));
   // проверка наличия заданий и запуск короткого интервала если заданий больше одного
-  let arrQuests = optimazeReadFileQuest.filter(v => timeNow >= v.startDate)
+  let arrQuests = optimazeReadFileQuest.filter(v => {
+      if (timeNow >= v.startDate) {
+        if (v.notThisDay) {
+          if (v.notThisDay.some( day => day == new Date().getDay())) {
+            prepairQuest(v, v.obj.TimeInterval);
+            return false;
+          }
+        }
+        return true;
+      }
+      return false;
+    })
     .map(v => Object.assign(v, { startWith: 'QuestPart2' }));
   //
   let arrActions = optimazeReadFileActions.filter(v => v.readyToSay)
