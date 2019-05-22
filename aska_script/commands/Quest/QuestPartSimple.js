@@ -3,6 +3,7 @@ const asyncAsk = require('../../asyncAsk');
 const socket = require('../../webSocketOnMessage');
 const { checkURL } = require('../../saveAska');
 const { saveVictory, saveObjtoFile } = require('./QuestInstrument');
+const { normalizeTimeZone } = require('../../textToTime');
 const mainTimeCircle = require('../../mainTimeCircle');
 // ///////////////////////////////////////
 // //////////////////////////////////////
@@ -21,7 +22,7 @@ function getSameMinutes(timePlus, hm) {
 
 function prepairQuest(obj, num) {
   obj.TimeInterval = num;
-  obj.startDate = getSameMinutes(num * 3600000, getMinutes(obj));
+  obj.startDate = normalizeTimeZone(getSameMinutes(num * 3600000, getMinutes(obj)));
   console.log(new Date(obj.startDate));
   saveObjtoFile(obj);
 }
