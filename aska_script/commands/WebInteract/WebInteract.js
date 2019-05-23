@@ -2,6 +2,7 @@ const { payforInternet } = require('./payforInternet');
 const { payforEnergy } = require('./payforEnergy');
 const { payforHome } = require('./payforHome');
 const { sayMoney } = require('./checkMoney');
+const { orderVisitation } = require('./orderVisitation');
 // /////////////////////////////////////////////////////////////////////////////
 function WebInteract(ws, option, parameter) {
   parameter = parameter.join(' ');
@@ -18,6 +19,9 @@ function WebInteract(ws, option, parameter) {
       break;
     case '4':
       payforHome(ws);
+      break;
+    case '5':
+      orderVisitation(ws);
       break;
     default:
       console.log('error option');
