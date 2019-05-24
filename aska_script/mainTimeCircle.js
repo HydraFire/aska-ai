@@ -7,6 +7,7 @@ const  askForCircle = require('./commands/LifeCircles/askForCircle');
 const { sayAction } =require('./commands/WebScraping/WebScraping');
 const { checkArray } = require('./saveAska');
 const { checkDate, sayWhatYouNeed } = require('./commands/System/systemNotification');
+
 // ///////////////////////////////////////////////////////////////////////////
 const fileOption = './data/commands/Quest/option.json';
 const AskaSC = JSON.parse(fs.readFileSync(fileOption));
@@ -153,7 +154,7 @@ const checkQuests = function checkQuests(ws) {
 // //////////////////////////////////////////////////////////////////////////////
 const checkAssignments = function checkAssignments(ws) {
   // Запускаем проверку актуальных заданий
-  if (Date.now() > lastTime) {
+  if (Date.now() > lastTime && !askForCircle.statusOfInterval()) {
     lastTime = Date.now() + 60000;
     displayOn = true;
     checkQuests(ws);
