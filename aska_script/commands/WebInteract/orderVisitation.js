@@ -93,7 +93,8 @@ function askAutoIsIt(ws, typeVisit, visitOt, visitDo) {
       }
     ], () => {
       socket.send(ws, 'aska', checkURL(asyncAsk.whatToSay(AskaSC, 'answerTOVDef3')));
-  });
+    });
+  })
 }
 
 function askTimeOfVisitDo(ws, typeVisit, visitOt) {
@@ -109,7 +110,8 @@ function askTimeOfVisitDo(ws, typeVisit, visitOt) {
       }
     ], () => {
       socket.send(ws, 'aska', checkURL(asyncAsk.whatToSay(AskaSC, 'answerTOVDef2')));
-  });
+    });
+  })
 }
 
 function askTimeOfVisitOt(ws, typeVisit) {
@@ -125,7 +127,8 @@ function askTimeOfVisitOt(ws, typeVisit) {
       }
     ], () => {
       socket.send(ws, 'aska', checkURL(asyncAsk.whatToSay(AskaSC, 'answerTOVDef2')));
-  });
+    });
+  })
 }
 
 function askTypeOfVisit(ws) {
