@@ -11,6 +11,7 @@ const { calcLast } = require('./calcTime');
 const fileOption = './data/commands/LifeCircles/option.json';
 const AskaSC = JSON.parse(fs.readFileSync(fileOption));
 // //////////////////////////////////////
+let waitInterval = false;
 const filepath = './data/LifeCirclesData.json';
 const example = [{
   words: ['test'],
@@ -78,10 +79,16 @@ function itsHappened(ws, arrOld, iOld) {
   arr = remindCalc(ws, arr, i);
   saveFile(filepath, arr);
 }
-
+// /////////////////////////////////////////////////////////////////////////////
+function statusOfInterval() {
+  return waitInterval;
+}
+module.exports.statusOfInterval = statusOfInterval;
+// /////////////////////////////////////////////////////////////////////////////
 function waitIntervalEndFunc(ws, arr, i, value) {
-
+  waitInterval = true;
   const int = setInterval(() => {
+
     if (ws.lifeCirclesResponse === 'done') {
       ws.audio = 'speech_start';
       if (arr[i].startFunction) {
@@ -90,9 +97,11 @@ function waitIntervalEndFunc(ws, arr, i, value) {
       itsHappened(ws, arr, i, value);
       ws.lifeCirclesResponse = 'none';
       clearInterval(int);
+      waitInterval = false;
     } else if (ws.lifeCirclesResponse === 'error') {
       ws.lifeCirclesResponse = 'none';
       clearInterval(int);
+      waitInterval = false;
     }
     ws.closeAllInterval ? clearInterval(int) : '';
   }, 1000);
