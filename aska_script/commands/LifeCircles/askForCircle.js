@@ -192,6 +192,7 @@ module.exports.when = when;
 
 // /////////////////////////////////////////////////////////////////////////////
 function statusOfInterval() {
+  console.log('statusOfInterval = '+waitInterval);
   return waitInterval;
 }
 module.exports.statusOfInterval = statusOfInterval;
@@ -226,6 +227,7 @@ function go(ws, arr, value, allWordsArray, option) {
     ], defaultFunction);
   };
   waitInterval = true;
+  console.log('waitInterval = '+waitInterval);
   const int = setInterval(() => {
     if (!positivAnswer) {
       if (ws.NNListen) {
@@ -235,11 +237,13 @@ function go(ws, arr, value, allWordsArray, option) {
         } else {
           lifeCircles.newIncident(ws, arr, value);
           clearInterval(int);
+            console.log('waitInterval = '+waitInterval);
           waitInterval = false;
         }
       }
     } else {
       clearInterval(int);
+        console.log('waitInterval = '+waitInterval);
       waitInterval = false;
     }
     ws.closeAllInterval ? clearInterval(int) : '';

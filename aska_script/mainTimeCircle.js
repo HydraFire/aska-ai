@@ -154,6 +154,7 @@ const checkQuests = function checkQuests(ws) {
 // //////////////////////////////////////////////////////////////////////////////
 const checkAssignments = function checkAssignments(ws) {
   // Запускаем проверку актуальных заданий
+  console.log('askForCircle.statusOfInterval '+!askForCircle.statusOfInterval());
   if (Date.now() > lastTime && !askForCircle.statusOfInterval()) {
     lastTime = Date.now() + 60000;
     displayOn = true;
