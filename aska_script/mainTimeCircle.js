@@ -4,7 +4,7 @@ const { QuestPart2 } = require('./commands/Quest/QuestPart2');
 const { QuestPart3 } = require('./commands/Quest/QuestPart3');
 const { QuestPartSimple, prepairQuest } = require('./commands/Quest/QuestPartSimple');
 const  askForCircle = require('./commands/LifeCircles/askForCircle');
-const { statusOfInterval } = require('./commands/LifeCircles/LifeCircles');
+const LifeCircles = require('./commands/LifeCircles/LifeCircles');
 const { sayAction } =require('./commands/WebScraping/WebScraping');
 const { checkArray } = require('./saveAska');
 const { checkDate, sayWhatYouNeed } = require('./commands/System/systemNotification');
@@ -155,7 +155,7 @@ const checkQuests = function checkQuests(ws) {
 // //////////////////////////////////////////////////////////////////////////////
 const checkAssignments = function checkAssignments(ws) {
   // Запускаем проверку актуальных заданий
-  if (Date.now() > lastTime && !statusOfInterval()) {
+  if (Date.now() > lastTime && !LifeCircles.statusOfInterval()) {
     lastTime = Date.now() + 60000;
     displayOn = true;
     checkQuests(ws);
