@@ -84,7 +84,7 @@ function scenario(ws, money, metDay, metNight) {
     .type('#username', '${process.env.ENERGY_LOGIN}')
     .type('#password', '${process.env.ENERGY_PASSWORD}')
     .click('input[type="submit"]')
-    .wait(1000)
+    .wait(6000)
     .click('a[href="https://ok.kep.com.ua/home/ru/accounts/675566"]')
     .wait(6000)
     .click('a[href="/home/ru/readings/new"]')
