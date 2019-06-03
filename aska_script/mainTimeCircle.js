@@ -122,7 +122,7 @@ const checkQuests = function checkQuests(ws) {
       if (timeNow >= v.startDate) {
         if (v.notThisDay) {
           if (v.notThisDay.some( day => day == new Date().getDay())) {
-            prepairQuest(v, v.obj.TimeInterval);
+            prepairQuest(v, v.TimeInterval);
             return false;
           }
         }
