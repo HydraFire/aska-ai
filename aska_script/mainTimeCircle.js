@@ -166,7 +166,7 @@ module.exports.checkAssignments = checkAssignments;
 // Функция запуска уведомлений
 // /////////////////////////////////////////////////////////////////////////////
 const mainTimeCircle = function mainTimeCircle(ws) {
-  const timeTest = Date.now() + (15 * 60 * 1000);
+  const timeTest = Date.now() + (10 * 60 * 1000);
   // x.setHours(howLong);
   // x.setMinutes(0);
   // howLong < houersNow ? x.setDate(x.getDate() + 1) : '';
@@ -184,6 +184,13 @@ const mainTimeCircle = function mainTimeCircle(ws) {
   });
   let arrQuests = optimazeReadFileQuest.filter(v => Date.now() < v.startDate && v.type !== 'SIMPLE')
     .filter(v => timeTest >= v.startDate && v.type !== 'SIMPLE')
+    .filter(v => {
+      if (v.notThisDay) {
+        return !v.notThisDay.some( day => day == new Date().getDay())
+      } else {
+        return true;
+      }
+    })
     .concat(arrActions);
   if (arrQuests.length > 0) {
     //console.log(arrQuests);
@@ -215,6 +222,7 @@ const idleInterval = function idleInterval(ws) {
     // console.log(`pastTime = ${pastTime} now = ${now}`);
     if (pastTime < now) {
       // sumtime += now - pastTime;
+      /*
       const sum = (now - pastTime) / 1000 | 0;
       const min = sum / 60 | 0;
       const sec = sum % 60;
@@ -223,7 +231,7 @@ const idleInterval = function idleInterval(ws) {
       } else {
         console.log(`${min}m ${sec}s`);
       }
-
+      */
       if (displayOn) {
         displayOn = false;
         console.log('chargeImpulse');

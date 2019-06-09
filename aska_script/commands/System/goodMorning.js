@@ -3,6 +3,7 @@ const socket = require('../../webSocketOnMessage');
 const mainTimeCircle = require('../../mainTimeCircle');
 const asyncAsk = require('../../asyncAsk');
 const { sayMorning } = require('../Weather/Weather');
+const { Creative } = require('../Creative/Creative');
 const { checkURL, checkSmartURL } = require('../../saveAska');
 
 const filepath = './data/system.json';
@@ -54,7 +55,9 @@ function goodMorning(ws, value) {
     if (value.timeLeft) {
       missYou = iMissYou(value);
     }
-    asyncAsk.readEndWait(ws, checkURL(asyncAsk.whatToSay(AskaSC, 'a0')));
+    Creative().forEach(v => { //asyncAsk.whatToSay(AskaSC, 'a0')
+      asyncAsk.readEndWait(ws, checkURL(v));
+    })
     asyncAsk.readEndWait(ws, checkURL(sayDay()));
     asyncAsk.readEndWait(ws, checkURL(sayDateMonth()));
     asyncAsk.readEndWait(ws, checkURL(missYou));
