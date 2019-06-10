@@ -53,7 +53,8 @@ function chargeImpulse() {
 function intervalGO(arr) {
   function finishIntervals(obj) {
     //window.myconsole.log(JSON.stringify(obj), 'string');
-    impulseToServer();
+    !document.getElementById('audio').paused ? document.getElementById('audio').pause():'';
+    
     clearInterval(impulseInterval);
     impulseInterval = 0;
 
@@ -64,6 +65,7 @@ function intervalGO(arr) {
       mainInterval = 0;
       stop20Hz();
     }
+    impulseToServer();
   }
   // ////////////////////////////////////////////////////////////////
   function askMode(obj) {
