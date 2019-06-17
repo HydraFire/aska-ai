@@ -101,6 +101,34 @@ function questInfinityAsk(ws, obj) {
   });
 }
 
+function questButtons(text) {
+  const buttons = [
+    {
+      mainType: 'typeSimpleQuest',
+      type: 'negative',
+      value: text,
+      name: 'перенеси на выходные',
+      chartData: false
+    },
+    {
+      mainType: 'typeSimpleQuest',
+      type: 'default',
+      value: text,
+      name: '...'
+    },
+    {
+      mainType: 'typeSimpleQuest',
+      type: 'positive',
+      value: text,
+      name: 'Ясно'
+    }
+  ];
+
+  return {
+    content: { type:'video', data: 'test'},
+    buttons
+  };
+}
 function QuestPartSimple(ws, obj) {
   function packaging() {
     saveVictory(obj);
@@ -108,8 +136,10 @@ function QuestPartSimple(ws, obj) {
   };
   if (obj.type === 'LITE_Infinity') {
     asyncAsk.readEndWait(ws, obj.quest, questInfinityAsk, obj);
+  } else if (obj.type === 'SIMPLE') {
+    socket.send(ws, 'aska', checkURL(`${obj.quest}`), questButtons(obj.quest));
   } else {
-    asyncAsk.readEndWait(ws, obj.quest, packaging);
+    asyncAsk.readEndWait(ws, obj.quest, packaging); // SIMPLE_SPECIAL and LITE
   }
 }
 module.exports.QuestPartSimple = QuestPartSimple;

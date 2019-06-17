@@ -31,7 +31,7 @@ function saveResult(day, time, text, options) {
     quest: text,
     type: options
   };
-  
+
   const arr = JSON.parse(fs.readFileSync(filepath));
   arr.push(obj);
   fs.writeFileSync(filepath, JSON.stringify(arr), 'utf8');
@@ -129,7 +129,7 @@ function saveSpecialResult(dateNum, tag, text) {
     startDate: dateNum,
     endDate: 9999999999999,
     quest: text,
-    type: 'SIMPLE',
+    type: 'SIMPLE_SPECIAL',
     special: tag
   };
   const arr = JSON.parse(fs.readFileSync(filepath));
@@ -217,8 +217,39 @@ const convertAllDataToSimpleQuest = function(ws, obj, range, newText) {
   saveSpecialResult(newDateInNum, obj.words[0], text);
 }
 
+// /////////////////////////////////////////////////////////////////////////////
+function closedSimpleQuest(ws, param) {
+  let obj = {quest: param};
+  saveVictory(obj);
+  mainTimeCircle.shortInterval(ws);
+}
+module.exports.closedSimpleQuest = closedSimpleQuest;
 
+function postponeSimpleQuest(ws, param) {
+  /*
+  const r = new Date();
+  let month = r.getMonth() + 1;
+  month < 10 ? month = `0${month}` : '';
+  let day = r.getDate();
+  day < 10 ? day = `0${day}` : '';
+  return normalizeTimeZone(Date.parse(new Date(`${r.getFullYear()}-${month}-${day}T04:00:00.000Z`)));
 
+  const str = day + time;
+  const normalDate = Date.parse(new Date(str));
+  obj.startDate = normalizeTimeZone(normalDate);
+  obj.endDate = 9999999999999;
+  saveObjtoFile(obj);
+
+  const arr = JSON.parse(fs.readFileSync(filepath));
+  const arrIndex = arr.findIndex(v => v.quest === obj.quest);
+  arr.splice(arrIndex, 1);
+  fs.writeFileSync(filepath, JSON.stringify(arr), 'utf8');
+  mainTimeCircle.reloadFileQuest();
+  */
+
+  asyncAsk.readEndWait(ws, checkURL(`есть`), mainTimeCircle.shortInterval);
+}
+module.exports.postponeSimpleQuest = postponeSimpleQuest;
 
 
 module.exports.convertAllDataToSimpleQuest = convertAllDataToSimpleQuest;

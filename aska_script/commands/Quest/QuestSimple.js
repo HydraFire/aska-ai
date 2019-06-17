@@ -64,7 +64,7 @@ function questSimple(ws, parameters) {
         }
       }
       if (!z) {
-        console.log(`parameters ${parameters}***`);
+        console.log(`parameters: "${parameters}"`);
         if (parameters != '') {
           z = true;
         } else if (question) {

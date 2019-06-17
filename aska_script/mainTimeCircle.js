@@ -182,8 +182,8 @@ const mainTimeCircle = function mainTimeCircle(ws) {
     v.type = 'WEB';
     return v;
   });
-  let arrQuests = optimazeReadFileQuest.filter(v => Date.now() < v.startDate && v.type !== 'SIMPLE')
-    .filter(v => timeTest >= v.startDate && v.type !== 'SIMPLE')
+  let arrQuests = optimazeReadFileQuest.filter(v => Date.now() < v.startDate && v.type !== 'SIMPLE' && v.type !== 'SIMPLE_SPECIAL')
+    .filter(v => timeTest >= v.startDate && v.type !== 'SIMPLE' && v.type !== 'SIMPLE_SPECIAL')
     .filter(v => {
       if (v.notThisDay) {
         return !v.notThisDay.some( day => day == new Date().getDay())

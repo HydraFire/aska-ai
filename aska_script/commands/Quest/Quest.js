@@ -4,7 +4,7 @@ const asyncAsk = require('../../asyncAsk');
 const { checkURL } = require('../../saveAska');
 const { questSimple } = require('./QuestSimple');
 const { searchDate, searchTime } = require('../../textToTime');
-const { saveResult } = require('./QuestInstrument');
+const { saveResult, closedSimpleQuest, postponeSimpleQuest } = require('./QuestInstrument');
 const { questSpecial } = require('./QuestSpecial');
 // ///////////////////////////////
 // ///////////////////////////////
@@ -106,6 +106,12 @@ function Quest(ws, option, parameters) {
       break;
     case '5':
       questHard(ws, option, parameters);
+      break;
+    case '6':
+      closedSimpleQuest(ws, parameters);
+      break;
+    case '7':
+      postponeSimpleQuest(ws, parameters);
       break;
     default:
       console.log('error option');

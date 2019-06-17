@@ -158,6 +158,19 @@ class InteractWindow extends React.Component {
     }
     this.props.handlerInteractWindow(false);
   }
+
+  typeSimpleQuest = (e) => {
+    if (e.target.getAttribute('alt') === 'positive') {
+      socket.send('speech_end','AUDIO');
+      socket.send(`ясно понятно ${e.target.getAttribute('value')}`,'aska');
+    } else if (e.target.getAttribute('alt') === 'negative') {
+      socket.send('speech_end','AUDIO');
+      socket.send(`перенеси ${e.target.getAttribute('value')}`, 'aska');
+    } else if (e.target.getAttribute('alt') === 'default') {
+      socket.send(null, 'shortInterval');
+    }
+    this.props.handlerInteractWindow(false);
+  }
   /*
   changeFormatMedia = (type, num) => {
     console.log('changeFormatMedia');
