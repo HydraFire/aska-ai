@@ -5,6 +5,7 @@ const asyncAsk = require('../../asyncAsk');
 const { sayMorning } = require('../Weather/Weather');
 const { Creative } = require('../Creative/Creative');
 const { checkURL, checkSmartURL } = require('../../saveAska');
+const { checkMoney, checkMyMoney } = require('../WebInteract/checkMoney');
 
 const filepath = './data/system.json';
 const fileOption = './data/commands/System/option.json';
@@ -61,16 +62,24 @@ function goodMorning(ws, value) {
     asyncAsk.readEndWait(ws, checkURL(sayDay()));
     asyncAsk.readEndWait(ws, checkURL(sayDateMonth()));
     asyncAsk.readEndWait(ws, checkURL(missYou));
+
+
     //console.log(result);
     result.split(',')
       .filter(v => v != '' && v != ' ' && v != ', ' && v != ' ,' && v != ',')
       .forEach((v, i, arr) => {
-        if (i === arr.length - 1) {
-          asyncAsk.readEndWait(ws, checkURL(v), mainTimeCircle.shortInterval)
-        } else {
+      //  if (i === arr.length - 1) {
+      //    asyncAsk.readEndWait(ws, checkURL(v), mainTimeCircle.shortInterval)
+    //    } else {
           asyncAsk.readEndWait(ws, checkURL(v));
-        }
+    //    }
       });
+    Promise.all([checkMoney(), checkMyMoney()]).then(function(values) {
+      let money = values[0].split('.')[0];
+      let money2 = values[1].split('.')[0];
+      let text = `На моём счету ${money} гривен, а на другом ${money2} гривен`;
+      asyncAsk.readEndWait(ws, text, mainTimeCircle.shortInterval)
+    });
 
     let x = value.obj;
     x.timeLastRun = Date.now();

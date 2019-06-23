@@ -218,8 +218,10 @@ const convertAllDataToSimpleQuest = function(ws, obj, range, newText) {
 }
 
 // /////////////////////////////////////////////////////////////////////////////
-function closedSimpleQuest(ws, param) {
-  let obj = {quest: param};
+function closedSimpleQuest(ws) {
+  let y = ws.ClientSay.substring(12)
+  console.log(y);
+  let obj = {quest: y};
   saveVictory(obj);
   mainTimeCircle.shortInterval(ws);
 }
