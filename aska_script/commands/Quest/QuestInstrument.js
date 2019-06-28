@@ -115,7 +115,10 @@ module.exports.saveTimeStart = saveTimeStart;
 // /////////////////////////////////////////////////////////////////////////////
 const saveVictory = function saveVictory(obj) {
   const arr = JSON.parse(fs.readFileSync(filepath));
-  const arrIndex = arr.findIndex(v => v.quest === obj.quest);
+  const arrIndex = arr.findIndex(v =>{
+    console.log(v.quest === obj.quest);
+    return v.quest === obj.quest;
+  });
   arr.splice(arrIndex, 1);
   fs.writeFileSync(filepath, JSON.stringify(arr), 'utf8');
   mainTimeCircle.reloadFileQuest();
