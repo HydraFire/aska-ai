@@ -64,7 +64,7 @@ function animeteMic(boolean) {
       iterations: Infinity
     });
   } else {
-    animMic.cancel();
+    animMic ? animMic.cancel():'';
   }
 }
 function animeteUltraSound(boolean) {

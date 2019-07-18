@@ -18,6 +18,11 @@ export const startStopRec = () => {
   }
 };
 
+export const stopRec = () => {
+    recognition.abort();
+    animeteMic(false);
+};
+
 export const speechRecInit = () => {
   // Дополнительные функции
   function transcriptText(text) {

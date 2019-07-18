@@ -2,7 +2,7 @@ import md5 from 'blueimp-md5';
 import socket from './webSocketClient';
 import { getIp } from './checkIp';
 import { animeteLoadAudio, animetePlayAudio, animeteUltraSound, animeteIPcheck } from './interface/animation';
-// import { startStopRec } from './speechRecognition';
+import { stopRec } from './speechRecognition';
 /* eslint-disable */
 let audio
 let audio2
@@ -77,6 +77,7 @@ function setVolume(number) {
 
 // /////////////////////////////////////////////////////////////////////////////
 function trueAska(text) {
+  stopRec();
   function choseAudioTag(text, audioTag, num) {
     let par = false;
     function createURL(text) {
