@@ -107,7 +107,6 @@ class Logo extends React.Component {
       }, 200);
     }
   }
-  // ВОТ ЭТО МЕСТО
   handlerInteractWindow = (obj) => {
     if (!this.state.console || obj == false) {
       this.setState({interactWindow: obj});

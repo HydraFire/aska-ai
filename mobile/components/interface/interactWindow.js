@@ -154,6 +154,7 @@ class InteractWindow extends React.Component {
       socket.send('speech_end','AUDIO');
       socket.send(`давай не сегодня ${e.target.getAttribute('value')}`, 'aska');
     } else if (e.target.getAttribute('alt') === 'default') {
+      socket.send('speech_end','AUDIO');
       socket.send(null, 'shortInterval');
     }
     this.props.handlerInteractWindow(false);
@@ -167,6 +168,7 @@ class InteractWindow extends React.Component {
       socket.send('speech_end','AUDIO');
       socket.send(`перенеси ${e.target.getAttribute('value')}`, 'aska');
     } else if (e.target.getAttribute('alt') === 'default') {
+      socket.send('speech_end','AUDIO');
       socket.send(null, 'shortInterval');
     }
     this.props.handlerInteractWindow(false);
