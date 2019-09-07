@@ -24,11 +24,13 @@ function payError(ws, errText) {
 }
 function allIsDone(ws, money) {
   asyncAsk.readEndWait(ws, checkURL(asyncAsk.whatToSay(AskaSC, arguments.callee.name)));
-  checkMoney().then((moneyNew) => {
-    let lost = money - moneyNew;
-    asyncAsk.readEndWait(ws, `${lost}`);
-    ws.lifeCirclesResponse = 'done';
-  })
+  setTimeout(() => {
+    checkMoney().then((moneyNew) => {
+      let lost = money - moneyNew;
+      asyncAsk.readEndWait(ws, `${lost}`);
+      ws.lifeCirclesResponse = 'done';
+    })
+  }, 5000)
 }
 function sayMoneyError(ws, money, tarif) {
   ws.lifeCirclesResponse = 'error';

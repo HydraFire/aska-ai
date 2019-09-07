@@ -38,11 +38,12 @@ function psevdo() {
     audio.play();
     animeteUltraSound(true);
     socket.send('speech_start','AUDIO');
+
+    audio.addEventListener('pause',() => {
+      socket.send('speech_end','AUDIO');
+      animetePlayAudio(false);
+    },{ once: true });
   };
-  setTimeout(()=>{
-    socket.send('speech_end','AUDIO');
-    animeteUltraSound(false);
-  }, 2500);
 }
 // /////////////////////////////////////////////////////////////////////////////
 function handleMediaError(e) {
