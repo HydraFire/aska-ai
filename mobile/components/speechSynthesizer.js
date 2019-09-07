@@ -179,7 +179,7 @@ function aska(text, buttons) {
     trueAska(text);
   } else {
     if (aska_hide) {
-      window.myconsole.log(`askaWriteOnScreen(${text})`, 'err');
+      //window.myconsole.log(`askaWriteOnScreen(${text})`, 'err');
       askaWriteOnScreen(text, buttons);
     } else {
       if (!aska_mute || text.substring(0, 1) == '#') {

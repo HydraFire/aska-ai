@@ -107,10 +107,15 @@ class Logo extends React.Component {
       }, 200);
     }
   }
-  // ВОТ ЭТО МЕСТО
   handlerInteractWindow = (obj) => {
-    this.setState({interactWindow: obj});
-    obj ? closeWindowInterval(28) : closeWindowInterval(false);
+    if (!this.state.console || obj == false) {
+      this.setState({interactWindow: obj});
+      obj ? closeWindowInterval(28) : closeWindowInterval(false);
+    } else {
+      setTimeout(() => {
+        socket.send('speech_end','AUDIO');
+      }, 500);
+    }
   }
   renderInteractWindow = () => {
     if (this.state.interactWindow) {

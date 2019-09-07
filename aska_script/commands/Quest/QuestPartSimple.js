@@ -134,8 +134,21 @@ function QuestPartSimple(ws, obj) {
     saveVictory(obj);
     mainTimeCircle.shortInterval(ws);
   };
+  /*
+  function noAskToRetry() {
+    prepairQuest(obj, obj.TimeInterval);
+    mainTimeCircle.shortInterval(ws);
+  }
+  */
   if (obj.type === 'LITE_Infinity') {
-    asyncAsk.readEndWait(ws, obj.quest, questInfinityAsk, obj);
+    if (obj.noAsk) {
+      asyncAsk.readEndWait(ws, obj.quest, () => {
+        prepairQuest(obj, obj.TimeInterval);
+        mainTimeCircle.shortInterval(ws);
+      });
+    } else {
+      asyncAsk.readEndWait(ws, obj.quest, questInfinityAsk, obj);
+    }
   } else if (obj.type === 'SIMPLE') {
     socket.send(ws, 'aska', checkURL(`${obj.quest}`), questButtons(obj.quest));
   } else {
