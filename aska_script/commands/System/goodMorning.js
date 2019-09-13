@@ -6,6 +6,7 @@ const { sayMorning } = require('../Weather/Weather');
 const { Creative } = require('../Creative/Creative');
 const { checkURL, checkSmartURL } = require('../../saveAska');
 const { checkMoney, checkMyMoney } = require('../WebInteract/checkMoney');
+const { dateToText_to_e } = require('../../textToTime');
 
 const filepath = './data/system.json';
 const fileOption = './data/commands/System/option.json';
@@ -48,7 +49,7 @@ function sayDateMonth() {
   let dateNow = new Date();
   let month = dateNow.getMonth();
   let arrMonth = ['января', 'февраля', 'марта', 'апреля', 'мая', 'июня', 'июля','августа','сентября','октября','ноября','декабря'];
-  return `${dateNow.getDate()}-е ${arrMonth[month]}`;
+  return `${dateToText_to_e(dateNow.getDate())} ${arrMonth[month]}`;
 }
 function goodMorning(ws, value) {
   sayMorning(ws).then(result => {
