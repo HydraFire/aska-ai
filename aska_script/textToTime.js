@@ -289,4 +289,4 @@ function dateToText_to_e( n ) {
     'тридцатое',
     'тридцать первое'][n];
 }
-module.exports.dateToText = dateToText;
+module.exports.dateToText_to_e = dateToText_to_e;
