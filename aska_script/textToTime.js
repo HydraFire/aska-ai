@@ -257,6 +257,7 @@ module.exports.normalizeTimeZone = normalizeTimeZone;
 // /////////////////////////////////////////////////////////////////////////////
 function dateToText_to_e( n ) {
   return [
+    'нулевое',
     'первое',
     'второе',
     'третье',
