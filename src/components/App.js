@@ -19,7 +19,7 @@ import { speechRec } from './speechRecognition';
 class App extends React.Component {
   componentDidMount() {
     iconsole.start();
-    graphicsStart();
+
     socket.start(process.env.HOSTNAME);
     speechRec();
   }
@@ -27,6 +27,7 @@ class App extends React.Component {
     console.log(e.clientY);
     const size = document.querySelector('#draw');
     size.style.height = `${e.clientY + 50}px`;
+    graphicsStart();
     console.log(size.style.height);
   }
   render() {
