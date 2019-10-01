@@ -20,14 +20,15 @@ class App extends React.Component {
   componentDidMount() {
     iconsole.start();
 
-    socket.start(process.env.HOSTNAME);
-    speechRec();
+
   }
   resize = (e) => {
     console.log(e.clientY);
     const size = document.querySelector('#draw');
     size.style.height = `${e.clientY + 50}px`;
     graphicsStart();
+    socket.start(process.env.HOSTNAME);
+    speechRec();
     console.log(size.style.height);
   }
   render() {
