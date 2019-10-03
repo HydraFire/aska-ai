@@ -7,6 +7,7 @@ import SliderAudioVolume from './interface/sliderAudioVolume';
 import IconsoleUI from './interface/iconsoleUI';
 import iconsole from './interface/iconsole';
 import Music from './interface/music';
+import InteractWindow from './interface/InteractWindow';
 // Style Main Page
 import '../css/app.css';
 // OpenGL or Canvas animation
@@ -17,19 +18,40 @@ import socket from './webSocketClient';
 import { speechRec } from './speechRecognition';
 // Main Page HTML
 class App extends React.Component {
+  constructor() {
+    super();
+    this.state = { interactWindow: true }
+  }
   componentDidMount() {
     iconsole.start();
-
-
   }
-  resize = (e) => {
-    console.log(e.clientY);
-    const size = document.querySelector('#draw');
-    size.style.height = `${e.clientY + 50}px`;
-    graphicsStart();
+  chooseYourDestiny = (e) => {
+    this.setState({ interactWindow: false })
+    graphicsStart(e.target.value);
     socket.start(process.env.HOSTNAME);
     speechRec();
-    console.log(size.style.height);
+  }
+  resize = (e) => {
+    //console.log(e.clientY);
+    const size = document.querySelector('#draw');
+    size.style.height = `${e.clientY + 50}px`;
+    //console.log(size.style.height);
+  }
+  renderW = () => {
+    if (this.state.interactWindow) {
+      return <InteractWindow arr = {[
+        'shaderCloud',
+        'shaderSpace',
+        'shaderFractal00',
+        'shaderFractal01',
+        'shaderTemple',
+        'Equalizer',
+        'Kaleidoscope',
+        'Anime'
+      ]} metod = {this.chooseYourDestiny}/>
+    } else {
+      return '';
+    }
   }
   render() {
     return (
@@ -43,7 +65,8 @@ class App extends React.Component {
         </div>
         <canvas  onClick={this.resize} id="draw" />
         <InputCommandLine />
-        <Music ref={(musicPlayer) => { window.musicPlayer = musicPlayer }} />
+        {this.renderW()}
+        {/*<Music ref={(musicPlayer) => { window.musicPlayer = musicPlayer }} />*/}
         <audio src="" id="audio" />
         <audio src="" id="audio2" />
       </div>
