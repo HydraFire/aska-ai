@@ -71,10 +71,15 @@ function scenario(ws, money) {
     .click('#login2_btnLoginByAgr')
     .wait(2000)
     .evaluate(() => {
-      return [
-        document.querySelector('.personal_data').children[1].children[0].children[1].outerText,
-        document.querySelector('#cph_main_ddl_activations').options[0].outerText
-      ];
+      if (document.querySelector('#cph_main_ddl_activations').options[0])  {
+        return [
+          document.querySelector('.personal_data').children[1].children[0].children[1].outerText,
+          document.querySelector('#cph_main_ddl_activations').options[0].outerText
+        ];
+      } else {
+        return [document.querySelector('.personal_data').children[1].children[0].children[1].outerText, '150']
+      }
+
     })
   `;
 

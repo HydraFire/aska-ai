@@ -52,7 +52,7 @@ function checkMoney() {
        .cardbalance
        .balance
        ._text
-    })
+    }).catch( err => console.log(err))
 }
 
 function checkMyMoney() {
@@ -92,7 +92,7 @@ function checkMyMoney() {
        .cardbalance
        .balance
        ._text
-    })
+    }).catch( err => console.log(err))
 }
 
 function sayMoney(ws) {

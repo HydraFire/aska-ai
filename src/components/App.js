@@ -66,7 +66,7 @@ class App extends React.Component {
         <canvas  onClick={this.resize} id="draw" />
         <InputCommandLine />
         {this.renderW()}
-        {/*<Music ref={(musicPlayer) => { window.musicPlayer = musicPlayer }} />*/}
+        <Music ref={(musicPlayer) => { window.musicPlayer = musicPlayer }} />
         <audio src="" id="audio" />
         <audio src="" id="audio2" />
       </div>
