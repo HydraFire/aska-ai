@@ -58,7 +58,7 @@ function buildIntelligentObjects(src, fileName, exception) {
     let temp = next.stimulus.map(v => ({
       keyWords: v,
       decisionName: 'DynamicMemory',
-      option: 2,
+      option: -1,
       mass: v.length,
       data: next
     }))
