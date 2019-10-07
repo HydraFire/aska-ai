@@ -13,9 +13,12 @@ function webSocketOnConnect(wss) {
     // своего функционала, после чего NNListen станет сново true, чо
     // Доступ нужно получить
     ws.accessed = false;
+    // Для некоторых функция нужно помноть предыдушие фразы
+    ws.ClientSayArray = [];
     // позволит запустить новую комманду
     ws.NNListen = true;
     ws.lifeCirclesResponse = 'none';
+    ws.askaAnswer = '';
     ws.readEndWaitIntervalArrey = [];
     // статус проигрования аудио на клиенте, speech_end тоесть сейчас не проигрываеться
     ws.audio = 'speech_end';

@@ -4,6 +4,7 @@ const { getOptions } = require('./optionalNN');
 const { getParameters } = require('./parameterNN');
 // ////////////////////////////////////////////////////////////////////////////
 const { Asmr } = require('../commands/Asmr/Asmr');
+const { DynamicMemory } = require('../commands/DynamicMemory/DynamicMemory');
 const { LifeCircles } = require('../commands/LifeCircles/LifeCircles');
 const { Quest } = require('../commands/Quest/Quest');
 const { Logbook } = require('../commands/Logbook/Logbook');
@@ -17,6 +18,7 @@ const { WebInteract } = require('../commands/WebInteract/WebInteract');
 // /////////////////////////////////////////////////////////////////////////////
 const commands = {
   Asmr,
+  DynamicMemory,
   LifeCircles,
   Quest,
   Logbook,
@@ -52,6 +54,21 @@ function buildIntelligentObjects(src, fileName, exception) {
       }));
     },[]));
   },[]);
+
+
+  let dmArray = JSON.parse(fs.readFileSync('./data/commands/DynamicMemory/buffer.json'));
+
+  collection = collection.concat( dmArray.reduce((prev, next) => {
+    let temp = next.stimulus.map(v => {
+      keyWords: v,
+      decisionName: 'DynamicMemory',
+      option: 2,
+      mass: v.length,
+      data: next
+    })
+    return prev.concat(...temp)
+  },[]))
+
   return collection;
 }
 // /////////////////////////////////////////////////////////////////////////////
@@ -93,7 +110,7 @@ function start(ws, text) {
     commands['Reaction'](ws, '1', '');
   } else {
     decision = decision[0];
-    commands[decision.decisionName](ws, `${decision.option + 1}`, getParameters(text, decision.decisionName));
+    commands[decision.decisionName](ws, `${decision.option + 1}`, getParameters(text, decision.decisionName), decision.data);
   }
 }
 module.exports.start = start;

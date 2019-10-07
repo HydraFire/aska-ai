@@ -17,6 +17,7 @@ function send(ws, type, data, buttons) {
     }
     if (type === 'aska') {
       ws.audio = 'speech_start';
+      ws.askaAnswer = data;
     }
     ws.send(JSON.stringify({ type, data, buttons }));
   }
@@ -41,6 +42,8 @@ function webSocketOnMessage(ws) {
             // Глобальная переменая со значением последнего сказаного клиентом,
             // нужна для внутрених интервалов некоторых команд
             ws.ClientSay = obj.data;
+            ws.ClientSayArray.length > 3 ? ws.ClientSayArray.pop():'';
+            ws.ClientSayArray.unshift(obj.data);
             // Тригер переключаюший идут даные в нейроную сеть или только
             // для внутрених интервалов
             ws.NNListen ? start(ws, obj.data) : '';
