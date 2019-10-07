@@ -61,4 +61,5 @@ function deleteRegularity(prevSay, askaAnswer) {
   fs.writeFileSync(bufferPath, JSON.stringify(fileArray), 'utf8');
 }
 
-export { saveRegularity, deleteRegularity }
+module.exports.saveRegularity = saveRegularity
+module.exports.deleteRegularity = deleteRegularity
