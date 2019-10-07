@@ -18,10 +18,10 @@ function createId(arr) {
   }
 }
 
-function margeIO(objST[0], objRE[0], arr) {
-  objST[0].stimulus = objST[0].stimulus.concat(objRE[0].stimulus)
-  objST[0].reaction = objST[0].reaction.concat(objRE[0].reaction)
-  arr.splice(arr.findIndex(v=> v.id == objRE[0].id), 1)
+function margeIO(objST, objRE, arr) {
+  objST.stimulus = objST.stimulus.concat(objRE.stimulus)
+  objST.reaction = objST.reaction.concat(objRE.reaction)
+  arr.splice(arr.findIndex(v=> v.id == objRE.id), 1)
 }
 // ///////////////////////////////////////////////////////////
 function saveRegularity(nowSay, prevSay) {
