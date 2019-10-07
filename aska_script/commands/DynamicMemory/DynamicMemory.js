@@ -46,13 +46,13 @@ function sayRegularity(ws, data) {
 // /////////////////////////////////////////////////////////////////////////////
 function DynamicMemory(ws, options, param, data) {
   switch (options) {
-    case '0':
+    case '1':
       addRegularity(ws);
       break;
-    case '1':
+    case '2':
       dontSatThat(ws);
       break;
-    case '2':
+    case '0':
       sayRegularity(ws, data);
       break;
   }

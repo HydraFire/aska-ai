@@ -50,7 +50,7 @@ function saveRegularity(nowSay, prevSay) {
 }
 
 function deleteRegularity(prevSay, askaAnswer) {
-  console.log(`nowSay=${nowSay} askaAnswer=${askaAnswer}`);
+  console.log(`nowSay=${prevSay} askaAnswer=${askaAnswer}`);
   let fileArray = JSON.parse(fs.readFileSync(bufferPath));
   let obj = fileArray.filter(f => f.reaction.some(s => s == askaAnswer))
   if (obj.reaction.length > 1) {
