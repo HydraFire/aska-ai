@@ -54,6 +54,7 @@ function deleteRegularity(prevSay, askaAnswer) {
   let fileArray = JSON.parse(fs.readFileSync(bufferPath));
   let obj = fileArray.filter(f => f.reaction.some(s => s == askaAnswer))
   if (obj.length > 0) {
+    console.log(obj);
     if (obj.reaction.length > 1) {
       obj.reaction.splice(obj.reaction.findIndex(v => v == askaAnswer), 1)
     } else {
