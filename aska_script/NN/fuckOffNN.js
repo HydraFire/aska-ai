@@ -38,6 +38,7 @@ module.exports.checkIntelligentObject = function(str) {
 }
 // /////////////////////////////////////////////////////////////////////////////
 function buildIntelligentObjects(src, fileName, exception) {
+  let dmArray = JSON.parse(fs.readFileSync('./data/commands/DynamicMemory/buffer.json'));
   const list = fs.readdirSync(src).filter(f => f != exception).map((v) =>
       ({ [v]: JSON.parse(fs.readFileSync(`${src}${v}${fileName}`)).nn })
   );
@@ -53,12 +54,7 @@ function buildIntelligentObjects(src, fileName, exception) {
         };
       }));
     },[]));
-  },[]);
-
-
-  let dmArray = JSON.parse(fs.readFileSync('./data/commands/DynamicMemory/buffer.json'));
-
-  collection = collection.concat( dmArray.reduce((prev, next) => {
+  },[]).concat( dmArray.reduce((prev, next) => {
     let temp = next.stimulus.map(v => ({
       keyWords: v,
       decisionName: 'DynamicMemory',
