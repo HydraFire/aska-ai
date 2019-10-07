@@ -41,7 +41,7 @@ function dontSatThat(ws) {
   deleteRegularity(ws.ClientSayArray[1], ws.askaAnswer)
 }
 function sayRegularity(ws, data) {
-  socket.send(ws, 'aska', asyncAsk.whatToSay(data, reaction));
+  socket.send(ws, 'aska', asyncAsk.whatToSay(data, 'reaction'));
 }
 // /////////////////////////////////////////////////////////////////////////////
 function DynamicMemory(ws, options, param, data) {
