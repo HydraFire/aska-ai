@@ -59,13 +59,13 @@ function buildIntelligentObjects(src, fileName, exception) {
   let dmArray = JSON.parse(fs.readFileSync('./data/commands/DynamicMemory/buffer.json'));
 
   collection = collection.concat( dmArray.reduce((prev, next) => {
-    let temp = next.stimulus.map(v => {
+    let temp = next.stimulus.map(v => ({
       keyWords: v,
       decisionName: 'DynamicMemory',
       option: 2,
       mass: v.length,
       data: next
-    })
+    }))
     return prev.concat(...temp)
   },[]))
 
