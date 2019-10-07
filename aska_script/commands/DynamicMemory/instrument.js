@@ -53,12 +53,14 @@ function deleteRegularity(prevSay, askaAnswer) {
   console.log(`nowSay=${prevSay} askaAnswer=${askaAnswer}`);
   let fileArray = JSON.parse(fs.readFileSync(bufferPath));
   let obj = fileArray.filter(f => f.reaction.some(s => s == askaAnswer))
-  if (obj.reaction.length > 1) {
-    obj.reaction.splice(obj.reaction.findIndex(v => v == askaAnswer), 1)
-  } else {
-    fileArray.splice(fileArray.findIndex(v=> v.id == obj.id), 1)
+  if (obj.length > 0) {
+    if (obj.reaction.length > 1) {
+      obj.reaction.splice(obj.reaction.findIndex(v => v == askaAnswer), 1)
+    } else {
+      fileArray.splice(fileArray.findIndex(v=> v.id == obj.id), 1)
+    }
+    fs.writeFileSync(bufferPath, JSON.stringify(fileArray), 'utf8');
   }
-  fs.writeFileSync(bufferPath, JSON.stringify(fileArray), 'utf8');
 }
 
 module.exports.saveRegularity = saveRegularity

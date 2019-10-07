@@ -37,8 +37,8 @@ function addRegularity(ws) {
 }
 
 function dontSatThat(ws) {
-  socket.send(ws, 'aska', checkURL(asyncAsk.whatToSay(AskaSC, arguments.callee.name)));
   deleteRegularity(ws.ClientSayArray[1], ws.askaAnswer)
+  socket.send(ws, 'aska', checkURL(asyncAsk.whatToSay(AskaSC, arguments.callee.name)));
 }
 function sayRegularity(ws, data) {
   socket.send(ws, 'aska', asyncAsk.whatToSay(data, 'reaction'));
