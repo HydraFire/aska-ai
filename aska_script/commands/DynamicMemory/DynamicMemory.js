@@ -9,10 +9,6 @@ const AskaSC = JSON.parse(fs.readFileSync(fileOption));
 
 
 function addRegularity(ws) {
-    // - I say                                      // addRegularity: ["как мне следует на это реагировать?"]
-    //                                                 wordsBreak: ["отмена"]
-    //                                                 wordsBreakSay:["ладно"]
-    //                                              // dontSatThat: ["больше не буду"]
   asyncAsk.readEndWait(ws, checkURL(asyncAsk.whatToSay(AskaSC, arguments.callee.name)), () => {
     asyncAsk.selectFunctionFromWords(ws, [
       {
@@ -25,6 +21,7 @@ function addRegularity(ws) {
       {
         func: () => {
           saveRegularity(ws.ClientSay, ws.ClientSayArray[2])
+          socket.send(ws, 'aska', checkURL(asyncAsk.whatToSay(AskaSC, 'saveRegularity')));
         },
         words: [""],
         whatever: true,
