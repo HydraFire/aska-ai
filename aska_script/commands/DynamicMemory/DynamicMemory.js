@@ -33,6 +33,11 @@ function addRegularity(ws) {
   });
 }
 
+function addRegularitySecondWay(ws) {
+  saveRegularity(ws.ClientSayArray[1], ws.ClientSayArray[2])
+  socket.send(ws, 'aska', checkURL(asyncAsk.whatToSay(AskaSC, 'saveRegularity')));
+}
+
 function dontSatThat(ws) {
   deleteRegularity(ws.ClientSayArray[1], ws.askaAnswer)
   socket.send(ws, 'aska', checkURL(asyncAsk.whatToSay(AskaSC, arguments.callee.name)));
@@ -43,14 +48,17 @@ function sayRegularity(ws, data) {
 // /////////////////////////////////////////////////////////////////////////////
 function DynamicMemory(ws, options, param, data) {
   switch (options) {
+    case '0':
+      sayRegularity(ws, data);
+      break;
     case '1':
       addRegularity(ws);
       break;
     case '2':
       dontSatThat(ws);
       break;
-    case '0':
-      sayRegularity(ws, data);
+    case '3':
+      addRegularitySecondWay(ws);
       break;
   }
 }

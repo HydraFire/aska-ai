@@ -1,4 +1,5 @@
 const fs = require('fs');
+const { init } = require('./fuckOffNN');
 
 function noSystem(value) {
   if (value != 'System') {
@@ -51,6 +52,7 @@ function editorSave(data) {
     delete obj.description;
     fs.writeFileSync(`./data/commands/${v}/option.json`, JSON.stringify(obj), 'utf8');
   });
+  init()
   return 'done';
 }
 

@@ -1,5 +1,6 @@
 const fs = require('fs');
 const socket = require('../../webSocketOnMessage');
+const { init } = require('../../NN/fuckOffNN');
 const asyncAsk = require('../../asyncAsk');
 const { checkURL } = require('../../saveAska');
 // ////////////////////////////////////////////////////////////
@@ -44,6 +45,7 @@ function saveRegularity(nowSay, prevSay) {
     })
   }
   fs.writeFileSync(bufferPath, JSON.stringify(fileArray), 'utf8');
+  init()
 }
 
 function deleteRegularity(prevSay, askaAnswer) {
@@ -56,6 +58,7 @@ function deleteRegularity(prevSay, askaAnswer) {
       fileArray.splice(fileArray.findIndex(v=> v.id == obj[0].id), 1)
     }
     fs.writeFileSync(bufferPath, JSON.stringify(fileArray), 'utf8');
+    init()
   }
 }
 
