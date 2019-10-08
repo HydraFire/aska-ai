@@ -25,18 +25,16 @@ function margeIO(objST, objRE, arr) {
 }
 // ///////////////////////////////////////////////////////////
 function saveRegularity(nowSay, prevSay) {
-  console.log(`nowSay=${nowSay} prevSay=${prevSay}`);
-
   let fileArray = JSON.parse(fs.readFileSync(bufferPath));
 
   let arrSameStimulus = findIntObj(fileArray, 'stimulus', prevSay) // reaction
   let arrSameReaction = findIntObj(fileArray, 'reaction', nowSay) // reaction
 
-  if (       arrSameStimulus.length == 1 && arrSameReaction == 0) {
+  if (       arrSameStimulus.length == 1 && arrSameReaction.length == 0) {
     arrSameStimulus[0].reaction.push(nowSay)
-  } else if (arrSameStimulus.length == 0 && arrSameReaction == 1) {
+  } else if (arrSameStimulus.length == 0 && arrSameReaction.length == 1) {
     arrSameReaction[0].stimulus.push(nowSay)
-  } else if (arrSameStimulus.length == 1 && arrSameReaction == 1) {
+  } else if (arrSameStimulus.length == 1 && arrSameReaction.length == 1) {
     arrSameStimulus[0].id != arrSameReaction[0].id ? margeIO(arrSameStimulus[0], arrSameReaction[0], fileArray):'';
   } else {
     fileArray.push({
@@ -45,12 +43,10 @@ function saveRegularity(nowSay, prevSay) {
       reaction:[nowSay]
     })
   }
-  console.log(fileArray);
   fs.writeFileSync(bufferPath, JSON.stringify(fileArray), 'utf8');
 }
 
 function deleteRegularity(prevSay, askaAnswer) {
-  console.log(`nowSay=${prevSay} askaAnswer=${askaAnswer}`);
   let fileArray = JSON.parse(fs.readFileSync(bufferPath));
   let obj = fileArray.filter(f => f.reaction.some(s => s == askaAnswer))
   if (obj.length > 0) {
