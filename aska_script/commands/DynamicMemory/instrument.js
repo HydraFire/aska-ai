@@ -54,12 +54,10 @@ function deleteRegularity(prevSay, askaAnswer) {
   let fileArray = JSON.parse(fs.readFileSync(bufferPath));
   let obj = fileArray.filter(f => f.reaction.some(s => s == askaAnswer))
   if (obj.length > 0) {
-    console.log(obj);
-    console.log(obj.reaction)
-    if (obj.reaction.length > 1) {
-      obj.reaction.splice(obj.reaction.findIndex(v => v == askaAnswer), 1)
+    if (obj[0].reaction.length > 1) {
+      obj[0].reaction.splice(obj[0].reaction.findIndex(v => v == askaAnswer), 1)
     } else {
-      fileArray.splice(fileArray.findIndex(v=> v.id == obj.id), 1)
+      fileArray.splice(fileArray.findIndex(v=> v.id == obj[0].id), 1)
     }
     fs.writeFileSync(bufferPath, JSON.stringify(fileArray), 'utf8');
   }
