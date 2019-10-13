@@ -45,7 +45,7 @@ function saveRegularity(nowSay, prevSay) {
     })
   }
   fs.writeFileSync(bufferPath, JSON.stringify(fileArray), 'utf8');
-  fuckOffNN.init()
+  fuckOffNN.init(1)
 }
 
 function deleteRegularity(prevSay, askaAnswer) {
@@ -58,7 +58,7 @@ function deleteRegularity(prevSay, askaAnswer) {
       fileArray.splice(fileArray.findIndex(v=> v.id == obj[0].id), 1)
     }
     fs.writeFileSync(bufferPath, JSON.stringify(fileArray), 'utf8');
-    init()
+    fuckOffNN.init(1)
   }
 }
 

@@ -37,12 +37,20 @@ module.exports.checkIntelligentObject = function(str) {
   return intelligentObjects.some(v => v.keyWords == str);
 }
 // /////////////////////////////////////////////////////////////////////////////
-function buildIntelligentObjects(src, fileName, exception) {
+function buildIntelligentObjects(src, fileName, exception, vr) {
+
   let dmArray = JSON.parse(fs.readFileSync('./data/commands/DynamicMemory/buffer.json'));
-  const list = fs.readdirSync(src).filter(f => f != exception).map((v) =>
+  let list = fs.readdirSync(src).filter(f => f != exception);
+
+  if (vr) {
+    list = list.filter(f => f != 'LifeCircles');
+  }
+
+  list = list.map((v) =>
       ({ [v]: JSON.parse(fs.readFileSync(`${src}${v}${fileName}`)).nn })
   );
-  const collection = list.reduce((prev, next) => {
+
+  let collection = list.reduce((prev, next) => {
     let [fname] = Object.keys(next);
     return prev.concat(next[fname].reduce((p, n, i) => {
       return p.concat(n.map(v => {
@@ -54,16 +62,20 @@ function buildIntelligentObjects(src, fileName, exception) {
         };
       }));
     },[]));
-  },[]).concat( dmArray.reduce((prev, next) => {
-    let temp = next.stimulus.map(v => ({
-      keyWords: v,
-      decisionName: 'DynamicMemory',
-      option: -1,
-      mass: v.length,
-      data: next
-    }))
-    return prev.concat(...temp)
-  },[]))
+  },[]);
+
+  if (vr) {
+    collection = collection.concat( dmArray.reduce((prev, next) => {
+      let temp = next.stimulus.map(v => ({
+        keyWords: v,
+        decisionName: 'DynamicMemory',
+        option: -1,
+        mass: v.length,
+        data: next
+      }))
+      return prev.concat(...temp)
+    },[]))
+  }
 
   return collection;
 }
@@ -111,7 +123,7 @@ function start(ws, text) {
 }
 module.exports.start = start;
 // /////////////////////////////////////////////////////////////////////////////
-function init() {
- intelligentObjects = buildIntelligentObjects('./data/commands/','/option.json','System');
+function init(vr = 0) {
+  intelligentObjects = buildIntelligentObjects('./data/commands/','/option.json','System', vr);
 }
 module.exports.init = init;
