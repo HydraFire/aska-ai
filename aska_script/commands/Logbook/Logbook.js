@@ -61,6 +61,16 @@ function saveToFile(newText) {
   checkLargeURL(newText);
 }
 // /////////////////////////////////////////////////////////////////////////////
+const nearestValue = (arr, val) => arr.reduce((p, n) => (Math.abs(p) > Math.abs(n - val) ? n - val : p), Infinity) + val
+
+function searchLastYear(arr) {
+  let date = new Date()
+  let searchDate = Date.parse(new Date( date.getFullYear()-1, date.getMonth(), date.getDate(), 12,0,0,0 ))
+  let arrDate = arr.map(v => v.date);
+  let nearestDate = nearestValue(arrDate, searchDate);
+  return arr[arr.findIndex(v => v.date == nearestDate)];
+}
+
 function Logbook(ws) {
   function oneIteration(key) {
     let newText = '';
@@ -102,7 +112,7 @@ function Logbook(ws) {
     }
   }
   const array = readFile(filepath);
-  const obj = array[array.length - 1];
+  const obj = searchLastYear(array);
   let arrKeys = Object.keys(obj).filter(v => v !== 'date');
   arrayIterations();
 }
