@@ -81,7 +81,7 @@ function goodMorning(ws, value) {
       let money = values[0].split('.')[0];
       let money2 = values[1].split('.')[0];
       let text = `На моём счету ${money} гривен, а на другом ${money2} гривен`;
-      asyncAsk.readEndWait(ws, text, miniGame(ws))
+      asyncAsk.readEndWait(ws, text, (ws) => miniGame(ws))
     });
 
     let x = value.obj;
