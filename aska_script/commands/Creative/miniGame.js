@@ -40,7 +40,7 @@ function addWords( arr ) {
   deleteWords( arr )
 }
 
-nextQuestion(ws, arr ) {
+function nextQuestion(ws, arr ) {
   arr = readWordsArray()
   sayWords(ws, arr)
 }
