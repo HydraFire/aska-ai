@@ -3,7 +3,6 @@ const https = require('https');
 const fetch = require('node-fetch');
 const md5 = require('blueimp-md5');
 const sha1 = require('sha1');
-const convert = require('xml-js');
 // /////////////////////////////////////////////////////////////////////////////
 const socket = require('../../webSocketOnMessage');
 const asyncAsk = require('../../asyncAsk');
@@ -45,13 +44,15 @@ function checkMoney() {
     })
     .then(res => res.text())
     .then(xml => {
-      return JSON.parse(convert.xml2json(xml, {compact: true, spaces: 2}))
+      return 333
+      /*JSON.parse(convert.xml2json(xml, {compact: true, spaces: 2}))
        .response
        .data
        .info
        .cardbalance
        .balance
        ._text
+       */
     }).catch( err => console.log(err))
 }
 
@@ -85,13 +86,15 @@ function checkMyMoney() {
     })
     .then(res => res.text())
     .then(xml => {
-      return JSON.parse(convert.xml2json(xml, {compact: true, spaces: 2}))
+      return 777
+      /*JSON.parse(convert.xml2json(xml, {compact: true, spaces: 2}))
        .response
        .data
        .info
        .cardbalance
        .balance
        ._text
+       */
     }).catch( err => console.log(err))
 }
 

@@ -1,12 +1,23 @@
 const fs = require('fs');
 const fetch = require('node-fetch');
-const convert = require('xml-js');
 const { from, merge, of } = require('rxjs');
 const { switchMap, concatMap, map, delay, reduce } = require( 'rxjs/operators');
 
 // /////////////////////////////////////////////////////////////////////////////
 function isOK( arrWords ) {
   return arrWords.length > 0;
+}
+
+function xmltoJson( xml ) {
+  xml = xml.substring(xml.search('>') + 1, xml.length);
+  xml = xml.substring(xml.search('>') + 1, xml.length);
+  let arr = [];
+  while (xml.length > 20) {
+    xml = xml.substring(xml.search('>') + 1, xml.length);
+    arr.push( xml.substring(0, xml.search('<')));
+    xml = xml.substring(xml.search('>') + 1, xml.length);
+  }
+  return arr;
 }
 
 function writeIgnoredVidioArray( alreadyListened ) {
@@ -30,8 +41,7 @@ function getSubtitles( videoID ) {
   return from( fetch(`https://video.google.com/timedtext?type=track&v=${videoID}&id=0&lang=ru`))
   .pipe(
     switchMap(response => response.text()),
-    map(v => JSON.parse(convert.xml2json(v, {compact: true, spaces: 2}))),
-    map(v =>({ id: videoID, arrText: v.transcript.text.map( s => s._text) }))
+    map(v =>({ id: videoID, arrText: xmltoJson(v) }))
   )
 }
 
@@ -97,5 +107,7 @@ function concatAndRandomizeArray( arrayText ) {
 function updateKnowsFromInternet() {
   getNewKnowledgeFromInternet(['UCQuDYVdemGofgSX9LujILcQ','UCo-gAYrvd7WIrCRsNueddtQ','UC5X7iRFTg24q8X01_W42OGg'], readIgnoredVidioArray())
 }
+
+
 
 module.exports.updateKnowsFromInternet = updateKnowsFromInternet;
