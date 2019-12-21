@@ -91,7 +91,7 @@ function miniGame(ws) {
 
   } else {
 
-    asyncAsk.readEndWait(ws, 'aska', checkURL(asyncAsk.whatToSay(AskaSC, 'gameStart')));
+    asyncAsk.readEndWait(ws, checkURL(asyncAsk.whatToSay(AskaSC, 'gameStart')));
     sayWords(ws, arr)
 
   }
