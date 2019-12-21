@@ -30,10 +30,9 @@ function checkDate() {
   let hoursNow = new Date().getHours();
   let buildArr = {};
 
-//  if (hoursNow > 4 && hoursNow < 12 && timeLastGoodMorning > (16 * 60 * 60 * 1000)) {
+  //if (hoursNow > 4 && hoursNow < 12 && timeLastGoodMorning > (16 * 60 * 60 * 1000)) {
     buildArr.goodMorning = true;
-//  }
-
+  //}
   if (hoursNow > 19 && hoursNow < 24 && timeLastEveningTalk > (16 * 60 * 60 * 1000)) {
     buildArr.eveningTalk = true;
   }

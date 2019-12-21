@@ -11,6 +11,18 @@ const { checkURL } = require('../../saveAska');
 const fileOption = './data/commands/WebInteract/option.json';
 const AskaSC = JSON.parse(fs.readFileSync(fileOption));
 // /////////////////////////////////////////////////////////////////////////////
+function xmltoJson( xml ) {
+  xml = xml.substring(xml.search('>') + 1, xml.length);
+  xml = xml.substring(xml.search('>') + 1, xml.length);
+  let arr = [];
+  while (xml.length > 20) {
+    xml = xml.substring(xml.search('>') + 1, xml.length);
+    arr.push( xml.substring(0, xml.search('<')));
+    xml = xml.substring(xml.search('>') + 1, xml.length);
+  }
+  return arr;
+}
+
 function sayApiError(ws) {
   socket.send(ws, 'aska', checkURL(asyncAsk.whatToSay(AskaSC, 'bankApiError')));
 }
@@ -44,6 +56,7 @@ function checkMoney() {
     })
     .then(res => res.text())
     .then(xml => {
+      console.log(xml);
       return '333.00'
       /*JSON.parse(convert.xml2json(xml, {compact: true, spaces: 2}))
        .response
