@@ -76,15 +76,13 @@ function goodMorning(ws, value) {
           v != 'undefined' ? asyncAsk.readEndWait(ws, checkURL(v)):'';
     //    }
       });
-      /*
+
     Promise.all([checkMoney(), checkMyMoney()]).then(function(values) {
       let money = values[0].split('.')[0];
       let money2 = values[1].split('.')[0];
       let text = `На моём счету ${money} гривен, а на другом ${money2} гривен`;
-      asyncAsk.readEndWait(ws, text)
+      asyncAsk.readEndWait(ws, text, miniGame(ws))
     });
-*/
-    miniGame(ws)
 
     let x = value.obj;
     x.timeLastRun = Date.now();
