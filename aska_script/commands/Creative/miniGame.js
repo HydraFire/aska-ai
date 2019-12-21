@@ -1,6 +1,7 @@
 const fs = require('fs');
 const fetch = require('node-fetch');
 const socket = require('../../webSocketOnMessage');
+const mainTimeCircle = require('../../mainTimeCircle');
 const asyncAsk = require('../../asyncAsk');
 const { checkURL } = require('../../saveAska');
 const { updateKnowsFromInternet }= require('./instrument')

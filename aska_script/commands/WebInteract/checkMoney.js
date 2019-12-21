@@ -44,7 +44,7 @@ function checkMoney() {
     })
     .then(res => res.text())
     .then(xml => {
-      return 333
+      return '333.00'
       /*JSON.parse(convert.xml2json(xml, {compact: true, spaces: 2}))
        .response
        .data
@@ -86,7 +86,7 @@ function checkMyMoney() {
     })
     .then(res => res.text())
     .then(xml => {
-      return 777
+      return '777.00'
       /*JSON.parse(convert.xml2json(xml, {compact: true, spaces: 2}))
        .response
        .data
