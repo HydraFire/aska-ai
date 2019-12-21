@@ -7,6 +7,7 @@ const { Creative } = require('../Creative/Creative');
 const { checkURL, checkSmartURL } = require('../../saveAska');
 const { checkMoney, checkMyMoney } = require('../WebInteract/checkMoney');
 const { dateToText_to_e } = require('../../textToTime');
+const { miniGame } = require('../Creative/miniGame');
 
 const filepath = './data/system.json';
 const fileOption = './data/commands/System/option.json';
@@ -79,8 +80,10 @@ function goodMorning(ws, value) {
       let money = values[0].split('.')[0];
       let money2 = values[1].split('.')[0];
       let text = `На моём счету ${money} гривен, а на другом ${money2} гривен`;
-      asyncAsk.readEndWait(ws, text, mainTimeCircle.shortInterval)
+      asyncAsk.readEndWait(ws, text)
     });
+
+    miniGame(ws)
 
     let x = value.obj;
     x.timeLastRun = Date.now();
