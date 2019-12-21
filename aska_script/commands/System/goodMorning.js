@@ -73,8 +73,7 @@ function goodMorning(ws, value) {
       //  if (i === arr.length - 1) {
       //    asyncAsk.readEndWait(ws, checkURL(v), mainTimeCircle.shortInterval)
     //    } else {
-          console.log(v);
-          asyncAsk.readEndWait(ws, checkURL(v));
+          v != undefined ? asyncAsk.readEndWait(ws, checkURL(v)):'';
     //    }
       });
     Promise.all([checkMoney(), checkMyMoney()]).then(function(values) {
