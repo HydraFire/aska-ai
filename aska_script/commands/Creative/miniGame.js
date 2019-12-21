@@ -75,7 +75,7 @@ function sayWords(ws, arr) {
         end: true
       }
     ], () => {
-      socket.send(ws, 'aska', arr[0]);
+      socket.send(ws, arr[0]);
     });
   });
 }
