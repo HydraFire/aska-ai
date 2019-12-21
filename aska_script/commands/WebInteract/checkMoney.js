@@ -12,6 +12,12 @@ const fileOption = './data/commands/WebInteract/option.json';
 const AskaSC = JSON.parse(fs.readFileSync(fileOption));
 // /////////////////////////////////////////////////////////////////////////////
 function xmltoJson( xml ) {
+
+  if (xml.includes('invalid')) {
+    return 'непонятно.0'
+  }
+  console.log(xml);
+
   xml = xml.substring(xml.search('>') + 1, xml.length);
   xml = xml.substring(xml.search('>') + 1, xml.length);
   let arr = [];
@@ -20,7 +26,7 @@ function xmltoJson( xml ) {
     arr.push( xml.substring(0, xml.search('<')));
     xml = xml.substring(xml.search('>') + 1, xml.length);
   }
-  return arr;
+  return 'нужно доделать.0';
 }
 
 function sayApiError(ws) {
@@ -55,18 +61,8 @@ function checkMoney() {
         agent
     })
     .then(res => res.text())
-    .then(xml => {
-      console.log(xml);
-      return '333.00'
-      /*JSON.parse(convert.xml2json(xml, {compact: true, spaces: 2}))
-       .response
-       .data
-       .info
-       .cardbalance
-       .balance
-       ._text
-       */
-    }).catch( err => console.log(err))
+    .then(xml => xmltoJson(xml))
+    .catch( err => console.log(err))
 }
 
 function checkMyMoney() {
@@ -98,17 +94,8 @@ function checkMyMoney() {
         agent
     })
     .then(res => res.text())
-    .then(xml => {
-      return '777.00'
-      /*JSON.parse(convert.xml2json(xml, {compact: true, spaces: 2}))
-       .response
-       .data
-       .info
-       .cardbalance
-       .balance
-       ._text
-       */
-    }).catch( err => console.log(err))
+    .then(xml => xmltoJson(xml))
+    .catch( err => console.log(err))
 }
 
 function sayMoney(ws) {
