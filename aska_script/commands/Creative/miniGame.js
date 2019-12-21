@@ -5,6 +5,8 @@ const asyncAsk = require('../../asyncAsk');
 const { checkURL } = require('../../saveAska');
 const { updateKnowsFromInternet }= require('./instrument')
 
+const fileOption = './data/commands/Creative/option.json';
+const AskaSC = JSON.parse(fs.readFileSync(fileOption));
 
 function readWordsArray() {
   try {
