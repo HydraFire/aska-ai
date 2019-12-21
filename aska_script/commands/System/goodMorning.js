@@ -73,6 +73,7 @@ function goodMorning(ws, value) {
       //  if (i === arr.length - 1) {
       //    asyncAsk.readEndWait(ws, checkURL(v), mainTimeCircle.shortInterval)
     //    } else {
+        console.log(v);
           v != undefined ? asyncAsk.readEndWait(ws, checkURL(v)):'';
     //    }
       });
