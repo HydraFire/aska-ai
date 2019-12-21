@@ -1,6 +1,6 @@
 {
   "name": "aska",
-  "version": "3.7.2",
+  "version": "3.7.4",
   "description": "phone assistent",
   "main": "server.js",
   "scripts": {
@@ -42,7 +42,6 @@
     "sha1": "^1.1.1",
     "web-audio-analyser": "^2.0.1",
     "web-push": "^3.3.0",
-    "ws": "^5.0.0",
-    "xml-js": "^1.6.11"
+    "ws": "^5.0.0"
   }
 }
