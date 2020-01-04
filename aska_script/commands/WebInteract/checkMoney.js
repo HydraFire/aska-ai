@@ -16,9 +16,9 @@ function xmltoJson( xml ) {
   if (xml.includes('invalid')) {
     return 'непонятно.0'
   }
-  console.log(xml); // 159.224.183.122
+  console.log(xml); 
 
-  xml = xml.substring(xml.search('<balance') + 7, xml.length);
+  xml = xml.substring(xml.search('<balance') + 9, xml.length);
   xml = xml.substring(0, xml.search('<') + 1);
 
   return xml;
