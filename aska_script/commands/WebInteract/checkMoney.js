@@ -12,13 +12,13 @@ const fileOption = './data/commands/WebInteract/option.json';
 const AskaSC = JSON.parse(fs.readFileSync(fileOption));
 // /////////////////////////////////////////////////////////////////////////////
 function xmltoJson( xml ) {
-  console.log(xml);
+
   if (xml.includes('invalid')) {
     return 'непонятно.0'
   }
   console.log(xml); // 159.224.183.122
 
-  xml = xml.substring(xml.search('balance') + 7, xml.length);
+  xml = xml.substring(xml.search('<balance') + 7, xml.length);
   xml = xml.substring(0, xml.search('<') + 1);
 
   return xml;
