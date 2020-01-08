@@ -81,15 +81,15 @@ function scenario(ws, money, metDay, metNight) {
   //
   part0 = `
   nightmare
-    .goto('https://ok.kep.com.ua/home/ru')
+    .goto('https://https://my.kyiv.yasno.com.ua')
     .wait(1000)
     .type('#username', '${process.env.ENERGY_LOGIN}')
     .type('#password', '${process.env.ENERGY_PASSWORD}')
     .click('input[type="submit"]')
     .wait(6000)
-    .click('a[href="https://ok.kep.com.ua/home/ru/accounts/675566"]')
+    .click('a[href="https://www.my.kyiv.yasno.com.ua/accounts/675566"]')
     .wait(6000)
-    .click('a[href="/home/ru/readings/new"]')
+    .click('a[href="/readings/new"]')
     .wait(1000)
     .type('#readings_counter_1', '${metDay}')
     .type('#readings_counter_2', '${metNight}')
@@ -124,7 +124,7 @@ function scenario(ws, money, metDay, metNight) {
     .wait(2000)
     .click('input[value="Занести показания"]')
     .wait(3000)
-    .click('a[href="/home/ru/pays/1/type/1/method?main_service=only"]')
+    .click('a[href="/pays/1/type/1/method?main_service=only"]')
     .wait(3000)
     .click('img[alt="PORTMONE.COM"]')
     .wait(1000)

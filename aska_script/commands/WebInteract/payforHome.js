@@ -112,7 +112,7 @@ function scenario(ws, money, tarif) {
 }
 // /////////////////////////////////////////////////////////////////////////////
 function checkNeedMoney(ws, money) {
-  let tarif = 608.16;
+  let tarif = 629.00;
   if (money > tarif) {
     scenario(ws, money, tarif);
   } else {
