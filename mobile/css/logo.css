@@ -6,7 +6,7 @@
 
 
 .circle-static {
-  margin: 250px 0px 0px -60px;
+  margin: 280px 0px 0px -47px;
   transform: rotate(90deg);
 }
 .circle-static-portable {
@@ -16,14 +16,14 @@
 
 
 .circle {
-  left: 7px;
-  top: 180px;
+  left: 16px;
+  top: 210px;
   position: absolute;
   will-change: transform;
 }
 .circle-portable {
-  left: 180px;
-  top: -3px;
+  left: 210px;
+  top: 16px;
   position: absolute;
   will-change: transform;
 }
@@ -52,9 +52,9 @@
 }
 .interactWindow_center {
   position: absolute;
-  width: 340px;
+  width: 100vw;
   overflow-y: scroll;
-  margin: 5px 10px 5px 10px;
+  margin: 5px 0px 5px 0px;
   z-index: 15;
   text-align: center;
   white-space: normal;
@@ -69,6 +69,7 @@
 }
 .interactWindow_chart {
   height: 80vh;
+  width: 100vw;
   margin-top: 100px;
   position: absolute;
   z-index: 25;

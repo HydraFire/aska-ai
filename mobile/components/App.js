@@ -13,7 +13,7 @@ import '../css/logotype.css';
 class App extends React.Component {
   componentDidMount() {
     initAudio();
-    init()
+    //init()
   }
   render() {
     return (
