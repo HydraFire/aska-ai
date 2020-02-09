@@ -1,7 +1,7 @@
 .input_bgg {
   position: absolute;
-  width: 720px;
-  height: 360px;
+  width: 100vh;
+  height: 100vw;
   background: rgba(3,3,3,0.5);
   z-index: 4;
 }

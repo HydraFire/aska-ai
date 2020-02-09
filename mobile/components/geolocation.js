@@ -4,7 +4,7 @@ let pastTime = Date.now();
 function success(position) {
   var latitude  = position.coords.latitude;
   var longitude = position.coords.longitude;
-  window.myconsole.log(`<p>Latitude is ${latitude}° <br>Longitude is ${longitude}°</p>`, 'html');
+  window.myconsole.log(`<p>Latitude is ${latitude} <br>Longitude is ${longitude}</p>`, 'html');
 
   const now = Date.now();
   const sum = (now - pastTime) / 1000 | 0;

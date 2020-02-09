@@ -4,6 +4,7 @@ import ChallengeLog from './interface/challengeLog';
 import ChartCom from './interface/chartComponent';
 import clientTimeout from './clientTimeout';
 import { initAudio } from './speechSynthesizer';
+import { init } from './geolocation';
 import Logo from './interface/logo';
 
 
@@ -12,6 +13,7 @@ import '../css/logotype.css';
 class App extends React.Component {
   componentDidMount() {
     initAudio();
+    init()
   }
   render() {
     return (
