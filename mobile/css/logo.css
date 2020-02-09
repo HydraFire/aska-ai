@@ -16,14 +16,14 @@
 
 
 .circle {
-  left: 14px;
-  top: 210px;
+  left: 13px;
+  top: 230px;
   position: absolute;
   will-change: transform;
 }
 .circle-portable {
-  left: 210px;
-  top: 14px;
+  left: 230px;
+  top: 13px;
   position: absolute;
   will-change: transform;
 }
