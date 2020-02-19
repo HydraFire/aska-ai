@@ -109,7 +109,7 @@ const shortInterval = function shortInterval(ws) {
 };
 module.exports.shortInterval = shortInterval;
 // //////////////////////////////////////////////////////////////////////////////
-const checkQuests = function checkQuests(ws) {
+const checkQuests = function checkQuests(ws, gps) {
   // Текущее время
   let timeNow = Date.now();
   // Прогрузка файлов
@@ -129,6 +129,17 @@ const checkQuests = function checkQuests(ws) {
         return true;
       }
       return false;
+    })
+    .filter(v => {
+      if (v.gps) {
+        if (v.gps[0] == gps[0] && v.gps[1] == gps[1]) {
+          return true
+        } else {
+          return false
+        }
+      } else {
+        return true
+      }
     })
     .map(v => Object.assign(v, { startWith: 'QuestPart2' }));
   //
@@ -153,12 +164,12 @@ const checkQuests = function checkQuests(ws) {
 // //////////////////////////////////////////////////////////////////////////////
 // Функция которая работает при подключении клиента
 // //////////////////////////////////////////////////////////////////////////////
-const checkAssignments = function checkAssignments(ws) {
+const checkAssignments = function checkAssignments(ws, gps) {
   // Запускаем проверку актуальных заданий
   if (Date.now() > lastTime && !LifeCircles.statusOfInterval()) {
     lastTime = Date.now() + 60000;
     displayOn = true;
-    checkQuests(ws);
+    checkQuests(ws, gps);
   }
 };
 module.exports.checkAssignments = checkAssignments;
