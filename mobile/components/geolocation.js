@@ -1,9 +1,17 @@
 
 let pastTime = Date.now();
 
+let lastCoords = [0,0]
+
+function getCoords() {
+  return lastCoords;
+}
+
 function success(position) {
-  var latitude  = position.coords.latitude;
-  var longitude = position.coords.longitude;
+  let latitude  = position.coords.latitude;
+  let longitude = position.coords.longitude;
+  lastCoords = [latitude, longitude];
+
   window.myconsole.log(`<p>Latitude is ${latitude} <br>Longitude is ${longitude}</p>`, 'html');
 
   const now = Date.now();
@@ -37,4 +45,6 @@ function init() {
   }
   navigator.geolocation.watchPosition(success, error, geo_options);
 }
+
 module.exports.init = init;
+module.exports.getCoords = getCoords;

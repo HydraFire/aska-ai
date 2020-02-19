@@ -1,7 +1,10 @@
 import socket from './webSocketClient';
 import { switchModeOnMute } from './speechSynthesizer';
 import { animeteIPcheck } from './interface/animation';
+import { getCoords } from './geolocation';
+
 let home_ip = JSON.parse(process.env.ASKA_HOME_IP);
+
 function impulseToServer() {
   //window.myconsole.log('navigator.connection.type = ' + navigator.connection.type, 'err');
   animeteIPcheck(true);
@@ -9,21 +12,21 @@ function impulseToServer() {
     getIp()
     .then(
           result => {
-            animeteIPcheck(false);
-            switchModeOnMute(result);
-            socket.send('impulse', 'impulse');
+            animeteIPcheck(false)
+            switchModeOnMute(result)
+            socket.send(getCoords(), 'impulse');
           },
           error => {
             //window.myconsole.log('ip error = ' + error, 'err');
             animeteIPcheck(false);
             switchModeOnMute(result);
-            socket.send('impulse', 'impulse');
+            socket.send(getCoords(), 'impulse');
           }
       );
   } else {
     animeteIPcheck(false);
     switchModeOnMute(true);
-    socket.send('impulse', 'impulse');
+    socket.send(getCoords(), 'impulse');
     //window.myconsole.log('socket.send(impulse, impulse);', 'string');
   }
 }

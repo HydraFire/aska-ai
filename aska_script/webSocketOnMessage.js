@@ -91,6 +91,8 @@ function webSocketOnMessage(ws) {
             break;
           case 'impulse':
             console.log('GET IMPULSE');
+            console.log(obj.data[0]);
+            console.log(obj.data[1]);
             checkAssignments(ws);
             break;
             /*
