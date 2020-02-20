@@ -19,7 +19,7 @@ function verifAccess() {
 }
 module.exports.verifAccess = verifAccess;
 // ////////////////////////////////////////////////////////////////////////////
-function verifToken(ws, token) {
+function verifToken(ws, token, gps) {
   if (token != '*') {
     jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
       if (err || decoded.id !== process.env.PASSWORD) {
@@ -27,7 +27,7 @@ function verifToken(ws, token) {
       } else {
         ws.accessed = true;
         mainTimeCircle.idleInterval(ws);
-        mainTimeCircle.checkAssignments(ws);
+        mainTimeCircle.checkAssignments(ws, gps);
         console.log('connection accessed');
       }
     });
@@ -62,7 +62,7 @@ function Login(ws, option) {
     // Запуск проверки заданий и лайф циклов
     setTimeout(() => {
       mainTimeCircle.idleInterval(ws);
-      mainTimeCircle.checkAssignments(ws);
+      mainTimeCircle.checkAssignments(ws, [0,0]);
     }, 3000);
   };
   const negative = function negative() {

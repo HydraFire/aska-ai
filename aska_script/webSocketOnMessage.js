@@ -10,6 +10,15 @@ const { writeResultEXP } = require('./commands/Logbook/Logbook');
 const { shortInterval } = require('./mainTimeCircle');
 const { getImgs } = require('./kaleidoscopeImg');
 // Функция нужна для автоматизации создания обэкта и стрингификации
+function ckeckGPS(arr) {
+  let x = parseFloat(arr[0]).toFixed(3)
+  let y = parseFloat(arr[1]).toFixed(3)
+  if ( Number(x) === x ) {
+    return [x, y]
+  } else {
+    return [0, 0]
+  }
+}
 function send(ws, type, data, buttons) {
   if (!ws.closeAllInterval) {
     if (type === 'console' && typeof data === 'object') {
@@ -55,6 +64,7 @@ function webSocketOnMessage(ws) {
             ws.ClientSay = obj.data;
             break;
             // Запрос на получение ключа для подписки на уведомление
+            /*
           case 'notificationGetKey':
             getKey(ws);
             break;
@@ -62,7 +72,7 @@ function webSocketOnMessage(ws) {
           case 'notificationSetKey':
             setKey(obj.data);
             break;
-
+*/
           case 'AUDIO':
             ws.audio = obj.data;
             //send(ws, 'console', ws.audio);
@@ -90,8 +100,8 @@ function webSocketOnMessage(ws) {
             commands(ws, obj.data);
             break;
           case 'impulse':
-            console.log('GET IMPULSE');
-            checkAssignments(ws, [parseFloat(obj.data[0]).toFixed(3), parseFloat(obj.data[1]).toFixed(3)]);
+            //console.log('GET IMPULSE');
+            checkAssignments(ws, ckeckGPS(obj.data));
             break;
             /*
           case 'expClick':
@@ -121,7 +131,7 @@ function webSocketOnMessage(ws) {
           send(ws, 'console', obj.data);
           break;
         case 'TOKEN':
-          verifToken(ws, obj.data);
+          verifToken(ws, obj.data[2], ckeckGPS(obj.data));
           break;
         case 'AUDIO':
           ws.audio = obj.data;

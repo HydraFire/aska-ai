@@ -48,9 +48,9 @@ function start(ip) {
   socket.onopen = function onopen() {
     iconsole.logC('SOCKET CONNECT');
     localStorage.aska_ip = ip;
-    localStorage.test_token ? send(localStorage.test_token, 'TOKEN') : send('*', 'TOKEN');
+    localStorage.test_token ? send([0,0,localStorage.test_token], 'TOKEN') : send('*', 'TOKEN');
     impulseInterval = setInterval(() => {
-      send('impulse','impulse');
+      send([0,0],'impulse');
     }, 5*60*1000);
   };
 
@@ -63,10 +63,12 @@ function start(ip) {
       case 'clientFunction':
         clientFunction(message.data);
         break;
+        /*
       case 'notificationPublicKey':
         pushNotification.setVapidPublicKey(message.data);
         iconsole.logS(message.data);
         break;
+        */
       case 'token':
         localStorage.test_token = message.data;
         iconsole.logS('TOKEN is accepted');

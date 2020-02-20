@@ -5,6 +5,7 @@ import { animeteErr } from './interface/animation';
 import clientTimeout from './clientTimeout';
 import { twoArr, chargeImpulse } from './quest';
 import { controls } from './asmrControls';
+import { getCoords } from './geolocation'
 
 let socket = null;
 
@@ -39,7 +40,7 @@ function start() {
 
   socket.onopen = function onopen() {
     // iconsole.logC('SOCKET CONNECT');
-    localStorage.test_token ? send(localStorage.test_token, 'TOKEN') : send('*', 'TOKEN');
+    localStorage.test_token ? send(getCoords().concat([localStorage.test_token]), 'TOKEN') : send('*', 'TOKEN');
   };
 
   socket.onmessage = function onmessage(event) {
