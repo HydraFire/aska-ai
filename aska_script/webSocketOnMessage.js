@@ -13,10 +13,10 @@ const { getImgs } = require('./kaleidoscopeImg');
 function ckeckGPS(arr) {
   let x = parseFloat(arr[0]).toFixed(3)
   let y = parseFloat(arr[1]).toFixed(3)
-  if ( Number(x) === x ) {
-    return [x, y]
-  } else {
+  if ( isNaN(x) ) {
     return [0, 0]
+  } else {
+    return [x, y]
   }
 }
 function send(ws, type, data, buttons) {
