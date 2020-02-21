@@ -132,7 +132,7 @@ const checkQuests = function checkQuests(ws, gps) {
     })
     .filter(v => {
       if (v.gps) {
-        console.log(gps);
+        console.log(`${v.gps[0]} == ${gps[0]} && ${v.gps[1]} == ${gps[1]}`);
         if (v.gps[0] == gps[0] && v.gps[1] == gps[1]) {
           return true
         } else {
