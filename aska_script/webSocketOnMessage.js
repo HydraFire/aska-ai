@@ -11,8 +11,8 @@ const { shortInterval } = require('./mainTimeCircle');
 const { getImgs } = require('./kaleidoscopeImg');
 // Функция нужна для автоматизации создания обэкта и стрингификации
 function ckeckGPS(arr) {
-  let x = parseFloat(arr[0]).toFixed(3)
-  let y = parseFloat(arr[1]).toFixed(3)
+  let x = parseFloat(arr[0]).toFixed(2)
+  let y = parseFloat(arr[1]).toFixed(2)
   if ( isNaN(x) ) {
     return [0, 0]
   } else {
