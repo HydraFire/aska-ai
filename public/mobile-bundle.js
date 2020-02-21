@@ -4630,11 +4630,14 @@ if (process.env.NODE_ENV === 'production') {
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__speechSynthesizer__ = __webpack_require__(5);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__interface_animation__ = __webpack_require__(14);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__clientTimeout__ = __webpack_require__(26);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__quest__ = __webpack_require__(27);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__clientTimeout__ = __webpack_require__(27);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__quest__ = __webpack_require__(28);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__asmrControls__ = __webpack_require__(179);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__geolocation__ = __webpack_require__(22);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__geolocation___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5__geolocation__);
 // import iconsole from './interface/iconsole';
 //import pushNotification from './pushNotification';
+
 
 
 
@@ -4674,7 +4677,7 @@ function start() {
 
   socket.onopen = function onopen() {
     // iconsole.logC('SOCKET CONNECT');
-    localStorage.test_token ? send(localStorage.test_token, 'TOKEN') : send('*', 'TOKEN');
+    localStorage.test_token ? send(Object(__WEBPACK_IMPORTED_MODULE_5__geolocation__["getCoords"])().concat([localStorage.test_token]), 'TOKEN') : send('*', 'TOKEN');
   };
 
   socket.onmessage = function onmessage(event) {
@@ -4758,7 +4761,7 @@ function start() {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_blueimp_md5__ = __webpack_require__(176);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_blueimp_md5___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_blueimp_md5__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__webSocketClient__ = __webpack_require__(4);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__checkIp__ = __webpack_require__(28);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__checkIp__ = __webpack_require__(29);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__interface_animation__ = __webpack_require__(14);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__speechRecognition__ = __webpack_require__(30);
 
@@ -7126,6 +7129,60 @@ module.exports = ReactPropTypesSecret;
 
 /***/ }),
 /* 22 */
+/***/ (function(module, exports) {
+
+
+let pastTime = Date.now();
+
+let lastCoords = [0, 0];
+
+function getCoords() {
+  return lastCoords;
+}
+
+function success(position) {
+  let latitude = position.coords.latitude;
+  let longitude = position.coords.longitude;
+  lastCoords = [latitude, longitude];
+
+  window.myconsole.log(`<p>Latitude is ${latitude} <br>Longitude is ${longitude}</p>`, 'html');
+
+  const now = Date.now();
+  const sum = (now - pastTime) / 1000 | 0;
+  const min = sum / 60 | 0;
+  const sec = sum % 60;
+  if (min == 0) {
+    window.myconsole.log(`${sec}s`, 'str');
+  } else {
+    window.myconsole.log(`${min}m ${sec}s`, 'str');
+  }
+  pastTime = now;
+  window.myconsole.log(`-----------------------`, 'str');
+};
+
+function error() {
+  window.myconsole.log('Unable to retrieve your location', 'err');
+};
+
+var geo_options = {
+  enableHighAccuracy: true,
+  maximumAge: 30000,
+  timeout: 27000
+};
+
+function init() {
+  if (!navigator.geolocation) {
+    window.myconsole.log('Geolocation is not supported by your browser', 'err');
+    return;
+  }
+  navigator.geolocation.watchPosition(success, error, geo_options);
+}
+
+module.exports.init = init;
+module.exports.getCoords = getCoords;
+
+/***/ }),
+/* 23 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -7164,7 +7221,7 @@ var ExecutionEnvironment = {
 module.exports = ExecutionEnvironment;
 
 /***/ }),
-/* 23 */
+/* 24 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -7206,7 +7263,7 @@ function getActiveElement(doc) /*?DOMElement*/{
 module.exports = getActiveElement;
 
 /***/ }),
-/* 24 */
+/* 25 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -7277,7 +7334,7 @@ function shallowEqual(objA, objB) {
 module.exports = shallowEqual;
 
 /***/ }),
-/* 25 */
+/* 26 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -7320,13 +7377,13 @@ function containsNode(outerNode, innerNode) {
 module.exports = containsNode;
 
 /***/ }),
-/* 26 */
+/* 27 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__webSocketClient__ = __webpack_require__(4);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__speechSynthesizer__ = __webpack_require__(5);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__quest__ = __webpack_require__(27);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__quest__ = __webpack_require__(28);
 
 
 
@@ -7365,7 +7422,7 @@ function clientTimeout(arr) {
 /* harmony default export */ __webpack_exports__["a"] = (clientTimeout);
 
 /***/ }),
-/* 27 */
+/* 28 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -7376,7 +7433,7 @@ function clientTimeout(arr) {
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return chargeImpulse; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__webSocketClient__ = __webpack_require__(4);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__speechSynthesizer__ = __webpack_require__(5);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__checkIp__ = __webpack_require__(28);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__checkIp__ = __webpack_require__(29);
 
 
 
@@ -7507,7 +7564,7 @@ function twoArr(arr) {
 
 
 /***/ }),
-/* 28 */
+/* 29 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -7516,7 +7573,7 @@ function twoArr(arr) {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__webSocketClient__ = __webpack_require__(4);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__speechSynthesizer__ = __webpack_require__(5);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__interface_animation__ = __webpack_require__(14);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__geolocation__ = __webpack_require__(29);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__geolocation__ = __webpack_require__(22);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__geolocation___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3__geolocation__);
 
 
@@ -7576,60 +7633,6 @@ function getIp() {
   return promise;
 }
 
-
-/***/ }),
-/* 29 */
-/***/ (function(module, exports) {
-
-
-let pastTime = Date.now();
-
-let lastCoords = [0, 0];
-
-function getCoords() {
-  return lastCoords;
-}
-
-function success(position) {
-  let latitude = position.coords.latitude;
-  let longitude = position.coords.longitude;
-  lastCoords = [latitude, longitude];
-
-  window.myconsole.log(`<p>Latitude is ${latitude} <br>Longitude is ${longitude}</p>`, 'html');
-
-  const now = Date.now();
-  const sum = (now - pastTime) / 1000 | 0;
-  const min = sum / 60 | 0;
-  const sec = sum % 60;
-  if (min == 0) {
-    window.myconsole.log(`${sec}s`, 'str');
-  } else {
-    window.myconsole.log(`${min}m ${sec}s`, 'str');
-  }
-  pastTime = now;
-  window.myconsole.log(`-----------------------`, 'str');
-};
-
-function error() {
-  window.myconsole.log('Unable to retrieve your location', 'err');
-};
-
-var geo_options = {
-  enableHighAccuracy: true,
-  maximumAge: 30000,
-  timeout: 27000
-};
-
-function init() {
-  if (!navigator.geolocation) {
-    window.myconsole.log('Geolocation is not supported by your browser', 'err');
-    return;
-  }
-  navigator.geolocation.watchPosition(success, error, geo_options);
-}
-
-module.exports.init = init;
-module.exports.getCoords = getCoords;
 
 /***/ }),
 /* 30 */
@@ -22689,7 +22692,7 @@ if (process.env.NODE_ENV === 'production') {
 /*
  Modernizr 3.0.0pre (Custom Build) | MIT
 */
-var aa=__webpack_require__(11),ca=__webpack_require__(3),m=__webpack_require__(22),p=__webpack_require__(13),v=__webpack_require__(12),da=__webpack_require__(23),ea=__webpack_require__(24),fa=__webpack_require__(25),ha=__webpack_require__(17);
+var aa=__webpack_require__(11),ca=__webpack_require__(3),m=__webpack_require__(23),p=__webpack_require__(13),v=__webpack_require__(12),da=__webpack_require__(24),ea=__webpack_require__(25),fa=__webpack_require__(26),ha=__webpack_require__(17);
 function A(a){for(var b=arguments.length-1,c="https://reactjs.org/docs/error-decoder.html?invariant="+a,d=0;d<b;d++)c+="&args[]="+encodeURIComponent(arguments[d+1]);aa(!1,"Minified React error #"+a+"; visit %s for the full message or use the non-minified dev environment for full errors and additional helpful warnings. ",c)}ca?void 0:A("227");
 function ia(a,b,c,d,e,f,g,h,k){this._hasCaughtError=!1;this._caughtError=null;var n=Array.prototype.slice.call(arguments,3);try{b.apply(c,n)}catch(r){this._caughtError=r,this._hasCaughtError=!0}}
 var B={_caughtError:null,_hasCaughtError:!1,_rethrowError:null,_hasRethrowError:!1,invokeGuardedCallback:function(a,b,c,d,e,f,g,h,k){ia.apply(B,arguments)},invokeGuardedCallbackAndCatchFirstError:function(a,b,c,d,e,f,g,h,k){B.invokeGuardedCallback.apply(this,arguments);if(B.hasCaughtError()){var n=B.clearCaughtError();B._hasRethrowError||(B._hasRethrowError=!0,B._rethrowError=n)}},rethrowCaughtError:function(){return ka.apply(B,arguments)},hasCaughtError:function(){return B._hasCaughtError},clearCaughtError:function(){if(B._hasCaughtError){var a=
@@ -22998,13 +23001,13 @@ if (process.env.NODE_ENV !== "production") {
 var invariant = __webpack_require__(11);
 var React = __webpack_require__(3);
 var warning = __webpack_require__(18);
-var ExecutionEnvironment = __webpack_require__(22);
+var ExecutionEnvironment = __webpack_require__(23);
 var _assign = __webpack_require__(13);
 var emptyFunction = __webpack_require__(12);
 var checkPropTypes = __webpack_require__(20);
-var getActiveElement = __webpack_require__(23);
-var shallowEqual = __webpack_require__(24);
-var containsNode = __webpack_require__(25);
+var getActiveElement = __webpack_require__(24);
+var shallowEqual = __webpack_require__(25);
+var containsNode = __webpack_require__(26);
 var emptyObject = __webpack_require__(17);
 var hyphenateStyleName = __webpack_require__(169);
 var camelizeStyleName = __webpack_require__(171);
@@ -40453,9 +40456,9 @@ module.exports = camelize;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__interface_NNEditor__ = __webpack_require__(174);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__interface_challengeLog__ = __webpack_require__(187);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__interface_chartComponent__ = __webpack_require__(190);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__clientTimeout__ = __webpack_require__(26);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__clientTimeout__ = __webpack_require__(27);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__speechSynthesizer__ = __webpack_require__(5);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__geolocation__ = __webpack_require__(29);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__geolocation__ = __webpack_require__(22);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__geolocation___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6__geolocation__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__interface_logo__ = __webpack_require__(247);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__css_logotype_css__ = __webpack_require__(160);
