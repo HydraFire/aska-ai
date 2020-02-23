@@ -62,6 +62,11 @@ class Logo extends React.Component {
     arr.push({ text, type });
     this.setState({ arr });
   }
+  componentDidUpdate(prevProps, prevState, snapshot) {
+    this.state.console ?
+    document.querySelector('body').style.overflowX = 'auto':
+    document.querySelector('body').style.overflowX = 'hidden';
+  }
   // //////////////////////////////////////////////////////////////////////////
   // ///////////////////////////////////////////////////////////////////////////
   myRender = () => {

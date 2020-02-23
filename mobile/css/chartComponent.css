@@ -1,7 +1,8 @@
 .scrollfix {
-  width: 100%;
+  transform: rotate(90deg) translate(270px, 216px);
+  width: 100vh;
   height: 360px;
-  overflow-y: scroll;
+  overflow-y: auto;
 }
 .buttons {
   width: 100%;

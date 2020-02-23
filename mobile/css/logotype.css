@@ -26,22 +26,22 @@ html, body {
   font-size: 0px;
 }
 .page {
-  width: 360px;
-  height: 720px;
+  width: 400px;
+  height: 100vh;
   display: inline-block;
   vertical-align: middle;
 }
 .page2 {
-  width: 720px;
-  height: 720px;
+  width: 400px;
+  height: 100vh;
   display: inline-block;
   vertical-align: middle;
 }
 .page2x {
   overflow: hidden;
   color: #ddd;
-  width: 720px;
-  height: 720px;
+  width: 400px;
+  height: 100vh;
   background: #353436;
   display: inline-block;
   vertical-align: middle;
@@ -82,16 +82,16 @@ p {
   position: absolute;
 }
 #cube0 {
-  width: 360px;
-  height: 720px;
+  width: 100vw;
+  height: 100vh;
   background: #000;
 }
 #cube1 {
-  width: 360px;
-  height: 720px;
+  width: 100vw;
+  height: 100vh;
 }
 #cube2 {
-  width: 360px;
-  height: 720px;
+  width: 100vw;
+  height: 100vh;
   background: #353436;
 }
