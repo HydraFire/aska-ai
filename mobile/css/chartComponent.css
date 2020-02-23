@@ -1,5 +1,5 @@
 .scrollfix {
-  transform: rotate(90deg) translate(270px, 216px);
+  transform: rotate(90deg) translate(260px, 200px);
   width: 100vh;
   height: 360px;
   overflow-y: auto;
