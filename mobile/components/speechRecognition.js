@@ -13,6 +13,7 @@ recognition.lang = 'ru-RU';
 
 export const startStopRec = () => {
   if (checkPlaing()) {
+    window.navigator.vibrate(200)
     recognition.start();
     animeteMic(true);
   }

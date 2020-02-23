@@ -7206,6 +7206,7 @@ recognition.lang = 'ru-RU';
 
 const startStopRec = () => {
   if (Object(__WEBPACK_IMPORTED_MODULE_3__speechSynthesizer__["c" /* checkPlaing */])()) {
+    window.navigator.vibrate(200);
     recognition.start();
     Object(__WEBPACK_IMPORTED_MODULE_2__interface_animation__["d" /* animeteMic */])(true);
   }
@@ -21097,10 +21098,7 @@ Object(__WEBPACK_IMPORTED_MODULE_1_react_dom__["render"])(__WEBPACK_IMPORTED_MOD
 __WEBPACK_IMPORTED_MODULE_5__components_webSocketClient__["a" /* default */].askaSwitchMute();
 Object(__WEBPACK_IMPORTED_MODULE_6__components_speechRecognition__["a" /* speechRecInit */])();
 // /////////////////////////////////////////////////////////////////////////////
-/*
-const askaButton = document.querySelector('#c1');
-askaButton.addEventListener('click', startStopRec);
-*/
+document.addEventListener('contextmenu', evt => evt.preventDefault());
 // /////////////////////////////////////////////////////////////////////////////
 // /////////////////////////////////////////////////////////////////////////////
 /*
