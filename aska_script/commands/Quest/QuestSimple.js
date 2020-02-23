@@ -1,13 +1,41 @@
 const fs = require('fs');
 const socket = require('../../webSocketOnMessage');
 const asyncAsk = require('../../asyncAsk');
-const { searchDate } = require('../../textToTime');
+const { searchDate, searchGpsCoords } = require('../../textToTime');
 const { saveResult } = require('./QuestInstrument');
 const { checkURL } = require('../../saveAska');
 // ///////////////////////////////
 // ///////////////////////////////
 const fileOption = './data/commands/Quest/option.json';
 const AskaSC = JSON.parse(fs.readFileSync(fileOption));
+// /////////////////////////////////////////////////////////////////////////////
+function searchGpsCoords(string) {
+  let arr = string.split(' ');
+  let pickCoords = false
+  let arrCoords = [{
+    words: AskaSC.gpsHome,
+    x: 50.44,
+    y: 30.62
+  },{
+    words: AskaSC.gpsWork,
+    x: 50.44,
+    y: 30.52
+  },{
+    words: AskaSC.gpsNovus0,
+    x: 50.44,
+    y: 30.61
+  },{
+    words: AskaSC.gpsNovus1,
+    x: 50.41,
+    y: 30.62
+  }]
+  for (let i = 0; i < arrCoords.length; i++) {
+    if (arr.filter(f => arrCoords[i].words.some(s=> s == f) ).length > 0) {
+      pickCoords = [arrCoords[i].x, arrCoords[i].y]
+    }
+  }
+  return pickCoords
+}
 // /////////////////////////////////////////////////////////////////////////////
 function note(ws, day, time) {
   function defaultFunction(string) {
@@ -41,6 +69,8 @@ function questSimple(ws, parameters) {
   let x = false;
   let xString = false;
   let z = false;
+  let gps = false;
+  let gpsCoord = false;
 
   const int = setInterval(() => {
     if (skazanoe !== ws.ClientSay) {
@@ -56,6 +86,17 @@ function questSimple(ws, parameters) {
           question = false;
         }
       }
+      if (!gps) {
+        gpsCoord = searchGpsCoords(ws.ClientSay);
+        console.log('gpsCoord');
+        console.log(gpsCoord);
+        if (gpsCoord) {
+          gps = true;
+        } else {
+          socket.send(ws, 'aska', checkURL(asyncAsk.whatToSay(AskaSC, 'g0')));
+          question = false;
+        }
+      }
       if (!z) {
         console.log(`parameters: "${parameters}"`);
         if (parameters != '') {
@@ -65,10 +106,10 @@ function questSimple(ws, parameters) {
           clearInterval(int);
         }
       }
-      if (x && z) {
+      if (x && z && gps) {
         socket.send(ws, 'aska', checkURL(asyncAsk.whatToSay(AskaSC, 'f3')));
         parameters = parameters.join(' ');
-        saveResult(xString, '04:00:00.000Z', parameters, '3');
+        saveResult(xString, '04:00:00.000Z', gpsCoord, parameters, '3');
         clearInterval(int);
         ws.NNListen = true;
       }

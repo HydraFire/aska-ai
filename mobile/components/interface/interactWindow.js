@@ -129,12 +129,12 @@ class InteractWindow extends React.Component {
   typeAska = () => {
     socket.send('speech_end','AUDIO');
     this.props.handlerInteractWindow(false);
-    window.navigator.vibrate(100)
+    window.navigator.vibrate(30)
   }
   typeSwitchMuteMode = (e) => {
     if (e.target.getAttribute('alt') === 'MuteMode') {
       this.props.handlerInteractWindow(false);
-      window.navigator.vibrate(100)
+      window.navigator.vibrate(30)
       //window.myconsole.log(e.target.getAttribute('value'));
       let value = e.target.getAttribute('value');
       value == 'true' ? value = true : value = false ;
@@ -147,7 +147,7 @@ class InteractWindow extends React.Component {
   typeAskMute = (e) => {
     switchModeOnMute(e.target.getAttribute('alt'));
     this.props.handlerInteractWindow(false);
-    window.navigator.vibrate(100)
+    window.navigator.vibrate(30)
   }
   typeLifeCircles = (e) => {
     if (e.target.getAttribute('alt') === 'positive') {
@@ -161,7 +161,7 @@ class InteractWindow extends React.Component {
       socket.send(null, 'shortInterval');
     }
     this.props.handlerInteractWindow(false);
-    window.navigator.vibrate(100)
+    window.navigator.vibrate(30)
   }
 
   typeSimpleQuest = (e) => {
@@ -176,7 +176,7 @@ class InteractWindow extends React.Component {
       socket.send(null, 'shortInterval');
     }
     this.props.handlerInteractWindow(false);
-    window.navigator.vibrate(100)
+    window.navigator.vibrate(30)
   }
   /*
   changeFormatMedia = (type, num) => {

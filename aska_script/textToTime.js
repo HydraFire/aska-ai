@@ -3,6 +3,7 @@ const textToTime = function textToTime(text) {
 };
 module.exports.textToTime = textToTime;
 
+
 const searchDate = function searchDate(str) {
   let strEnd = false;
   const arr = str.split(' ');

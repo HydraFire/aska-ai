@@ -7,7 +7,7 @@ const { checkURL, checkLargeURL } = require('../../saveAska');
 const filepath = './data/QuestData.json';
 const fileVictorypath = './data/QuestVictoryData.json';
 
-function saveResult(day, time, text, options) {
+function saveResult(day, time, gps, text, options) {
   if (options === '1') {
     options = 'HARD';
   } else if (options === '2') {
@@ -29,6 +29,7 @@ function saveResult(day, time, text, options) {
     startDate: normalizeTimeZone(normalDate),
     endDate: 9999999999999,
     quest: text,
+    gps: gps,
     type: options
   };
 
