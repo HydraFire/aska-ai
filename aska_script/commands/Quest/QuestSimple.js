@@ -1,7 +1,7 @@
 const fs = require('fs');
 const socket = require('../../webSocketOnMessage');
 const asyncAsk = require('../../asyncAsk');
-const { searchDate, searchGpsCoords } = require('../../textToTime');
+const { searchDate } = require('../../textToTime');
 const { saveResult } = require('./QuestInstrument');
 const { checkURL } = require('../../saveAska');
 // ///////////////////////////////
