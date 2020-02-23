@@ -7206,7 +7206,7 @@ recognition.lang = 'ru-RU';
 
 const startStopRec = () => {
   if (Object(__WEBPACK_IMPORTED_MODULE_3__speechSynthesizer__["c" /* checkPlaing */])()) {
-    window.navigator.vibrate(200);
+    window.navigator.vibrate([100, 30, 100, 30]);
     recognition.start();
     Object(__WEBPACK_IMPORTED_MODULE_2__interface_animation__["d" /* animeteMic */])(true);
   }
@@ -56262,11 +56262,13 @@ class InteractWindow extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Compo
     this.typeAska = () => {
       __WEBPACK_IMPORTED_MODULE_2__webSocketClient__["a" /* default */].send('speech_end', 'AUDIO');
       this.props.handlerInteractWindow(false);
+      window.navigator.vibrate(100);
     };
 
     this.typeSwitchMuteMode = e => {
       if (e.target.getAttribute('alt') === 'MuteMode') {
         this.props.handlerInteractWindow(false);
+        window.navigator.vibrate(100);
         //window.myconsole.log(e.target.getAttribute('value'));
         let value = e.target.getAttribute('value');
         value == 'true' ? value = true : value = false;
@@ -56280,6 +56282,7 @@ class InteractWindow extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Compo
     this.typeAskMute = e => {
       Object(__WEBPACK_IMPORTED_MODULE_4__speechSynthesizer__["g" /* switchModeOnMute */])(e.target.getAttribute('alt'));
       this.props.handlerInteractWindow(false);
+      window.navigator.vibrate(100);
     };
 
     this.typeLifeCircles = e => {
@@ -56294,6 +56297,7 @@ class InteractWindow extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Compo
         __WEBPACK_IMPORTED_MODULE_2__webSocketClient__["a" /* default */].send(null, 'shortInterval');
       }
       this.props.handlerInteractWindow(false);
+      window.navigator.vibrate(100);
     };
 
     this.typeSimpleQuest = e => {
@@ -56308,6 +56312,7 @@ class InteractWindow extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Compo
         __WEBPACK_IMPORTED_MODULE_2__webSocketClient__["a" /* default */].send(null, 'shortInterval');
       }
       this.props.handlerInteractWindow(false);
+      window.navigator.vibrate(100);
     };
 
     this.renderChart = () => {
