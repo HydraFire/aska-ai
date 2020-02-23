@@ -1,3 +1,4 @@
+.wrapper { overscroll-behavior: none }
 .main {
   height: 100vh;
   font-size: 20px;
@@ -27,7 +28,17 @@
   position: absolute;
   will-change: transform;
 }
-
+.micButton {
+  width: 50px;
+  height: 50px;
+  margin-top: calc(50vh - 25px);
+  margin-left: calc(50vw - 25px);
+  position: absolute;
+  z-index: 1000;
+  background: rgba(0,0,0,0);
+  border: 0;
+  outline: 0;
+}
 .consoleButton {
   margin-top: 10px;
   margin-left: 10px;

@@ -7,7 +7,7 @@
     "watch": "nodemon ./server.js --ignore config.json --ignore public/ --ignore src/ --ignore mobile/ --ignore data/",
     "start": "node server.js",
     "assets": "webpack -w --display-max-modules 0",
-    "dev": "concurrently \"npm run watch\" \"npm run build\" --names \"💻,📦\" --prefix name",
+    "dev": "concurrently \"npm run watch\" \"webpack --watch --color\" --names \"💻,📦\" --prefix name",
     "build": "webpack",
     "test": "jasmine"
   },

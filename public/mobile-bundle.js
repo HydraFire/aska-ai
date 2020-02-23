@@ -4630,8 +4630,8 @@ if (process.env.NODE_ENV === 'production') {
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__speechSynthesizer__ = __webpack_require__(5);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__interface_animation__ = __webpack_require__(14);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__clientTimeout__ = __webpack_require__(27);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__quest__ = __webpack_require__(28);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__clientTimeout__ = __webpack_require__(28);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__quest__ = __webpack_require__(29);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__asmrControls__ = __webpack_require__(179);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__geolocation__ = __webpack_require__(22);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__geolocation___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5__geolocation__);
@@ -4761,9 +4761,9 @@ function start() {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_blueimp_md5__ = __webpack_require__(176);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_blueimp_md5___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_blueimp_md5__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__webSocketClient__ = __webpack_require__(4);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__checkIp__ = __webpack_require__(29);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__checkIp__ = __webpack_require__(30);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__interface_animation__ = __webpack_require__(14);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__speechRecognition__ = __webpack_require__(30);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__speechRecognition__ = __webpack_require__(23);
 
 
 
@@ -7183,6 +7183,73 @@ module.exports.getCoords = getCoords;
 
 /***/ }),
 /* 23 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__webSocketClient__ = __webpack_require__(4);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__interface_displayCanvasMessage__ = __webpack_require__(180);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__interface_displayCanvasMessage___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__interface_displayCanvasMessage__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__interface_animation__ = __webpack_require__(14);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__speechSynthesizer__ = __webpack_require__(5);
+// import iconsole from './interface/iconsole';
+
+
+
+
+// Cтатус розпознавания речи, включено true, выключено false
+/* eslint-disable */
+window.SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+const recognition = new SpeechRecognition();
+recognition.interimResults = true;
+recognition.lang = 'ru-RU';
+/* eslint-enable */
+
+const startStopRec = () => {
+  if (Object(__WEBPACK_IMPORTED_MODULE_3__speechSynthesizer__["c" /* checkPlaing */])()) {
+    recognition.start();
+    Object(__WEBPACK_IMPORTED_MODULE_2__interface_animation__["d" /* animeteMic */])(true);
+  }
+};
+/* harmony export (immutable) */ __webpack_exports__["b"] = startStopRec;
+
+
+const stopRec = () => {
+  recognition.abort();
+  Object(__WEBPACK_IMPORTED_MODULE_2__interface_animation__["d" /* animeteMic */])(false);
+};
+/* harmony export (immutable) */ __webpack_exports__["c"] = stopRec;
+
+
+const speechRecInit = () => {
+  // Дополнительные функции
+  function transcriptText(text) {
+    /* eslint-disable */
+    text = Array.from(text).map(v => v[0]).map(v => v.transcript).join('');
+    /* eslint-enable */
+    return text;
+  }
+
+  recognition.addEventListener('result', e => {
+    const text = transcriptText(e.results);
+    // Финальное значение разпознавания
+    if (e.results[0].isFinal) {
+      window.myconsole.log(text, 'chat');
+      Object(__WEBPACK_IMPORTED_MODULE_2__interface_animation__["d" /* animeteMic */])(false);
+      __WEBPACK_IMPORTED_MODULE_0__webSocketClient__["a" /* default */].send(text);
+    }
+  });
+  recognition.addEventListener('end', () => {
+    Object(__WEBPACK_IMPORTED_MODULE_2__interface_animation__["d" /* animeteMic */])(false);
+  });
+  recognition.addEventListener('error', () => {
+    Object(__WEBPACK_IMPORTED_MODULE_2__interface_animation__["d" /* animeteMic */])(false);
+  });
+};
+/* harmony export (immutable) */ __webpack_exports__["a"] = speechRecInit;
+
+
+/***/ }),
+/* 24 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -7221,7 +7288,7 @@ var ExecutionEnvironment = {
 module.exports = ExecutionEnvironment;
 
 /***/ }),
-/* 24 */
+/* 25 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -7263,7 +7330,7 @@ function getActiveElement(doc) /*?DOMElement*/{
 module.exports = getActiveElement;
 
 /***/ }),
-/* 25 */
+/* 26 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -7334,7 +7401,7 @@ function shallowEqual(objA, objB) {
 module.exports = shallowEqual;
 
 /***/ }),
-/* 26 */
+/* 27 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -7377,13 +7444,13 @@ function containsNode(outerNode, innerNode) {
 module.exports = containsNode;
 
 /***/ }),
-/* 27 */
+/* 28 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__webSocketClient__ = __webpack_require__(4);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__speechSynthesizer__ = __webpack_require__(5);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__quest__ = __webpack_require__(28);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__quest__ = __webpack_require__(29);
 
 
 
@@ -7422,7 +7489,7 @@ function clientTimeout(arr) {
 /* harmony default export */ __webpack_exports__["a"] = (clientTimeout);
 
 /***/ }),
-/* 28 */
+/* 29 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -7433,7 +7500,7 @@ function clientTimeout(arr) {
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return chargeImpulse; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__webSocketClient__ = __webpack_require__(4);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__speechSynthesizer__ = __webpack_require__(5);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__checkIp__ = __webpack_require__(29);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__checkIp__ = __webpack_require__(30);
 
 
 
@@ -7564,7 +7631,7 @@ function twoArr(arr) {
 
 
 /***/ }),
-/* 29 */
+/* 30 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -7632,73 +7699,6 @@ function getIp() {
   });
   return promise;
 }
-
-
-/***/ }),
-/* 30 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__webSocketClient__ = __webpack_require__(4);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__interface_displayCanvasMessage__ = __webpack_require__(180);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__interface_displayCanvasMessage___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__interface_displayCanvasMessage__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__interface_animation__ = __webpack_require__(14);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__speechSynthesizer__ = __webpack_require__(5);
-// import iconsole from './interface/iconsole';
-
-
-
-
-// Cтатус розпознавания речи, включено true, выключено false
-/* eslint-disable */
-window.SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-const recognition = new SpeechRecognition();
-recognition.interimResults = true;
-recognition.lang = 'ru-RU';
-/* eslint-enable */
-
-const startStopRec = () => {
-  if (Object(__WEBPACK_IMPORTED_MODULE_3__speechSynthesizer__["c" /* checkPlaing */])()) {
-    recognition.start();
-    Object(__WEBPACK_IMPORTED_MODULE_2__interface_animation__["d" /* animeteMic */])(true);
-  }
-};
-/* harmony export (immutable) */ __webpack_exports__["b"] = startStopRec;
-
-
-const stopRec = () => {
-  recognition.abort();
-  Object(__WEBPACK_IMPORTED_MODULE_2__interface_animation__["d" /* animeteMic */])(false);
-};
-/* harmony export (immutable) */ __webpack_exports__["c"] = stopRec;
-
-
-const speechRecInit = () => {
-  // Дополнительные функции
-  function transcriptText(text) {
-    /* eslint-disable */
-    text = Array.from(text).map(v => v[0]).map(v => v.transcript).join('');
-    /* eslint-enable */
-    return text;
-  }
-
-  recognition.addEventListener('result', e => {
-    const text = transcriptText(e.results);
-    // Финальное значение разпознавания
-    if (e.results[0].isFinal) {
-      window.myconsole.log(text, 'chat');
-      Object(__WEBPACK_IMPORTED_MODULE_2__interface_animation__["d" /* animeteMic */])(false);
-      __WEBPACK_IMPORTED_MODULE_0__webSocketClient__["a" /* default */].send(text);
-    }
-  });
-  recognition.addEventListener('end', () => {
-    Object(__WEBPACK_IMPORTED_MODULE_2__interface_animation__["d" /* animeteMic */])(false);
-  });
-  recognition.addEventListener('error', () => {
-    Object(__WEBPACK_IMPORTED_MODULE_2__interface_animation__["d" /* animeteMic */])(false);
-  });
-};
-/* harmony export (immutable) */ __webpack_exports__["a"] = speechRecInit;
 
 
 /***/ }),
@@ -21078,7 +21078,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__css_inputCommandLine_css__ = __webpack_require__(251);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__css_inputCommandLine_css___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4__css_inputCommandLine_css__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__components_webSocketClient__ = __webpack_require__(4);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__components_speechRecognition__ = __webpack_require__(30);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__components_speechRecognition__ = __webpack_require__(23);
 /* eslint-disable */
 
 
@@ -21097,8 +21097,10 @@ Object(__WEBPACK_IMPORTED_MODULE_1_react_dom__["render"])(__WEBPACK_IMPORTED_MOD
 __WEBPACK_IMPORTED_MODULE_5__components_webSocketClient__["a" /* default */].askaSwitchMute();
 Object(__WEBPACK_IMPORTED_MODULE_6__components_speechRecognition__["a" /* speechRecInit */])();
 // /////////////////////////////////////////////////////////////////////////////
+/*
 const askaButton = document.querySelector('#c1');
-askaButton.addEventListener('click', __WEBPACK_IMPORTED_MODULE_6__components_speechRecognition__["b" /* startStopRec */]);
+askaButton.addEventListener('click', startStopRec);
+*/
 // /////////////////////////////////////////////////////////////////////////////
 // /////////////////////////////////////////////////////////////////////////////
 /*
@@ -22692,7 +22694,7 @@ if (process.env.NODE_ENV === 'production') {
 /*
  Modernizr 3.0.0pre (Custom Build) | MIT
 */
-var aa=__webpack_require__(11),ca=__webpack_require__(3),m=__webpack_require__(23),p=__webpack_require__(13),v=__webpack_require__(12),da=__webpack_require__(24),ea=__webpack_require__(25),fa=__webpack_require__(26),ha=__webpack_require__(17);
+var aa=__webpack_require__(11),ca=__webpack_require__(3),m=__webpack_require__(24),p=__webpack_require__(13),v=__webpack_require__(12),da=__webpack_require__(25),ea=__webpack_require__(26),fa=__webpack_require__(27),ha=__webpack_require__(17);
 function A(a){for(var b=arguments.length-1,c="https://reactjs.org/docs/error-decoder.html?invariant="+a,d=0;d<b;d++)c+="&args[]="+encodeURIComponent(arguments[d+1]);aa(!1,"Minified React error #"+a+"; visit %s for the full message or use the non-minified dev environment for full errors and additional helpful warnings. ",c)}ca?void 0:A("227");
 function ia(a,b,c,d,e,f,g,h,k){this._hasCaughtError=!1;this._caughtError=null;var n=Array.prototype.slice.call(arguments,3);try{b.apply(c,n)}catch(r){this._caughtError=r,this._hasCaughtError=!0}}
 var B={_caughtError:null,_hasCaughtError:!1,_rethrowError:null,_hasRethrowError:!1,invokeGuardedCallback:function(a,b,c,d,e,f,g,h,k){ia.apply(B,arguments)},invokeGuardedCallbackAndCatchFirstError:function(a,b,c,d,e,f,g,h,k){B.invokeGuardedCallback.apply(this,arguments);if(B.hasCaughtError()){var n=B.clearCaughtError();B._hasRethrowError||(B._hasRethrowError=!0,B._rethrowError=n)}},rethrowCaughtError:function(){return ka.apply(B,arguments)},hasCaughtError:function(){return B._hasCaughtError},clearCaughtError:function(){if(B._hasCaughtError){var a=
@@ -23001,13 +23003,13 @@ if (process.env.NODE_ENV !== "production") {
 var invariant = __webpack_require__(11);
 var React = __webpack_require__(3);
 var warning = __webpack_require__(18);
-var ExecutionEnvironment = __webpack_require__(23);
+var ExecutionEnvironment = __webpack_require__(24);
 var _assign = __webpack_require__(13);
 var emptyFunction = __webpack_require__(12);
 var checkPropTypes = __webpack_require__(20);
-var getActiveElement = __webpack_require__(24);
-var shallowEqual = __webpack_require__(25);
-var containsNode = __webpack_require__(26);
+var getActiveElement = __webpack_require__(25);
+var shallowEqual = __webpack_require__(26);
+var containsNode = __webpack_require__(27);
 var emptyObject = __webpack_require__(17);
 var hyphenateStyleName = __webpack_require__(169);
 var camelizeStyleName = __webpack_require__(171);
@@ -40456,7 +40458,7 @@ module.exports = camelize;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__interface_NNEditor__ = __webpack_require__(174);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__interface_challengeLog__ = __webpack_require__(187);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__interface_chartComponent__ = __webpack_require__(190);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__clientTimeout__ = __webpack_require__(27);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__clientTimeout__ = __webpack_require__(28);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__speechSynthesizer__ = __webpack_require__(5);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__geolocation__ = __webpack_require__(22);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__geolocation___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6__geolocation__);
@@ -55894,7 +55896,7 @@ exports = module.exports = __webpack_require__(8)(false);
 
 
 // module
-exports.push([module.i, ".scrollfix {\r\n  transform: rotate(90deg) translate(270px, 216px);\r\n  width: 100vh;\r\n  height: 360px;\r\n  overflow-y: auto;\r\n}\r\n.buttons {\r\n  width: 100%;\r\n  height: 50px;\r\n}\r\n.loadButton {\r\n  width: 100%;\r\n  height: 360px;\r\n  font-size: 20px;\r\n  text-align: center;\r\n}\r\n.buttonRewind {\r\n  background: #333;\r\n  border: 0px;\r\n  width: 90px;\r\n  height: 50px;\r\n}\r\n.buttonSpeed {\r\n  background: #333;\r\n  border: 0px;\r\n  width: 45px;\r\n  height: 50px;\r\n}\r\n.buttonFull {\r\n  background: #222;\r\n  border: 0px;\r\n  width: 110px;\r\n  height: 50px;\r\n}\r\n.razdel {\r\n  color: #444;\r\n  font-size: 20px;\r\n  width: 100%;\r\n  height: 20px;\r\n}\r\n.panel {\r\n  font-size: 20px;\r\n  width: 100%;\r\n}\r\n.text {\r\n  color: #999;\r\n  width: 360px;\r\n  display: inline-block;\r\n  text-align: center;\r\n}\r\n.buttonEnabled {\r\n  border: 0px;\r\n  margin: 10px 25px 10px 25px;\r\n  height: 35px;\r\n}\r\n.buttonColor {\r\n  border: 0px;\r\n  margin: 10px 25px 10px 25px;\r\n  height: 35px;\r\n}\r\n.buttonGO {\r\n  background: #222;\r\n  border: 0px;\r\n  margin: 10px 25px 10px 25px;\r\n  height: 35px;\r\n}\r\n.buttonX {\r\n  background: #222;\r\n  border: 0px;\r\n  margin: 10px 0px 10px 25px;\r\n  height: 35px;\r\n}\r\n", ""]);
+exports.push([module.i, ".scrollfix {\r\n  transform: rotate(90deg) translate(260px, 200px);\r\n  width: 100vh;\r\n  height: 360px;\r\n  overflow-y: auto;\r\n}\r\n.buttons {\r\n  width: 100%;\r\n  height: 50px;\r\n}\r\n.loadButton {\r\n  width: 100%;\r\n  height: 360px;\r\n  font-size: 20px;\r\n  text-align: center;\r\n}\r\n.buttonRewind {\r\n  background: #333;\r\n  border: 0px;\r\n  width: 90px;\r\n  height: 50px;\r\n}\r\n.buttonSpeed {\r\n  background: #333;\r\n  border: 0px;\r\n  width: 45px;\r\n  height: 50px;\r\n}\r\n.buttonFull {\r\n  background: #222;\r\n  border: 0px;\r\n  width: 110px;\r\n  height: 50px;\r\n}\r\n.razdel {\r\n  color: #444;\r\n  font-size: 20px;\r\n  width: 100%;\r\n  height: 20px;\r\n}\r\n.panel {\r\n  font-size: 20px;\r\n  width: 100%;\r\n}\r\n.text {\r\n  color: #999;\r\n  width: 360px;\r\n  display: inline-block;\r\n  text-align: center;\r\n}\r\n.buttonEnabled {\r\n  border: 0px;\r\n  margin: 10px 25px 10px 25px;\r\n  height: 35px;\r\n}\r\n.buttonColor {\r\n  border: 0px;\r\n  margin: 10px 25px 10px 25px;\r\n  height: 35px;\r\n}\r\n.buttonGO {\r\n  background: #222;\r\n  border: 0px;\r\n  margin: 10px 25px 10px 25px;\r\n  height: 35px;\r\n}\r\n.buttonX {\r\n  background: #222;\r\n  border: 0px;\r\n  margin: 10px 0px 10px 25px;\r\n  height: 35px;\r\n}\r\n", ""]);
 
 // exports
 
@@ -55909,8 +55911,10 @@ exports.push([module.i, ".scrollfix {\r\n  transform: rotate(90deg) translate(27
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__speechSynthesizer__ = __webpack_require__(5);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__webSocketClient__ = __webpack_require__(4);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__interactWindow__ = __webpack_require__(248);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__css_logo_css__ = __webpack_require__(159);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__css_logo_css___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4__css_logo_css__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__components_speechRecognition__ = __webpack_require__(23);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__css_logo_css__ = __webpack_require__(159);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__css_logo_css___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5__css_logo_css__);
+
 
 
 
@@ -56094,6 +56098,10 @@ class Logo extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
     return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
       __WEBPACK_IMPORTED_MODULE_0_react__["Fragment"],
       null,
+      __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('button', { onClick: () => {
+          console.log('test');
+          Object(__WEBPACK_IMPORTED_MODULE_4__components_speechRecognition__["b" /* startStopRec */])();
+        }, className: 'micButton' }),
       __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('button', { onClick: this.consoleButton, className: 'consoleButton' }),
       __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
         'div',
@@ -56414,7 +56422,7 @@ exports = module.exports = __webpack_require__(8)(false);
 
 
 // module
-exports.push([module.i, ".main {\r\n  height: 100vh;\r\n  font-size: 20px;\r\n  background: #000;\r\n}\r\n\r\n\r\n.circle-static {\r\n  margin: 280px 0px 0px -47px;\r\n  transform: rotate(90deg);\r\n}\r\n.circle-static-portable {\r\n  margin: 70px 0px 0px 118px;\r\n}\r\n\r\n\r\n\r\n.circle {\r\n  left: 13px;\r\n  top: 230px;\r\n  position: absolute;\r\n  will-change: transform;\r\n}\r\n.circle-portable {\r\n  left: 230px;\r\n  top: 13px;\r\n  position: absolute;\r\n  will-change: transform;\r\n}\r\n\r\n.consoleButton {\r\n  margin-top: 10px;\r\n  margin-left: 10px;\r\n  position: absolute;\r\n  width: 95%;\r\n  height: 50px;\r\n  background: rgba(0,0,0,0);\r\n  color: #fff;\r\n  z-index: 11;\r\n  border-width: 0px;\r\n  outline: 0px;\r\n}\r\n.interactWindow {\r\n  position: absolute;\r\n  font-size: 13px;\r\n  width: 100vw;\r\n  height: 100vh;\r\n  background: rgba(0,0,0,0.7);\r\n  color: #ddd;\r\n  z-index: 9;\r\n  top:0;\r\n}\r\n.interactWindow_center {\r\n  position: absolute;\r\n  width: 100vw;\r\n  overflow-y: scroll;\r\n  margin: 5px 0px 5px 0px;\r\n  z-index: 15;\r\n  text-align: center;\r\n  white-space: normal;\r\n  text-shadow: 1px 1px 2px black, 0 0 2em white;\r\n  font-size: 32px;\r\n  color: #fff;\r\n}\r\n.interactWindow_img {\r\n  position: absolute;\r\n  width: auto;\r\n  height: 100vh;\r\n}\r\n.interactWindow_chart {\r\n  height: 80vh;\r\n  width: 100vw;\r\n  margin-top: 100px;\r\n  position: absolute;\r\n  z-index: 25;\r\n}\r\n.interactWindow_bottom {\r\n  height: 100vh;\r\n  width: 100vw;\r\n  display: flex;\r\n  align-items: center;\r\n  flex-direction: column-reverse;\r\n\r\n  position: absolute;\r\n  z-index: 30;\r\n}\r\n.interactWindow_bottom button {\r\n  background: rgba(0, 0, 0, 0.2);\r\n  border-radius: 10px;\r\n  text-shadow: 1px 1px 2px black, 0 0 2em white;\r\n  font-size: 14px;\r\n  color: #fff;\r\n  width: 300px;\r\n  height: 70px;\r\n  margin-bottom: 35px;\r\n}\r\n.console {\r\n  position: absolute;\r\n  font-size: 13px;\r\n  width: 100vw;\r\n  height: 100vh;\r\n  background: rgba(0,0,0,0.8);\r\n  color: #ddd;\r\n  z-index: 10;\r\n  top:0;\r\n}\r\n.console_top {\r\n  width: 100%;\r\n  font-size: 18px;\r\n  height: 30px;\r\n  margin: 5px 10px 5px 20px;\r\n  padding-top: 10px;\r\n}\r\n.console_top span {\r\n  font-size: 14px;\r\n  padding-right: 30px;\r\n  color: #222;\r\n  float: right;\r\n}\r\n.console_center {\r\n  white-space: normal;\r\n  width: 340px;\r\n  height: 570px;\r\n  overflow-y: scroll;\r\n  margin: 5px 10px 5px 20px;\r\n}\r\n.inputCommandLine {\r\n  width: 80%;\r\n  font-size: 18px;\r\n  vertical-align: middle;\r\n  text-align: center;\r\n  margin: 25px auto 42px auto;\r\n  display: block;\r\n  color: #ddd;\r\n  border-color: #333;\r\n  border-style: dashed;\r\n  background: rgba(0, 0, 0, 0);\r\n}\r\n.console_string {\r\n  font-size: 10px;\r\n  color: #777;\r\n  margin-bottom: 5px;\r\n}\r\n.console_html {\r\n  font-size: 10px;\r\n  color: #76a;\r\n  margin-bottom: 5px;\r\n}\r\n.console_chat {\r\n  font-size: 10px;\r\n  color: #fff;\r\n  margin-bottom: 5px;\r\n}\r\n.console_err {\r\n  font-size: 10px;\r\n  color: red;\r\n  margin: 10px 0px 10px 0px;\r\n}\r\n.console_aska {\r\n  font-size: 10px;\r\n  color: #fa2;\r\n  margin-bottom: 5px;\r\n}\r\n#c1 {\r\n  animation-name: anim;\r\n  animation-duration: 30s;\r\n  animation-iteration-count: infinite;\r\n  animation-timing-function: linear;\r\n}\r\n#c2 {\r\n  animation-name: anim;\r\n  animation-duration: 40s;\r\n  animation-iteration-count: infinite;\r\n  animation-timing-function: linear;\r\n}\r\n#c3 {\r\n  animation-name: anim;\r\n  animation-duration: 50s;\r\n  animation-iteration-count: infinite;\r\n  animation-timing-function: linear;\r\n}\r\n#c4 {\r\n  animation-name: anim;\r\n  animation-duration: 60s;\r\n  animation-iteration-count: infinite;\r\n  animation-timing-function: linear;\r\n}\r\n#c5 {\r\n  animation-name: anim;\r\n  animation-duration: 70s;\r\n  animation-iteration-count: infinite;\r\n  animation-timing-function: linear;\r\n}\r\n#c6 {\r\n  animation-name: anim;\r\n  animation-duration: 80s;\r\n  animation-iteration-count: infinite;\r\n  animation-timing-function: linear;\r\n}\r\n#c7 {\r\n  animation-name: anim;\r\n  animation-duration: 90s;\r\n  animation-iteration-count: infinite;\r\n  animation-timing-function: linear;\r\n}\r\n#c8 {\r\n  animation-name: anim;\r\n  animation-duration: 100s;\r\n  animation-iteration-count: infinite;\r\n  animation-timing-function: linear;\r\n}\r\n#c9 {\r\n  animation-name: anim;\r\n  animation-duration: 110s;\r\n  animation-iteration-count: infinite;\r\n  animation-timing-function: linear;\r\n  will-change: transform;\r\n}\r\n#c10 {\r\n  animation-name: anim;\r\n  animation-duration: 120s;\r\n  animation-iteration-count: infinite;\r\n  animation-timing-function: linear;\r\n\r\n}\r\n\r\n@keyframes anim {\r\n  0%{\r\n    transform:rotate(0deg);\r\n    }\r\n  100%{\r\n    transform:rotate(360deg);\r\n    }\r\n  }\r\n", ""]);
+exports.push([module.i, ".wrapper { overscroll-behavior: none }\r\n.main {\r\n  height: 100vh;\r\n  font-size: 20px;\r\n  background: #000;\r\n}\r\n\r\n\r\n.circle-static {\r\n  margin: 280px 0px 0px -47px;\r\n  transform: rotate(90deg);\r\n}\r\n.circle-static-portable {\r\n  margin: 70px 0px 0px 118px;\r\n}\r\n\r\n\r\n\r\n.circle {\r\n  left: 13px;\r\n  top: 230px;\r\n  position: absolute;\r\n  will-change: transform;\r\n}\r\n.circle-portable {\r\n  left: 230px;\r\n  top: 13px;\r\n  position: absolute;\r\n  will-change: transform;\r\n}\r\n.micButton {\r\n  width: 50px;\r\n  height: 50px;\r\n  margin-top: calc(50vh - 25px);\r\n  margin-left: calc(50vw - 25px);\r\n  position: absolute;\r\n  z-index: 1000;\r\n  background: rgba(0,0,0,0);\r\n  border: 0;\r\n  outline: 0;\r\n}\r\n.consoleButton {\r\n  margin-top: 10px;\r\n  margin-left: 10px;\r\n  position: absolute;\r\n  width: 95%;\r\n  height: 50px;\r\n  background: rgba(0,0,0,0);\r\n  color: #fff;\r\n  z-index: 11;\r\n  border-width: 0px;\r\n  outline: 0px;\r\n}\r\n.interactWindow {\r\n  position: absolute;\r\n  font-size: 13px;\r\n  width: 100vw;\r\n  height: 100vh;\r\n  background: rgba(0,0,0,0.7);\r\n  color: #ddd;\r\n  z-index: 9;\r\n  top:0;\r\n}\r\n.interactWindow_center {\r\n  position: absolute;\r\n  width: 100vw;\r\n  overflow-y: scroll;\r\n  margin: 5px 0px 5px 0px;\r\n  z-index: 15;\r\n  text-align: center;\r\n  white-space: normal;\r\n  text-shadow: 1px 1px 2px black, 0 0 2em white;\r\n  font-size: 32px;\r\n  color: #fff;\r\n}\r\n.interactWindow_img {\r\n  position: absolute;\r\n  width: auto;\r\n  height: 100vh;\r\n}\r\n.interactWindow_chart {\r\n  height: 80vh;\r\n  width: 100vw;\r\n  margin-top: 100px;\r\n  position: absolute;\r\n  z-index: 25;\r\n}\r\n.interactWindow_bottom {\r\n  height: 100vh;\r\n  width: 100vw;\r\n  display: flex;\r\n  align-items: center;\r\n  flex-direction: column-reverse;\r\n\r\n  position: absolute;\r\n  z-index: 30;\r\n}\r\n.interactWindow_bottom button {\r\n  background: rgba(0, 0, 0, 0.2);\r\n  border-radius: 10px;\r\n  text-shadow: 1px 1px 2px black, 0 0 2em white;\r\n  font-size: 14px;\r\n  color: #fff;\r\n  width: 300px;\r\n  height: 70px;\r\n  margin-bottom: 35px;\r\n}\r\n.console {\r\n  position: absolute;\r\n  font-size: 13px;\r\n  width: 100vw;\r\n  height: 100vh;\r\n  background: rgba(0,0,0,0.8);\r\n  color: #ddd;\r\n  z-index: 10;\r\n  top:0;\r\n}\r\n.console_top {\r\n  width: 100%;\r\n  font-size: 18px;\r\n  height: 30px;\r\n  margin: 5px 10px 5px 20px;\r\n  padding-top: 10px;\r\n}\r\n.console_top span {\r\n  font-size: 14px;\r\n  padding-right: 30px;\r\n  color: #222;\r\n  float: right;\r\n}\r\n.console_center {\r\n  white-space: normal;\r\n  width: 340px;\r\n  height: 570px;\r\n  overflow-y: scroll;\r\n  margin: 5px 10px 5px 20px;\r\n}\r\n.inputCommandLine {\r\n  width: 80%;\r\n  font-size: 18px;\r\n  vertical-align: middle;\r\n  text-align: center;\r\n  margin: 25px auto 42px auto;\r\n  display: block;\r\n  color: #ddd;\r\n  border-color: #333;\r\n  border-style: dashed;\r\n  background: rgba(0, 0, 0, 0);\r\n}\r\n.console_string {\r\n  font-size: 10px;\r\n  color: #777;\r\n  margin-bottom: 5px;\r\n}\r\n.console_html {\r\n  font-size: 10px;\r\n  color: #76a;\r\n  margin-bottom: 5px;\r\n}\r\n.console_chat {\r\n  font-size: 10px;\r\n  color: #fff;\r\n  margin-bottom: 5px;\r\n}\r\n.console_err {\r\n  font-size: 10px;\r\n  color: red;\r\n  margin: 10px 0px 10px 0px;\r\n}\r\n.console_aska {\r\n  font-size: 10px;\r\n  color: #fa2;\r\n  margin-bottom: 5px;\r\n}\r\n#c1 {\r\n  animation-name: anim;\r\n  animation-duration: 30s;\r\n  animation-iteration-count: infinite;\r\n  animation-timing-function: linear;\r\n}\r\n#c2 {\r\n  animation-name: anim;\r\n  animation-duration: 40s;\r\n  animation-iteration-count: infinite;\r\n  animation-timing-function: linear;\r\n}\r\n#c3 {\r\n  animation-name: anim;\r\n  animation-duration: 50s;\r\n  animation-iteration-count: infinite;\r\n  animation-timing-function: linear;\r\n}\r\n#c4 {\r\n  animation-name: anim;\r\n  animation-duration: 60s;\r\n  animation-iteration-count: infinite;\r\n  animation-timing-function: linear;\r\n}\r\n#c5 {\r\n  animation-name: anim;\r\n  animation-duration: 70s;\r\n  animation-iteration-count: infinite;\r\n  animation-timing-function: linear;\r\n}\r\n#c6 {\r\n  animation-name: anim;\r\n  animation-duration: 80s;\r\n  animation-iteration-count: infinite;\r\n  animation-timing-function: linear;\r\n}\r\n#c7 {\r\n  animation-name: anim;\r\n  animation-duration: 90s;\r\n  animation-iteration-count: infinite;\r\n  animation-timing-function: linear;\r\n}\r\n#c8 {\r\n  animation-name: anim;\r\n  animation-duration: 100s;\r\n  animation-iteration-count: infinite;\r\n  animation-timing-function: linear;\r\n}\r\n#c9 {\r\n  animation-name: anim;\r\n  animation-duration: 110s;\r\n  animation-iteration-count: infinite;\r\n  animation-timing-function: linear;\r\n  will-change: transform;\r\n}\r\n#c10 {\r\n  animation-name: anim;\r\n  animation-duration: 120s;\r\n  animation-iteration-count: infinite;\r\n  animation-timing-function: linear;\r\n\r\n}\r\n\r\n@keyframes anim {\r\n  0%{\r\n    transform:rotate(0deg);\r\n    }\r\n  100%{\r\n    transform:rotate(360deg);\r\n    }\r\n  }\r\n", ""]);
 
 // exports
 

@@ -2,6 +2,7 @@ import React, { Fragment } from 'react';
 import { aska } from '../speechSynthesizer';
 import socket from '../webSocketClient';
 import InteractWindow from './interactWindow';
+import { speechRecInit, startStopRec } from '../../components/speechRecognition';
 import '../../css/logo.css';
 
 let int;
@@ -144,6 +145,10 @@ class Logo extends React.Component {
     const svg11 = 'http://localhost:8080/coub/index-portal-sides-7d999cb5d5762880eef4ede55549d5c6.svg';
     return (
       <Fragment>
+      <button onClick={()=>{
+        console.log('test');
+        startStopRec()
+      }} className="micButton"></button>
       <button onClick={this.consoleButton} className="consoleButton"></button>
       <div className="main">
         <div className="hero-logo-div">
