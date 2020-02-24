@@ -13,7 +13,7 @@ function success(position) {
   lastCoords = [latitude, longitude];
 
   window.myconsole.log(`<p>Latitude is ${latitude} <br>Longitude is ${longitude}</p>`, 'html');
-
+/*
   const now = Date.now();
   const sum = (now - pastTime) / 1000 | 0;
   const min = sum / 60 | 0;
@@ -25,6 +25,7 @@ function success(position) {
   }
   pastTime = now;
   window.myconsole.log(`-----------------------`, 'str');
+  */
 };
 
 function error() {
@@ -33,17 +34,20 @@ function error() {
 
 var geo_options = {
   enableHighAccuracy: true,
-  maximumAge        : 30000,
-  timeout           : 27000
+//  maximumAge        : 30000,
+//  timeout           : 27000
 };
 
 
 function init() {
+  /*
   if (!navigator.geolocation){
     window.myconsole.log('Geolocation is not supported by your browser', 'err');
     return;
   }
-  navigator.geolocation.watchPosition(success, error, geo_options);
+  */
+  navigator.geolocation.getCurrentPosition(success, error, geo_options);
+  //navigator.geolocation.watchPosition(success, error, geo_options);
 }
 
 module.exports.init = init;

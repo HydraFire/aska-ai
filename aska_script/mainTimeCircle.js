@@ -132,8 +132,8 @@ const checkQuests = function checkQuests(ws, gps) {
     })
     .filter(v => {
       if (v.gps) {
-        console.log(`Math.abs(${v.gps[0] - gps[0]}) < 0.005 && Math.abs(${v.gps[1] - gps[1]}) < 0.005`);
-        if ( Math.abs(v.gps[0] - gps[0]) < 0.005 && Math.abs(v.gps[1] - gps[1]) < 0.005) {
+        console.log(`Math.abs(${v.gps[0] - gps[0]}) < 0.004 && Math.abs(${v.gps[1] - gps[1]}) < 0.004`);
+        if ( Math.abs(v.gps[0] - gps[0]) < 0.004 && Math.abs(v.gps[1] - gps[1]) < 0.004) {
           return true
         } else {
           return false
@@ -151,6 +151,18 @@ const checkQuests = function checkQuests(ws, gps) {
   // проверка наличия лайф циклов
 
   let arrLifeCircle = optimazeReadFileLifeCircle.filter(v => timeNow >= v.remind)
+    .filter(v => {
+      if (v.gps) {
+        //console.log(`Math.abs(${v.gps[0] - gps[0]}) < 0.004 && Math.abs(${v.gps[1] - gps[1]}) < 0.004`);
+        if ( Math.abs(v.gps[0] - gps[0]) < 0.004 && Math.abs(v.gps[1] - gps[1]) < 0.004) {
+          return true
+        } else {
+          return false
+        }
+      } else {
+        return true
+      }
+    })
     .map(v => ({ startWith: 'LifeCircle', words: v.words[0], data: v.incident }));
 
   // сливаем всё в один масив

@@ -1,12 +1,13 @@
 import socket from './webSocketClient';
 import { switchModeOnMute } from './speechSynthesizer';
 import { animeteIPcheck } from './interface/animation';
-import { getCoords } from './geolocation';
+import { getCoords, init } from './geolocation';
 
 let home_ip = JSON.parse(process.env.ASKA_HOME_IP);
 
 function impulseToServer() {
   //window.myconsole.log('navigator.connection.type = ' + navigator.connection.type, 'err');
+  init()
   animeteIPcheck(true);
   if (navigator.connection.type == 'wifi') {
     getIp()
