@@ -14,20 +14,20 @@ function searchGpsCoords(string) {
   let pickCoords = false
   let arrCoords = [{
     words: AskaSC.gpsHome,
-    x: 50.44,
-    y: 30.62
+    x: 50.435256,
+    y: 30.620723
   },{
     words: AskaSC.gpsWork,
-    x: 50.44,
-    y: 30.52
+    x: 50.441858,
+    y: 30.520930
   },{
     words: AskaSC.gpsNovus0,
-    x: 50.44,
-    y: 30.61
+    x: 50.437989,
+    y: 30.621579
   },{
     words: AskaSC.gpsNovus1,
-    x: 50.41,
-    y: 30.62
+    x: 50.447592,
+    y: 30.602243
   }]
   for (let i = 0; i < arrCoords.length; i++) {
     if (arr.filter(f => arrCoords[i].words.some(s=> s == f) ).length > 0) {

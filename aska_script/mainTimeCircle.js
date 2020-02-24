@@ -132,8 +132,8 @@ const checkQuests = function checkQuests(ws, gps) {
     })
     .filter(v => {
       if (v.gps) {
-        console.log(`${v.gps[0]} == ${gps[0]} && ${v.gps[1]} == ${gps[1]}`);
-        if (v.gps[0] == gps[0] && v.gps[1] == gps[1]) {
+        console.log(`Math.abs(${v.gps[0] - gps[0]}) > 0.005 && Math.abs(${v.gps[1] - gps[1]}) > 0.005`);
+        if ( Math.abs(v.gps[0] - gps[0]) > 0.005 && Math.abs(v.gps[1] - gps[1]) > 0.005) {
           return true
         } else {
           return false
