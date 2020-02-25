@@ -59,9 +59,7 @@ class Logo extends React.Component {
     };
   }
   log = (text, type) => {
-    const arr = this.state.arr;
-    arr.push({ text, type });
-    this.setState({ arr });
+    this.setState({ arr: [{ text, type }, ...this.state.arr] });
   }
   componentDidUpdate(prevProps, prevState, snapshot) {
     this.state.console ?

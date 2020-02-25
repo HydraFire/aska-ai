@@ -7146,18 +7146,19 @@ function success(position) {
   lastCoords = [latitude, longitude];
 
   window.myconsole.log(`<p>Latitude is ${latitude} <br>Longitude is ${longitude}</p>`, 'html');
-
-  const now = Date.now();
-  const sum = (now - pastTime) / 1000 | 0;
-  const min = sum / 60 | 0;
-  const sec = sum % 60;
-  if (min == 0) {
-    window.myconsole.log(`${sec}s`, 'str');
-  } else {
-    window.myconsole.log(`${min}m ${sec}s`, 'str');
-  }
-  pastTime = now;
-  window.myconsole.log(`-----------------------`, 'str');
+  /*
+    const now = Date.now();
+    const sum = (now - pastTime) / 1000 | 0;
+    const min = sum / 60 | 0;
+    const sec = sum % 60;
+    if (min == 0) {
+      window.myconsole.log(`${sec}s`,'str');
+    } else {
+      window.myconsole.log(`${min}m ${sec}s`,'str');
+    }
+    pastTime = now;
+    window.myconsole.log(`-----------------------`, 'str');
+    */
 };
 
 function error() {
@@ -7165,17 +7166,20 @@ function error() {
 };
 
 var geo_options = {
-  enableHighAccuracy: true,
-  maximumAge: 30000,
-  timeout: 27000
+  enableHighAccuracy: true
+  //  maximumAge        : 30000,
+  //  timeout           : 27000
 };
 
 function init() {
-  if (!navigator.geolocation) {
+  /*
+  if (!navigator.geolocation){
     window.myconsole.log('Geolocation is not supported by your browser', 'err');
     return;
   }
-  navigator.geolocation.watchPosition(success, error, geo_options);
+  */
+  navigator.geolocation.getCurrentPosition(success, error, geo_options);
+  //navigator.geolocation.watchPosition(success, error, geo_options);
 }
 
 module.exports.init = init;
@@ -7652,6 +7656,7 @@ let home_ip = JSON.parse("[\"159.224.183.122\"]");
 
 function impulseToServer() {
   //window.myconsole.log('navigator.connection.type = ' + navigator.connection.type, 'err');
+  Object(__WEBPACK_IMPORTED_MODULE_3__geolocation__["init"])();
   Object(__WEBPACK_IMPORTED_MODULE_2__interface_animation__["b" /* animeteIPcheck */])(true);
   if (navigator.connection.type == 'wifi') {
     getIp().then(result => {
@@ -55968,9 +55973,7 @@ class Logo extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
     super();
 
     this.log = (text, type) => {
-      const arr = this.state.arr;
-      arr.push({ text, type });
-      this.setState({ arr });
+      this.setState({ arr: [{ text, type }, ...this.state.arr] });
     };
 
     this.myRender = () => {

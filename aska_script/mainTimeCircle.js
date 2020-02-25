@@ -133,7 +133,7 @@ const checkQuests = function checkQuests(ws, gps) {
     .filter(v => {
       if (v.gps) {
         console.log(`Math.abs(${v.gps[0] - gps[0]}) < 0.004 && Math.abs(${v.gps[1] - gps[1]}) < 0.004`);
-        if ( Math.abs(v.gps[0] - gps[0]) < 0.004 && Math.abs(v.gps[1] - gps[1]) < 0.004) {
+        if ( Math.abs(v.gps[0] - gps[0]) < 0.003 && Math.abs(v.gps[1] - gps[1]) < 0.003) {
           return true
         } else {
           return false
@@ -154,7 +154,7 @@ const checkQuests = function checkQuests(ws, gps) {
     .filter(v => {
       if (v.gps) {
         //console.log(`Math.abs(${v.gps[0] - gps[0]}) < 0.004 && Math.abs(${v.gps[1] - gps[1]}) < 0.004`);
-        if ( Math.abs(v.gps[0] - gps[0]) < 0.004 && Math.abs(v.gps[1] - gps[1]) < 0.004) {
+        if ( Math.abs(v.gps[0] - gps[0]) < 0.003 && Math.abs(v.gps[1] - gps[1]) < 0.003) {
           return true
         } else {
           return false
