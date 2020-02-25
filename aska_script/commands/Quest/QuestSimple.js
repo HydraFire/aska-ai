@@ -37,13 +37,13 @@ function searchGpsCoords(string) {
   return pickCoords
 }
 // /////////////////////////////////////////////////////////////////////////////
-function note(ws, day, time) {
+function note(ws, day, time, gpsCoord) {
   function defaultFunction(string) {
     socket.send(ws, 'aska', checkURL(asyncAsk.whatToSay(AskaSC, 'x5')));
   };
 
   function attentionCheck() {
-      saveResult(day, time, ws.ClientSay, '3');
+      saveResult(day, time, ws.ClientSay, '3', gpsCoord);
       socket.send(ws, 'aska', checkURL(asyncAsk.whatToSay(AskaSC, 'f3')));
   };
 
@@ -102,14 +102,14 @@ function questSimple(ws, parameters) {
         if (parameters != '') {
           z = true;
         } else if (question) {
-          note(ws, xString, '04:00:00.000Z');
+          note(ws, xString, '04:00:00.000Z', gpsCoord);
           clearInterval(int);
         }
       }
       if (x && z && gps) {
         socket.send(ws, 'aska', checkURL(asyncAsk.whatToSay(AskaSC, 'f3')));
         parameters = parameters.join(' ');
-        saveResult(xString, '04:00:00.000Z', gpsCoord, parameters, '3');
+        saveResult(xString, '04:00:00.000Z', parameters, '3', gpsCoord);
         clearInterval(int);
         ws.NNListen = true;
       }
