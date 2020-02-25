@@ -11,21 +11,7 @@ function success(position) {
   let latitude  = position.coords.latitude;
   let longitude = position.coords.longitude;
   lastCoords = [latitude, longitude];
-
   window.myconsole.log(`<p>Latitude is ${latitude} <br>Longitude is ${longitude}</p>`, 'html');
-/*
-  const now = Date.now();
-  const sum = (now - pastTime) / 1000 | 0;
-  const min = sum / 60 | 0;
-  const sec = sum % 60;
-  if (min == 0) {
-    window.myconsole.log(`${sec}s`,'str');
-  } else {
-    window.myconsole.log(`${min}m ${sec}s`,'str');
-  }
-  pastTime = now;
-  window.myconsole.log(`-----------------------`, 'str');
-  */
 };
 
 function error() {
@@ -38,6 +24,18 @@ var geo_options = {
 //  timeout           : 27000
 };
 
+function promiseGeo() {
+  return new Promise((res,req) => {
+    navigator.geolocation.getCurrentPosition( position => {
+      lastCoords = [position.coords.latitude, position.coords.longitude];
+      window.myconsole.log(`<p>Latitude is ${lastCoords[0]} <br>Longitude is ${lastCoords[1]}</p>`, 'html');
+      res(lastCoords)
+    }, () => {
+      window.myconsole.log('Unable to retrieve your location', 'err');
+      req()
+    }, geo_options)
+  })
+}
 
 function init() {
   /*
@@ -50,5 +48,6 @@ function init() {
   //navigator.geolocation.watchPosition(success, error, geo_options);
 }
 
+module.exports.promiseGeo = promiseGeo;
 module.exports.init = init;
 module.exports.getCoords = getCoords;

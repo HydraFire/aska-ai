@@ -1,35 +1,44 @@
 import socket from './webSocketClient';
 import { switchModeOnMute } from './speechSynthesizer';
 import { animeteIPcheck } from './interface/animation';
-import { getCoords, init } from './geolocation';
+import { getCoords, init, promiseGeo } from './geolocation';
 
-let home_ip = JSON.parse(process.env.ASKA_HOME_IP);
+const home_ip = JSON.parse(process.env.ASKA_HOME_IP);
+const home_gps = [50.435256, 30.620723]
 
 function impulseToServer() {
-  //window.myconsole.log('navigator.connection.type = ' + navigator.connection.type, 'err');
-  init()
-  animeteIPcheck(true);
-  if (navigator.connection.type == 'wifi') {
-    getIp()
-    .then(
-          result => {
-            animeteIPcheck(false)
-            switchModeOnMute(result)
-            socket.send(getCoords(), 'impulse');
-          },
-          error => {
-            //window.myconsole.log('ip error = ' + error, 'err');
-            animeteIPcheck(false);
-            switchModeOnMute(result);
-            socket.send(getCoords(), 'impulse');
-          }
-      );
-  } else {
-    animeteIPcheck(false);
-    switchModeOnMute(true);
+
+  promiseGeo().then( gps => {
+
+    switchModeOnMute( Math.abs(home_gps[0] - gps[0]) < 0.002 && Math.abs(home_gps[1] - gps[1]) < 0.002 )
     socket.send(getCoords(), 'impulse');
-    //window.myconsole.log('socket.send(impulse, impulse);', 'string');
-  }
+
+  }, () => {
+
+    animeteIPcheck(true);
+    if (navigator.connection.type == 'wifi') {
+      getIp()
+      .then(
+            result => {
+              animeteIPcheck(false)
+              switchModeOnMute(result)
+              socket.send(getCoords(), 'impulse');
+            },
+            error => {
+              //window.myconsole.log('ip error = ' + error, 'err');
+              animeteIPcheck(false);
+              switchModeOnMute(result);
+              socket.send(getCoords(), 'impulse');
+            }
+        );
+    } else {
+      animeteIPcheck(false);
+      switchModeOnMute(true);
+      socket.send(getCoords(), 'impulse');
+      //window.myconsole.log('socket.send(impulse, impulse);', 'string');
+    }
+  })
+
 }
 
 function getIp() {
