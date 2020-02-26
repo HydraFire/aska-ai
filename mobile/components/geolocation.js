@@ -25,15 +25,15 @@ var geo_options = {
 };
 
 function promiseGeo() {
-  return new Promise((res,req) => {
+  return new Promise((res, req) => {
     navigator.geolocation.getCurrentPosition( position => {
       lastCoords = [position.coords.latitude, position.coords.longitude];
-      window.myconsole.log(`<p>Latitude is ${lastCoords[0]} <br>Longitude is ${lastCoords[1]}</p>`, 'html');
-      res(lastCoords)
+      window.myconsole.log(`<p>Latitude is ${lastCoords[0]} <br>Longitude is ${lastCoords[1]} accuracy ${coords.accuracy}</p>`, 'html');
+      res([position.coords.latitude, position.coords.longitude])
     }, () => {
       window.myconsole.log('Unable to retrieve your location', 'err');
       req()
-    }, geo_options)
+    })
   })
 }
 

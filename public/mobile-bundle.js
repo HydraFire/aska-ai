@@ -7161,12 +7161,12 @@ function promiseGeo() {
   return new Promise((res, req) => {
     navigator.geolocation.getCurrentPosition(position => {
       lastCoords = [position.coords.latitude, position.coords.longitude];
-      window.myconsole.log(`<p>Latitude is ${lastCoords[0]} <br>Longitude is ${lastCoords[1]}</p>`, 'html');
-      res(lastCoords);
+      window.myconsole.log(`<p>Latitude is ${lastCoords[0]} <br>Longitude is ${lastCoords[1]} accuracy ${coords.accuracy}</p>`, 'html');
+      res([position.coords.latitude, position.coords.longitude]);
     }, () => {
       window.myconsole.log('Unable to retrieve your location', 'err');
       req();
-    }, geo_options);
+    });
   });
 }
 
@@ -7659,8 +7659,8 @@ function impulseToServer() {
 
   Object(__WEBPACK_IMPORTED_MODULE_3__geolocation__["promiseGeo"])().then(gps => {
 
-    Object(__WEBPACK_IMPORTED_MODULE_1__speechSynthesizer__["g" /* switchModeOnMute */])(!(Math.abs(home_gps[0] - gps[0]) < 0.002 && Math.abs(home_gps[1] - gps[1]) < 0.002));
-    __WEBPACK_IMPORTED_MODULE_0__webSocketClient__["a" /* default */].send(Object(__WEBPACK_IMPORTED_MODULE_3__geolocation__["getCoords"])(), 'impulse');
+    Object(__WEBPACK_IMPORTED_MODULE_1__speechSynthesizer__["g" /* switchModeOnMute */])(!(Math.abs(home_gps[0] - gps[0]) < 0.002 && Math.abs(home_gps[1] - gps[1]) < 0.002 && navigator.connection.type == 'wifi'));
+    __WEBPACK_IMPORTED_MODULE_0__webSocketClient__["a" /* default */].send(gps, 'impulse');
   }, () => {
 
     Object(__WEBPACK_IMPORTED_MODULE_2__interface_animation__["b" /* animeteIPcheck */])(true);

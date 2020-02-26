@@ -10,8 +10,8 @@ function impulseToServer() {
 
   promiseGeo().then( gps => {
 
-    switchModeOnMute( !(Math.abs(home_gps[0] - gps[0]) < 0.002 && Math.abs(home_gps[1] - gps[1]) < 0.002) )
-    socket.send(getCoords(), 'impulse');
+    switchModeOnMute( !(Math.abs(home_gps[0] - gps[0]) < 0.002 && Math.abs(home_gps[1] - gps[1]) < 0.002 && navigator.connection.type == 'wifi') )
+    socket.send( gps, 'impulse');
 
   }, () => {
 
