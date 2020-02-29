@@ -7,12 +7,15 @@ const home_ip = JSON.parse(process.env.ASKA_HOME_IP);
 const home_gps = [50.435256, 30.620723]
 
 function impulseToServer() {
+  init()
 
+  let gps = getCoords()
+/*
   promiseGeo().then( gps => {
-
+*/
     switchModeOnMute( !(Math.abs(home_gps[0] - gps[0]) < 0.002 && Math.abs(home_gps[1] - gps[1]) < 0.002 && navigator.connection.type == 'wifi') )
     socket.send( gps, 'impulse');
-
+/*
   }, () => {
 
     animeteIPcheck(true);
@@ -37,8 +40,9 @@ function impulseToServer() {
       socket.send(getCoords(), 'impulse');
       //window.myconsole.log('socket.send(impulse, impulse);', 'string');
     }
-  })
 
+  })
+*/
 }
 
 function getIp() {

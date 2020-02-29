@@ -4802,12 +4802,12 @@ function psevdo() {
   audio.src = 'http://localhost:8080/coub/80Hz.mp3';
   audio.onloadeddata = () => {
     audio.play();
-    Object(__WEBPACK_IMPORTED_MODULE_3__interface_animation__["f" /* animeteUltraSound */])(true);
+    Object(__WEBPACK_IMPORTED_MODULE_3__interface_animation__["e" /* animeteUltraSound */])(true);
     __WEBPACK_IMPORTED_MODULE_1__webSocketClient__["a" /* default */].send('speech_start', 'AUDIO');
 
     audio.addEventListener('pause', () => {
       __WEBPACK_IMPORTED_MODULE_1__webSocketClient__["a" /* default */].send('speech_end', 'AUDIO');
-      Object(__WEBPACK_IMPORTED_MODULE_3__interface_animation__["e" /* animetePlayAudio */])(false);
+      Object(__WEBPACK_IMPORTED_MODULE_3__interface_animation__["d" /* animetePlayAudio */])(false);
     }, { once: true });
   };
 }
@@ -4855,7 +4855,7 @@ function trueAska(text) {
       } else if (text.substring(0, 1) == '#' || par) {
         return `http://localhost:8080/sample/${__WEBPACK_IMPORTED_MODULE_0_blueimp_md5___default()(text.substring(1, text.length))}.mp3`;
       } else {
-        Object(__WEBPACK_IMPORTED_MODULE_3__interface_animation__["c" /* animeteLoadAudio */])(true);
+        Object(__WEBPACK_IMPORTED_MODULE_3__interface_animation__["b" /* animeteLoadAudio */])(true);
         return 'https://tts.voicetech.yandex.net/generate?' + 'key=' + aska_yandex_id + '&text=' + encodeURI(text) + '&format=mp3' + '&lang=ru-RU' + '&topic=queries' + '&speaker=oksana' + '&speed=1' + '&robot=1' + '&emotion=evil';
       }
     }
@@ -4893,12 +4893,12 @@ function trueAska(text) {
       audioTag.src = createURL(text);
       audioTag.onloadeddata = function onloadeddata() {
         if (text.substring(0, 1) != '#' && text != '20Hz' && text != '50Hz') {
-          Object(__WEBPACK_IMPORTED_MODULE_3__interface_animation__["c" /* animeteLoadAudio */])(false);
+          Object(__WEBPACK_IMPORTED_MODULE_3__interface_animation__["b" /* animeteLoadAudio */])(false);
         }
         audioTag.play();
         if (text != '20Hz' && text != '50Hz') {
           //socket.send('speech_start','AUDIO');
-          Object(__WEBPACK_IMPORTED_MODULE_3__interface_animation__["e" /* animetePlayAudio */])(true);
+          Object(__WEBPACK_IMPORTED_MODULE_3__interface_animation__["d" /* animetePlayAudio */])(true);
         }
       };
     };
@@ -4909,7 +4909,7 @@ function trueAska(text) {
       if (text.length == 0) {
         audioTag.addEventListener('pause', () => {
           __WEBPACK_IMPORTED_MODULE_1__webSocketClient__["a" /* default */].send('speech_end', 'AUDIO');
-          Object(__WEBPACK_IMPORTED_MODULE_3__interface_animation__["e" /* animetePlayAudio */])(false);
+          Object(__WEBPACK_IMPORTED_MODULE_3__interface_animation__["d" /* animetePlayAudio */])(false);
         }, { once: true });
       }
       return text;
@@ -5947,13 +5947,13 @@ module.exports = shouldUseNative() ? Object.assign : function (target, source) {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "g", function() { return init; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "e", function() { return animetePlayAudio; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return animeteLoadAudio; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "d", function() { return animeteMic; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "f", function() { return animeteUltraSound; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "f", function() { return init; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "d", function() { return animetePlayAudio; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return animeteLoadAudio; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return animeteMic; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "e", function() { return animeteUltraSound; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return animeteErr; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return animeteIPcheck; });
+/* unused harmony export animeteIPcheck */
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__audioAnalyser__ = __webpack_require__(177);
 
 
@@ -7212,7 +7212,7 @@ const startStopRec = () => {
   if (Object(__WEBPACK_IMPORTED_MODULE_3__speechSynthesizer__["c" /* checkPlaing */])()) {
     window.navigator.vibrate(30);
     recognition.start();
-    Object(__WEBPACK_IMPORTED_MODULE_2__interface_animation__["d" /* animeteMic */])(true);
+    Object(__WEBPACK_IMPORTED_MODULE_2__interface_animation__["c" /* animeteMic */])(true);
   }
 };
 /* harmony export (immutable) */ __webpack_exports__["b"] = startStopRec;
@@ -7220,7 +7220,7 @@ const startStopRec = () => {
 
 const stopRec = () => {
   recognition.abort();
-  Object(__WEBPACK_IMPORTED_MODULE_2__interface_animation__["d" /* animeteMic */])(false);
+  Object(__WEBPACK_IMPORTED_MODULE_2__interface_animation__["c" /* animeteMic */])(false);
 };
 /* harmony export (immutable) */ __webpack_exports__["c"] = stopRec;
 
@@ -7239,15 +7239,15 @@ const speechRecInit = () => {
     // Финальное значение разпознавания
     if (e.results[0].isFinal) {
       window.myconsole.log(text, 'chat');
-      Object(__WEBPACK_IMPORTED_MODULE_2__interface_animation__["d" /* animeteMic */])(false);
+      Object(__WEBPACK_IMPORTED_MODULE_2__interface_animation__["c" /* animeteMic */])(false);
       __WEBPACK_IMPORTED_MODULE_0__webSocketClient__["a" /* default */].send(text);
     }
   });
   recognition.addEventListener('end', () => {
-    Object(__WEBPACK_IMPORTED_MODULE_2__interface_animation__["d" /* animeteMic */])(false);
+    Object(__WEBPACK_IMPORTED_MODULE_2__interface_animation__["c" /* animeteMic */])(false);
   });
   recognition.addEventListener('error', () => {
-    Object(__WEBPACK_IMPORTED_MODULE_2__interface_animation__["d" /* animeteMic */])(false);
+    Object(__WEBPACK_IMPORTED_MODULE_2__interface_animation__["c" /* animeteMic */])(false);
   });
 };
 /* harmony export (immutable) */ __webpack_exports__["a"] = speechRecInit;
@@ -7656,32 +7656,42 @@ const home_ip = JSON.parse("[\"159.224.183.122\"]");
 const home_gps = [50.435256, 30.620723];
 
 function impulseToServer() {
+  Object(__WEBPACK_IMPORTED_MODULE_3__geolocation__["init"])();
 
-  Object(__WEBPACK_IMPORTED_MODULE_3__geolocation__["promiseGeo"])().then(gps => {
-
-    Object(__WEBPACK_IMPORTED_MODULE_1__speechSynthesizer__["g" /* switchModeOnMute */])(!(Math.abs(home_gps[0] - gps[0]) < 0.002 && Math.abs(home_gps[1] - gps[1]) < 0.002 && navigator.connection.type == 'wifi'));
-    __WEBPACK_IMPORTED_MODULE_0__webSocketClient__["a" /* default */].send(gps, 'impulse');
-  }, () => {
-
-    Object(__WEBPACK_IMPORTED_MODULE_2__interface_animation__["b" /* animeteIPcheck */])(true);
-    if (navigator.connection.type == 'wifi') {
-      getIp().then(result => {
-        Object(__WEBPACK_IMPORTED_MODULE_2__interface_animation__["b" /* animeteIPcheck */])(false);
-        Object(__WEBPACK_IMPORTED_MODULE_1__speechSynthesizer__["g" /* switchModeOnMute */])(result);
-        __WEBPACK_IMPORTED_MODULE_0__webSocketClient__["a" /* default */].send(Object(__WEBPACK_IMPORTED_MODULE_3__geolocation__["getCoords"])(), 'impulse');
-      }, error => {
-        //window.myconsole.log('ip error = ' + error, 'err');
-        Object(__WEBPACK_IMPORTED_MODULE_2__interface_animation__["b" /* animeteIPcheck */])(false);
-        Object(__WEBPACK_IMPORTED_MODULE_1__speechSynthesizer__["g" /* switchModeOnMute */])(result);
-        __WEBPACK_IMPORTED_MODULE_0__webSocketClient__["a" /* default */].send(Object(__WEBPACK_IMPORTED_MODULE_3__geolocation__["getCoords"])(), 'impulse');
-      });
-    } else {
-      Object(__WEBPACK_IMPORTED_MODULE_2__interface_animation__["b" /* animeteIPcheck */])(false);
-      Object(__WEBPACK_IMPORTED_MODULE_1__speechSynthesizer__["g" /* switchModeOnMute */])(true);
-      __WEBPACK_IMPORTED_MODULE_0__webSocketClient__["a" /* default */].send(Object(__WEBPACK_IMPORTED_MODULE_3__geolocation__["getCoords"])(), 'impulse');
-      //window.myconsole.log('socket.send(impulse, impulse);', 'string');
-    }
-  });
+  let gps = Object(__WEBPACK_IMPORTED_MODULE_3__geolocation__["getCoords"])();
+  /*
+    promiseGeo().then( gps => {
+  */
+  Object(__WEBPACK_IMPORTED_MODULE_1__speechSynthesizer__["g" /* switchModeOnMute */])(!(Math.abs(home_gps[0] - gps[0]) < 0.002 && Math.abs(home_gps[1] - gps[1]) < 0.002 && navigator.connection.type == 'wifi'));
+  __WEBPACK_IMPORTED_MODULE_0__webSocketClient__["a" /* default */].send(gps, 'impulse');
+  /*
+    }, () => {
+  
+      animeteIPcheck(true);
+      if (navigator.connection.type == 'wifi') {
+        getIp()
+        .then(
+              result => {
+                animeteIPcheck(false)
+                switchModeOnMute(result)
+                socket.send(getCoords(), 'impulse');
+              },
+              error => {
+                //window.myconsole.log('ip error = ' + error, 'err');
+                animeteIPcheck(false);
+                switchModeOnMute(result);
+                socket.send(getCoords(), 'impulse');
+              }
+          );
+      } else {
+        animeteIPcheck(false);
+        switchModeOnMute(true);
+        socket.send(getCoords(), 'impulse');
+        //window.myconsole.log('socket.send(impulse, impulse);', 'string');
+      }
+  
+    })
+  */
 }
 
 function getIp() {
@@ -56283,7 +56293,7 @@ class InteractWindow extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Compo
         let value = e.target.getAttribute('value');
         value == 'true' ? value = true : value = false;
         Object(__WEBPACK_IMPORTED_MODULE_4__speechSynthesizer__["g" /* switchModeOnMute */])(value);
-        Object(__WEBPACK_IMPORTED_MODULE_3__animation__["g" /* init */])();
+        Object(__WEBPACK_IMPORTED_MODULE_3__animation__["f" /* init */])();
         __WEBPACK_IMPORTED_MODULE_2__webSocketClient__["a" /* default */].start();
       }
       //this.props.handlerInteractWindow(false);
